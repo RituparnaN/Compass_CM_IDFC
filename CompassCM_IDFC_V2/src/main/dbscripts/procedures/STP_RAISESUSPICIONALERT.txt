@@ -1,0 +1,18 @@
+CREATE OR REPLACE PROCEDURE STP_RAISESUSPICIONALERT (
+i_vcAlertNo	 	 		 IN VARCHAR2,    			i_vcUserCode     		IN VARCHAR2, 
+i_vcGroupCode    	     IN VARCHAR2,				i_vcIPAddress    		IN VARCHAR2,	   
+i_vcReportingOn  		 IN VARCHAR2,				i_vcBranchCode 	 		IN VARCHAR2,
+i_vcAccountOrPersonName  IN VARCHAR2,				i_vcAlertRating  		IN VARCHAR2,
+i_vcAccountNo 			 IN VARCHAR2,				i_vcCustomerId   		IN VARCHAR2,
+i_vcAddress1  			 IN VARCHAR2,				i_vcAddress2    	 	IN VARCHAR2,
+i_vcTypeOfSuspicion      IN VARCHAR2,				i_vcReasonForSuspicion  IN VARCHAR2,
+i_vcResultSet  IN OUT SYS_REFCURSOR)
+AS
+BEGIN
+	OPEN i_vcResultSet FOR
+  SELECT 1
+    FROM DUAL;
+END STP_RAISESUSPICIONALERT;
+/
+
+ 

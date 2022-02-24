@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified" attributeFormDefault="qualified"
+	targetNamespace="http://quantumdataengines.com/ws/schema" 
+	xmlns:tns="http://quantumdataengines.com/ws/schema" xmlns:xmime="http://www.w3.org/2005/05/xmlmime">
+	
+	<xs:simpleType name="institute">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	
+	<xs:simpleType name="name">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	
+	<xs:simpleType name="dateofbirth">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	
+	<xs:simpleType name="passportno">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	
+	<xs:simpleType name="panno">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	
+	<xs:simpleType name="customerid">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	
+	<xs:simpleType name="accountno">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	
+	<xs:simpleType name="otherDetails">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	
+	<xs:simpleType name="status">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	
+	<xs:simpleType name="description">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	
+	<xs:complexType name="file">
+		<xs:sequence>
+			<xs:element name="file" type="xs:base64Binary" xmime:expectedContentTypes="application/octet-stream"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="person">
+		<xs:all>
+			<xs:element name="name" type="tns:name" nillable="true"/>
+			<xs:element name="dateofbirth" type="tns:dateofbirth" nillable="true"/>
+			<xs:element name="passportno" type="tns:passportno" nillable="true"/>
+			<xs:element name="panno" type="tns:panno" nillable="true"/>
+			<xs:element name="customerid" type="tns:customerid" nillable="true"/>
+			<xs:element name="accountno" type="tns:accountno" nillable="true"/>
+			<xs:element name="otherDetails" type="tns:otherDetails" nillable="true"/>
+		</xs:all>
+	</xs:complexType>
+	
+	<xs:complexType name="persons">
+		<xs:sequence>
+			<xs:element name="person" type="tns:person" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:element name="screeningBulkRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="institute" type="tns:institute" nillable="false"/>
+				<xs:element name="file" type="tns:file" nillable="false"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="screeningRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="institute" type="tns:institute" nillable="false"/>
+				<xs:element name="person" type="tns:person" nillable="true"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+		
+	<xs:element name="screeningResponse">
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="persons" maxOccurs="1" minOccurs="0" type="tns:persons"/>
+				<xs:element name="status" maxOccurs="1" minOccurs="1" nillable="false" type="tns:status"/>
+				<xs:element name="description" maxOccurs="1" minOccurs="1" nillable="false" type="tns:description"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

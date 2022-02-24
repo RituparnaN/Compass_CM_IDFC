@@ -1,0 +1,145 @@
+<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="../tags/tags.jsp"%>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		var id = '${UNQID}';
+		$("#createNewRiskAssessment"+id).click(function(){
+			var ASSESSMENTUNIT = $("#ASSESSMENTUNIT"+id).val();
+			if(ASSESSMENTUNIT != null && ASSESSMENTUNIT != ""){
+				if(confirm("Are you sure you want to Create a New Risk Assessment?")){
+					$(this).html("Creating...");
+					$(this).attr("disabled","disabled");
+					$.ajax({
+						url : "${pageContext.request.contextPath}/common/openNewRiskAssessment",
+						type : "POST",
+						cache : false,
+						data : "ASSESSMENTUNIT="+ASSESSMENTUNIT+"&ISNEWFORM=Y",
+						success : function(res){
+							$(".compassrow"+id).html(res);
+						},
+						error : function(){
+							alert("Error while opening form");
+						}
+					});
+				}
+			}else{
+				alert("Please select an assessment unit to proceed.");
+			}
+		});
+		
+		$("#searchRiskAssessment"+id).click(function(){
+			var ASSESSMENTUNIT = $("#ASSESSMENTUNIT"+id).val();
+			var COMPASSREFERENCENO = $("#COMPASSREFERENCENO"+id).val();
+			if((ASSESSMENTUNIT != null && ASSESSMENTUNIT != "")||(COMPASSREFERENCENO != null && COMPASSREFERENCENO != "")){
+				$.ajax({
+					url : "${pageContext.request.contextPath}/common/searchRiskAssessment",
+					type : "POST",
+					cache : false,
+					data : "ASSESSMENTUNIT="+ASSESSMENTUNIT+"&COMPASSREFERENCENO="+COMPASSREFERENCENO,
+					success : function(res){
+						$("#panelRAForm"+id).css("display", "block");
+						$("#riskAssessmentSerachResult"+id).html(res);
+					},
+					error : function(){
+						alert("Error while opening form");
+					}
+				});
+			}else{
+				alert("Please select an assessment unit or enter a compass reference number to proceed.");
+			}
+		});
+	});
+	
+	function continueRA(elm){
+		var id = '${UNQID}';
+		var compassRefNo = $(elm).attr("compassRefNo");
+		//alert(compassRefNo);
+		$(elm).html("Starting...");
+		$.ajax({
+			url : "${pageContext.request.contextPath}/common/openNewRiskAssessment",
+			type : "POST",
+			cache : false,
+			data :  "COMPASSREFERENCENO="+compassRefNo+"&ISNEWFORM=N",
+			success : function(res){
+				//alert(res);
+				//console.log(res);
+				$(".compassrow"+id).html(res);
+			},
+			error : function(){
+				alert("Error while opening form");
+			}
+		}); 
+	}
+	
+	function generateRAReport(elm){
+		var id = '${UNQID}';
+		var compassRefNo = $(elm).attr("compassRefNo");
+		//alert(compassRefNo);
+		 //$(elm).html("Generating...");
+		 var fromDate = "01/01/2000";
+		 if(confirm("Are you sure you want to Generate Excel Report?")){
+			 $.fileDownload("${pageContext.request.contextPath}/common/generateCMReport?compassRefNo="+compassRefNo, {
+			    httpMethod : "GET",
+				successCallback: function (url) {					 
+			    	$(elm).html("Downloaded");
+					btn.prop('disabled', false);
+			    },
+			    failCallback: function (html, url) {
+			    	btn.prop('disabled', false);
+			    	alert('Failed to download file'+url+"\n"+html);
+			    }
+			});
+		 }	 
+	}
+
+</script>
+<div class="row compassrow${UNQID}">
+	<div class="col-sm-12">
+		<div class="card card-primary panel_CDDForm">
+			<div class="card-header panelSlidingCDDForm${UNQID} clearfix">
+				<h6 class="card-title pull-${dirL}">Risk Assessment</h6>
+			</div>
+			<div class="panelSearchForm">
+				<form action="javascript:void(0)" method="POST" id="searchMasterForm${UNQID}">
+					 <div class="card-search-card" >
+						<table class="table table-striped formSearchTable cddForm${UNQID}" style="margin-bottom: 0px;border-collapse:collapse;">
+							<tbody>
+								<tr>
+									<td style="width: 20%">Assessment Unit</td>
+									<td style="width: 25%">
+										<select class="form-control input-sm" id="ASSESSMENTUNIT${UNQID}" name="ASSESSMENTUNIT">
+											<option value="">Select Assessment Unit</option>
+											<c:forEach var="assessmentUnit" items="${ASSESSMENTUNITS}">
+												<option value="${assessmentUnit}">${assessmentUnit}</option>
+											</c:forEach>
+										</select>
+									</td>
+									<td style="width: 10%">&nbsp;</td>
+									<td width="20%">Compass Reference No</td>
+									<td width="25%">
+										<input class="form-control input-sm" id="COMPASSREFERENCENO${UNQID}" name="COMPASSREFERENCENO"/>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div> 
+				</form>
+			</div>
+			<div class="card-footer clearfix">
+				<div class="pull-${dirR}">
+					<button type="button" id="searchRiskAssessment${UNQID}" class="btn btn-success btn-sm">Search</button>
+					<c:if test = "${CURRENTROLE eq 'ROLE_CM_OFFICER'}">
+						<button type="button" id="createNewRiskAssessment${UNQID}" class="btn btn-primary btn-sm">Create New</button>
+					</c:if>
+				</div>
+			</div>
+		</div>
+		<div class="card card-primary" id="panelRAForm${UNQID}" style="display: none;">
+			<div class="card-header panelSlidingRAForm${UNQID} clearfix">
+				<h6 class="card-title pull-${dirL}">Risk Assessment Search Result</h6>
+			</div>
+			<div id="riskAssessmentSerachResult${UNQID}"></div>
+		</div>
+	</div>
+</div>

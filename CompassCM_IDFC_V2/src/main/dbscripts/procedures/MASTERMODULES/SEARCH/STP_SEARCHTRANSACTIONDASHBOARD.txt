@@ -1,0 +1,95 @@
+CREATE OR REPLACE PROCEDURE STP_SEARCHTRANSACTIONDASHBOARD(
+ i_vcFromDate  		   IN VARCHAR2, i_vcToDate         IN VARCHAR2,
+ i_vcFromAmount 	   IN VARCHAR2, i_vcToAmount       IN VARCHAR2,
+ i_vcTransactionType   IN VARCHAR2, i_vcDebitCredit    IN VARCHAR2,
+ i_vcBranchCode		   IN VARCHAR2, i_vcInstrumentCode IN VARCHAR2,
+ i_vcCustomerId        IN VARCHAR2, i_vcCustomerName   IN VARCHAR2,
+ i_vcAccountNo   	   IN VARCHAR2, i_vcAlertNo		   IN VARCHAR2,
+ i_vcTransactionNo     IN VARCHAR2, i_vcChannelType    IN VARCHAR2,
+ i_vcUserCode   	   IN VARCHAR2, i_vcGroupCode  	   IN VARCHAR2,	
+ i_vcIPAddress  	   IN VARCHAR2, io_cuRESTULTSET    IN OUT SYS_REFCURSOR
+)
+-- EXEC STP_SEARCHTRANSACTIONDASHBOARD('','','','','','','','','','','','','','','','','',:KG);
+AS
+  vcQuery varchar2(32000);
+BEGIN
+
+vcQuery :=' SELECT ROWNUM AS ROWPOSITION, A.* FROM ( SELECT TRANSACTIONNO, '||
+'       TRANSACTIONBATCHID||''/''||TRANSACTIONID TRANSACTIONID, '||
+'       NVL(TRIM(INSTRUMENTCODE),''N.A.'') INSTRUMENTCODE, INSTRUMENTNO, FUN_DATETOCHAR(INSTRUMENTDATE) INSTRUMENTDATE,  '||
+'       CUSTOMERID, ACCOUNTNO, NVL(TRIM(BRANCHCODE),''N.A.'') BRANCHCODE, AMOUNT, TRANSACTIONTYPE,  '|| 
+'       CASE WHEN DEPOSITORWITHDRAWAL = ''D'' THEN ''CREDIT'' ELSE ''DEBIT'' END DEPOSITORWITHDRAWAL, '||
+'       CASE WHEN DEPOSITORWITHDRAWAL = ''D'' THEN AMOUNT||'' '' ELSE '' '' END CREDITAMOUNT, '||  
+'       CASE WHEN DEPOSITORWITHDRAWAL = ''W'' THEN AMOUNT||'' '' ELSE '' '' END DEBITAMOUNT, '||  
+'       FUN_DATETOCHAR(TRANSACTIONDATETIME) TRANSACTIONDATE, COUNTERPARTYID, '||  
+'       COUNTERPARTYTYPE, COUNTERBRANCHCODE, COUNTERBANKCODE, ACCTCURRENCYCODE, CURRENCYCODE, RATECODE, '|| 
+'       CONVERSIONRATE, REPLACE(NARRATION,CHR(39),'''') NARRATION, '||
+'       CHANNELID, COUNTERCOUNTRYCODE, CHANNELTYPE, COUNTERPARTYADDRESS, '|| 
+'       CUSTOMERNAME, ACCOUNTTYPE, PRODUCTCODE, COUNTERPARTYNAME, COUNTERACCOUNTNO, FLOWCODE '||
+'  FROM COMAML.TB_TRANSACTIONS A '||
+' WHERE 1 = 1 ';
+
+IF (i_vcFromDate IS NOT NULL AND i_vcFromDate NOT IN ('')) THEN
+vcQuery := vcQuery||' AND A.TRANSACTIONDATETIME >= FUN_CHARTODATE('''||i_vcFromDate||''' )';
+END IF;
+
+IF (i_vcToDate IS NOT NULL AND i_vcToDate NOT IN ('')) THEN
+vcQuery := vcQuery||' AND A.TRANSACTIONDATETIME < FUN_CHARTODATE('''||i_vcToDate||''' )+1';
+END IF;
+
+IF (i_vcFromAmount IS NOT NULL AND i_vcFromAmount NOT IN ('')) THEN
+vcQuery := vcQuery||' AND A.AMOUNT >= '''||i_vcFromAmount||''' ';
+END IF;
+
+IF (i_vcToAmount IS NOT NULL AND i_vcToAmount NOT IN ('')) THEN
+vcQuery := vcQuery||' AND A.AMOUNT >= '''||i_vcToAmount||''' ';
+END IF;
+
+IF (i_vcTransactionType IS NOT NULL AND i_vcTransactionType NOT IN ('') AND i_vcTransactionType NOT IN ('ALL'))THEN
+vcQuery := vcQuery||' AND SUBSTR(A.TRANSACTIONTYPE,1,1) = '''||i_vcTransactionType||''' ';
+END IF;
+
+IF (i_vcDebitCredit IS NOT NULL AND i_vcDebitCredit NOT IN ('') AND i_vcDebitCredit NOT IN ('ALL')) THEN
+vcQuery := vcQuery||' AND A.DEPOSITORWITHDRAWAL = '''||i_vcDebitCredit||''' ';
+END IF;
+
+IF (i_vcBranchCode IS NOT NULL AND i_vcBranchCode NOT IN ('')) THEN
+vcQuery := vcQuery||' AND A.BRANCHCODE = '''||i_vcBranchCode||''' ';
+END IF;
+
+IF (i_vcInstrumentCode IS NOT NULL AND i_vcInstrumentCode NOT IN ('')) THEN
+vcQuery := vcQuery||' AND A.INSTRUMENTCODE = '''||i_vcInstrumentCode||''' ';
+END IF;
+
+IF (i_vcCustomerId IS NOT NULL AND i_vcCustomerId NOT IN ('')) THEN
+vcQuery := vcQuery||' AND A.CUSTOMERID = '''||i_vcCustomerId||''' ';
+END IF;
+
+IF (i_vcCustomerName IS NOT NULL AND i_vcCustomerName NOT IN ('')) THEN
+vcQuery := vcQuery||' AND A.CUSTOMERNAME LIKE %'''||i_vcCustomerName||''' ';
+END IF;
+
+IF (i_vcAccountNo IS NOT NULL AND i_vcAccountNo NOT IN ('')) THEN
+vcQuery := vcQuery||' AND A.ACCOUNTNO = '''||i_vcAccountNo||''' ';
+END IF;
+
+IF (i_vcAlertNo IS NOT NULL AND i_vcAlertNo NOT IN ('')) THEN
+vcQuery := vcQuery||' AND A.TRANSACTIONNO IN 
+(SELECT TRANSACTIONNO FROM TB_ALERTTRANSACTIONMAPPING WHERE ALERTNO = '''||i_vcAlertNo||''') ';
+END IF;
+
+IF (i_vcTransactionNo IS NOT NULL AND i_vcTransactionNo NOT IN ('')) THEN
+vcQuery := vcQuery||' AND A.TRANSACTIONNO = '''||i_vcTransactionNo||''' ';
+END IF;
+
+IF (i_vcChannelType IS NOT NULL AND i_vcChannelType NOT IN ('ALL')) THEN
+vcQuery := vcQuery||' AND A.CHANNELTYPE = '''||i_vcChannelType||''' ';
+END IF;
+
+vcQuery := vcQuery || 'ORDER BY TRANSACTIONDATETIME ASC ) A ';
+vcQuery := vcQuery || ' WHERE ROWNUM <= 500 ';
+
+OPEN io_cuRESTULTSET FOR vcQuery;
+
+END STP_SEARCHTRANSACTIONDASHBOARD;
+/

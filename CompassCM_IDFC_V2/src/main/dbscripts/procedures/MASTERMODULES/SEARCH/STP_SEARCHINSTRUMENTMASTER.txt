@@ -1,0 +1,38 @@
+CREATE OR REPLACE PROCEDURE STP_SEARCHINSTRUMENTMASTER
+(
+ i_vcInstrumentCode IN VARCHAR2, i_vcInstrumentName IN VARCHAR2,
+ i_vcDescription IN VARCHAR2,	 i_vcUserCode    IN VARCHAR2,
+ i_vcGroupCode IN VARCHAR2, 	 i_vcIPAddress   IN VARCHAR2, 
+ io_cuRESTULTSET IN OUT SYS_REFCURSOR
+)
+-- EXEC STP_SEARCHINSTRUMENTMASTER('','','','','','',:KG);
+
+AS
+  vcQuery varchar2(5000);
+  vcInstrumentCode VARCHAR2(4000) := i_vcInstrumentCode;
+  vcInstrumentName VARCHAR2(4000) := '%'||i_vcInstrumentName||'%';
+  vcDescription VARCHAR2(4000) := '%'||i_vcDescription||'%';
+
+BEGIN
+
+vcQuery :=' SELECT ROWNUM AS "app.common.serialNo", INSTRUMENTCODE AS "app.common.instrumentCode", '
+	||'			   INSTRUMENTNAME AS "app.common.instrumentName", DESCRIPTION AS "app.common.description" '
+	||'   FROM COMAML.TB_INSTRUMENTMASTER A '
+	||'  WHERE 1 = 1 ';
+
+IF TRIM(UPPER(i_vcInstrumentCode)) IS NOT NULL THEN
+vcQuery := vcQuery||' AND A.INSTRUMENTCODE = '''||vcInstrumentCode||''' ';
+END IF;
+IF TRIM(UPPER(i_vcInstrumentName)) IS NOT NULL THEN
+vcQuery := vcQuery||' AND A.INSTRUMENTNAME LIKE '''||vcInstrumentName||''' ';
+END IF;
+IF TRIM(UPPER(i_vcDescription)) IS NOT NULL THEN
+vcQuery := vcQuery||' AND A.DESCRIPTION LIKE '''||vcDescription||''' ';
+END IF;
+
+vcQuery := vcQuery || ' AND ROWNUM <= 500 ';
+
+OPEN io_cuRESTULTSET FOR vcQuery;
+
+END STP_SEARCHINSTRUMENTMASTER;
+/

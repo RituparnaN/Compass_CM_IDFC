@@ -1,0 +1,33 @@
+CREATE OR REPLACE PROCEDURE STP_SEARCHPRODUCTSMASTER 
+(
+ i_vcProductCode IN VARCHAR2, i_vcDescription IN VARCHAR2,
+ i_vcUserCode    IN VARCHAR2, i_vcGroupCode IN VARCHAR2,  
+ i_vcIPAddress   IN VARCHAR2, io_cuRESTULTSET IN OUT SYS_REFCURSOR
+)
+-- EXEC STP_SEARCHPRODUCTSMASTER('','','','','',:KG);
+
+AS
+  vcQuery varchar2(5000);
+  vcProductCode VARCHAR2(4000) := i_vcProductCode;
+  vcDescription VARCHAR2(4000) := '%'||i_vcDescription||'%';
+
+BEGIN
+
+vcQuery :=' SELECT ROWNUM AS "app.common.serialNo", PRODUCTCODE AS "app.common.productCode", PRODUCTNAME AS "app.common.productName", '
+||'				   DESCRIPTION AS "app.common.description", PRODUCTGROUPCODE AS "app.common.productGroupCode" '
+	||'   FROM COMAML.TB_PRODUCTSMASTER A '
+	||'  WHERE 1 = 1 ';
+
+IF TRIM(UPPER(i_vcProductCode)) IS NOT NULL THEN
+vcQuery := vcQuery||' AND A.PRODUCTCODE = '''||vcProductCode||''' ';
+END IF;
+IF TRIM(UPPER(i_vcDescription)) IS NOT NULL THEN
+vcQuery := vcQuery||' AND A.DESCRIPTION LIKE '''||vcDescription||''' ';
+END IF;
+
+vcQuery := vcQuery || ' AND ROWNUM <= 500 ';
+
+OPEN io_cuRESTULTSET FOR vcQuery;
+
+END STP_SEARCHPRODUCTSMASTER;
+/

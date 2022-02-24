@@ -1,0 +1,34 @@
+CREATE OR REPLACE PROCEDURE STP_SEARCHREFVALUESMASTER (
+ i_vcReferenceCode IN VARCHAR2, i_vcDescription IN VARCHAR2,
+ i_vcReferenceType IN VARCHAR2, i_vcUserCode    IN VARCHAR2,
+ i_vcGroupCode IN VARCHAR2,     i_vcIPAddress   IN VARCHAR2,  
+ io_cuRESTULTSET IN OUT SYS_REFCURSOR
+)
+-- EXEC STP_SEARCHREFVALUESMASTER('','','','','','',:KG);
+
+AS
+  vcQuery varchar2(5000);
+  vcReferenceCode VARCHAR2(4000) := i_vcReferenceCode;
+  vcDescription VARCHAR2(4000) := '%'||i_vcDescription||'%';
+
+BEGIN
+
+vcQuery :=' SELECT ROWNUM AS ROWPOSITION, REFERENCECODE, DESCRIPTION, REFERENCETYPE '
+	||'   FROM COMAML.TB_REFERENCETYPEMASTER A '
+	||'  WHERE 1 = 1 ';
+IF TRIM(UPPER(i_vcReferenceCode)) IS NOT NULL THEN
+vcQuery := vcQuery||' AND A.REFERENCECODE = '''||vcReferenceCode||''' ';
+END IF;
+IF TRIM(UPPER(i_vcDescription)) IS NOT NULL THEN
+vcQuery := vcQuery||' AND A.DESCRIPTION LIKE '''||vcDescription||''' ';
+END IF;
+IF TRIM(UPPER(i_vcReferenceType)) IS NOT NULL  AND UPPER(i_vcReferenceType) NOT IN ('A') THEN
+vcQuery := vcQuery||' AND A.REFERENCETYPE = '''||i_vcReferenceType||''' ';
+END IF;
+
+vcQuery := vcQuery || ' AND ROWNUM <= 500 ';
+
+OPEN io_cuRESTULTSET FOR vcQuery;
+
+END STP_SEARCHREFVALUESMASTER;
+/

@@ -1,0 +1,70 @@
+CREATE OR REPLACE PROCEDURE STP_SEARCHCUSTOMERMASTER(
+i_vcCustomerId   IN VARCHAR2,  i_vcCustomerName IN VARCHAR2,
+i_vcBranchCode   IN VARCHAR2,  i_vcRiskRating   IN VARCHAR2, 
+i_vcCustomerType IN VARCHAR2,  i_vcPanNo        IN VARCHAR2,
+i_vcMobileNo     IN VARCHAR2,  i_vcUsIndicia    IN VARCHAR2,
+i_vcUserCode     IN VARCHAR2,  i_vcGroupCode    IN VARCHAR2,  
+i_vcIPAddress    IN VARCHAR2,  io_ResultSet     IN OUT SYS_REFCURSOR
+)
+-- EXEC STP_SEARCHCUSTOMERMASTER('','','','','','','','','','','',:KG);
+AS
+  vcSql Varchar2(32000);
+BEGIN 
+
+vcSql := 'SELECT ROWNUM AS ROWPOSITION, CUSTOMERID, CUSTOMERNAME, '||
+		 '       CUSTOMERTYPE, CUSTOMERCATEGORY, MINOR, BANKCODE, BRANCHCODE, NATUREOFBUSINESS, CREDITRATING, '||
+		 '       FUN_DATETOCHAR(CREATEDDATETIME) CREATEDDATETIME, INTRODUCERCUSTOMERID, '||
+		 '       INTRODUCERNAME, INTRODUCERCATEGORY, CUSTOMEREMPCODE, ESTIMATEDINCOMEFROMBUSINESS, OTHERINCOME, '||
+		 '       ANNUALINCOME, NET_WORTH, SALUTATION, FIRSTNAME, MIDDLENAME, LASTNAME, FATHERNAME, MOTHERNAME, '||
+		 '       FUN_DATETOCHAR(DATEOFBIRTH) DATEOFBIRTH, PLACEOFBIRTH, NATIONALITY, '||
+		 '       CASE WHEN RESIDENTIALSTATUS=''Y'' THEN ''DOMESTIC CUSTOMER'' '||
+		 '            WHEN RESIDENTIALSTATUS=''N'' THEN ''NRE/NRO CUSTOMER'' END RESIDENTIALSTATUS , AGE, '||
+		 '       CASE WHEN SEX=''M'' THEN ''MALE'' WHEN SEX=''F'' THEN ''FEMALE'' END SEX , '||
+         '       A.CBS_RISKRATING RISKRATING, '||
+		 '       PANNO, DRIVINGLICENSENO, PASSPORTNO, VOTERIDENTITYCARDNO, '||
+		 '       CASE WHEN MARITALSTATUS=''M'' THEN ''MARRIED'' WHEN SEX=''U'' THEN ''UNMARRIED'' END MARITALSTATUS , '||
+		 '       DEPENDENTS, OCCUPATION, ISSUINGAUTHORITY, '||
+		 '       PLACEOFISSUE, IDCARD, ADDRESSLINE1, ADDRESSLINE2, ADDRESSLINE3, CITY, STATE, COUNTRY, '||
+		 '       PINCODE, PHONENO, MOBILENO, FAXNO, EMAILID, WEBSITE, '||
+		 '       COMM_ADDRESSLINE1, COMM_ADDRESSLINE2, COMM_CITY, COMM_STATE, COMM_COUNTRY, COMM_PINCODE, '||
+		 '       COMM_PHONENO, COMM_FAXNO, COMM_EMAILID '||
+		 '  FROM COMAML.TB_CUSTOMERMASTER A WHERE 1=1 ';
+		 
+IF (i_vcCustomerId IS NOT NULL AND i_vcCustomerId NOT IN ('')) THEN
+   vcSql := vcSql || ' AND A.CUSTOMERID = '''||i_vcCustomerId||''' ';
+END IF;
+
+IF (i_vcCustomerName IS NOT NULL AND i_vcCustomerName NOT IN ('')) THEN
+   vcSql := vcSql || ' AND A.CUSTOMERNAME LIKE UPPER('''||i_vcCustomerName||'%'') ';
+END IF;
+
+IF (i_vcBranchCode IS NOT NULL AND i_vcBranchCode NOT IN ('ALL')) THEN
+   vcSql := vcSql || ' AND LPAD(A.BRANCHCODE,4,''0'') = LPAD('''||i_vcBranchCode||''',4,''0'') ';
+END IF;
+
+IF (i_vcRiskRating IS NOT NULL AND i_vcRiskRating NOT IN ('ALL')) THEN
+   vcSql := vcSql || ' AND A.RISKRATING = '''||i_vcRiskRating||''' ';
+END IF;
+
+IF (i_vcCustomerType IS NOT NULL AND i_vcCustomerType NOT IN ('ALL')) THEN
+   vcSql := vcSql || ' AND A.CUSTOMERTYPE = '''||i_vcCustomerType||''' ';
+END IF;
+
+IF (i_vcUsIndicia IS NOT NULL AND i_vcUsIndicia NOT IN ('NONE')) THEN
+   vcSql := vcSql || ' AND A.'||i_vcUsIndicia||' = ''Y'' ';
+END IF;
+
+IF (i_vcPanNo IS NOT NULL AND i_vcPanNo NOT IN ('')) THEN
+   vcSql := vcSql || ' AND A.PANNO = UPPER('''||i_vcPanNo||''') ';
+ END IF;
+   
+IF (i_vcMobileNo IS NOT NULL AND i_vcMobileNo NOT IN ('')) THEN
+   vcSql := vcSql || ' AND A.MOBILENO = UPPER('''||i_vcMobileNo||''') ';
+END IF;
+
+vcSql := vcSql || ' AND ROWNUM <= 500 ';
+
+OPEN io_ResultSet FOR vcSql;
+
+END STP_SEARCHCUSTOMERMASTER;
+/

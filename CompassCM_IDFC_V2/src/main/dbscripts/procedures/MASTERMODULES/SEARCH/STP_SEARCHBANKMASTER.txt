@@ -1,0 +1,48 @@
+CREATE OR REPLACE PROCEDURE STP_SEARCHBANKMASTER
+(
+-- EXEC STP_SEARCHBANKMASTER('','','ALL','','','','',:KG);
+ i_vcBankCode  IN VARCHAR2,  i_vcBankName IN VARCHAR2,
+ i_vcBankType  IN VARCHAR2,  i_vcGIINCode IN VARCHAR2, 
+ i_vcUserCode  IN VARCHAR2,  i_vcGroupCode IN VARCHAR2,
+ i_vcIPAddress IN VARCHAR2,  io_cuRESTULTSET IN OUT SYS_REFCURSOR
+)
+AS
+  vcQuery varchar2(5000);
+  vcBankCode VARCHAR2(4000) := i_vcBankCode;
+  vcBankName VARCHAR2(4000) := '%'||i_vcBankName||'%';
+
+BEGIN
+
+vcQuery := 'SELECT ROWNUM AS "app.common.serialNo", BANKCODE AS "app.common.bankCode", BANKNAME AS "app.common.bankName", '
+		||'        BANKTYPE AS "app.common.bankType", MDNAME AS "app.common.mdName", '
+        ||'        NOOFBRANCHES AS "app.common.noOfBranches", AUTHORISEDFOREXDEALER AS "app.common.authorisedForExDlr", '
+        ||' 	   UPDATETIMESTAMP AS "app.common.updateTimestamp", UPDATEDBY AS "app.common.updatedBy", '
+        ||'		   BSRCODE AS "app.common.bsrCode", PRINCIPALOFFICER_EMP_ID AS "app.common.princiOfficerEmpId", '
+        ||'        IDALLOCATEDBYFIU AS "app.common.idAllocatedByFIU", GIINCODE AS "app.common.giinCode" '
+	||'   FROM COMAML.TB_BANKMASTER A '
+	||'  WHERE 1 = 1 ';
+
+IF TRIM(UPPER(i_vcBankCode)) IS NOT NULL THEN
+vcQuery := vcQuery||' AND A.BANKCODE = '''||vcBankCode||''' ';
+END IF;
+IF TRIM(UPPER(i_vcBankName)) IS NOT NULL THEN
+vcQuery := vcQuery||' AND A.BANKNAME LIKE '''||vcBankName||''' ';
+END IF;
+IF TRIM(UPPER(i_vcBankType)) IS NOT NULL And UPPER(i_vcBankType) NOT IN('ALL') THEN
+vcQuery := vcQuery||' AND A.BANKTYPE = '''||i_vcBankType||''' ';
+END IF;
+IF TRIM(UPPER(i_vcGIINCode)) IS NOT NULL AND UPPER(i_vcGIINCode) NOT IN ('A') THEN
+vcQuery := vcQuery||' AND A.GIINCODE = '''||i_vcGIINCode||''' ';
+END IF;
+
+vcQuery := vcQuery || ' AND ROWNUM <= 500 ';
+
+OPEN io_cuRESTULTSET FOR vcQuery;
+
+DELETE FROM COMAML.C;
+COMMIT;
+INSERT INTO COMAML.C VALUES(vcQuery);
+COMMIT;
+
+END STP_SEARCHBANKMASTER;
+/

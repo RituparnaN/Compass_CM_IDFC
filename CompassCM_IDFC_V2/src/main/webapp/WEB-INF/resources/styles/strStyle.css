@@ -1,0 +1,23 @@
+@CHARSET "UTF-8";
+@IMPORT url("regulatoryMain.css");
+
+.header{
+	width : 100%;
+	padding: 5px 0;
+	position : relative;
+}
+.checkBoxDiv{
+	padding: 5px 0;
+	font-weight: normal;
+}
+.checkBoxDiv span{
+	margin-right : 1%;
+	margin-top : 2px;
+	display : inline-table;
+	padding : 5px 3px;
+	background: #F0F8FF;
+	border: 1px solid black;
+}
+
+
+

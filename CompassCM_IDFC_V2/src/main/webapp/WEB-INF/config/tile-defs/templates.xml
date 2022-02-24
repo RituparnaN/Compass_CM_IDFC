@@ -1,0 +1,15 @@
+<!DOCTYPE tiles-definitions PUBLIC 
+	"-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+	"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+    <definition name="defaultTemplate" template="/WEB-INF/pages/common/template/template.jsp">
+    	<put-attribute name="title" value=" | Welcome"/>
+    	<put-attribute name="static" value="/WEB-INF/pages/tags/staticFiles.jsp"/>
+    	<put-attribute name="otherStatic" value="/otherStatic"/>
+    	
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="sideBar" value="/defaultSidebar"/>
+    	<!--<put-attribute name="chatWindow" value="/WEB-INF/pages/common/template/chatWindow.jsp"/>-->
+    	<put-attribute name="content" value="/WEB-INF/pages/common/template/defaultContent.jsp"/>
+    </definition>
+</tiles-definitions>

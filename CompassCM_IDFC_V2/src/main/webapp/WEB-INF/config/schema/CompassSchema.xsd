@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:ns2="etl" xmlns:ns1="aml" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:import namespace="aml" schemaLocation="aml.xsd" />
+	<xs:import namespace="etl" schemaLocation="etl.xsd" />
+
+	<xs:element name="configurations" type="configurations"/>
+		
+	<xs:complexType name="configurations">
+		<xs:sequence>
+			<xs:element ref="configuration" maxOccurs="unbounded" minOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	
+	<xs:element name="configuration" type="configuration"/>	
+	
+	<xs:complexType name="configuration">
+		<xs:all>
+			<xs:element name="jndiDetails" type="jndiDetails" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="authentication" type="authentication" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="email" type="email" minOccurs="1" maxOccurs="1"/>
+			<xs:element ref="paths" minOccurs="1" maxOccurs="1"/>
+		</xs:all>
+		<xs:attribute name="entityName" type="xs:string" use="required" />
+	</xs:complexType>
+	
+	
+	<xs:complexType name="jndiDetails">
+		<xs:attribute name="jndiName" type="xs:string" use="required" />
+	</xs:complexType>
+	
+	
+	<xs:complexType name="authentication">
+		<xs:all>
+			<xs:element name="ldapProvider" type="ldapProvider" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ssoProvider" type="ssoProvider" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="webServiceProvider" type="webServiceProvider" minOccurs="0" maxOccurs="1"/>
+		</xs:all>
+		<xs:attribute name="provider" type="provider" use="required" />
+	</xs:complexType>
+	
+	<xs:simpleType name="provider">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="database" />
+			<xs:enumeration value="ldap" />
+			<xs:enumeration value="sso" />
+			<xs:enumeration value="webservice" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:complexType name="webServiceProvider">
+		<xs:sequence>
+			<xs:element name="URL" type="xs:string" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="ssoProvider">
+		<xs:sequence>
+			<xs:element name="ssoDetails" type="ssoDetails" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="ssoDetails">
+		<xs:sequence>
+			<xs:element name="ssoAppId" type="xs:string" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ssoAppPassword" type="xs:string" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ssoURL" type="xs:string" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+		
+	<xs:complexType name="ldapProvider">
+		<xs:sequence>
+			<xs:element name="ldapDetails" type="ldapDetails" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+		<xs:attribute name="providerType" type="LdapProviderType" use="required" />
+	</xs:complexType>
+	
+	<xs:complexType name="ldapDetails">
+		<xs:all>
+			<xs:element name="domain" type="domain" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="baseDN" type="baseDN" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ldapHostIP" type="ldapHostIP" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ldapHostPort" type="ldapHostPort" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="manager" type="manager" minOccurs="0" maxOccurs="1"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="domain">
+		<xs:sequence />
+		<xs:attribute name="value" type="xs:string" use="required" />
+	</xs:complexType>
+	<xs:complexType name="baseDN">
+		<xs:sequence />
+		<xs:attribute name="value" type="xs:string" use="required" />
+	</xs:complexType>
+	<xs:complexType name="ldapHostIP">
+		<xs:sequence />
+		<xs:attribute name="value" type="xs:string" use="required" />
+	</xs:complexType>
+	<xs:complexType name="ldapHostPort">
+		<xs:sequence />
+		<xs:attribute name="value" type="xs:int" use="required" />
+	</xs:complexType>
+	<xs:complexType name="manager">
+		<xs:sequence>
+			<xs:element name="ldapUsername" type="ldapUsername" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ldapPassword" type="ldapPassword" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ldapUsername">
+		<xs:sequence />
+		<xs:attribute name="value" type="xs:string" use="required" />
+	</xs:complexType>
+	<xs:complexType name="ldapPassword">
+		<xs:sequence />
+		<xs:attribute name="value" type="xs:string" use="required" />
+	</xs:complexType>
+	
+	
+	
+	<xs:simpleType name="LdapProviderType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="msad" />
+			<xs:enumeration value="other" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	
+	<xs:complexType name="email">
+		<xs:all>
+			<xs:element name="smtpHost" type="smtpHost" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="smtpPort" type="smtpPort" minOccurs="1" maxOccurs="1" />
+			<xs:element name="imapProtocol" type="imapProtocol" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="imapHost" type="imapHost" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="imapPort" type="imapPort" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="amlEmail" type="ns1:amlEmail" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="etlEmail" type="ns2:etlEmail" minOccurs="1" maxOccurs="1"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="smtpHost">
+		<xs:sequence />
+		<xs:attribute name="value" type="xs:string" use="required" />
+	</xs:complexType>
+	<xs:complexType name="smtpPort">
+		<xs:sequence />
+		<xs:attribute name="value" type="xs:int" use="required" />
+	</xs:complexType>
+	<xs:simpleType name="imapProtocol">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="imaps" />
+			<xs:enumeration value="imap" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="imapHost">
+		<xs:sequence />
+		<xs:attribute name="value" type="xs:string" use="required" />
+	</xs:complexType>
+	<xs:complexType name="imapPort">
+		<xs:sequence />
+		<xs:attribute name="value" type="xs:int" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="authId">
+		<xs:sequence />
+		<xs:attribute name="value" type="xs:string" use="required" />
+	</xs:complexType>
+	<xs:complexType name="emailId">
+		<xs:sequence />
+		<xs:attribute name="value" type="xs:string" use="required" />
+	</xs:complexType>
+	<xs:complexType name="emailPassword">
+		<xs:sequence />
+		<xs:attribute name="value" type="xs:string" use="required" />
+	</xs:complexType>
+	
+	<xs:element name="paths" type="paths" />
+	<xs:complexType name="paths">
+		<xs:sequence />
+		<xs:attribute name="indexingPath" type="xs:string" use="required" />
+		<xs:attribute name="emailPath" type="xs:string" use="required" />
+	</xs:complexType>
+</xs:schema>

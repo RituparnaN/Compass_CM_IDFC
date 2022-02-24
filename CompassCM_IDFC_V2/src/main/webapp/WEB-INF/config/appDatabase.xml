@@ -1,0 +1,78 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+						http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd
+						http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+	<jee:jndi-lookup id="jndi0" jndi-name="defaultJndi" lookup-on-startup="true"/>
+	<!--<jee:jndi-lookup id="jndi1" jndi-name="qde1Jndi" lookup-on-startup="true" /> -->
+	<jee:jndi-lookup id="jndi2" jndi-name="comamlCMJndi" lookup-on-startup="true" />
+	<jee:jndi-lookup id="otherDataSource" jndi-name="comamlCMJndi" lookup-on-startup="true" />
+	
+	<bean id="sessionFactoryBean0" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="jndi0"/>
+		<property name="packagesToScan" value="com.quantumdataengines.app.compass.model"/>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.format_sql">true</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!--
+	<bean id="sessionFactoryBean1" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="jndi1"/>
+		<property name="packagesToScan" value="com.quantumdataengines.app.compass.model"/>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.format_sql">true</prop>
+			</props>
+		</property>
+	</bean>
+	-->
+
+	<bean id="sessionFactoryBean2" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="jndi2"/>
+		<property name="packagesToScan" value="com.quantumdataengines.app.compass.model"/>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.generate_statistics">true</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.format_sql">true</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="dataSource" class="com.quantumdataengines.app.compass.util.DataSourceRouterUtil">
+		<property name="targetDataSources">
+	        <map key-type="java.lang.String">
+	        	<entry key="defaultJndi" value-ref="jndi0"/>
+	          <!--  <entry key="qde1Jndi" value-ref="jndi1"/>-->
+	            <entry key="comamlCMJndi" value-ref="jndi2"/>
+	        </map>
+	    </property>
+	</bean>
+		
+	<bean id="sessionFactoryRoutingUtil" class="com.quantumdataengines.app.compass.util.SessionFactoryRoutingUtil">
+		<property name="sessionFactories">
+			<map key-type="java.lang.String" value-type="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+				<entry key="defaultJndi" value-ref="sessionFactoryBean0"/>
+				<!--<entry key="qde1Jndi" value-ref="sessionFactoryBean1"/>-->
+				<entry key="comamlCMJndi" value-ref="sessionFactoryBean2"/>				
+			</map>
+		</property>
+	</bean>
+			
+	<tx:annotation-driven />
+	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+</beans>

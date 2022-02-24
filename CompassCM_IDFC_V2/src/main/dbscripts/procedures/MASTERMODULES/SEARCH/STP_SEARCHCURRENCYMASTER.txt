@@ -1,0 +1,40 @@
+CREATE OR REPLACE PROCEDURE STP_SEARCHCURRENCYMASTER(
+i_vcCurrencyCode IN VARCHAR2, i_vcCurrencyName IN VARCHAR2,
+i_vcCountryCode IN VARCHAR2,  i_vcRateDate IN VARCHAR2, 
+i_vcUserCode    IN VARCHAR2,  i_vcGroupCode IN VARCHAR2,
+i_vcIPAddress   IN VARCHAR2,  io_cuRESTULTSET IN OUT SYS_REFCURSOR
+)
+-- EXEC STP_SEARCHCURRENCYMASTER('','','','','','','',:KG);
+
+AS
+  vcQuery varchar2(5000);
+  vcCurrencyCode VARCHAR2(4000) := i_vcCurrencyCode;
+  vcCurrencyName VARCHAR2(4000) := '%'||i_vcCurrencyName||'%';
+
+BEGIN
+
+vcQuery :=' SELECT ROWNUM AS ROWPOSITION, CURRENCYCODE, CURRENCYNAME, COUNTRYCODE, RATE, '
+        ||'        TO_CHAR(RATEDATE,''DD-MON-YYYY'') RATEDATE '
+	||'   FROM COMAML.TB_CURRENCYMASTER A '
+	||'  WHERE 1 = 1 ';
+
+IF TRIM(UPPER(i_vcCurrencyCode)) IS NOT NULL THEN
+vcQuery := vcQuery||' AND A.CURRENCYCODE = '''||vcCurrencyCode||''' ';
+END IF;
+IF TRIM(UPPER(i_vcCurrencyName)) IS NOT NULL THEN
+vcQuery := vcQuery||' AND A.CURRENCYNAME LIKE '''||vcCurrencyName||''' ';
+END IF;
+IF TRIM(UPPER(i_vcCountryCode)) IS NOT NULL And UPPER(i_vcCountryCode) NOT IN('A') THEN
+vcQuery := vcQuery||' AND A.COUNTRYCODE = '''||i_vcCountryCode||''' ';
+END IF;
+IF TRIM(UPPER(i_vcRateDate)) IS NOT NULL AND UPPER(i_vcRateDate) NOT IN ('A') THEN
+vcQuery := vcQuery ||' AND A.RATEDATE >= TO_TIMESTAMP('''||i_vcRateDate||''',''MM/DD/YYYY'') '
+                   ||' AND A.RATEDATE <  TO_TIMESTAMP('''||i_vcRateDate||''',''MM/DD/YYYY'') + 1 ';
+END IF;
+
+vcQuery := vcQuery || ' AND ROWNUM <= 500 ';
+
+OPEN io_cuRESTULTSET FOR vcQuery;
+
+END STP_SEARCHCURRENCYMASTER;
+/

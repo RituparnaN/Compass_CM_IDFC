@@ -1,0 +1,35 @@
+CREATE OR REPLACE PROCEDURE STP_SEARCHFIUMAPPINGMASTER(
+i_vcLookupType   IN VARCHAR2, i_vcFIUFieldCode IN VARCHAR2,
+i_vcFIUFieldName IN VARCHAR2, i_vcUserCode    IN VARCHAR2,
+i_vcGroupCode IN VARCHAR2,	  i_vcIPAddress   IN VARCHAR2,
+io_cuRESULTSET   IN OUT SYS_REFCURSOR
+)
+-- EXEC STP_SEARCHFIUMAPPINGMASTER('','','','','','',:KG);
+
+AS
+  vcQuery VARCHAR2(5000);
+  vcLookupType   VARCHAR2(4000) := i_vcLookupType;
+  vcFIUFieldCode VARCHAR2(4000) := i_vcFIUFieldCode;
+  vcFIUFieldName VARCHAR2(4000) := i_vcFIUFieldName;
+
+BEGIN
+
+ vcQuery := 'SELECT ROWNUM AS ROWPOSITION, LOOKUPTYPE, FIUFIELDCODE, FIUFIELDNAME '
+	 || '  FROM COMAML.TB_FIULOOKUPTABLE A'
+	 || ' WHERE 1 = 1 ';
+IF TRIM(UPPER(i_vcLookupType)) IS NOT NULL THEN
+  vcQuery := vcQuery || ' AND A.LOOKUPTYPE = '''|| vcLookupType ||''' ';
+END IF;
+
+IF TRIM(UPPER(i_vcFIUFieldCode)) IS NOT NULL THEN
+  vcQuery := vcQuery || ' AND A.FIUFIELDCODE = '''|| vcFIUFieldCode ||''' ';
+END IF;
+
+IF TRIM(UPPER(i_vcFIUFieldName)) IS NOT NULL THEN
+  vcQuery := vcQuery || ' AND UPPER(A.FIUFIELDNAME) LIKE UPPER(''%'|| i_vcFIUFieldName ||'%'') ';
+END IF;
+
+OPEN io_cuRESULTSET FOR vcQuery;
+
+END STP_SEARCHFIUMAPPINGMASTER;
+/

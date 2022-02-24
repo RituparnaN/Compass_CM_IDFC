@@ -1,0 +1,60 @@
+CREATE OR REPLACE PROCEDURE STP_COMPOSEEMAIL (
+i_vcCaseNo	 	 		IN VARCHAR2,    			i_vcEmailNo     		IN VARCHAR2, 
+i_vcFolderType    	    IN VARCHAR2,				i_vcComposeType    		IN VARCHAR2,
+i_vcUserCode			IN VARCHAR2,				i_vcUserRole			IN VARCHAR2,
+i_vcEmailDetails	IN OUT SYS_REFCURSOR,			i_vcEmailAttachment IN OUT SYS_REFCURSOR
+--EXEC STP_COMPOSEEMAIL('285','98','INBOX','NEW','AMLUser','ROLE_AMLUSER',:rc1,:rc2);
+--EXEC STP_COMPOSEEMAIL('285','98','INBOX','REPLY','AMLUser','ROLE_AMLUSER',:rc1,:rc2);
+--EXEC STP_COMPOSEEMAIL('285','98','INBOX','REPLYALL','AMLUser','ROLE_AMLUSER',:rc1,:rc2);
+--EXEC STP_COMPOSEEMAIL('285','98','INBOX','FORWARD','AMLUser','ROLE_AMLUSER',:rc1,:rc2);
+)
+AS
+l_rc  		  SYS_REFCURSOR;
+l_rec 		  SYS_REFCURSOR;
+i_vcTable 	  VARCHAR2(100) := 'DUAL';
+i_vcSender    VARCHAR2(100) := 'NULL';
+i_vcRcpCC     VARCHAR2(100) := 'NULL';
+i_vcMsgCon    VARCHAR2(100) := 'NULL';
+i_vcMsgConCOl VARCHAR2(100) := 'NULL';
+i_vcSubject   VARCHAR2(100) := 'NULL';
+i_vcSQL 	  VARCHAR2(4000);
+BEGIN
+
+	IF(i_vcComposeType <> 'NEW') THEN
+		i_vcTable     := 'TB_EMAILEXCHANGEDETAILS';
+		i_vcSender    := 'TO_CHAR(A.SENDERID)';
+		i_vcRcpCC     := 'TO_CHAR(A.RECIPIENTSCC)';
+		i_vcMsgConCOl := 'A.MESSAGECONTENT';
+		i_vcSubject   := 'TO_CHAR(A.SUBJECT)';
+	ELSE
+		i_vcMsgCon  := '''Content''';
+	END IF;
+
+	i_vcSQL := 'SELECT CASE WHEN '''||i_vcComposeType||''' IN (''NEW'',''FORWARD'') THEN '' '' ELSE '||i_vcSender||' END RECIPIENTSTO, '||
+			   '	   CASE WHEN '''||i_vcComposeType||''' IN (''NEW'',''FORWARD'',''REPLY'') THEN '' '' ELSE '||i_vcRcpCC||' END RECIPIENTSCC, '||
+			   '	   CASE WHEN '''||i_vcComposeType||''' IN (''NEW'') THEN (SELECT PARAMETERVALUE FROM TB_SYSTEMPARAMETERS WHERE PARAMETERNAME = ''CASESEARCHSTRING'') ELSE '||i_vcSubject||' END SUBJECT, '||
+	 		   '	   CASE WHEN '''||i_vcComposeType||''' IN (''NEW'') THEN '||i_vcMsgCon||' ELSE '||i_vcMsgConCOl||' END MESSAGECONTENT '||
+			   '  FROM '||i_vcTable||' A '||
+			   ' WHERE 1 = 1 ';
+    
+    IF(i_vcComposeType <> 'NEW') THEN
+    	i_vcSQL := i_vcSQL || ' AND A.EMAILREFERENCENO = '''||i_vcCaseNo||''' ';
+    END IF;
+    
+    IF(i_vcComposeType <> 'NEW' AND i_vcEmailNo <> ' ') THEN
+    	i_vcSQL := i_vcSQL || ' AND MESSAGEINTERNALNO = '''||i_vcEmailNo||''' ';
+    END IF;
+    
+    IF(i_vcComposeType <> 'NEW') THEN
+    	i_vcSQL := i_vcSQL || ' AND FOLDERTYPE = '''||i_vcFolderType||''' ';
+    END IF;
+    
+    DELETE FROM COMAML.C;
+    INSERT INTO COMAML.C VALUES(i_vcSQL);	
+    COMMIT;
+    
+    OPEN i_vcEmailDetails FOR i_vcSQL;
+    OPEN i_vcEmailAttachment FOR SELECT 1 FROM DUAL;
+    
+END STP_COMPOSEEMAIL;
+/

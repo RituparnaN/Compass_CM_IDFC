@@ -1,0 +1,30 @@
+CREATE OR REPLACE PROCEDURE STP_SEARCHBRNUSERMAPPINGMASTER (
+i_vcBranchCode  IN VARCHAR2, i_vcMappingUserCode IN VARCHAR2,
+i_vcUserCode    IN VARCHAR2, i_vcGroupCode     IN VARCHAR2,
+i_vcIPAddress   IN VARCHAR2, io_cuRESULTSET  IN OUT SYS_REFCURSOR
+)
+-- EXEC STP_SEARCHBRNUSERMAPPINGMASTER('','','','','',:KG);
+
+AS
+  vcQuery VARCHAR2(5000);
+  vcBranchCode 		 VARCHAR2(4000) := i_vcBranchCode;
+  vcMappingUserCode  VARCHAR2(4000) := i_vcMappingUserCode;
+
+BEGIN
+
+ vcQuery := 'SELECT ROWNUM AS "app.common.serialNo", BRANCHCODE AS "app.common.branchCode", ZONECODE AS "app.common.zoneCode", '
+ 		||'			VIGILANCECODE AS "app.common.vigilanceCode", USERCODE AS "app.common.userCode", '
+         || '       TO_CHAR(UPDATETIMESTAMP, ''DD-MON-YYYY'') AS "app.common.updatedOn", UPDATEDBY AS "app.common.updatedBy" '
+	 || '  FROM COMAML.TB_BRANCHUSERMAPPING A'
+	 || ' WHERE 1 = 1 ';
+IF (TRIM(UPPER(i_vcBranchCode)) IS NOT NULL AND i_vcBranchCode NOT IN ('ALL')) THEN
+  vcQuery := vcQuery || ' AND LPAD(A.BRANCHCODE,4,''0'') = LPAD('''|| vcBranchCode ||''',4,''0'') ';
+END IF;
+
+IF (TRIM(UPPER(i_vcMappingUserCode)) IS NOT NULL AND i_vcBranchCode NOT IN ('ALL'))  THEN
+  vcQuery := vcQuery || ' AND A.USERCODE = '''|| vcMappingUserCode ||''' ';
+END IF;
+OPEN io_cuRESULTSET FOR vcQuery;
+
+END STP_SEARCHBRNUSERMAPPINGMASTER;
+/
