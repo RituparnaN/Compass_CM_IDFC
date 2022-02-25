@@ -45,7 +45,7 @@ public class MultiSheetExcelViewChart extends AbstractExcelView {
 	 
 	        
 	        Connection con = null;
-	 
+	        
 	        try {
 	 
 	            DriverManager.registerDriver(
@@ -64,11 +64,19 @@ public class MultiSheetExcelViewChart extends AbstractExcelView {
 	            System.err.println(ex);
 	        }
 	        
-	 		System.out.println(imageData);
-	 	
-	 		String base64Image = imageData.split(",")[1];
-	 		byte[] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64Image);
-	 	      
+	        String base64Image = null;
+	        byte[] imageBytes = null;
+	        
+	        try {
+	        	
+	        	System.out.println(imageData);
+	        	
+	        	base64Image = imageData.split(",")[1];
+	        	imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64Image);
+	        }
+	 	    catch(Exception e) {
+	 	    	System.out.println("no image data found for risk Assessment report generation");
+	 	    }
 	 	    
 		List<String> tabOrder = (List<String>) model.get("TABORDER");
 		String filename = (String) model.get("FILENAME");
@@ -140,48 +148,54 @@ public class MultiSheetExcelViewChart extends AbstractExcelView {
 			//String name="RESIDUAL RISK RATING";
 			//if(name.equals(sheetNameTest)) {
 			//base image
-			
-			if(sheet.getSheetName().equals("RESIDUAL RISK RATING"))
-	 		  {System.out.println("true");
-	 		 InputStream baseimage = new FileInputStream("C:\\APPFOLDER\\resources\\ExcelHeatMap\\HeatMap_BaseImage.png");
-	 		//InputStream baseimage = new FileInputStream("C:\\Users\\kumar_comh5ib\\Downloads\\blank2.png");
-	 		byte[] bytesBi = IOUtils.toByteArray(baseimage);
-	 		int pictureBi = workbook.addPicture(bytesBi, Workbook.PICTURE_TYPE_PNG);
-	 		//chart
-	 		int pictureIdx = workbook.addPicture(imageBytes, Workbook.PICTURE_TYPE_PNG);
-
-	 		
-	 		//int pictureIdx1 = workbook.addPicture(imageBytes, Workbook.PICTURE_TYPE_PNG);
-	 		 
-	 		CreationHelper helper = workbook.getCreationHelper();
-	 		Drawing drawing1 = sheet.createDrawingPatriarch();
-	 		ClientAnchor anchorBi = helper.createClientAnchor();
-	 		
-	 		ClientAnchor anchor1 = helper.createClientAnchor();
-	 		
-	 		//create an anchor with upper left cell _and_ bottom right cell
-	 		//base image 
-	 		   anchorBi.setCol1(0); //Column B
-			   anchorBi.setRow1(totalRows+3); //Row 3
-			   anchorBi.setCol2(6); //Column C
-			   anchorBi.setRow2(totalRows+13); //Row 4
-			//base image ended
-			   //CHART IMAGE
-			   anchor1.setCol1(1); //Column B
-			   anchor1.setRow1(totalRows+3); //Row 3
-			   anchor1.setCol2(6); //Column C
-			   anchor1.setRow2(totalRows+12); //Row 4
-			
-			   //CellStyle lockedCellStyle = wb.createCellStyle();
-			  // lockedCellStyle.setLocked(true);
-			   
-	 		 //Creates a picture
-			 anchorBi.setAnchorType(AnchorType.DONT_MOVE_AND_RESIZE);//set anchor type
-			 anchor1.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);
-	 		 Picture pict = drawing1.createPicture(anchorBi, pictureBi);
-	 		 Picture pict2 = drawing1.createPicture(anchor1, pictureIdx);
-	 		  }
-	 		
+			try {
+				
+				if(sheet.getSheetName().equals("RESIDUAL RISK RATING"))
+		 		  {System.out.println("true");
+		 		 InputStream baseimage = new FileInputStream("C:\\APPFOLDER\\resources\\ExcelHeatMap\\HeatMap_BaseImage.png");
+		 		//InputStream baseimage = new FileInputStream("C:\\Users\\kumar_comh5ib\\Downloads\\blank2.png");
+		 		byte[] bytesBi = IOUtils.toByteArray(baseimage);
+		 		int pictureBi = workbook.addPicture(bytesBi, Workbook.PICTURE_TYPE_PNG);
+		 		//chart
+		 		int pictureIdx = workbook.addPicture(imageBytes, Workbook.PICTURE_TYPE_PNG);
+		 		
+	
+		 		
+		 		//int pictureIdx1 = workbook.addPicture(imageBytes, Workbook.PICTURE_TYPE_PNG);
+		 		 
+		 		CreationHelper helper = workbook.getCreationHelper();
+		 		Drawing drawing1 = sheet.createDrawingPatriarch();
+		 		ClientAnchor anchorBi = helper.createClientAnchor();
+		 		
+		 		ClientAnchor anchor1 = helper.createClientAnchor();
+		 		
+		 		//create an anchor with upper left cell _and_ bottom right cell
+		 		//base image 
+		 		   anchorBi.setCol1(0); //Column B
+				   anchorBi.setRow1(totalRows+3); //Row 3
+				   anchorBi.setCol2(6); //Column C
+				   anchorBi.setRow2(totalRows+13); //Row 4
+				//base image ended
+				   //CHART IMAGE
+				   anchor1.setCol1(1); //Column B
+				   anchor1.setRow1(totalRows+3); //Row 3
+				   anchor1.setCol2(6); //Column C
+				   anchor1.setRow2(totalRows+12); //Row 4
+				
+				   //CellStyle lockedCellStyle = wb.createCellStyle();
+				  // lockedCellStyle.setLocked(true);
+				   
+		 		 //Creates a picture
+				 anchorBi.setAnchorType(AnchorType.DONT_MOVE_AND_RESIZE);//set anchor type
+				 anchor1.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);
+		 		 Picture pict = drawing1.createPicture(anchorBi, pictureBi);
+		 		 Picture pict2 = drawing1.createPicture(anchor1, pictureIdx);
+		 		  }
+			}
+		catch(Exception e) {
+			System.out.println("error while inserting graph in report");
+			e.printStackTrace();
+		}
 	 		
 		}
 	}

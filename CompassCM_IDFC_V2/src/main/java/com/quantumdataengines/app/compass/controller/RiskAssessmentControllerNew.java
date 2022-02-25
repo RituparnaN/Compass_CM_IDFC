@@ -237,5 +237,29 @@ private static final Logger log = LoggerFactory.getLogger(CommonController.class
 		return ResponseEntity.ok(riskAssessmentNewService.getMakerCheckerList(qId,compassRefNo).toString());
 	}
 	
+	@RequestMapping(value = "/generateCMReport", method=RequestMethod.GET) 
+	public ModelAndView generateCMReport(HttpServletRequest request, HttpServletResponse response, 
+			Authentication authentication) throws Exception {
+		String compassRefNo = request.getParameter("compassRefNo");
+		String userCode = authentication.getPrincipal().toString();
+		String userRole = request.getSession(false) != null ? (String) request.getSession(false).getAttribute("CURRENTROLE") : "";
+		String ipAddress = request.getRemoteAddr();
+		
+		Map<String, Object> mainMap = riskAssessmentNewService.generateCMReport(compassRefNo, userCode, userRole, ipAddress);
+		Iterator<String> itr = mainMap.keySet().iterator();
+		List<String> tabOrder = new Vector<String>();
+		while(itr.hasNext()){
+			tabOrder.add(itr.next());
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyyHHmmss");
+		Date date = new Date();
+		mainMap.put("TABORDER", tabOrder);
+		mainMap.put("FILENAME", compassRefNo+"_"+userCode+"_"+sdf.format(date));
+		ModelAndView modelAndView = new ModelAndView(new MultiSheetExcelViewChart(), mainMap);
+		//System.out.println("MAINMAP: "+mainMap);
+		commonService.auditLog(authentication.getPrincipal().toString(), request, "REPORTS", "DOWNLOAD", "File Downloaded");
+		return modelAndView;	
+	}
+	
 	
 }
