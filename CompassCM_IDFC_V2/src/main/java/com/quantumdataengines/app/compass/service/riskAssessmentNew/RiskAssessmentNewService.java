@@ -22,4 +22,5 @@ public interface RiskAssessmentNewService {
 	public JSONObject getMakerCheckerList(String qId,String compassRefId);
 	public Map<String, Object> saveRaiseToRFI(MakerCheckerDataModel makerCheckerData);
 	public Map<Object,Object> getRASummaryData(int assessmentPeriod);
+	public Object getGraphDataPoints(String cmRefNo);
 }

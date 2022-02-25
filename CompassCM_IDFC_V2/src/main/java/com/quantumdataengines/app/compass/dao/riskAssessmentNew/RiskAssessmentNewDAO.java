@@ -23,4 +23,5 @@ public interface RiskAssessmentNewDAO {
 	public JSONObject getMakerCheckerList(String qId,String compassRefNo);
 	public Map<String, Object> saveRaiseToRFI(MakerCheckerDataModel makerCheckerData);
 	public Map<Object, Object> getRASummaryData(int assessmentPeriod);
+	public Object getGraphDataPoints(String cmRefNo);
 }

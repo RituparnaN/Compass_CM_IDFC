@@ -64,6 +64,11 @@ public class RiskAssessmentNewServiceImpl implements RiskAssessmentNewService{
 	public Map<Object, Object> getRASummaryData(int assessmentPeriod) {
 		// TODO Auto-generated method stub
 		return riskAssessmentNewDAO.getRASummaryData(assessmentPeriod);
+	}
+	@Override
+	public Object getGraphDataPoints(String cmRefNo) {
+		// TODO Auto-generated method stub
+		return riskAssessmentNewDAO.getGraphDataPoints(cmRefNo);
 	} 
 
 }

@@ -102,18 +102,53 @@
 		//alert(compassRefNo);
 		 //$(elm).html("Generating...");
 		 var fromDate = "01/01/2000";
+		 
 		 if(confirm("Are you sure you want to Generate Excel Report?")){
-			 $.fileDownload("${pageContext.request.contextPath}/common/generateCMReport?compassRefNo="+compassRefNo, {
-			    httpMethod : "GET",
-				successCallback: function (url) {					 
-			    	$(elm).html("Downloaded");
-					btn.prop('disabled', false);
-			    },
-			    failCallback: function (html, url) {
-			    	btn.prop('disabled', false);
-			    	alert('Failed to download file'+url+"\n"+html);
-			    }
-			});
+			  $.ajax({
+					url : "${pageContext.request.contextPath}/common/mixedChart?CRMREFNO="+compassRefNo,
+					type : "POST",
+					cache : false,
+					success : function(res){
+						//console.log("mixedChart jsp tags call ",res);
+						document.getElementById("chartDiv").style.display = "block";
+						$("#chartDiv").html(res);
+						var data = $("#demo").val();
+						//console.log("data came in demo: ",res);
+						document.getElementById("chartDiv").style.display = "none";
+						
+						console.log()
+						$.ajax({
+								url : "${pageContext.request.contextPath}/common/saveChartImage",
+								type : "POST",
+								cache : false,
+								data: JSON.stringify({"data":data}),
+								success : function(res){
+									//alert(res);
+									$.fileDownload("${pageContext.request.contextPath}/common/generateCMReport?compassRefNo="+compassRefNo+"&imageId="+res , {
+									    httpMethod : "GET",
+									    successCallback: function (url) {	
+											alert("done")
+									    	$(elm).html("Downloaded");
+											btn.prop('disabled', false);
+									    },
+									    failCallback: function (html, url) {
+									    	btn.prop('disabled', false);
+									    	alert('Failed to download file'+url+"\n"+html);
+									    }
+										 });
+									
+									
+								},
+								error : function(){
+									alert("Error while opening form");
+								}
+							}); 
+					},
+					error : function(){
+						alert("Error while opening form");
+					}
+				});  
+			 
 		 }	 
 	}
 	
@@ -203,4 +238,6 @@
 			<div id="riskAssessmentNewSerachResult${UNQID}"></div>
 		</div>
 	</div>
+</div>
+<div id = "chartDiv" style="display: block">
 </div>

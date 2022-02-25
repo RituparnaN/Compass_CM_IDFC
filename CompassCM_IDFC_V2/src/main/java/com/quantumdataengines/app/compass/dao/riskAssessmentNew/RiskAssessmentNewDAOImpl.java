@@ -1652,5 +1652,58 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 		return raSummaryData;
 	}
 	
+	@Override
+	public Map<String, Object> getGraphDataPoints(String cmRefNo){
+		Map<String, Object> graphDataPoints = new LinkedHashMap<String,Object>();
+		List<String> dataPointLabels = new LinkedList<String>();
+		dataPointLabels.add("Customer");
+		dataPointLabels.add("Geography");
+		dataPointLabels.add("ProductsAndServices");
+		dataPointLabels.add("DeliveryChannels");
+		dataPointLabels.add("Transactions");
+		dataPointLabels.add("ControlParameters");
+		dataPointLabels.add("ResidualRiskRating");
+		dataPointLabels.add("TotalInherentFinalRisk");
+		
+		Connection connection = connectionUtil.getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try{
+			String query = "SELECT CUSTOMERFINALRISK, GEOGFINALRISK, PRODUCTSFINALRISK, "
+						+ "		   DELIVERYFINALRISK, TRANSACTIONSFINALRISK, CONTROLFINALRISK,"
+						+ "        RESIDUALFINALRISK, TOTINHFINALRISK"
+						+ "   FROM COMAML_CM.TB_CMGENRLFINALRISKDETAILS"
+						+ "  WHERE CREFNUM = ?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, cmRefNo);
+			resultSet = preparedStatement.executeQuery();
+			Map<String,String> dataPoints = new LinkedHashMap<String, String>();
+			while(resultSet.next()) {
+				dataPoints.put("Customer",resultSet.getString("CUSTOMERFINALRISK"));
+				dataPoints.put("Geography",resultSet.getString("GEOGFINALRISK"));
+				dataPoints.put("ProductsAndServices",resultSet.getString("PRODUCTSFINALRISK"));
+				dataPoints.put("DeliveryChannels",resultSet.getString("DELIVERYFINALRISK"));
+				dataPoints.put("Transactions",resultSet.getString("TRANSACTIONSFINALRISK"));
+				dataPoints.put("ControlParameters",resultSet.getString("CONTROLFINALRISK"));
+				dataPoints.put("ResidualRiskRating",resultSet.getString("RESIDUALFINALRISK"));
+				try {
+					//to handle null values from db
+					dataPoints.put("TotalInherentFinalRisk",resultSet.getString("TOTINHFINALRISK").split("- ")[1]);
+				}catch(Exception e) {
+					dataPoints.put("TotalInherentFinalRisk","0");
+				}
+				
+			}
+			graphDataPoints.put("labels",dataPointLabels);
+			graphDataPoints.put("dataPoints", dataPoints);
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			connectionUtil.closeResources(connection, preparedStatement, resultSet, null);
+		}
+		return graphDataPoints;	
+	}
+	
 	
 }
