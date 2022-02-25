@@ -1,0 +1,54 @@
+ CREATE OR REPLACE PROCEDURE STP_SEARCHREPORTWIZARD (
+i_vcFromDate   IN VARCHAR2, i_vcToDate     IN VARCHAR2,
+i_vcReportCode IN VARCHAR2, i_vcReportName IN VARCHAR2,
+i_vcIsEnabled  IN VARCHAR2, i_vcReportType  IN VARCHAR2,
+i_vcUserCode   IN VARCHAR2, i_vcGroupCode  IN VARCHAR2,
+i_vcIPAddress  IN VARCHAR2,
+io_ResultSet   IN OUT SYS_REFCURSOR
+)
+-- EXEC STP_SEARCHREPORTWIZARD('01/01/2011','01/01/2016','','','ALL','ALL','AMLUser','ROLE_AMLUSER','192.0.0.1',:KG);
+AS
+  vcSql Varchar2(32000);
+BEGIN
+
+vcSql := ' SELECT A.REPORTID REPORTWIDGETSID, A.REPORTCODE, A.REPORTNAME, '||
+         '        CASE WHEN UPPER(A.ISENABLED) = ''TURE'' THEN ''YES'' ELSE ''NO'' END AS ISENABLED, '||
+         '        A.UPDATEDBY, FUN_DATETOCHAR(A.UPDATETIMESTAMP) UPDATEDON '||
+         '   FROM COMAML.TB_REPORTWIDGETDETAILS_NEW A '||
+         '  WHERE 1 = 1 ';
+
+IF(i_vcFromDate IS NOT NULL) THEN
+  vcSql := vcSql || ' AND A.UPDATETIMESTAMP >= FUN_CHARTODATE('''||i_vcFromDate||''') ';
+END IF;
+
+IF(i_vcToDate IS NOT NULL) THEN
+  vcSql := vcSql || ' AND A.UPDATETIMESTAMP <  FUN_CHARTODATE('''||i_vcToDate||''') + 1 ';
+END IF;
+
+IF(i_vcReportCode IS NOT NULL) THEN
+  vcSql := vcSql || ' AND UPPER(A.REPORTCODE) LIKE ''%'||UPPER(i_vcReportCode)||'%'' ';
+END IF;
+
+IF(i_vcReportName IS NOT NULL) THEN
+  vcSql := vcSql || ' AND UPPER(A.REPORTNAME) LIKE ''%'||UPPER(i_vcReportName)||'%'' ';
+END IF;
+
+IF(i_vcIsEnabled IS NOT NULL AND i_vcIsEnabled IN ('YES','Y')) THEN
+  vcSql := vcSql || ' AND UPPER(A.ISENABLED) = ''TRUE'' ';
+END IF;
+
+IF(i_vcIsEnabled IS NOT NULL AND i_vcIsEnabled IN ('NO','N')) THEN
+  vcSql := vcSql || ' AND UPPER(A.ISENABLED) = ''FALSE'' ';
+END IF;
+
+vcSql := vcSql || ' ORDER BY A.UPDATETIMESTAMP DESC, A.REPORTID ';
+
+DELETE FROM COMAML.C;
+INSERT INTO COMAML.C VALUES(vcSql);
+commit;
+
+OPEN io_ResultSet FOR vcSql;
+
+END STP_SEARCHREPORTWIZARD;
+
+/

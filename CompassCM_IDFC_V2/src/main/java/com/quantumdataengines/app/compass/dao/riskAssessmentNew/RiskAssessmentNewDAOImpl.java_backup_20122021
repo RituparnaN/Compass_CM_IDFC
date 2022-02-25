@@ -1,0 +1,1539 @@
+package com.quantumdataengines.app.compass.dao.riskAssessmentNew;
+
+import java.lang.reflect.Array;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.text.SimpleDateFormat;
+import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.Random;
+import java.util.Set;
+import java.util.Vector;
+
+import oracle.jdbc.OracleTypes;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Repository;
+
+import com.quantumdataengines.app.compass.model.riskAssessment.MakerCheckerDataModel;
+import com.quantumdataengines.app.compass.model.riskAssessmentNew.FormConfigurationModel;
+import com.quantumdataengines.app.compass.util.CommonUtil;
+import com.quantumdataengines.app.compass.util.ConnectionUtil;
+
+@Repository
+public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
+	
+	@Autowired
+	private ConnectionUtil connectionUtil;
+	
+	@Value("${compass.aml.config.schemaName}")
+	private String schemaName;
+	
+	@Override
+	public Map<String,Object> getQuestionsFormDetails(String assessmentUnit, String cmRefNo){
+		
+		//creating categories list
+		ArrayList<String> categoryList = new ArrayList<String>();
+		categoryList.add("customer");
+		categoryList.add("geography");
+		categoryList.add("products and services");
+		categoryList.add("transactions");
+		categoryList.add("delivery channels");
+		
+		
+		
+		// adding subcategories 
+		ArrayList<String> customerSubCategories = new ArrayList<String>();
+		customerSubCategories.add("Enitity type");
+		customerSubCategories.add("Industry / profession");
+		customerSubCategories.add("Customer Risk Rating");
+		customerSubCategories.add("Politically Exposed Persons (PEPs)");
+		customerSubCategories.add("Others");
+		
+		ArrayList<String> geoSubCategories = new ArrayList<String>();
+		geoSubCategories.add("Nationalities");
+		geoSubCategories.add("Residence / Country of Incorporation / Operation");
+		
+		ArrayList<String> pAndSSubCategories = new ArrayList<String>();
+		pAndSSubCategories.add("Retail Assets Products");
+		
+		ArrayList<String> tranSubCategories = new ArrayList<String>();
+		tranSubCategories.add("Transactions");
+		
+		ArrayList<String> delChannelsSubCategories = new ArrayList<String>();
+		delChannelsSubCategories.add("Delivery Channel");
+		
+		// assigning sub categories to categories
+		Map<String,Object> categoresAndSubCategories = new LinkedHashMap<String, Object>();
+		categoresAndSubCategories.put("customer", customerSubCategories);
+		categoresAndSubCategories.put("geography", geoSubCategories);
+		categoresAndSubCategories.put("products and services", pAndSSubCategories);
+		categoresAndSubCategories.put("transactions", tranSubCategories);
+		categoresAndSubCategories.put("delivery channels", delChannelsSubCategories);
+		
+		JSONObject controlReviewCategoryWeights = new JSONObject();
+		try {
+			controlReviewCategoryWeights.put("Governance & Management Oversight",10);
+			controlReviewCategoryWeights.put("Customer Due Diligence & Risk Management",25);
+			controlReviewCategoryWeights.put("Transactions Monitoring",10);
+			controlReviewCategoryWeights.put("Internal Quality Assurance and Compliance Testing",10);
+			controlReviewCategoryWeights.put("Name/Sanctions Screening",10);
+			controlReviewCategoryWeights.put("Training",15);
+			controlReviewCategoryWeights.put("Foreign Correspondent Banking Relationships",5);
+			controlReviewCategoryWeights.put("Internal Audit",10);
+			controlReviewCategoryWeights.put("Reporting Requirements",5);
+		} catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		JSONObject categoryWeights = new JSONObject();
+		try {
+			categoryWeights.put("customer", 30);
+			categoryWeights.put("geography", 25);
+			categoryWeights.put("products and services", 25);
+			categoryWeights.put("transactions", 10);
+			categoryWeights.put("delivery channels", 10);
+		} catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
+		Map<String,Object> controlReview = new LinkedHashMap<String, Object>();
+		ArrayList<String> crSubCategories = new ArrayList<String>();
+		crSubCategories.add("Governance & Management Oversight");
+		crSubCategories.add("Customer Due Diligence & Risk Management");
+		crSubCategories.add("Transactions Monitoring");
+		crSubCategories.add("Internal Quality Assurance and Compliance Testing");
+		crSubCategories.add("Name/Sanctions Screening");
+		crSubCategories.add("Training");
+		crSubCategories.add("Foreign Correspondent Banking Relationships");
+		crSubCategories.add("Internal Audit");
+		crSubCategories.add("Reporting Requirements");
+		
+		controlReview.put("subCategories",crSubCategories);
+		
+		Map<String,Object> crSubandSubSubMap = new LinkedHashMap<String, Object>();
+			ArrayList<String> cr0SubSubCateg = new ArrayList<String>();
+			cr0SubSubCateg.add("Policy");
+			cr0SubSubCateg.add("Oversight & Team Structure");
+			cr0SubSubCateg.add("Third Party Service Provider");
+			cr0SubSubCateg.add("Management Information");
+		
+			crSubandSubSubMap.put(crSubCategories.get(0), cr0SubSubCateg);
+			
+			ArrayList<String> cr1SubSubCateg = new ArrayList<String>();
+			cr1SubSubCateg.add("CDD Procedures");
+			cr1SubSubCateg.add("Customer Risk Rating (CRR)");
+			cr1SubSubCateg.add("Periodic Updation of KYC");
+			
+			crSubandSubSubMap.put(crSubCategories.get(1), cr1SubSubCateg);
+			
+			ArrayList<String> cr2SubSubCateg = new ArrayList<String>();
+			cr2SubSubCateg.add("Transaction Monitoring Programme");
+			cr2SubSubCateg.add("Transaction Monitoring Alert Investigation & Suspicious Transaction Reporting (TMAI & STR)");
+			
+			crSubandSubSubMap.put(crSubCategories.get(2), cr2SubSubCateg);
+			
+			ArrayList<String> cr3SubSubCateg = new ArrayList<String>();
+			cr3SubSubCateg.add("AML Compliance Testing");
+			cr3SubSubCateg.add("Independent Testing of AML Complaince Program");
+			cr3SubSubCateg.add("Internal Testing and Programme Monitoring Issues Management");
+			
+			crSubandSubSubMap.put(crSubCategories.get(3), cr3SubSubCateg);
+			
+			ArrayList<String> cr4SubSubCateg = new ArrayList<String>();
+			cr4SubSubCateg.add("Customer Screening");
+			cr4SubSubCateg.add("Customer Screening - Technology");
+			cr4SubSubCateg.add("Payment/Transaction Screening");
+			cr4SubSubCateg.add("Payment/Transaction Screening - Technology");
+			cr4SubSubCateg.add("List Management");
+			cr4SubSubCateg.add("Sanctions alert Investigation");
+			cr4SubSubCateg.add("Blocked / Rejected Transactions");
+			
+			crSubandSubSubMap.put(crSubCategories.get(4), cr4SubSubCateg);
+			
+			ArrayList<String> cr5SubSubCateg = new ArrayList<String>();
+			cr5SubSubCateg.add("Training Program");
+			
+			crSubandSubSubMap.put(crSubCategories.get(5), cr5SubSubCateg);
+			
+			ArrayList<String> cr6SubSubCateg = new ArrayList<String>();
+			cr6SubSubCateg.add("Foreign Correspondent Banking (FCB) Relationships (Vostro accounts held for other banks)");
+			
+			crSubandSubSubMap.put(crSubCategories.get(6), cr6SubSubCateg);
+			
+			ArrayList<String> cr7SubSubCateg = new ArrayList<String>();
+			cr7SubSubCateg.add("Internal Audit Findings");
+			
+			crSubandSubSubMap.put(crSubCategories.get(7), cr7SubSubCateg);
+			
+			ArrayList<String> cr8SubSubCateg = new ArrayList<String>();
+			cr8SubSubCateg.add("Reporting");
+			
+			crSubandSubSubMap.put(crSubCategories.get(8), cr8SubSubCateg);
+		
+		controlReview.put("subAndSubSubCateg", crSubandSubSubMap);
+		
+//		System.out.println(controlReview.toString());
+		Connection connection = connectionUtil.getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String query =  "";
+
+		Map<String,Object> questionsFormDetails = new LinkedHashMap<String, Object>();
+		Map<String,Object> categoryWiseQuestions = new LinkedHashMap<String, Object>();
+		JSONObject categoryWiseQuestionsJson = new JSONObject();
+		JSONObject questionResponsesData = new JSONObject();
+		Map<String,Object> questionResponsesDataMap = new LinkedHashMap<String, Object>();
+		Map<String,Object> categSubcategInherentRiskRatings = new LinkedHashMap<String, Object>();
+		JSONObject categSubcategInherentRiskRatingsJson = new JSONObject();
+		Map<String,Object> categoryRiskRatings = new LinkedHashMap<String, Object>();
+		JSONObject categoryRiskRatingsJson = new JSONObject();
+		try{
+			
+			for(String category: categoryList) {
+//				System.out.println("category:"+category);
+				
+				query = "SELECT SYSGENRISKRATING, PROVRISKRATING, FINALRISKRATING, REASONFORDEVIATION "
+						+ "  FROM COMAML_CM.TB_RARISKRATINGS "
+						+ " WHERE ASSESSMENTUNIT = ? "
+						+ "   AND CATEGORY = ? "
+						+ "   AND SUBCATEGORY = ?"
+						+ "   AND CMREFNO = ?";
+				preparedStatement = connection.prepareStatement(query);
+				preparedStatement.setString(1, assessmentUnit);
+				preparedStatement.setString(2, category);
+				preparedStatement.setString(3, category);
+				preparedStatement.setString(4, cmRefNo);
+				resultSet = preparedStatement.executeQuery();
+				if(resultSet.next()){
+					Map<String,Object> categRiskRatings = new LinkedHashMap<String, Object>();
+					JSONObject categRiskRatingsJson = new JSONObject();
+					categRiskRatings.put("SYSGENRISKRATING", resultSet.getString("SYSGENRISKRATING"));
+					categRiskRatings.put("PROVRISKRATING", resultSet.getString("PROVRISKRATING"));
+					categRiskRatings.put("FINALRISKRATING", resultSet.getString("FINALRISKRATING"));
+					categRiskRatings.put("REASONFORDEVIATION", resultSet.getString("REASONFORDEVIATION"));
+					categoryRiskRatings.put(category, categRiskRatings);
+					
+					categRiskRatingsJson.put("SYSGENRISKRATING", resultSet.getString("SYSGENRISKRATING"));
+					categRiskRatingsJson.put("PROVRISKRATING", resultSet.getString("PROVRISKRATING"));
+					categRiskRatingsJson.put("FINALRISKRATING", resultSet.getString("FINALRISKRATING"));
+					categRiskRatingsJson.put("REASONFORDEVIATION", resultSet.getString("REASONFORDEVIATION"));
+					categoryRiskRatingsJson.put(category, categRiskRatingsJson);
+				}
+				else {
+					Map<String,Object> categRiskRatings = new LinkedHashMap<String, Object>();
+					JSONObject categRiskRatingsJson = new JSONObject();
+					categRiskRatings.put("SYSGENRISKRATING", "0.0");
+					categRiskRatings.put("PROVRISKRATING", "0.0");
+					categRiskRatings.put("FINALRISKRATING", "0.0");
+					categRiskRatings.put("REASONFORDEVIATION", "");
+					categoryRiskRatings.put(category, categRiskRatings);
+					
+					categRiskRatingsJson.put("SYSGENRISKRATING", "0.0");
+					categRiskRatingsJson.put("PROVRISKRATING", "0.0");
+					categRiskRatingsJson.put("FINALRISKRATING", "0.0");
+					categRiskRatingsJson.put("REASONFORDEVIATION", "");
+					categoryRiskRatingsJson.put(category, categRiskRatingsJson);
+				}
+				
+				Map<String,Object> subCategoryRiskrating = new LinkedHashMap<String, Object>();
+				JSONObject subCategoryRiskratingJson = new JSONObject();
+				Map<String,Object> subCategoryWiseQuestions = new LinkedHashMap<String, Object>();
+				JSONObject subCategoryWiseQuestionsJson = new JSONObject();
+				for( String subCategory:(ArrayList<String>) categoresAndSubCategories.get(category)) {
+//					System.out.println("subCategory:"+subCategory);
+					
+					query = "SELECT INHERENTRISKRATING "
+							+ "  FROM COMAML_CM.TB_RARISKRATINGS "
+							+ " WHERE ASSESSMENTUNIT = ? "
+							+ "   AND CATEGORY = ? "
+							+ "   AND SUBCATEGORY = ?"
+							+ "   AND CMREFNO = ?";
+					preparedStatement = connection.prepareStatement(query);
+					preparedStatement.setString(1, assessmentUnit);
+					preparedStatement.setString(2, category);
+					preparedStatement.setString(3, subCategory);
+					preparedStatement.setString(4, cmRefNo);
+					resultSet = preparedStatement.executeQuery();
+					if(resultSet.next()){
+						subCategoryRiskrating.put(subCategory, resultSet.getString("INHERENTRISKRATING"));
+						subCategoryRiskratingJson.put(subCategory, resultSet.getString("INHERENTRISKRATING"));
+					}
+					else {
+						subCategoryRiskrating.put(subCategory, "0.0");
+						subCategoryRiskratingJson.put(subCategory, "0.0");
+					}
+					ArrayList<Object> questionsList = new ArrayList<Object>();
+					JSONArray questionsListJson = new JSONArray();
+					
+					query = "SELECT QUESTIONID, QUESTION, INPUTTYPE, INPUTOPTIONSLIST, "
+							+ "		ISSUPERPARENT, HASPARENT, PARENTQSIDS, HASRISKIMPACT, INPUTOPTIONSLISTFORNUMERIC "
+							+ "  FROM COMAML_CM.TB_RISKASSESSQUESTIONSCONFIG "
+							+ " WHERE ASSESSMENTUNIT = ? "
+							+ "   AND CATEGORY = ? "
+							+ "   AND SUBCATEGORY = ?"
+							+ "   AND QUESTIONID NOT LIKE '%.%' ORDER BY QUESTIONID ASC";
+					preparedStatement = connection.prepareStatement(query);
+					preparedStatement.setString(1, assessmentUnit);
+					preparedStatement.setString(2, category);
+					preparedStatement.setString(3, subCategory);
+					resultSet = preparedStatement.executeQuery();
+					while(resultSet.next()){
+						Map<String,Object> questionDetails = new LinkedHashMap<String, Object>();
+						questionDetails.put("QUESTIONID", resultSet.getString("QUESTIONID"));
+						questionDetails.put("QUESTION", resultSet.getString("QUESTION"));
+						questionDetails.put("INPUTTYPE", resultSet.getString("INPUTTYPE"));
+						questionDetails.put("INPUTOPTIONSLIST", resultSet.getString("INPUTOPTIONSLIST"));
+						questionDetails.put("ISSUPERPARENT", resultSet.getString("ISSUPERPARENT"));
+						questionDetails.put("HASPARENT", resultSet.getString("HASPARENT"));
+						questionDetails.put("PARENTQSIDS", resultSet.getString("PARENTQSIDS"));
+						questionDetails.put("HASRISKIMPACT", resultSet.getString("HASRISKIMPACT"));
+						questionDetails.put("INPUTOPTIONSLISTFORNUMERIC", resultSet.getString("INPUTOPTIONSLISTFORNUMERIC"));
+						questionDetails.put("DISABLED", "Y");
+						
+						
+						
+						JSONObject questionDetailsJson = new JSONObject();
+						questionDetailsJson.put("QUESTIONID", resultSet.getString("QUESTIONID"));
+						questionDetailsJson.put("QUESTION", resultSet.getString("QUESTION"));
+						questionDetailsJson.put("INPUTTYPE", resultSet.getString("INPUTTYPE"));
+						questionDetailsJson.put("INPUTOPTIONSLIST", resultSet.getString("INPUTOPTIONSLIST"));
+						questionDetailsJson.put("ISSUPERPARENT", resultSet.getString("ISSUPERPARENT"));
+						questionDetailsJson.put("HASPARENT", resultSet.getString("HASPARENT"));
+						questionDetailsJson.put("PARENTQSIDS", resultSet.getString("PARENTQSIDS"));
+						questionDetailsJson.put("HASRISKIMPACT", resultSet.getString("HASRISKIMPACT"));
+						questionDetailsJson.put("INPUTOPTIONSLISTFORNUMERIC", resultSet.getString("INPUTOPTIONSLISTFORNUMERIC"));
+						questionDetailsJson.put("DISABLED", "Y");
+						
+						Map<String,String> qResponses = new LinkedHashMap<String, String>();
+						JSONObject qResponsesJson = new JSONObject();
+						
+						if(cmRefNo == "") {
+							qResponses.put("QUESTIONID", resultSet.getString("QUESTIONID"));
+							qResponses.put("QINPUT", "");
+							qResponses.put("QRESULT", "0");
+							qResponses.put("QIMPACTCRITERIA", "0");
+							qResponses.put("QLIKELYHOOD", "0");
+							qResponses.put("QINHERENTRISK", "0");
+							
+							questionDetails.put("QRESPONSES", qResponses);
+							questionResponsesDataMap.put(resultSet.getString("QUESTIONID"), qResponses);
+							
+							qResponsesJson.put("QUESTIONID", resultSet.getString("QUESTIONID"));
+							qResponsesJson.put("QINPUT", "");
+							qResponsesJson.put("QRESULT", "0");
+							qResponsesJson.put("QIMPACTCRITERIA", "0");
+							qResponsesJson.put("QLIKELYHOOD", "0");
+							qResponsesJson.put("QINHERENTRISK", "0");
+							
+							questionDetailsJson.put("QRESPONSES", qResponsesJson);
+							questionResponsesData.put(resultSet.getString("QUESTIONID"), qResponsesJson);
+						}
+						else {
+							query = "  SELECT QINPUT,QRESULT,QIMPACTCRITERIA,QLIKELYHOOD,QINHERENTRISK "
+									+ "  FROM COMAML_CM.TB_RAQUESTIONRESPONSES"
+									+ " WHERE ASSESSMENTUNIT = ?"
+									+ "   AND CMREFNO = ?"
+									+ "   AND QUESTIONID = ?";
+							preparedStatement = connection.prepareStatement(query);
+							preparedStatement.setString(1, assessmentUnit);
+							preparedStatement.setString(2, cmRefNo);
+							preparedStatement.setString(3, resultSet.getString("QUESTIONID"));
+							ResultSet responseResultSet = preparedStatement.executeQuery();
+							if(responseResultSet.next()) {
+								qResponses.put("QUESTIONID", resultSet.getString("QUESTIONID"));
+								qResponses.put("QINPUT", responseResultSet.getString("QINPUT"));
+								qResponses.put("QRESULT", responseResultSet.getString("QRESULT"));
+								qResponses.put("QIMPACTCRITERIA", responseResultSet.getString("QIMPACTCRITERIA"));
+								qResponses.put("QLIKELYHOOD", responseResultSet.getString("QLIKELYHOOD"));
+								qResponses.put("QINHERENTRISK", responseResultSet.getString("QINHERENTRISK"));
+								
+								questionDetails.put("QRESPONSES", qResponses);
+								questionResponsesDataMap.put(resultSet.getString("QUESTIONID"), qResponses);
+								
+								qResponsesJson.put("QUESTIONID", resultSet.getString("QUESTIONID"));
+								qResponsesJson.put("QINPUT", responseResultSet.getString("QINPUT"));
+								qResponsesJson.put("QRESULT", responseResultSet.getString("QRESULT"));
+								qResponsesJson.put("QIMPACTCRITERIA", responseResultSet.getString("QIMPACTCRITERIA"));
+								qResponsesJson.put("QLIKELYHOOD", responseResultSet.getString("QLIKELYHOOD"));
+								qResponsesJson.put("QINHERENTRISK", responseResultSet.getString("QINHERENTRISK"));
+								
+								questionDetailsJson.put("QRESPONSES", qResponsesJson);
+								questionResponsesData.put(resultSet.getString("QUESTIONID"), qResponsesJson);
+							}
+							else {
+								qResponses.put("QUESTIONID", resultSet.getString("QUESTIONID"));
+								qResponses.put("QINPUT", "");
+								qResponses.put("QRESULT", "0");
+								qResponses.put("QIMPACTCRITERIA", "0");
+								qResponses.put("QLIKELYHOOD", "0");
+								qResponses.put("QINHERENTRISK", "0");
+								
+								questionDetails.put("QRESPONSES", qResponses);
+								questionResponsesDataMap.put(resultSet.getString("QUESTIONID"), qResponses);
+								
+								qResponsesJson.put("QUESTIONID", resultSet.getString("QUESTIONID"));
+								qResponsesJson.put("QINPUT", "");
+								qResponsesJson.put("QRESULT", "0");
+								qResponsesJson.put("QIMPACTCRITERIA", "0");
+								qResponsesJson.put("QLIKELYHOOD", "0");
+								qResponsesJson.put("QINHERENTRISK", "0");
+								
+								questionDetailsJson.put("QRESPONSES", qResponsesJson);
+								questionResponsesData.put(resultSet.getString("QUESTIONID"), qResponsesJson);
+							}
+						}
+						ArrayList<Object> subQuestionsArrayList = new ArrayList<Object>();
+						JSONArray subQuestionArrayJson = new JSONArray();
+						query = "SELECT QUESTIONID, QUESTION, INPUTTYPE, INPUTOPTIONSLIST, "
+								+ "		ISSUPERPARENT, HASPARENT, PARENTQSIDS, HASRISKIMPACT,INPUTOPTIONSLISTFORNUMERIC "
+								+ "  FROM COMAML_CM.TB_RISKASSESSQUESTIONSCONFIG "
+								+ " WHERE ASSESSMENTUNIT = ? "
+								+ "   AND CATEGORY = ? "
+								+ "   AND SUBCATEGORY = ? "
+								+ "   AND QUESTIONID LIKE '%"+resultSet.getString("QUESTIONID")+"."+"%' ORDER BY QUESTIONID ASC";
+						preparedStatement = connection.prepareStatement(query);
+						preparedStatement.setString(1, assessmentUnit);
+						preparedStatement.setString(2, category);
+						preparedStatement.setString(3, subCategory);
+						ResultSet resultSetSub = preparedStatement.executeQuery();
+						while(resultSetSub.next()) {
+							JSONObject subQuestionObject = new JSONObject();
+							subQuestionObject.put("QUESTIONID", resultSetSub.getString("QUESTIONID"));
+							subQuestionObject.put("QUESTION", resultSetSub.getString("QUESTION"));
+							subQuestionObject.put("INPUTTYPE", resultSetSub.getString("INPUTTYPE"));
+							subQuestionObject.put("INPUTOPTIONSLIST", resultSetSub.getString("INPUTOPTIONSLIST"));
+							subQuestionObject.put("ISSUPERPARENT", resultSetSub.getString("ISSUPERPARENT"));
+							subQuestionObject.put("HASPARENT", resultSetSub.getString("HASPARENT"));
+							subQuestionObject.put("PARENTQSIDS", resultSetSub.getString("PARENTQSIDS"));
+							subQuestionObject.put("HASRISKIMPACT", resultSetSub.getString("HASRISKIMPACT"));
+							subQuestionObject.put("INPUTOPTIONSLISTFORNUMERIC", resultSetSub.getString("INPUTOPTIONSLISTFORNUMERIC"));
+							subQuestionObject.put("DISABLED", "Y");
+							
+							Map<String,Object> subQuestionObjectMap = new LinkedHashMap<String, Object>();
+							subQuestionObjectMap.put("QUESTIONID", resultSetSub.getString("QUESTIONID"));
+							subQuestionObjectMap.put("QUESTION", resultSetSub.getString("QUESTION"));
+							subQuestionObjectMap.put("INPUTTYPE", resultSetSub.getString("INPUTTYPE"));
+							subQuestionObjectMap.put("INPUTOPTIONSLIST", resultSetSub.getString("INPUTOPTIONSLIST"));
+							subQuestionObjectMap.put("ISSUPERPARENT", resultSetSub.getString("ISSUPERPARENT"));
+							subQuestionObjectMap.put("HASPARENT", resultSetSub.getString("HASPARENT"));
+							subQuestionObjectMap.put("PARENTQSIDS", resultSetSub.getString("PARENTQSIDS"));
+							subQuestionObjectMap.put("HASRISKIMPACT", resultSetSub.getString("HASRISKIMPACT"));
+							subQuestionObjectMap.put("INPUTOPTIONSLISTFORNUMERIC", resultSetSub.getString("INPUTOPTIONSLISTFORNUMERIC"));
+							subQuestionObjectMap.put("DISABLED", "Y");
+							
+							Map<String,String> qResponsess = new LinkedHashMap<String, String>();
+							JSONObject qResponsesJsonn = new JSONObject();
+							if(cmRefNo == "") {
+								qResponsess.put("QUESTIONID", resultSetSub.getString("QUESTIONID"));
+								qResponsess.put("QINPUT", "");
+								qResponsess.put("QRESULT", "0");
+								qResponsess.put("QIMPACTCRITERIA", "0");
+								qResponsess.put("QLIKELYHOOD", "0");
+								qResponsess.put("QINHERENTRISK", "0");
+								
+								subQuestionObjectMap.put("QRESPONSES", qResponsess);
+								questionResponsesDataMap.put(resultSetSub.getString("QUESTIONID"), qResponsess);
+								
+								qResponsesJsonn.put("QUESTIONID", resultSetSub.getString("QUESTIONID"));
+								qResponsesJsonn.put("QINPUT", "");
+								qResponsesJsonn.put("QRESULT", "0");
+								qResponsesJsonn.put("QIMPACTCRITERIA", "0");
+								qResponsesJsonn.put("QLIKELYHOOD", "0");
+								qResponsesJsonn.put("QINHERENTRISK", "0");
+								
+								subQuestionObject.put("QRESPONSES", qResponsesJsonn);
+								questionResponsesData.put(resultSetSub.getString("QUESTIONID"), qResponsesJsonn);
+							}
+							else {
+								query = "  SELECT QINPUT,QRESULT,QIMPACTCRITERIA,QLIKELYHOOD,QINHERENTRISK "
+										+ "  FROM COMAML_CM.TB_RAQUESTIONRESPONSES"
+										+ " WHERE ASSESSMENTUNIT = ?"
+										+ "   AND CMREFNO = ?"
+										+ "   AND QUESTIONID = ?";
+								preparedStatement = connection.prepareStatement(query);
+								preparedStatement.setString(1, assessmentUnit);
+								preparedStatement.setString(2, cmRefNo);
+								preparedStatement.setString(3, resultSetSub.getString("QUESTIONID"));
+								ResultSet responseResultSet = preparedStatement.executeQuery();
+								if(responseResultSet.next()) {
+									qResponsess.put("QUESTIONID", resultSetSub.getString("QUESTIONID"));
+									qResponsess.put("QINPUT", responseResultSet.getString("QINPUT"));
+									qResponsess.put("QRESULT", responseResultSet.getString("QRESULT"));
+									qResponsess.put("QIMPACTCRITERIA", responseResultSet.getString("QIMPACTCRITERIA"));
+									qResponsess.put("QLIKELYHOOD", responseResultSet.getString("QLIKELYHOOD"));
+									qResponsess.put("QINHERENTRISK", responseResultSet.getString("QINHERENTRISK"));
+									
+									subQuestionObjectMap.put("QRESPONSES", qResponsess);
+									questionResponsesDataMap.put(resultSetSub.getString("QUESTIONID"), qResponsess);
+									
+									qResponsesJsonn.put("QUESTIONID", resultSetSub.getString("QUESTIONID"));
+									qResponsesJsonn.put("QINPUT", responseResultSet.getString("QINPUT"));
+									qResponsesJsonn.put("QRESULT", responseResultSet.getString("QRESULT"));
+									qResponsesJsonn.put("QIMPACTCRITERIA", responseResultSet.getString("QIMPACTCRITERIA"));
+									qResponsesJsonn.put("QLIKELYHOOD", responseResultSet.getString("QLIKELYHOOD"));
+									qResponsesJsonn.put("QINHERENTRISK", responseResultSet.getString("QINHERENTRISK"));
+									
+									subQuestionObject.put("QRESPONSES", qResponsesJsonn);
+									questionResponsesData.put(resultSetSub.getString("QUESTIONID"), qResponsesJsonn);
+								}
+								else {
+									qResponsess.put("QUESTIONID", resultSetSub.getString("QUESTIONID"));
+									qResponsess.put("QINPUT", "");
+									qResponsess.put("QRESULT", "0");
+									qResponsess.put("QIMPACTCRITERIA", "0");
+									qResponsess.put("QLIKELYHOOD", "0");
+									qResponsess.put("QINHERENTRISK", "0");
+									
+									subQuestionObjectMap.put("QRESPONSES", qResponsess);
+									questionResponsesDataMap.put(resultSetSub.getString("QUESTIONID"), qResponsess);
+									
+									qResponsesJsonn.put("QUESTIONID", resultSetSub.getString("QUESTIONID"));
+									qResponsesJsonn.put("QINPUT", "");
+									qResponsesJsonn.put("QRESULT", "0");
+									qResponsesJsonn.put("QIMPACTCRITERIA", "0");
+									qResponsesJsonn.put("QLIKELYHOOD", "0");
+									qResponsesJsonn.put("QINHERENTRISK", "0");
+									
+									subQuestionObject.put("QRESPONSES", qResponsesJsonn);
+									questionResponsesData.put(resultSetSub.getString("QUESTIONID"), qResponsesJsonn);
+								}
+							}
+							
+							subQuestionArrayJson.put(subQuestionObject);
+							subQuestionsArrayList.add(subQuestionObjectMap);
+						}
+						questionDetails.put("SUBQUESTIONLIST", subQuestionsArrayList);
+						questionsList.add(questionDetails);
+						
+						questionDetailsJson.put("SUBQUESTIONLIST", subQuestionArrayJson);
+						questionsListJson.put(questionDetailsJson);
+					}
+					subCategoryWiseQuestions.put(subCategory, questionsList);
+					subCategoryWiseQuestionsJson.put(subCategory, questionsListJson);
+				}
+				categoryWiseQuestions.put(category, subCategoryWiseQuestions);
+				categoryWiseQuestionsJson.put(category, subCategoryWiseQuestionsJson);
+				
+				categSubcategInherentRiskRatings.put(category, subCategoryRiskrating);
+				categSubcategInherentRiskRatingsJson.put(category, subCategoryRiskratingJson);
+			}
+			questionsFormDetails.put("categoryList", categoryList);
+			questionsFormDetails.put("categoresAndSubCategories", categoresAndSubCategories);
+			questionsFormDetails.put("categoryWiseQuesitons", categoryWiseQuestions);
+			questionsFormDetails.put("categoryWiseQuesitonsJson", categoryWiseQuestionsJson.toString());
+			
+			Map<String,Object> controlReviewQuestionsMap = new LinkedHashMap<String, Object>();
+			JSONObject controlReviewQuestionsMapJson = new JSONObject();
+			String mainCategory = "Controls Review";
+			
+			Map<String,Object> crCategoryRiskRatings = new LinkedHashMap<String, Object>();
+			JSONObject crCategoryRiskRatingsJson = new JSONObject();
+			
+			for(String crCategory : (ArrayList<String>)controlReview.get("subCategories")) {
+//				System.out.println("++"+crCategory);
+				query = "SELECT SYSGENRISKRATING, PROVRISKRATING, FINALRISKRATING, REASONFORDEVIATION "
+						+ "  FROM COMAML_CM.TB_RARISKRATINGS "
+						+ " WHERE ASSESSMENTUNIT = ? "
+						+ "   AND CATEGORY = ? "
+						+ "   AND SUBCATEGORY = ?"
+						+ "   AND CMREFNO = ?";
+				preparedStatement = connection.prepareStatement(query);
+				preparedStatement.setString(1, assessmentUnit);
+				preparedStatement.setString(2, crCategory);
+				preparedStatement.setString(3, crCategory);
+				preparedStatement.setString(4, cmRefNo);
+				resultSet = preparedStatement.executeQuery();
+				if(resultSet.next()){
+					Map<String,Object> categRiskRatings = new LinkedHashMap<String, Object>();
+					JSONObject categRiskRatingsJson = new JSONObject();
+					categRiskRatings.put("SYSGENRISKRATING", resultSet.getString("SYSGENRISKRATING"));
+					categRiskRatings.put("PROVRISKRATING", resultSet.getString("PROVRISKRATING"));
+					categRiskRatings.put("FINALRISKRATING", resultSet.getString("FINALRISKRATING"));
+					categRiskRatings.put("REASONFORDEVIATION", resultSet.getString("REASONFORDEVIATION"));
+					crCategoryRiskRatings.put(crCategory, categRiskRatings);
+					
+					categRiskRatingsJson.put("SYSGENRISKRATING", resultSet.getString("SYSGENRISKRATING"));
+					categRiskRatingsJson.put("PROVRISKRATING", resultSet.getString("PROVRISKRATING"));
+					categRiskRatingsJson.put("FINALRISKRATING", resultSet.getString("FINALRISKRATING"));
+					categRiskRatingsJson.put("REASONFORDEVIATION", resultSet.getString("REASONFORDEVIATION"));
+					crCategoryRiskRatingsJson.put(crCategory, categRiskRatingsJson);
+				}
+				else {
+					Map<String,Object> categRiskRatings = new LinkedHashMap<String, Object>();
+					JSONObject categRiskRatingsJson = new JSONObject();
+					categRiskRatings.put("SYSGENRISKRATING", "0.0");
+					categRiskRatings.put("PROVRISKRATING", "0.0");
+					categRiskRatings.put("FINALRISKRATING", "0.0");
+					categRiskRatings.put("REASONFORDEVIATION", "");
+					crCategoryRiskRatings.put(crCategory, categRiskRatings);
+					
+					categRiskRatingsJson.put("SYSGENRISKRATING", "0.0");
+					categRiskRatingsJson.put("PROVRISKRATING", "0.0");
+					categRiskRatingsJson.put("FINALRISKRATING", "0.0");
+					categRiskRatingsJson.put("REASONFORDEVIATION", "");
+					crCategoryRiskRatingsJson.put(crCategory, categRiskRatingsJson);
+				}
+				
+				Map<String,Object> crCategoryQuestionsMap = new LinkedHashMap<String, Object>();
+				JSONObject crCategoryQuestionsMapJson = new JSONObject();
+				for(String crSubCategory: (ArrayList<String>)((Map<String,Object>) controlReview.get("subAndSubSubCateg")).get(crCategory)) {
+//					System.out.println("==="+crSubCategory);
+					ArrayList<Object> QuestionList = new ArrayList<Object>();
+					JSONArray questionListjson = new JSONArray();
+					query = "SELECT QUESTIONID, QUESTION, INPUTTYPE, INPUTOPTIONSLIST, "
+							+ "		ISSUPERPARENT, HASPARENT, PARENTQSIDS, HASRISKIMPACT, INPUTOPTIONSLISTFORNUMERIC "
+							+ "  FROM COMAML_CM.TB_RISKASSESSQUESTIONSCONFIG "
+							+ " WHERE ASSESSMENTUNIT = ? "
+							+ "   AND CATEGORY = ? "
+							+ "   AND SUBCATEGORY = ?"
+							+ "	  AND SUBSUBCATEG = ?"
+							+ "   AND QUESTIONID NOT LIKE '%.%' ORDER BY QUESTIONID ASC";
+					preparedStatement = connection.prepareStatement(query);
+					preparedStatement.setString(1, assessmentUnit);
+					preparedStatement.setString(2, mainCategory);
+					preparedStatement.setString(3, crCategory);
+					preparedStatement.setString(4, crSubCategory);
+					resultSet = preparedStatement.executeQuery();
+					while(resultSet.next()) {
+						Map<String,Object> questionObj = new LinkedHashMap<String, Object>();
+						questionObj.put("QUESTIONID", resultSet.getString("QUESTIONID"));
+						questionObj.put("QUESTION", resultSet.getString("QUESTION"));
+						questionObj.put("INPUTTYPE", resultSet.getString("INPUTTYPE"));
+						questionObj.put("INPUTOPTIONSLIST", resultSet.getString("INPUTOPTIONSLIST"));
+						questionObj.put("ISSUPERPARENT", resultSet.getString("ISSUPERPARENT"));
+						questionObj.put("HASPARENT", resultSet.getString("HASPARENT"));
+						questionObj.put("PARENTQSIDS", resultSet.getString("PARENTQSIDS"));
+						questionObj.put("HASRISKIMPACT", resultSet.getString("HASRISKIMPACT"));
+						questionObj.put("INPUTOPTIONSLISTFORNUMERIC", resultSet.getString("INPUTOPTIONSLISTFORNUMERIC"));
+						questionObj.put("DISABLED", "Y");
+						
+						JSONObject questionDetailsJson = new JSONObject();
+						questionDetailsJson.put("QUESTIONID", resultSet.getString("QUESTIONID"));
+						questionDetailsJson.put("QUESTION", resultSet.getString("QUESTION"));
+						questionDetailsJson.put("INPUTTYPE", resultSet.getString("INPUTTYPE"));
+						questionDetailsJson.put("INPUTOPTIONSLIST", resultSet.getString("INPUTOPTIONSLIST"));
+						questionDetailsJson.put("ISSUPERPARENT", resultSet.getString("ISSUPERPARENT"));
+						questionDetailsJson.put("HASPARENT", resultSet.getString("HASPARENT"));
+						questionDetailsJson.put("PARENTQSIDS", resultSet.getString("PARENTQSIDS"));
+						questionDetailsJson.put("HASRISKIMPACT", resultSet.getString("HASRISKIMPACT"));
+						questionDetailsJson.put("INPUTOPTIONSLISTFORNUMERIC", resultSet.getString("INPUTOPTIONSLISTFORNUMERIC"));
+						questionDetailsJson.put("DISABLED", "Y");
+						
+						Map<String,String> qResponses = new LinkedHashMap<String, String>();
+						JSONObject qResponsesJson = new JSONObject();
+						if(cmRefNo == "") {
+							qResponses.put("QUESTIONID", resultSet.getString("QUESTIONID"));
+							qResponses.put("QDESIGNRATING", "NA");
+							qResponses.put("QOPERATINGRATING", "NA");
+							qResponses.put("QOBSERVATION", "");
+							qResponses.put("QDOCREFSAMTESTING", "");
+							qResponses.put("QINPUT", "");
+							
+							questionObj.put("QRESPONSES", qResponses);
+							questionResponsesDataMap.put(resultSet.getString("QUESTIONID"), qResponses);
+							
+							qResponsesJson.put("QUESTIONID", resultSet.getString("QUESTIONID"));
+							qResponsesJson.put("QDESIGNRATING", "NA");
+							qResponsesJson.put("QOPERATINGRATING", "NA");
+							qResponsesJson.put("QOBSERVATION", "");
+							qResponsesJson.put("QDOCREFSAMTESTING", "");
+							qResponsesJson.put("QINPUT", "");
+							
+							questionDetailsJson.put("QRESPONSES", qResponsesJson);
+							questionResponsesData.put(resultSet.getString("QUESTIONID"), qResponsesJson);
+						}
+						else {
+							query = "  SELECT QINPUT,QDESIGNRATING,QOPERATINGRATING,QOBSERVATION,QDOCREFSAMTESTING "
+									+ "  FROM COMAML_CM.TB_RAQUESTIONRESPONSES"
+									+ " WHERE ASSESSMENTUNIT = ?"
+									+ "   AND CMREFNO = ?"
+									+ "   AND QUESTIONID = ?";
+							preparedStatement = connection.prepareStatement(query);
+							preparedStatement.setString(1, assessmentUnit);
+							preparedStatement.setString(2, cmRefNo);
+							preparedStatement.setString(3, resultSet.getString("QUESTIONID"));
+							ResultSet responseResultSet = preparedStatement.executeQuery();
+							if(responseResultSet.next()) {
+								qResponses.put("QUESTIONID", resultSet.getString("QUESTIONID"));
+								qResponses.put("QDESIGNRATING", responseResultSet.getString("QDESIGNRATING"));
+								qResponses.put("QOPERATINGRATING", responseResultSet.getString("QOPERATINGRATING"));
+								qResponses.put("QOBSERVATION", responseResultSet.getString("QOBSERVATION"));
+								qResponses.put("QDOCREFSAMTESTING", responseResultSet.getString("QDOCREFSAMTESTING"));
+								qResponses.put("QINPUT", responseResultSet.getString("QINPUT"));
+								
+								questionObj.put("QRESPONSES", qResponses);
+								questionResponsesDataMap.put(resultSet.getString("QUESTIONID"), qResponses);
+								
+								qResponsesJson.put("QUESTIONID", resultSet.getString("QUESTIONID"));
+								qResponsesJson.put("QDESIGNRATING", responseResultSet.getString("QDESIGNRATING"));
+								qResponsesJson.put("QOPERATINGRATING", responseResultSet.getString("QOPERATINGRATING"));
+								qResponsesJson.put("QOBSERVATION", responseResultSet.getString("QOBSERVATION"));
+								qResponsesJson.put("QDOCREFSAMTESTING", responseResultSet.getString("QDOCREFSAMTESTING"));
+								qResponsesJson.put("QINPUT", responseResultSet.getString("QINPUT"));
+								
+								questionDetailsJson.put("QRESPONSES", qResponsesJson);
+								questionResponsesData.put(resultSet.getString("QUESTIONID"), qResponsesJson);
+							}
+							else {
+								qResponses.put("QUESTIONID", resultSet.getString("QUESTIONID"));
+								qResponses.put("QDESIGNRATING", "NA");
+								qResponses.put("QOPERATINGRATING", "NA");
+								qResponses.put("QOBSERVATION", "");
+								qResponses.put("QDOCREFSAMTESTING", "");
+								qResponses.put("QINPUT", "");
+								
+								questionObj.put("QRESPONSES", qResponses);
+								questionResponsesDataMap.put(resultSet.getString("QUESTIONID"), qResponses);
+								
+								qResponsesJson.put("QUESTIONID", resultSet.getString("QUESTIONID"));
+								qResponsesJson.put("QDESIGNRATING", "NA");
+								qResponsesJson.put("QOPERATINGRATING", "NA");
+								qResponsesJson.put("QOBSERVATION", "");
+								qResponsesJson.put("QDOCREFSAMTESTING", "");
+								qResponsesJson.put("QINPUT", "");
+								
+								questionDetailsJson.put("QRESPONSES", qResponsesJson);
+								questionResponsesData.put(resultSet.getString("QUESTIONID"), qResponsesJson);
+							}
+						}
+						
+						ArrayList<Object> subQuestionsArrayList = new ArrayList<Object>();
+						JSONArray subQuestionArrayJson = new JSONArray();
+						query = "SELECT QUESTIONID, QUESTION, INPUTTYPE, INPUTOPTIONSLIST, "
+								+ "		ISSUPERPARENT, HASPARENT, PARENTQSIDS, HASRISKIMPACT,INPUTOPTIONSLISTFORNUMERIC "
+								+ "  FROM COMAML_CM.TB_RISKASSESSQUESTIONSCONFIG "
+								+ " WHERE ASSESSMENTUNIT = ? "
+								+ "   AND CATEGORY = ? "
+								+ "   AND SUBCATEGORY = ? "
+								+ "	  AND SUBSUBCATEG = ?"
+								+ "   AND QUESTIONID LIKE '%"+resultSet.getString("QUESTIONID")+"."+"%' ORDER BY QUESTIONID ASC";
+						preparedStatement = connection.prepareStatement(query);
+						preparedStatement.setString(1, assessmentUnit);
+						preparedStatement.setString(2, mainCategory);
+						preparedStatement.setString(3, crCategory);
+						preparedStatement.setString(4, crSubCategory);
+						ResultSet resultSetSub = preparedStatement.executeQuery();
+						while(resultSetSub.next()) {
+							JSONObject subQuestionObject = new JSONObject();
+							subQuestionObject.put("QUESTIONID", resultSetSub.getString("QUESTIONID"));
+							subQuestionObject.put("QUESTION", resultSetSub.getString("QUESTION"));
+							subQuestionObject.put("INPUTTYPE", resultSetSub.getString("INPUTTYPE"));
+							subQuestionObject.put("INPUTOPTIONSLIST", resultSetSub.getString("INPUTOPTIONSLIST"));
+							subQuestionObject.put("ISSUPERPARENT", resultSetSub.getString("ISSUPERPARENT"));
+							subQuestionObject.put("HASPARENT", resultSetSub.getString("HASPARENT"));
+							subQuestionObject.put("PARENTQSIDS", resultSetSub.getString("PARENTQSIDS"));
+							subQuestionObject.put("HASRISKIMPACT", resultSetSub.getString("HASRISKIMPACT"));
+							subQuestionObject.put("INPUTOPTIONSLISTFORNUMERIC", resultSetSub.getString("INPUTOPTIONSLISTFORNUMERIC"));
+							subQuestionObject.put("DISABLED", "Y");
+							
+							Map<String,Object> subQuestionObjectMap = new LinkedHashMap<String, Object>();
+							subQuestionObjectMap.put("QUESTIONID", resultSetSub.getString("QUESTIONID"));
+							subQuestionObjectMap.put("QUESTION", resultSetSub.getString("QUESTION"));
+							subQuestionObjectMap.put("INPUTTYPE", resultSetSub.getString("INPUTTYPE"));
+							subQuestionObjectMap.put("INPUTOPTIONSLIST", resultSetSub.getString("INPUTOPTIONSLIST"));
+							subQuestionObjectMap.put("ISSUPERPARENT", resultSetSub.getString("ISSUPERPARENT"));
+							subQuestionObjectMap.put("HASPARENT", resultSetSub.getString("HASPARENT"));
+							subQuestionObjectMap.put("PARENTQSIDS", resultSetSub.getString("PARENTQSIDS"));
+							subQuestionObjectMap.put("HASRISKIMPACT", resultSetSub.getString("HASRISKIMPACT"));
+							subQuestionObjectMap.put("INPUTOPTIONSLISTFORNUMERIC", resultSetSub.getString("INPUTOPTIONSLISTFORNUMERIC"));
+							subQuestionObjectMap.put("DISABLED", "Y");
+							
+							Map<String,String> qResponsess = new LinkedHashMap<String, String>();
+							JSONObject qResponsesJsonn = new JSONObject();
+							if(cmRefNo == "") {
+								qResponsess.put("QUESTIONID", resultSetSub.getString("QUESTIONID"));
+								qResponsess.put("QDESIGNRATING", "NA");
+								qResponsess.put("QOPERATINGRATING", "NA");
+								qResponsess.put("QOBSERVATION", "");
+								qResponsess.put("QDOCREFSAMTESTING", "");
+								qResponsess.put("QINPUT", "");
+								
+								subQuestionObjectMap.put("qResponsess", qResponsess);
+								questionResponsesDataMap.put(resultSetSub.getString("QUESTIONID"), qResponsess);
+								
+								qResponsesJsonn.put("QUESTIONID", resultSetSub.getString("QUESTIONID"));
+								qResponsesJsonn.put("QDESIGNRATING", "NA");
+								qResponsesJsonn.put("QOPERATINGRATING", "NA");
+								qResponsesJsonn.put("QOBSERVATION", "");
+								qResponsesJsonn.put("QDOCREFSAMTESTING", "");
+								qResponsesJsonn.put("QINPUT", "");
+								
+								subQuestionObject.put("qResponsess", qResponsesJsonn);
+								questionResponsesData.put(resultSetSub.getString("QUESTIONID"), qResponsesJsonn);
+							}
+							else {
+								query = "  SELECT QINPUT,QDESIGNRATING,QOPERATINGRATING,QOBSERVATION,QDOCREFSAMTESTING "
+										+ "  FROM COMAML_CM.TB_RAQUESTIONRESPONSES"
+										+ " WHERE ASSESSMENTUNIT = ?"
+										+ "   AND CMREFNO = ?"
+										+ "   AND QUESTIONID = ?";
+								preparedStatement = connection.prepareStatement(query);
+								preparedStatement.setString(1, assessmentUnit);
+								preparedStatement.setString(2, cmRefNo);
+								preparedStatement.setString(3, resultSetSub.getString("QUESTIONID"));
+								ResultSet responseResultSet = preparedStatement.executeQuery();
+								if(responseResultSet.next()) {
+									qResponsess.put("QUESTIONID", resultSetSub.getString("QUESTIONID"));
+									qResponsess.put("QDESIGNRATING", responseResultSet.getString("QDESIGNRATING"));
+									qResponsess.put("QOPERATINGRATING", responseResultSet.getString("QOPERATINGRATING"));
+									qResponsess.put("QOBSERVATION", responseResultSet.getString("QOBSERVATION"));
+									qResponsess.put("QDOCREFSAMTESTING", responseResultSet.getString("QDOCREFSAMTESTING"));
+									qResponsess.put("QINPUT", responseResultSet.getString("QINPUT"));
+									
+									subQuestionObjectMap.put("qResponsess", qResponsess);
+									questionResponsesDataMap.put(resultSetSub.getString("QUESTIONID"), qResponsess);
+									
+									qResponsesJsonn.put("QUESTIONID", resultSetSub.getString("QUESTIONID"));
+									qResponsesJsonn.put("QDESIGNRATING", responseResultSet.getString("QDESIGNRATING"));
+									qResponsesJsonn.put("QOPERATINGRATING", responseResultSet.getString("QOPERATINGRATING"));
+									qResponsesJsonn.put("QOBSERVATION", responseResultSet.getString("QOBSERVATION"));
+									qResponsesJsonn.put("QDOCREFSAMTESTING", responseResultSet.getString("QDOCREFSAMTESTING"));
+									qResponsesJsonn.put("QINPUT", responseResultSet.getString("QINPUT"));
+									
+									subQuestionObject.put("qResponsess", qResponsesJsonn);
+									questionResponsesData.put(resultSetSub.getString("QUESTIONID"), qResponsesJsonn);
+								}
+								else {
+									qResponsess.put("QUESTIONID", resultSetSub.getString("QUESTIONID"));
+									qResponsess.put("QDESIGNRATING", "NA");
+									qResponsess.put("QOPERATINGRATING", "NA");
+									qResponsess.put("QOBSERVATION", "");
+									qResponsess.put("QDOCREFSAMTESTING", "");
+									qResponsess.put("QINPUT", "");
+									
+									subQuestionObjectMap.put("qResponsess", qResponsess);
+									questionResponsesDataMap.put(resultSetSub.getString("QUESTIONID"), qResponsess);
+									
+									qResponsesJsonn.put("QUESTIONID", resultSetSub.getString("QUESTIONID"));
+									qResponsesJsonn.put("QDESIGNRATING", "NA");
+									qResponsesJsonn.put("QOPERATINGRATING", "NA");
+									qResponsesJsonn.put("QOBSERVATION", "");
+									qResponsesJsonn.put("QDOCREFSAMTESTING", "");
+									qResponsesJsonn.put("QINPUT", "");
+									
+									subQuestionObject.put("qResponsess", qResponsesJsonn);
+									questionResponsesData.put(resultSetSub.getString("QUESTIONID"), qResponsesJsonn);
+								}
+							}
+							
+							subQuestionArrayJson.put(subQuestionObject);
+							subQuestionsArrayList.add(subQuestionObjectMap);
+						}
+						questionObj.put("SUBQUESTIONLIST", subQuestionsArrayList);
+						QuestionList.add(questionObj);
+						
+						questionDetailsJson.put("SUBQUESTIONLIST", subQuestionArrayJson);
+						questionListjson.put(questionDetailsJson);
+						
+						
+					}
+					crCategoryQuestionsMap.put(crSubCategory,QuestionList);
+					crCategoryQuestionsMapJson.put(crSubCategory,questionListjson);
+					
+					
+				}
+				controlReviewQuestionsMap.put(crCategory, crCategoryQuestionsMap);
+				controlReviewQuestionsMapJson.put(crCategory, crCategoryQuestionsMapJson);
+				
+			}
+			questionsFormDetails.put("controlsReviewCategSubCateg",controlReview);
+			questionsFormDetails.put("controlsReviewQuestions", controlReviewQuestionsMap);
+			questionsFormDetails.put("controlsReviewQuestionsJson", controlReviewQuestionsMapJson);
+			
+			questionsFormDetails.put("questionResponsesData", questionResponsesData);
+			questionsFormDetails.put("questionResponsesDataMap", questionResponsesDataMap);
+			
+			questionsFormDetails.put("categSubcategInherentRiskRatings", categSubcategInherentRiskRatings);
+			questionsFormDetails.put("categSubcategInherentRiskRatingsJson", categSubcategInherentRiskRatingsJson);
+			
+			questionsFormDetails.put("categoryRiskRatings", categoryRiskRatings);
+			questionsFormDetails.put("categoryRiskRatingsJson", categoryRiskRatingsJson);
+			
+			questionsFormDetails.put("crCategoryRiskRatings", crCategoryRiskRatings);
+			questionsFormDetails.put("crCategoryRiskRatingsJson", crCategoryRiskRatingsJson);
+			
+			questionsFormDetails.put("controlReviewCategoryWeights", controlReviewCategoryWeights);
+			questionsFormDetails.put("categoryWeights", categoryWeights);
+			
+			
+			
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			connectionUtil.closeResources(connection, preparedStatement, resultSet, null);
+		}
+		return questionsFormDetails;
+	}
+
+	@Override
+	public void saveRiskAssesesmentFormConfiguration(FormConfigurationModel formConfigurationModel) {
+		Connection connection = connectionUtil.getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String query =  "";
+		try{
+			if(formConfigurationModel.questionsList.size() > 0) {
+				query = "DELETE FROM COMAML_CM.TB_RISKASSESSQUESTIONSCONFIG WHERE ASSESSMENTUNIT = ?";
+				preparedStatement = connection.prepareStatement(query);
+				
+				preparedStatement.setString(1, (String) formConfigurationModel.questionsList.get(0).get("assessmentUnit"));
+				preparedStatement.executeUpdate();
+				
+				for(Map<String, Object> question: formConfigurationModel.questionsList) {
+					
+					query = "INSERT INTO COMAML_CM.TB_RISKASSESSQUESTIONSCONFIG(QUESTIONID, QUESTION, INPUTTYPE, INPUTOPTIONSLIST, "
+							+ "		ISSUPERPARENT, HASPARENT, PARENTQSIDS, HASRISKIMPACT, ASSESSMENTUNIT,CATEGORY, SUBCATEGORY, UPDATETIMESTAMP, ISENABLED, INPUTOPTIONSLISTFORNUMERIC) "
+							+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,SYSTIMESTAMP,'Y',?)";
+					preparedStatement = connection.prepareStatement(query);
+					preparedStatement.setString(1, (String) question.get("QUESTIONID"));
+					preparedStatement.setString(2, (String) question.get("QUESTION"));
+					preparedStatement.setString(3, (String) question.get("INPUTTYPE"));
+					preparedStatement.setString(4, (String) question.get("INPUTOPTIONSLIST"));
+					preparedStatement.setString(5, (String) question.get("ISSUPERPARENT"));
+					preparedStatement.setString(6, (String) question.get("HASPARENT"));
+					preparedStatement.setString(7, (String) question.get("PARENTQSIDS"));
+					preparedStatement.setString(8, (String) question.get("HASRISKIMPACT"));
+					preparedStatement.setString(9, (String) question.get("assessmentUnit"));
+					preparedStatement.setString(10, (String) question.get("category"));
+					preparedStatement.setString(11, (String) question.get("subCategory"));
+					preparedStatement.setString(12, (String) question.get("INPUTOPTIONSLISTFORNUMERIC"));
+					preparedStatement.executeUpdate();
+				}
+			}
+			if(formConfigurationModel.controlsReviewQsList.size() > 0) {
+				
+				for(Map<String, Object> question: formConfigurationModel.controlsReviewQsList) {
+					
+					query = "INSERT INTO COMAML_CM.TB_RISKASSESSQUESTIONSCONFIG(QUESTIONID, QUESTION, INPUTTYPE, INPUTOPTIONSLIST, "
+							+ "		ISSUPERPARENT, HASPARENT, PARENTQSIDS, HASRISKIMPACT, ASSESSMENTUNIT,CATEGORY, SUBCATEGORY, UPDATETIMESTAMP,"
+							+ "		ISENABLED, INPUTOPTIONSLISTFORNUMERIC,SUBSUBCATEG) "
+							+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,SYSTIMESTAMP,'Y',?,?)";
+					preparedStatement = connection.prepareStatement(query);
+					preparedStatement.setString(1, (String) question.get("QUESTIONID"));
+					preparedStatement.setString(2, (String) question.get("QUESTION"));
+					preparedStatement.setString(3, (String) question.get("INPUTTYPE"));
+					preparedStatement.setString(4, (String) question.get("INPUTOPTIONSLIST"));
+					preparedStatement.setString(5, (String) question.get("ISSUPERPARENT"));
+					preparedStatement.setString(6, (String) question.get("HASPARENT"));
+					preparedStatement.setString(7, (String) question.get("PARENTQSIDS"));
+					preparedStatement.setString(8, (String) question.get("HASRISKIMPACT"));
+					preparedStatement.setString(9, (String) question.get("assessmentUnit"));
+					preparedStatement.setString(10, ((String) question.get("category")).replace("&amp;","&"));
+					preparedStatement.setString(11, ((String) question.get("subCategory")).replace("&amp;","&"));
+					preparedStatement.setString(12, (String) question.get("INPUTOPTIONSLISTFORNUMERIC"));
+					preparedStatement.setString(13, ((String) question.get("subSubCategory")).replace("&amp;","&"));
+					preparedStatement.executeUpdate();
+				}
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			connectionUtil.closeResources(connection, preparedStatement, resultSet, null);
+		}
+		
+	}
+//	@Override
+	public Map<String,Object> getRiskAssesesmentForm(String assessmentUnit) {
+		Connection connection = connectionUtil.getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String query =  "";
+		try{
+			query = "SELECT QUESTIONID, QUESTION, INPUTTYPE, INPUTOPTIONSLIST,"
+					+ "		ISSUPERPARENT, HASPARENT, PARENTQSIDS, HASRISKIMPACT, ASSESSMENTUNIT,CATEGORY, SUBCATEGORY";
+			preparedStatement = connection.prepareStatement(query);
+			
+			preparedStatement.setString(1, "");
+			preparedStatement.executeUpdate();
+			
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			connectionUtil.closeResources(connection, preparedStatement, resultSet, null);
+		}
+		return new LinkedHashMap<String, Object>();
+	}
+	
+	@Override
+	public List<Map<String, String>> searchRiskAssessmentData(String ASSESSMENTUNIT, String COMPASSREFERENCENO){
+		List<Map<String, String>> dataList = new Vector<Map<String, String>>();
+		Connection connection = connectionUtil.getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String query =  "SELECT CREFNUM COMPASSREFNO, ASSESSMENTUNIT, ASSESSMENTPERIOD, "+
+						"		DECODE(STATUS, 'CMO-P', 'Pending with CM Officer', "+
+						"			   'CMM-P', 'Pending with CM Manager', "+
+						"			   'CMM-A', 'Approved by CM Manager', "+
+						"			   'CMM-R', 'Rejected by CM Manager') STATUS, "+
+						"		DECODE(STATUS, 'CMO-P', CMOFFICERCODE, " + 
+						"			   'CMM-P', CMOFFICERCODE, " + 
+						"			   'CMM-A', CMMANAGERCODE, " + 
+						"			   'CMM-R', CMMANAGERCODE) UPDATEDBY, "+
+						"		FUN_DATETIMETOCHAR(DECODE(STATUS, 'CMO-P', CMOFFICERUPDATETIMESTAMP, " + 
+						"			   'CMM-P', CMOFFICERUPDATETIMESTAMP, " + 
+						"			   'CMM-A', CMMNGERUPDATETIMESTAMP, " + 
+						"			   'CMM-R', CMMNGERUPDATETIMESTAMP)) UPDATEDON, "+
+						"       STATUS STATUSCODE "+
+						"  FROM TB_CMGENRLFINALRISKDETAILS "+
+						" WHERE 1=1 ";
+		
+		if(COMPASSREFERENCENO != null && !"".equals(COMPASSREFERENCENO)){
+			query = query + " AND CREFNUM = '"+COMPASSREFERENCENO+"' ";
+		}
+		
+		if(ASSESSMENTUNIT != null && !"".equals(ASSESSMENTUNIT)){
+			query = query + " AND ASSESSMENTUNIT = '"+ASSESSMENTUNIT+"' ";
+		}
+		
+		query = query + " ORDER BY LOGTIMESTAMP DESC ";
+		try{
+			preparedStatement = connection.prepareStatement(query);
+			
+			resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()){
+				Map<String, String> dataMap = new LinkedHashMap<String, String>();
+				dataMap.put("COMPASSREFNO", resultSet.getString("COMPASSREFNO"));
+				dataMap.put("ASSESSMENTUNIT", resultSet.getString("ASSESSMENTUNIT"));
+				dataMap.put("ASSESSMENTPERIOD", resultSet.getString("ASSESSMENTPERIOD"));
+				dataMap.put("STATUS", resultSet.getString("STATUS"));
+				dataMap.put("UPDATEBY", resultSet.getString("UPDATEDBY"));
+				dataMap.put("UPDATETIMESTAMP", resultSet.getString("UPDATEDON"));
+				dataMap.put("STATUSCODE", resultSet.getString("STATUSCODE"));
+				dataList.add(dataMap);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			connectionUtil.closeResources(connection, preparedStatement, resultSet, null);
+		}
+		return dataList;
+	}
+	
+	@Override
+	public String generateCompassRefNo() {
+		String COMPASSREFNO = "";
+		Date date = new Date();
+		SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy");
+		String strDate= formatter.format(date);
+		Random random = new Random();
+		
+		COMPASSREFNO = "CM"+strDate+random.nextInt(10000);
+		return COMPASSREFNO;
+	}
+	
+	@SuppressWarnings("resource")
+	public Map<String, Object> getRiskAssessmentForm(String ASSESSMENTUNIT, String ASSESSMENTSECTIONCODE, String COMPASSREFERENCENO, String ISNEWFORM){
+		Map<String, Object> mainMap =  new LinkedHashMap<String, Object>();
+		List<String> subGroupsList = new LinkedList<String>();
+		List<Map<String, Object>> questionsList = new LinkedList<Map<String,Object>>();
+		List<String> questionIdsList = new LinkedList<String>();
+		List<Map<String, Object>> optionsList = new LinkedList<Map<String,Object>>();
+		//List<Object> formDataList = new LinkedList<Object>();
+		Connection connection = connectionUtil.getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String query = "";
+		try{
+			query = "SELECT DISTINCT UPPER(ASSESSMENTSECTIONCODE) ASSESSMENTSECTIONCODE, WEIGHTAGE FROM "+schemaName+"TB_ASSESSMENTUNITMASTER "+
+					" WHERE UPPER(ASSESSMENTSECTIONCODE) NOT IN ('CONTROLPARAMETERS') "+
+					" ORDER BY ASSESSMENTSECTIONCODE ";
+			preparedStatement = connection.prepareStatement(query);
+			resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()) {
+				mainMap.put(resultSet.getString("ASSESSMENTSECTIONCODE"), resultSet.getString("WEIGHTAGE"));
+			}
+			
+			query = "SELECT DISTINCT UPPER(ASSESSMENTSUBGROUP) ASSESSMENTSUBGROUP, WEIGHTAGE FROM "+schemaName+"TB_ASSESSMENTUNITMASTER "+
+					" WHERE UPPER(ASSESSMENTSECTIONCODE) IN ('CONTROLPARAMETERS') "+
+					" ORDER BY ASSESSMENTSUBGROUP ";
+			preparedStatement = connection.prepareStatement(query);
+			resultSet = preparedStatement.executeQuery();
+			List<Map<String, String>> ctrlParamWeightageList = new LinkedList<Map<String,String>>();
+			while(resultSet.next()) {
+				Map<String, String> ctrlParamWeightageMap = new LinkedHashMap<String, String>();
+				ctrlParamWeightageMap.put(resultSet.getString("ASSESSMENTSUBGROUP"), resultSet.getString("WEIGHTAGE"));
+				
+				ctrlParamWeightageList.add(ctrlParamWeightageMap);
+			}
+			
+			//System.out.println(ctrlParamWeightageList);
+			mainMap.put("CONTROLPARAMSWEIGHTAGE", ctrlParamWeightageList);
+			
+			query = "SELECT ASSESSMENTSUBGROUP FROM "+schemaName+"TB_ASSESSMENTUNITMASTER "+
+						   " WHERE ASSESSMENTUNIT = ? "+
+						   "   AND ASSESSMENTSECTIONCODE = ? "+
+						   " ORDER BY ASSESSMENTSUBGROUP ";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, ASSESSMENTUNIT);
+			preparedStatement.setString(2, ASSESSMENTSECTIONCODE);
+			resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()) {
+				subGroupsList.add(resultSet.getString("ASSESSMENTSUBGROUP"));
+			}
+							
+			//if(COMPASSREFERENCENO == null || COMPASSREFERENCENO.isEmpty()) {
+			if(ISNEWFORM.equalsIgnoreCase("Y")) {
+				for(String ASSESSMENTSUBGROUP : subGroupsList) {
+					query = "SELECT QUESTIONID, QUESTIONDESCRIPTION, ISFREETEXTAREAREQUIRED, VERSION_SEQNO "+
+					        "  FROM "+schemaName+"TB_ASSESSMENTQUESTIONMASTER "+
+							" WHERE ASSESSMENTUNIT = ? " + 
+							"   AND ASSESSMENTSECTIONCODE = ? "+
+							"   AND ASSESSMENTSUBGROUP = ? "+
+							"   AND ISENABLED = 'Y' "+
+							" ORDER BY ASSESSMENTSUBGROUP, QUESTIONID ";
+					//		" ORDER BY ASSESSMENTSUBGROUP, TO_NUMBER(QUESTIONID) ";
+					
+					preparedStatement = connection.prepareStatement(query);
+					preparedStatement.setString(1, ASSESSMENTUNIT);
+					preparedStatement.setString(2, ASSESSMENTSECTIONCODE);
+					preparedStatement.setString(3, ASSESSMENTSUBGROUP);
+					resultSet = preparedStatement.executeQuery();
+					Map<String, Object> questionSetMap = new LinkedHashMap<String, Object>();
+					List<Object> questionList = new LinkedList<Object>();
+					while(resultSet.next()) {
+						questionIdsList.add(resultSet.getString("QUESTIONID")+"."+resultSet.getString("VERSION_SEQNO"));
+						
+						Map<String, Object> questionsMap = new LinkedHashMap<String, Object>();
+						questionsMap.put("QUESTIONID",resultSet.getString("QUESTIONID"));
+						questionsMap.put("VERSION_SEQNO",resultSet.getString("VERSION_SEQNO"));
+						questionsMap.put("QUESTIONDESCRIPTION",resultSet.getString("QUESTIONDESCRIPTION"));
+						questionsMap.put("ISFREETEXTAREAREQUIRED",resultSet.getString("ISFREETEXTAREAREQUIRED"));
+						
+						query = "SELECT RFISTATUS FROM "+schemaName+"TB_CMQUES_CASEWORKFLOWDETAILS "+
+								" WHERE CASEID = ?"+
+								"   AND COMPASSREFNO = ?";
+						//System.out.println("Q2 = "+query);
+						preparedStatement = connection.prepareStatement(query);
+						preparedStatement.setString(1, resultSet.getString("QUESTIONID")+"."+resultSet.getString("VERSION_SEQNO"));
+						preparedStatement.setString(2, COMPASSREFERENCENO);
+						ResultSet resultSet1 = preparedStatement.executeQuery();
+						String rfiStatus = "NA";
+						if(resultSet1.next()) {
+							rfiStatus = resultSet1.getString("RFISTATUS");
+						}
+						questionsMap.put("RFISTATUS",rfiStatus);
+						
+						questionList.add(questionsMap);
+						questionsMap = new LinkedHashMap<String, Object>();
+					}
+					questionSetMap.put(ASSESSMENTSUBGROUP, questionList);
+					questionsList.add(questionSetMap);
+				}
+				
+				for(String QUESTIONVERSIONID : questionIdsList) {
+					query = "SELECT OPTIONNAME, OPTIONVALUE, "+ // -- OPTIONVALUE1, 
+							//"       NVL((SELECT CASE WHEN X.ASSESSMENTSECTIONCODE = 'ControlParameters' THEN X.WEIGHTAGE||'' ELSE A.LIKELIHOODRISKRATING END "+
+							"       NVL((SELECT CASE WHEN X.ASSESSMENTSECTIONCODE = 'ControlParameters' THEN ASSESSMENTCTRLSCORE ELSE A.IMPACTRISKRATING END "+
+							" 			   FROM "+schemaName+"TB_ASSESSMENTUNITMASTER X,  "+schemaName+"TB_ASSESSMENTQUESTIONMASTER Y "+
+							"             WHERE X.ASSESSMENTUNIT = Y.ASSESSMENTUNIT "+ 
+							"               AND X.ASSESSMENTSECTIONCODE = Y.ASSESSMENTSECTIONCODE "+ 
+							"               AND X.ASSESSMENTSUBGROUP = Y.ASSESSMENTSUBGROUP "+ 
+							"               AND Y.ASSESSMENTUNIT = A.ASSESSMENTUNIT "+ 
+							"               AND Y.QUESTIONID = A.QUESTIONID "+
+							"				AND Y.ISENABLED = 'Y' ),1) "+ 
+							"         AS IMPACTRISKRATING, "+
+							"       NVL((SELECT CASE WHEN X.ASSESSMENTSECTIONCODE = 'ControlParameters' THEN TO_CHAR(X.WEIGHTAGE) ELSE A.LIKELIHOODRISKRATING END "+
+							"              FROM "+schemaName+"TB_ASSESSMENTUNITMASTER X,  "+schemaName+"TB_ASSESSMENTQUESTIONMASTER Y "+
+							"             WHERE X.ASSESSMENTUNIT = Y.ASSESSMENTUNIT "+ 
+							"               AND X.ASSESSMENTSECTIONCODE = Y.ASSESSMENTSECTIONCODE "+ 
+							"               AND X.ASSESSMENTSUBGROUP = Y.ASSESSMENTSUBGROUP "+ 
+							"               AND Y.ASSESSMENTUNIT = A.ASSESSMENTUNIT "+ 
+							"               AND Y.QUESTIONID = A.QUESTIONID "+
+							"				AND Y.ISENABLED = 'Y' ),1) "+ 
+							"       AS LIKELIHOODRISKRATING "+
+							"  FROM "+schemaName+"TB_ASSESMNTQUESTIONNAIREMASTER A "+
+							" WHERE QUESTIONID = ? "+
+							"   AND VERSION_SEQNO = ? "+ 
+					        "   AND ASSESSMENTUNIT = ? "+
+							" ORDER BY A.OPTIONVALUE";
+
+					String[] QUESTIONIDArr = QUESTIONVERSIONID.split("\\.");
+					
+					preparedStatement = connection.prepareStatement(query);
+					preparedStatement.setString(1, QUESTIONIDArr[0]);
+					preparedStatement.setString(2, QUESTIONIDArr[1]);
+					preparedStatement.setString(3, ASSESSMENTUNIT);
+					resultSet = preparedStatement.executeQuery();	
+									
+					Map<String, Object> optionSetMap = new LinkedHashMap<String, Object>();
+					Map<String, String> optionsMap = new LinkedHashMap<String, String>();
+					Map<String, String> optionsMap1 = new LinkedHashMap<String, String>();
+					List<Object> optionList = new LinkedList<Object>();
+					
+					while(resultSet.next()) {
+						optionsMap.put(resultSet.getString("OPTIONNAME"), resultSet.getString("OPTIONVALUE"));
+						optionsMap1.put(resultSet.getString("OPTIONVALUE"), resultSet.getString("IMPACTRISKRATING").concat("~-~").concat(resultSet.getString("LIKELIHOODRISKRATING")));
+					}
+					
+					optionList.add(optionsMap);
+					optionList.add(optionsMap1);
+					
+					optionSetMap.put(QUESTIONIDArr[0], optionList);
+						
+					optionsList.add(optionSetMap);
+								
+				}
+				
+				mainMap.put("SUBGROUPSLIST", subGroupsList);
+				mainMap.put("QUESTIONNAIRESLIST", questionsList);
+				mainMap.put("OPTIONSLIST", optionsList);
+			}else {
+				String query1 = "SELECT DISTINCT ASQ.QUESTIONDESCRIPTION, ASQ.ASSESSMENTSECTIONCODE, ASQ.ASSESSMENTSUBGROUP, "+
+								"		ASQ.ISFREETEXTAREAREQUIRED, X.* "+
+								"  FROM (" + 
+								"       SELECT A.CREFNUM, A.VERSION_SEQNO, A.QUESTIONID, NVL(A.QUESTIONVALUE, 'NA') QUESTIONVALUE, NVL(A.REMARKS, 'NA') REMARKS "+
+								//"		       NVL(A.IMPACTRISKRATING, ' ') IMPACTRISKRATING, NVL(A.LIKELIHOODRISKRATING, ' ') LIKELIHOODRISKRATING "+
+						        "         FROM TB_CMCUSTOMERQUESTIONDETAILS A "+
+								"        UNION ALL " + 
+								"       SELECT C.CREFNUM, C.VERSION_SEQNO, C.QUESTIONID, NVL(C.QUESTIONVALUE, 'NA') QUESTIONVALUE, NVL(C.REMARKS, 'NA') REMARKS "+
+								//"			   NVL(C.IMPACTRISKRATING, ' ') IMPACTRISKRATING, NVL(C.LIKELIHOODRISKRATING, ' ') LIKELIHOODRISKRATING "+
+						        "         FROM TB_CMTRANSQUESTIONDETAILS C "+
+								"        UNION ALL " + 
+								"       SELECT D.CREFNUM, D.VERSION_SEQNO, D.QUESTIONID, NVL(D.QUESTIONVALUE, 'NA') QUESTIONVALUE, NVL(D.REMARKS, 'NA') REMARKS "+
+								//"			   NVL(D.IMPACTRISKRATING, ' ') IMPACTRISKRATING, NVL(D.LIKELIHOODRISKRATING, ' ') LIKELIHOODRISKRATING "+
+						        "         FROM TB_CMDELIVERYCHANNELDETAILS D "+
+								"        UNION ALL " + 
+								"       SELECT E.CREFNUM, E.VERSION_SEQNO, E.QUESTIONID, NVL(E.QUESTIONVALUE, 'NA') QUESTIONVALUE, NVL(E.REMARKS, 'NA') REMARKS "+
+								//"			   NVL(E.IMPACTRISKRATING, ' ') IMPACTRISKRATING, NVL(E.LIKELIHOODRISKRATING, ' ') LIKELIHOODRISKRATING "+
+						        "         FROM TB_CMPRODUCTQUESTIONDETAILS E "+
+								"        UNION ALL " + 
+								"       SELECT F.CREFNUM, F.VERSION_SEQNO, F.QUESTIONID, NVL(F.QUESTIONVALUE, 'NA') QUESTIONVALUE, NVL(F.REMARKS, 'NA') REMARKS "+
+								//"			   NVL(F.IMPACTRISKRATING, ' ') IMPACTRISKRATING, NVL(F.LIKELIHOODRISKRATING, ' ') LIKELIHOODRISKRATING "+
+						        "         FROM TB_CMGEOGQUESTIONDETAILS F "+
+								"		 UNION ALL " + 
+								"       SELECT B.CREFNUM, B.VERSION_SEQNO, B.QUESTIONID, NVL(B.QUESTIONVALUE, 'NA') QUESTIONVALUE, NVL(B.REMARKS, 'NA') REMARKS " + 
+								//"			   NVL(B.ASSESSMENTCTRLSCORE, ' ') IMPACTRISKRATING, '0' LIKELIHOODRISKRATING  " + 
+								"         FROM TB_CMCONTROLPARAMETERDETAILS B "+
+								"       )X " + 
+						        " INNER JOIN TB_ASSESSMENTQUESTIONMASTER ASQ ON (X.QUESTIONID = ASQ.QUESTIONID AND X.VERSION_SEQNO = ASQ.VERSION_SEQNO) "+
+								" WHERE X.CREFNUM = ? "+
+								"   AND ASQ.ASSESSMENTSUBGROUP = ?"+
+								" ORDER BY X.QUESTIONID, X.VERSION_SEQNO ";
+				        
+				for(String ASSESSMENTSUBGROUP : subGroupsList) {
+					preparedStatement = connection.prepareStatement(query1);
+					preparedStatement.setString(1, COMPASSREFERENCENO);
+					preparedStatement.setString(2, ASSESSMENTSUBGROUP);
+					resultSet = preparedStatement.executeQuery();
+			
+					Map<String, Object> questionSetMap = new LinkedHashMap<String, Object>();
+					List<Object> questionList = new LinkedList<Object>();
+					while(resultSet.next()) {
+						questionIdsList.add(resultSet.getString("QUESTIONID")+"."+resultSet.getString("VERSION_SEQNO"));
+						
+						Map<String, Object> questionsMap = new LinkedHashMap<String, Object>();
+						questionsMap.put("QUESTIONID",resultSet.getString("QUESTIONID"));
+						questionsMap.put("VERSION_SEQNO",resultSet.getString("VERSION_SEQNO"));
+						questionsMap.put("QUESTIONDESCRIPTION",resultSet.getString("QUESTIONDESCRIPTION"));
+						questionsMap.put("ISFREETEXTAREAREQUIRED",resultSet.getString("ISFREETEXTAREAREQUIRED"));
+						questionsMap.put("REMARKS_"+resultSet.getString("QUESTIONID"),resultSet.getString("REMARKS"));
+						
+						query = "SELECT RFISTATUS  FROM "+schemaName+"TB_CMQUES_CASEWORKFLOWDETAILS "+
+								" WHERE CASEID = ?"+
+								"   AND COMPASSREFNO = ?";
+						//System.out.println("Q2 = "+query);
+						preparedStatement = connection.prepareStatement(query);
+						preparedStatement.setString(1, resultSet.getString("QUESTIONID")+"."+resultSet.getString("VERSION_SEQNO"));
+						preparedStatement.setString(2, COMPASSREFERENCENO);
+						ResultSet resultSett = preparedStatement.executeQuery();
+						String rfiStatus = "NA";
+						if(resultSett.next()) {
+							rfiStatus = resultSett.getString("RFISTATUS");
+						}
+						questionsMap.put("RFISTATUS",rfiStatus);
+						
+						questionList.add(questionsMap);
+						questionsMap = new LinkedHashMap<String, Object>();
+					}
+					questionSetMap.put(ASSESSMENTSUBGROUP, questionList);
+					questionsList.add(questionSetMap);
+				}
+				
+				for(String QUESTIONVERSIONID : questionIdsList) {
+					query = "SELECT OPTIONNAME, OPTIONVALUE, "+
+							//"       NVL((SELECT CASE WHEN X.ASSESSMENTSECTIONCODE = 'ControlParameters' THEN X.WEIGHTAGE||'' ELSE A.LIKELIHOODRISKRATING END "+
+							//"       NVL((SELECT CASE WHEN X.ASSESSMENTSECTIONCODE = 'ControlParameters' THEN X.WEIGHTAGE||'' ELSE A.LIKELIHOODRISKRATING END "+
+							"       NVL((SELECT CASE WHEN X.ASSESSMENTSECTIONCODE = 'ControlParameters' THEN ASSESSMENTCTRLSCORE ELSE A.IMPACTRISKRATING END "+
+							" 			   FROM "+schemaName+"TB_ASSESSMENTUNITMASTER X,  "+schemaName+"TB_ASSESSMENTQUESTIONMASTER Y "+
+							"             WHERE X.ASSESSMENTUNIT = Y.ASSESSMENTUNIT "+ 
+							"               AND X.ASSESSMENTSECTIONCODE = Y.ASSESSMENTSECTIONCODE "+ 
+							"               AND X.ASSESSMENTSUBGROUP = Y.ASSESSMENTSUBGROUP "+ 
+							"               AND Y.ASSESSMENTUNIT = A.ASSESSMENTUNIT "+ 
+							"               AND Y.QUESTIONID = A.QUESTIONID "+
+							"				AND Y.ISENABLED = 'Y' ),1) "+ 
+							"         AS IMPACTRISKRATING, "+
+							"       NVL((SELECT CASE WHEN X.ASSESSMENTSECTIONCODE = 'ControlParameters' THEN TO_CHAR(X.WEIGHTAGE) ELSE A.LIKELIHOODRISKRATING END "+
+							"              FROM "+schemaName+"TB_ASSESSMENTUNITMASTER X,  "+schemaName+"TB_ASSESSMENTQUESTIONMASTER Y "+
+							"             WHERE X.ASSESSMENTUNIT = Y.ASSESSMENTUNIT "+ 
+							"               AND X.ASSESSMENTSECTIONCODE = Y.ASSESSMENTSECTIONCODE "+ 
+							"               AND X.ASSESSMENTSUBGROUP = Y.ASSESSMENTSUBGROUP "+ 
+							"               AND Y.ASSESSMENTUNIT = A.ASSESSMENTUNIT "+ 
+							"               AND Y.QUESTIONID = A.QUESTIONID "+
+							"				AND Y.ISENABLED = 'Y' ),1) "+ 
+							"       AS LIKELIHOODRISKRATING "+
+							"  FROM "+schemaName+"TB_ASSESMNTQUESTIONNAIREMASTER A "+
+							" WHERE QUESTIONID = ? "+
+							"   AND VERSION_SEQNO = ? "+
+							"   AND ASSESSMENTUNIT = ? "+
+							" ORDER BY A.OPTIONVALUE";
+				
+					String[] QUESTIONIDArr = QUESTIONVERSIONID.split("\\.");
+					/*System.out.println(query);
+					System.out.println(QUESTIONIDArr[0]);
+					System.out.println(QUESTIONIDArr[1]);
+					System.out.println(ASSESSMENTUNIT);*/
+					preparedStatement = connection.prepareStatement(query);
+					preparedStatement.setString(1, QUESTIONIDArr[0]);
+					preparedStatement.setString(2, QUESTIONIDArr[1]);
+					preparedStatement.setString(3, ASSESSMENTUNIT);
+					resultSet = preparedStatement.executeQuery();	
+									
+					Map<String, Object> optionSetMap = new LinkedHashMap<String, Object>();
+					Map<String, String> optionsMap = new LinkedHashMap<String, String>();
+					Map<String, String> optionsMap1 = new LinkedHashMap<String, String>();
+					List<Object> optionList = new LinkedList<Object>();
+					
+					while(resultSet.next()) {
+						optionsMap.put(resultSet.getString("OPTIONNAME"), resultSet.getString("OPTIONVALUE"));
+						optionsMap1.put(resultSet.getString("OPTIONVALUE"), resultSet.getString("IMPACTRISKRATING").concat("~-~").concat(resultSet.getString("LIKELIHOODRISKRATING")));
+					}
+					
+					optionList.add(optionsMap);
+					optionList.add(optionsMap1);
+					
+					//filled up question and answers
+					
+					query1 = "SELECT DISTINCT ASQ.QUESTIONDESCRIPTION, ASQ.ASSESSMENTSECTIONCODE, ASQ.ASSESSMENTSUBGROUP, "+
+							"		ASQ.ISFREETEXTAREAREQUIRED, X.* "+
+							"  FROM (" + 
+							"       SELECT A.CREFNUM, A.VERSION_SEQNO, A.QUESTIONID, NVL(A.QUESTIONVALUE, 'NA') QUESTIONVALUE, NVL(A.REMARKS, 'NA') REMARKS, "+
+							"		       NVL(A.IMPACTRISKRATING, 'NA') IMPACTRISKRATING, NVL(A.LIKELIHOODRISKRATING, 'NA') LIKELIHOODRISKRATING "+
+					        "         FROM TB_CMCUSTOMERQUESTIONDETAILS A "+
+							"        UNION ALL " + 
+							"       SELECT C.CREFNUM, C.VERSION_SEQNO, C.QUESTIONID, NVL(C.QUESTIONVALUE, 'NA') QUESTIONVALUE, NVL(C.REMARKS, 'NA') REMARKS, "+
+							"			   NVL(C.IMPACTRISKRATING, 'NA') IMPACTRISKRATING, NVL(C.LIKELIHOODRISKRATING, 'NA') LIKELIHOODRISKRATING "+
+					        "         FROM TB_CMTRANSQUESTIONDETAILS C "+
+							"        UNION ALL " + 
+							"       SELECT D.CREFNUM, D.VERSION_SEQNO, D.QUESTIONID, NVL(D.QUESTIONVALUE, 'NA') QUESTIONVALUE, NVL(D.REMARKS, 'NA') REMARKS, "+
+							"			   NVL(D.IMPACTRISKRATING, 'NA') IMPACTRISKRATING, NVL(D.LIKELIHOODRISKRATING, 'NA') LIKELIHOODRISKRATING "+
+					        "         FROM TB_CMDELIVERYCHANNELDETAILS D "+
+							"        UNION ALL " + 
+							"       SELECT E.CREFNUM, E.VERSION_SEQNO, E.QUESTIONID, NVL(E.QUESTIONVALUE, 'NA') QUESTIONVALUE, NVL(E.REMARKS, 'NA') REMARKS, "+
+							"			   NVL(E.IMPACTRISKRATING, 'NA') IMPACTRISKRATING, NVL(E.LIKELIHOODRISKRATING, 'NA') LIKELIHOODRISKRATING "+
+					        "         FROM TB_CMPRODUCTQUESTIONDETAILS E "+
+							"        UNION ALL " + 
+							"       SELECT F.CREFNUM, F.VERSION_SEQNO, F.QUESTIONID, NVL(F.QUESTIONVALUE, 'NA') QUESTIONVALUE, NVL(F.REMARKS, 'NA') REMARKS, "+
+							"			   NVL(F.IMPACTRISKRATING, 'NA') IMPACTRISKRATING, NVL(F.LIKELIHOODRISKRATING, 'NA') LIKELIHOODRISKRATING "+
+					        "         FROM TB_CMGEOGQUESTIONDETAILS F "+
+					        "		 UNION ALL " + 
+							"       SELECT B.CREFNUM, B.VERSION_SEQNO, B.QUESTIONID, NVL(B.QUESTIONVALUE, 'NA') QUESTIONVALUE, NVL(B.REMARKS, 'NA') REMARKS, " + 
+							"			   NVL(B.ASSESSMENTCTRLSCORE, 'NA') IMPACTRISKRATING, "+
+							"			   NVL((SELECT TO_CHAR(X.WEIGHTAGE) FROM TB_ASSESSMENTUNITMASTER X, TB_ASSESSMENTQUESTIONMASTER Y "+ 
+							"        WHERE X.ASSESSMENTUNIT = Y.ASSESSMENTUNIT "+ 
+							"          AND X.ASSESSMENTSECTIONCODE = Y.ASSESSMENTSECTIONCODE "+ 
+							"          AND X.ASSESSMENTSUBGROUP = Y.ASSESSMENTSUBGROUP "+ 
+							"          AND Y.QUESTIONID = B.QUESTIONID "+ 
+							"          AND Y.VERSION_SEQNO = B.VERSION_SEQNO "+ 
+							"          AND Y.ISENABLED = 'Y' ), '0') LIKELIHOODRISKRATING  "+ 
+							"         FROM TB_CMCONTROLPARAMETERDETAILS B "+
+							"       )X " + 
+					        " INNER JOIN TB_ASSESSMENTQUESTIONMASTER ASQ ON (X.QUESTIONID=ASQ.QUESTIONID AND X.VERSION_SEQNO = ASQ.VERSION_SEQNO) "+
+							" WHERE X.CREFNUM = ? "+
+							"   AND X.QUESTIONID = ? "+
+							"   AND X.VERSION_SEQNO = ?"+
+							" ORDER BY X.QUESTIONID, X.VERSION_SEQNO ";
+					
+					preparedStatement = connection.prepareStatement(query1);
+					preparedStatement.setString(1, COMPASSREFERENCENO);
+					preparedStatement.setString(2, QUESTIONIDArr[0]);
+					preparedStatement.setString(3, QUESTIONIDArr[1]);
+					resultSet = preparedStatement.executeQuery();	
+					
+					Map<String, Object> formDataMap = new LinkedHashMap<String, Object>();
+					
+					while(resultSet.next()) {
+						String QUESTIONVALUE = resultSet.getString("QUESTIONVALUE").trim();
+						String IMPACTRISKRATING = resultSet.getString("IMPACTRISKRATING").trim();
+						String LIKELIHOODRISKRATING = resultSet.getString("LIKELIHOODRISKRATING").trim();
+						formDataMap.put(QUESTIONVALUE, IMPACTRISKRATING.concat("~-~").concat(LIKELIHOODRISKRATING));
+						
+					}
+
+					optionList.add(formDataMap);										
+					optionSetMap.put(QUESTIONIDArr[0], optionList);
+						
+					optionsList.add(optionSetMap);
+				}	
+								
+				mainMap.put("SUBGROUPSLIST", subGroupsList);
+				mainMap.put("QUESTIONNAIRESLIST", questionsList);
+				mainMap.put("OPTIONSLIST", optionsList);
+				
+				String sql = "SELECT CREFNUM, ASSESSMENTUNIT, ASSESSMENTPERIOD, POCNAME, POCEMAIL, COMPLIANCE1, BUSINESS1, OTHER1, KEYBUSINESSNAME1, " + 
+							 "		 KEYBUSINESSROLE1, KEYBUSINESSNAME2, KEYBUSINESSROLE2, KEYBUSINESSNAME3, KEYBUSINESSROLE3, CUSTOMERSYSTEMGENRISK," + 
+							 "		 CUSTOMERPROVISRISK, CUSTOMERFINALRISK, CUSTOMERREMARKS, GEOGSYSTEMGENRISK, GEOGPROVISRISK, GEOGFINALRISK, " + 
+							 "		 GEOGREMARKS, PRODUCTSSYSTEMGENRISK, PRODUCTSPROVISRISK, PRODUCTSFINALRISK, PRODUCTSREMARKS, DELIVERYSYSTEMGENRISK, " + 
+							 "		 DELIVERYPROVISRISK, DELIVERYFINALRISK, DELIVERYREMARKS, TRANSACTIONSSYSTEMGENRISK, TRANSACTIONSPROVISRISK, " + 
+							 "		 TRANSACTIONSFINALRISK, TRANSACTIONSREMARKS, CONTROLSYSTEMGENRISK, CONTROLPROVISRISK, CONTROLFINALRISK, " + 
+							 "		 CONTROLREMARKS, CMOFFICERCODE, CMOFFICERUPDATETIMESTAMP, CMMANAGERCODE, CMMNGERUPDATETIMESTAMP, STATUS, " + 
+							 "		 CMOFFICERCOMMENTS, CMMANAGERCOMMENTS, COMPLIANCE2, BUSINESS2, OTHER2, RESIDUALSYSTEMGENRISK, RESIDUALPROVRISK, " +
+							 "       RESIDUALFINALRISK, RESIDUALREMARKS, TOTINHSYSGENRISK, TOTINHPROVISRISK, TOTINHFINALRISK "+
+							 "	FROM TB_CMGENRLFINALRISKDETAILS" + 
+							 " WHERE CREFNUM = ?"; 
+				
+				preparedStatement = connection.prepareStatement(sql);
+				preparedStatement.setString(1, COMPASSREFERENCENO);
+				resultSet = preparedStatement.executeQuery();
+				while(resultSet.next()) {
+					Map<String, String> generalDataMap = new LinkedHashMap<String, String>();
+					generalDataMap.put("ASSESSMENTUNIT", resultSet.getString("ASSESSMENTUNIT"));
+					generalDataMap.put("ASSESSMENTPERIOD", resultSet.getString("ASSESSMENTPERIOD"));
+					generalDataMap.put("POCNAME", resultSet.getString("POCNAME"));
+					generalDataMap.put("POCEMAIL", resultSet.getString("POCEMAIL"));
+					generalDataMap.put("COMPLIANCE1", resultSet.getString("COMPLIANCE1"));
+					generalDataMap.put("BUSINESS1", resultSet.getString("BUSINESS1"));
+					generalDataMap.put("OTHER1", resultSet.getString("OTHER1"));
+					generalDataMap.put("COMPLIANCE2", resultSet.getString("COMPLIANCE2"));
+					generalDataMap.put("BUSINESS2", resultSet.getString("BUSINESS2"));
+					generalDataMap.put("OTHER2", resultSet.getString("OTHER2"));
+					generalDataMap.put("KEYBUSINESSNAME1", resultSet.getString("KEYBUSINESSNAME1"));
+					generalDataMap.put("KEYBUSINESSROLE1", resultSet.getString("KEYBUSINESSROLE1"));
+					generalDataMap.put("KEYBUSINESSNAME2", resultSet.getString("KEYBUSINESSNAME2"));
+					generalDataMap.put("KEYBUSINESSROLE2", resultSet.getString("KEYBUSINESSROLE2"));
+					generalDataMap.put("KEYBUSINESSNAME3", resultSet.getString("KEYBUSINESSNAME3"));
+					generalDataMap.put("KEYBUSINESSROLE3", resultSet.getString("KEYBUSINESSROLE3"));
+					
+					generalDataMap.put("CUSTOMERSYSTEMGENRISK", resultSet.getString("CUSTOMERSYSTEMGENRISK"));
+					generalDataMap.put("CUSTOMERPROVISRISK", resultSet.getString("CUSTOMERPROVISRISK"));
+					double CUSTOMERFINALRISK = Double.parseDouble((resultSet.getString("CUSTOMERFINALRISK")));
+					generalDataMap.put("CUSTOMERFINALRISK", (CUSTOMERFINALRISK <= 2) ? "Low - "+CUSTOMERFINALRISK : (CUSTOMERFINALRISK > 2 && CUSTOMERFINALRISK <= 6) ? "Medium - "+CUSTOMERFINALRISK : (CUSTOMERFINALRISK > 6) ? "High - "+CUSTOMERFINALRISK : "");
+					generalDataMap.put("CUSTOMERREMARKS", resultSet.getString("CUSTOMERREMARKS"));
+					
+					generalDataMap.put("GEOGSYSTEMGENRISK", resultSet.getString("GEOGSYSTEMGENRISK"));
+					generalDataMap.put("GEOGPROVISRISK", resultSet.getString("GEOGPROVISRISK"));
+					//generalDataMap.put("GEOGFINALRISK", resultSet.getString("GEOGFINALRISK"));
+					double GEOGFINALRISK = Double.parseDouble((resultSet.getString("GEOGFINALRISK")));
+					generalDataMap.put("GEOGFINALRISK", (GEOGFINALRISK <= 2) ? "Low - "+GEOGFINALRISK : (GEOGFINALRISK > 2 && GEOGFINALRISK <= 6) ? "Medium - "+GEOGFINALRISK : (GEOGFINALRISK > 6) ? "High - "+GEOGFINALRISK : "");
+					generalDataMap.put("GEOGREMARKS", resultSet.getString("GEOGREMARKS"));
+					
+					generalDataMap.put("PRODUCTSSYSTEMGENRISK", resultSet.getString("PRODUCTSSYSTEMGENRISK"));
+					generalDataMap.put("PRODUCTSPROVISRISK", resultSet.getString("PRODUCTSPROVISRISK"));
+					//generalDataMap.put("PRODUCTSFINALRISK", resultSet.getString("PRODUCTSFINALRISK"));
+					double PRODUCTSFINALRISK = Double.parseDouble((resultSet.getString("PRODUCTSFINALRISK")));
+					generalDataMap.put("PRODUCTSFINALRISK", (PRODUCTSFINALRISK <= 2) ? "Low - "+PRODUCTSFINALRISK : (PRODUCTSFINALRISK > 2 && PRODUCTSFINALRISK <= 6) ? "Medium - "+PRODUCTSFINALRISK : (PRODUCTSFINALRISK > 6) ? "High - "+PRODUCTSFINALRISK : "");
+					generalDataMap.put("PRODUCTSREMARKS", resultSet.getString("PRODUCTSREMARKS"));
+					
+					generalDataMap.put("DELIVERYSYSTEMGENRISK", resultSet.getString("DELIVERYSYSTEMGENRISK"));
+					generalDataMap.put("DELIVERYPROVISRISK", resultSet.getString("DELIVERYPROVISRISK"));
+					//generalDataMap.put("DELIVERYFINALRISK", resultSet.getString("DELIVERYFINALRISK"));
+					double DELIVERYFINALRISK = Double.parseDouble((resultSet.getString("DELIVERYFINALRISK")));
+					generalDataMap.put("DELIVERYFINALRISK", (DELIVERYFINALRISK <= 2) ? "Low - "+DELIVERYFINALRISK : (DELIVERYFINALRISK > 2 && DELIVERYFINALRISK <= 6) ? "Medium - "+DELIVERYFINALRISK : (DELIVERYFINALRISK > 6) ? "High - "+DELIVERYFINALRISK : "");
+					generalDataMap.put("DELIVERYREMARKS", resultSet.getString("DELIVERYREMARKS"));
+					
+					generalDataMap.put("TRANSACTIONSSYSTEMGENRISK", resultSet.getString("TRANSACTIONSSYSTEMGENRISK"));
+					generalDataMap.put("TRANSACTIONSPROVISRISK", resultSet.getString("TRANSACTIONSPROVISRISK"));
+					//generalDataMap.put("TRANSACTIONSFINALRISK", resultSet.getString("TRANSACTIONSFINALRISK"));
+					double TRANSACTIONSFINALRISK = Double.parseDouble((resultSet.getString("TRANSACTIONSFINALRISK")));
+					generalDataMap.put("TRANSACTIONSFINALRISK", (TRANSACTIONSFINALRISK <= 2) ? "Low - "+TRANSACTIONSFINALRISK : (TRANSACTIONSFINALRISK > 2 && TRANSACTIONSFINALRISK <= 6) ? "Medium - "+TRANSACTIONSFINALRISK : (TRANSACTIONSFINALRISK > 6) ? "High - "+TRANSACTIONSFINALRISK : "");
+					generalDataMap.put("TRANSACTIONSREMARKS", resultSet.getString("TRANSACTIONSREMARKS"));
+					
+					generalDataMap.put("CONTROLSYSTEMGENRISK", resultSet.getString("CONTROLSYSTEMGENRISK"));
+					generalDataMap.put("CONTROLPROVISRISK", resultSet.getString("CONTROLPROVISRISK"));
+					//generalDataMap.put("CONTROLFINALRISK", resultSet.getString("CONTROLFINALRISK"));
+					double CONTROLFINALRISK = Double.parseDouble((resultSet.getString("CONTROLFINALRISK")));
+					generalDataMap.put("CONTROLFINALRISK", (CONTROLFINALRISK <= 2) ? "Low - "+CONTROLFINALRISK : (CONTROLFINALRISK > 2 && CONTROLFINALRISK <= 6) ? "Medium - "+CONTROLFINALRISK : (CONTROLFINALRISK > 6) ? "High - "+CONTROLFINALRISK : "");
+					generalDataMap.put("CONTROLREMARKS", resultSet.getString("CONTROLREMARKS"));
+					
+					generalDataMap.put("TOTINHSYSGENRISK", resultSet.getString("TOTINHSYSGENRISK"));
+					generalDataMap.put("TOTINHPROVISRISK", resultSet.getString("TOTINHPROVISRISK"));
+					generalDataMap.put("TOTINHFINALRISK", resultSet.getString("TOTINHFINALRISK"));
+					/*double TOTINHFINALRISK = Double.parseDouble((resultSet.getString("TOTINHFINALRISK")));
+					generalDataMap.put("TOTINHFINALRISK", (TOTINHFINALRISK <= 2) ? "Low - "+TOTINHFINALRISK : (TOTINHFINALRISK > 2 && TOTINHFINALRISK <= 6) ? "Medium - "+TOTINHFINALRISK : (TOTINHFINALRISK > 6) ? "High - "+TOTINHFINALRISK : "");*/
+					
+					generalDataMap.put("RESIDUALSYSTEMGENRISK", resultSet.getString("RESIDUALSYSTEMGENRISK"));
+					generalDataMap.put("RESIDUALPROVRISK", resultSet.getString("RESIDUALPROVRISK"));
+					generalDataMap.put("RESIDUALFINALRISK", resultSet.getString("RESIDUALFINALRISK"));
+					generalDataMap.put("RESIDUALREMARKS", resultSet.getString("RESIDUALREMARKS"));
+					
+					generalDataMap.put("CMOFFICERCODE", resultSet.getString("CMOFFICERCODE"));
+					generalDataMap.put("CMOFFICERUPDATETIMESTAMP", resultSet.getString("CMOFFICERUPDATETIMESTAMP"));
+					generalDataMap.put("CMOFFICERCOMMENTS", resultSet.getString("CMOFFICERCOMMENTS"));
+
+					generalDataMap.put("CMMANAGERCODE", resultSet.getString("CMMANAGERCODE"));
+					generalDataMap.put("CMMNGERUPDATETIMESTAMP", resultSet.getString("CMMNGERUPDATETIMESTAMP"));
+					generalDataMap.put("CMMANAGERCOMMENTS", resultSet.getString("CMMANAGERCOMMENTS"));
+					
+					generalDataMap.put("STATUS", resultSet.getString("STATUS"));
+
+					mainMap.put("GENERALDATAMAP", generalDataMap);
+				}
+				mainMap.put("STATUSAUDITLOG", getCMAuditLog(COMPASSREFERENCENO));
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			connectionUtil.closeResources(connection, preparedStatement, resultSet, null);
+		}
+		return mainMap;		
+	}
+	
+	public List<Map<String, String>> getCMAuditLog(String COMPASSREFNO) {
+		Connection connection = null;
+		List<Map<String, String>> dataList = new LinkedList<Map<String,String>>();
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String sql = "";
+		try{
+			connection = connectionUtil.getConnection();
+			sql = "SELECT DECODE(STATUS, 'CMO-P', CMOFFICERCODE, 'CMM-P', CMOFFICERCODE, 'CMM-A', CMMANAGERCODE, 'CMM-R', CMMANAGERCODE) USERCODE, " + 
+				  "       DECODE(STATUS, 'CMO-P', 'CM_OFFICER', 'CMM-P', 'CM_OFFICER', 'CMM-A', 'CM_MANAGER', 'CMM-R', 'CM_MANAGER') USERROLE, " + 
+				  "       DECODE(STATUS, 'CMO-P', 'Pending with CM Officer', 'CMM-P', 'Pending with CM Manager', 'CMM-A', 'Approved by CM Manager', 'CMM-R', 'Rejected by CM Manager') STATUS,  " + 
+				  "       FUN_DATETIMETOCHAR(DECODE(STATUS, 'CMO-P', CMOFFICERUPDATETIMESTAMP, 'CMM-P', CMOFFICERUPDATETIMESTAMP, 'CMM-A', CMMANAGERUPDATETIMESTAMP, 'CMM-R', CMMANAGERUPDATETIMESTAMP)) USERTIMESTAMP, " + 
+				  "       DECODE(STATUS, 'CMO-P', CMOFFICERCOMMENTS, 'CMM-P', CMOFFICERCOMMENTS, 'CMM-A', CMMANAGERCOMMENTS, 'CMM-R', CMMANAGERCOMMENTS) COMMENTS " + 
+				  "  FROM TB_CMFORMAUDITLOG "+
+				  " WHERE CREFNUM = ? "+
+				  " ORDER BY LOGTIMESTAMP DESC ";
+		
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, COMPASSREFNO);
+			resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				Map<String, String> dataMap = new LinkedHashMap<String, String>();
+				dataMap.put("USERCODE", resultSet.getString("USERCODE"));
+				dataMap.put("USERROLE", resultSet.getString("USERROLE"));
+				dataMap.put("STATUS", resultSet.getString("STATUS"));
+				dataMap.put("USERTIMESTAMP", resultSet.getString("USERTIMESTAMP"));
+				dataMap.put("COMMENTS", resultSet.getString("COMMENTS"));
+				dataList.add(dataMap);
+			}	
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			connectionUtil.closeResources(connection, preparedStatement, resultSet, null);
+		}
+		return dataList;
+	}
+	
+}

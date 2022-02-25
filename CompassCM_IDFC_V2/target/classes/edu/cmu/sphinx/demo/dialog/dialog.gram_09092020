@@ -1,0 +1,12 @@
+#JSGF V1.0;
+
+grammar dialog;
+
+
+
+public <module_command> = open (customer master | pending cases );
+
+public <greetings>  = ( how many alerts are there for the day | how many suspicions have been filed in the day
+ | who has closed maximum number of alerts | how many reports are pending to be filed | my name is ravi
+ | what is time | i am going to office);
+public <command> = (exit | stop | thank you please close);

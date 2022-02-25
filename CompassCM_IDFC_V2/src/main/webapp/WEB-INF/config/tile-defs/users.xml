@@ -1,0 +1,211 @@
+<!DOCTYPE tiles-definitions PUBLIC 
+	"-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+	"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<definition name="adminIndexTemplete" extends="defaultTemplate">
+    	<put-attribute name="title" value=" | Admin Console"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/ADMIN.jsp"/>
+    </definition>
+    <definition name="checkerIndexTemplete" extends="defaultTemplate">
+    	<put-attribute name="title" value=" | UAM Checker"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/CHECKER.jsp"/>
+    </definition>
+    <definition name="makerIndexTemplete" extends="defaultTemplate">
+    	<put-attribute name="title" value=" | UAM Maker"/>
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/MAKER.jsp"/>
+    </definition>
+    <definition name="uamReportsReviewIndexTemplete" extends="defaultTemplate">
+    	<put-attribute name="title" value=" | UAM Reports Review"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/UAMREPORTSREVIEW.jsp"/>
+    </definition>
+    <definition name="etlIndexTemplete" extends="defaultTemplate">
+    	<put-attribute name="title" value=" | ETL"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/ETL.jsp"/>
+    </definition>
+	<definition name="branchUserIndexTemplete" extends="defaultTemplate">
+    	<put-attribute name="title" value=" | BranchUser"/>
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/BRANCHUSER.jsp"/>
+    </definition>
+    <definition name="userIndexTemplete" extends="defaultTemplate">
+    	<put-attribute name="title" value=" | User"/>
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/USER.jsp"/>
+    </definition>
+    <definition name="amlUserIndexTemplete" extends="defaultTemplate">
+    	<put-attribute name="title" value=" | AMLUser"/>
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/AMLUSER.jsp"/>
+    </definition>
+    <definition name="amlUserL1IndexTemplete" extends="defaultTemplate">
+    	<put-attribute name="title" value=" | AMLUserL1"/>
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/AMLUSERL1.jsp"/>
+    </definition>
+    <definition name="amlUserL2IndexTemplete" extends="defaultTemplate">
+    	<put-attribute name="title" value=" | AMLUserL2"/>
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/AMLUSERL2.jsp"/>
+    </definition>
+    <definition name="amlUserL3IndexTemplete" extends="defaultTemplate">
+    	<put-attribute name="title" value=" | AMLUserL3"/>
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/AMLUSERL3.jsp"/>
+    </definition>
+    <definition name="amloIndexTemplete" extends="defaultTemplate">
+    	<put-attribute name="title" value=" | AMLO"/>
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/AMLO.jsp"/>
+    </definition>
+    <definition name="mlroIndexTemplete" extends="defaultTemplate">
+    	<put-attribute name="title" value=" | MLRO"/>
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/MLRO.jsp"/>
+    </definition>
+    <definition name="mlroL1IndexTemplete" extends="defaultTemplate">
+    	<put-attribute name="title" value=" | MLROL1"/>
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/MLROL1.jsp"/>
+    </definition>
+    <definition name="mlroL2IndexTemplete" extends="defaultTemplate">
+    	<put-attribute name="title" value=" | MLROLL2"/>
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/MLROL2.jsp"/>
+    </definition>
+    <definition name="amlRepIndexTemplete" extends="defaultTemplate">
+    	<put-attribute name="title" value=" | AMLReporting"/>
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/AMLREP.jsp"/>
+    </definition>
+    <definition name="fatcaUserIndexTemplete" extends="defaultTemplate">
+    	<put-attribute name="title" value=" | FATCAUser"/>
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/FATCAUSER.jsp"/>
+    </definition>
+    <definition name="fatcaRMUserIndexTemplete" extends="defaultTemplate">
+    	<put-attribute name="title" value=" | FATCARMUser"/>
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/FATCARMUSER.jsp"/>
+    </definition>
+    <definition name="fatcaOfficerIndexTemplete" extends="defaultTemplate">
+    	<put-attribute name="title" value=" | FATCAOfficer"/>
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/FATCAOFFICER.jsp"/>
+    </definition>
+    <definition name="fatcaManagerIndexTemplete" extends="defaultTemplate">
+    	<put-attribute name="title" value=" | FATCAManager"/>
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/FATCAMANAGER.jsp"/>
+    </definition>
+    <definition name="cpuAdminIndexTemplete" extends="defaultTemplate">
+    	<put-attribute name="title" value=" | CPUAdmin"/>
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/CPUADMIN.jsp"/>
+    </definition>
+    <definition name="cpuCheckerIndexTemplete" extends="defaultTemplate">
+    	<put-attribute name="title" value=" | CPUChecker"/>
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/CPUCHECKER.jsp"/>
+    </definition>
+    <definition name="cpuMakerIndexTemplete" extends="defaultTemplate">
+    	<put-attribute name="title" value=" | CPUMaker"/>
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/CPUMAKER.jsp"/>
+    </definition>
+    <definition name="auditUserIndexTemplete" extends="defaultTemplate">
+    	<put-attribute name="title" value=" | AuditUser"/>
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/AuditUser.jsp"/>
+    </definition>
+    <definition name="btgUserIndexTemplete" extends="defaultTemplate">
+    	<put-attribute name="title" value=" | BTG"/>
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/BTGUser.jsp"/>
+    </definition>
+    <definition name="itUserIndexTemplete" extends="defaultTemplate">
+    	<put-attribute name="title" value=" | IT"/>
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/ITUser.jsp"/>
+    </definition>
+    <definition name="rptMakerIndexTemplete" extends="defaultTemplate">
+	<put-attribute name="title" value=" | RPTMaker"/>
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/RPTMaker.jsp"/>
+	</definition>
+	<definition name="rptAdminIndexTemplete" extends="defaultTemplate">
+    	<put-attribute name="title" value=" | RPTAdmin"/>
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/RPTAdmin.jsp"/>
+	</definition>
+	<definition name="swiftUserIndexTemplete" extends="defaultTemplate">
+	<put-attribute name="title" value=" | SwiftUser"/>
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/SwiftUser.jsp"/>
+	</definition>
+	<definition name="swiftAdminIndexTemplete" extends="defaultTemplate">
+    	<put-attribute name="title" value=" | SwiftAdmin"/>
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/SwiftAdmin.jsp"/>
+	</definition>
+	<definition name="leaMakerIndexTemplete" extends="defaultTemplate">
+    	<put-attribute name="title" value=" | LEAMaker"/>
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/LEAMAKER.jsp"/>
+	</definition>
+	<definition name="leaCheckerIndexTemplete" extends="defaultTemplate">
+    	<put-attribute name="title" value=" | LEAChecker"/>
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/LEACHECKER.jsp"/>
+	</definition>
+	<definition name="screeningMakerIndexTemplete" extends="defaultTemplate">
+	<put-attribute name="title" value=" | ScreeningMaker"/>
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/ScreeningMaker.jsp"/>
+	</definition>
+	<definition name="screeningCheckerIndexTemplete" extends="defaultTemplate">
+    	<put-attribute name="title" value=" | ScreeningChecker"/>
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/ScreeningChecker.jsp"/>
+	</definition>
+	<definition name="cmOfficerIndexTemplete" extends="defaultTemplate">
+	<put-attribute name="title" value=" | CMOfficer"/>
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/CMOFFICER.jsp"/>
+	</definition>
+	<definition name="cmManagerIndexTemplete" extends="defaultTemplate">
+	<put-attribute name="title" value=" | CMManager"/>
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/CMMANAGER.jsp"/>
+	</definition>
+	<definition name="cmMakerIndexTemplete" extends="defaultTemplate">
+	<put-attribute name="title" value=" | CMMaker"/>
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/CMMAKER.jsp"/>
+	</definition>
+	<definition name="cmCheckerIndexTemplete" extends="defaultTemplate">
+	<put-attribute name="title" value=" | CMChecker"/>
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/CMCHECKER.jsp"/>
+	</definition>
+	<definition name="cmUAMMakerIndexTemplete" extends="defaultTemplate">
+	<put-attribute name="title" value=" | CMUAMMaker"/>
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/CMUAMMAKER.jsp"/>
+	</definition>
+	<definition name="cmUAMCheckerIndexTemplete" extends="defaultTemplate">
+	<put-attribute name="title" value=" | CMUAMChecker"/>
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/CMUAMCHECKER.jsp"/>
+	</definition>
+	<definition name="cmAdminMakerIndexTemplete" extends="defaultTemplate">
+	<put-attribute name="title" value=" | CMAdminMaker"/>
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/CMADMINMAKER.jsp"/>
+	</definition>
+	<definition name="cmAdminCheckerIndexTemplete" extends="defaultTemplate">
+	<put-attribute name="title" value=" | CMAdminChecker"/>
+    	<put-attribute name="header" value="/displayHeader"/>
+    	<put-attribute name="content" value="/WEB-INF/pages/users/CMADMINCHECKER.jsp"/>
+	</definition>
+</tiles-definitions>

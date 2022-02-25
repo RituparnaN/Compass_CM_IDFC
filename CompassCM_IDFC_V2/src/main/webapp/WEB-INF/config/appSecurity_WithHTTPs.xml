@@ -1,0 +1,79 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/security	http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+	
+	<http security="none" pattern="/ws/**"/>
+	
+	<http auto-config="true" use-expressions="true" disable-url-rewriting="true" servlet-api-provision="true">
+		<intercept-url pattern="/securityTesting/**" access="permitAll"/>
+		<intercept-url pattern="/**" method="OPTIONS" access="denyAll"/>
+	    <intercept-url pattern="/includes/**" access="permitAll"/>
+	    <intercept-url pattern="/getHashtoken" access="permitAll"/>	    
+		<intercept-url pattern="/loginFailure" access="isAnonymous()"/>
+		<intercept-url pattern="/logoutSuccess/**"  access="isAnonymous()"/>
+		<intercept-url pattern="/login" access="isAnonymous()" requires-channel="https"/>
+		
+		<intercept-url pattern="/admin/**" access="hasAnyRole('ROLE_ADMIN','ROLE_AUDITUSER','ROLE_MLRO','ROLE_AMLO','ROLE_MLROL1','ROLE_MLROL2','ROLE_BTGUSER')" requires-channel="https"/>
+		<intercept-url pattern="/branchuser/**" access="hasAnyRole('ROLE_BRANCHUSER','ROLE_FATCARMUSER')" requires-channel="https"/>
+		<intercept-url pattern="/user/**" access="hasAnyRole('ROLE_USER','ROLE_FATCARMUSER')" requires-channel="https"/>
+		<intercept-url pattern="/amluser/**" access="hasAnyRole('ROLE_AMLUSER','ROLE_FATCAUSER','ROLE_AUDITUSER','ROLE_AMLUSERL1','ROLE_AMLUSERL2','ROLE_AMLUSERL3','ROLE_BTGUSER')" requires-channel="https"/>
+		<intercept-url pattern="/amlo/**" access="hasAnyRole('ROLE_AMLO','ROLE_FATCAOFFICER','ROLE_AMLUSERL3')" requires-channel="https"/>
+		<intercept-url pattern="/mlro/**" access="hasAnyRole('ROLE_MLRO','ROLE_FATCAMANAGER','ROLE_AMLO','ROLE_MLROL1','ROLE_MLROL2')" requires-channel="https"/>
+		<intercept-url pattern="/amlrep/**" access="hasAnyRole('ROLE_AMLREP','ROLE_FATCAUSER','ROLE_AUDITUSER','ROLE_BTGUSER','ROLE_AMLO','ROLE_MLRO','ROLE_MLROL1','ROLE_MLROL2','ROLE_AMLUSER','ROLE_AMLUSERL1','ROLE_AMLUSERL2','ROLE_AMLUSERL3')" requires-channel="https"/>
+		<intercept-url pattern="/etl/**" access="hasRole('ROLE_ETL')" requires-channel="https"/>
+		<intercept-url pattern="/cpumaker/**" access="hasAnyRole('ROLE_CPUMAKER','ROLE_CPUCHECKER','ROLE_AMLUSER','ROLE_AMLO','ROLE_MLRO','ROLE_AMLREP')" requires-channel="https"/>
+		<intercept-url pattern="/cpuchecker/**" access="hasAnyRole('ROLE_CPUMAKER','ROLE_CPUCHECKER')" requires-channel="https"/>
+		<intercept-url pattern="/cpuadmin/**" access="hasRole('ROLE_CPUADMIN')" requires-channel="https"/>
+		<intercept-url pattern="/adminMaker/**" access="hasAnyRole('ROLE_ADMIN','ROLE_MAKER')" requires-channel="https"/>
+		<intercept-url pattern="/checker/**" access="hasRole('ROLE_CHECKER')" requires-channel="https"/>
+		<intercept-url pattern="/maker/**" access="hasRole('ROLE_MAKER')" requires-channel="https"/>
+		<intercept-url pattern="/common/**" access="hasAnyRole('ROLE_ADMIN','ROLE_BRANCHUSER','ROLE_USER','ROLE_AMLUSER','ROLE_AMLO','ROLE_MLRO','ROLE_AMLREP','ROLE_CHECKER','ROLE_MAKER','ROLE_ETL','ROLE_CPUMAKER','ROLE_CPUMAKER','ROLE_CPUADMIN','ROLE_CPUCHECKER','ROLE_AUDITUSER','ROLE_FATCAUSER','ROLE_FATCAOFFICER','ROLE_FATCAMANAGER','ROLE_FATCARMUSER','ROLE_RPTMAKER','ROLE_RPTADMIN','ROLE_SWIFTUSER','ROLE_SWIFTADMIN','ROLE_AMLUSERL1','ROLE_AMLUSERL2','ROLE_AMLUSERL3','ROLE_MLROL1','ROLE_MLROL2','ROLE_BTGUSER','ROLE_UAMREPORTSREVIEW')" requires-channel="https"/>
+		<intercept-url pattern="/rptadmin/**" access="hasRole('ROLE_RPTADMIN')" requires-channel="https"/>
+		<intercept-url pattern="/rptmaker/**" access="hasRole('ROLE_RPTMAKER')" requires-channel="https"/>
+		<intercept-url pattern="/rptcommon/**" access="hasAnyRole('ROLE_RPTMAKER','ROLE_RPTADMIN')" requires-channel="https"/>
+		<intercept-url pattern="/swiftuser/**" access="hasRole('ROLE_SWIFTUSER')" requires-channel="https"/>
+		<intercept-url pattern="/swiftadmin/**" access="hasRole('ROLE_SWIFTADMIN')" requires-channel="https"/>
+		<intercept-url pattern="/swiftcommon/**" access="hasAnyRole('ROLE_SWIFTUSER','ROLE_SWIFTADMIN')" requires-channel="https"/>
+		<intercept-url pattern="/**" access="isAuthenticated()" />
+		
+		<access-denied-handler error-page="/403" />		
+
+		<form-login login-page="/login" default-target-url="/index" login-processing-url="/loginAction"
+		    username-parameter="username" password-parameter="password" authentication-failure-url="/loginFailure"
+		    authentication-success-handler-ref="loginSuccessHandler"
+			authentication-failure-handler-ref="loginFailedHandler"/>
+
+		<logout logout-success-url="/logoutSuccess/1" delete-cookies="JSESSIONID"
+			invalidate-session="true" logout-url="/logout" />
+
+		<csrf />
+
+		<headers>
+			<xss-protection enabled="true" />
+			<frame-options policy="DENY" />
+			<hsts include-subdomains="true" max-age-seconds="31536000"/>
+			<content-type-options />
+			<xss-protection block="true"/>
+		</headers>
+		
+		<session-management session-fixation-protection="newSession" invalid-session-url="/logoutSuccess/4" 
+							session-authentication-error-url="/logoutSuccess/2">
+			<concurrency-control max-sessions="1" session-registry-ref="sessionRegistry" 
+								 expired-url="/logoutSuccess/3"/>
+		</session-management>
+		
+		<port-mappings>
+			<port-mapping http="80" https="443"/>
+	        <port-mapping http="${compass.aml.ports.http}" https="${compass.aml.ports.https}"/>
+    	</port-mappings>
+		
+		<custom-filter ref="contextSettingFilter" before="FORM_LOGIN_FILTER"/>
+	</http>
+	
+	<authentication-manager alias="compassAuthenticationManager">
+        <authentication-provider  ref="compassAuthenticationProvider" />
+    </authentication-manager>
+	
+	<beans:bean id="sessionRegistry" class="org.springframework.security.core.session.SessionRegistryImpl" />
+	</beans:beans>

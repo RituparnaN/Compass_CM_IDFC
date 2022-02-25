@@ -1,0 +1,170 @@
+CREATE OR REPLACE PROCEDURE STP_SAVEAMLCASECOMMENTDETAILS
+(
+ i_vcCaseNos              IN VARCHAR2, i_vcCaseStatus           IN VARCHAR2,
+ i_vcComments             IN VARCHAR2, i_vcFraudIndicator       IN VARCHAR2,  
+ i_vcRemovalReason        IN VARCHAR2, i_vcOutcomeIndicator     IN VARCHAR2,  
+ i_vcHighRiskReasonCode   IN VARCHAR2, i_vcAddedToFalsePositive IN VARCHAR2,  
+ i_vcLastReviewedDate     IN VARCHAR2, i_vcUserCode             IN VARCHAR2,  
+ i_vcGroupCode            IN VARCHAR2, i_vcIPAddress            IN VARCHAR2,  
+ io_cuRestultSet          IN OUT SYS_REFCURSOR
+)
+-- EXEC STP_SAVEAMLCASECOMMENTDETAILS('119349','11','AMLuser','ROLE_AMLUSER','192.0.0.1',:KG);
+AS
+  vcQuery              VARCHAR2(5000);
+  vcupdateMessage      VARCHAR2(5000) := 'Error occured while updating the status of the case';
+  vcCaseCustomerId     VARCHAR2(100) := '';
+  vcReviewedCustomerId VARCHAR2(100) := '';
+  nCountValue          NUMBER := 0;
+BEGIN
+ 
+ DELETE FROM COMAML.C;
+ INSERT INTO COMAML.C 
+ VALUES('i_vcComments: '||i_vcComments||' i_vcFraudIndicator: '||i_vcFraudIndicator||' i_vcRemovalReason: '||i_vcRemovalReason||' i_vcOutcomeIndicator: '||i_vcOutcomeIndicator||' i_vcHighRiskReasonCode: '||i_vcHighRiskReasonCode||' i_vcAddedToFalsePositive: '||i_vcAddedToFalsePositive);
+ COMMIT;
+
+ BEGIN
+    SELECT A.CUSTOMERID, NVL(TRIM(B.CUSTOMERID),'NOTFOUND') REVIEWEDCUSTID 
+      INTO vcCaseCustomerId, vcReviewedCustomerId
+      FROM COMAML.TB_CASEWORKFLOWDETAILS A 
+      LEFT OUTER JOIN COMAML.TB_CUSTOMERLASTREVIEWEDDETAILS B ON A.CUSTOMERID = B.CUSTOMERID 
+     WHERE A.CASENO = i_vcCaseNos ;
+
+     IF(vcReviewedCustomerId NOT IN ('NOTFOUND')) THEN
+       nCountValue := 1;
+     END IF;
+   -- nCountValue := 1;
+ END;
+
+
+IF(i_vcGroupCode = 'ROLE_USER') THEN
+
+UPDATE COMAML.TB_CASEWORKFLOWDETAILS 
+   SET USERCODE = i_vcUserCode, USERCOMMENTS = i_vcComments, CASESTATUS = i_vcCaseStatus, 
+       USERREASONCODE = i_vcFraudIndicator, USERADDEDTOFALSEPOSITIVE = i_vcAddedToFalsePositive, USERTIMESTAMP = SYSTIMESTAMP, 
+       ACCOUNTREVIEWEDDATE = TO_TIMESTAMP(i_vcLastReviewedDate,'DD/MM/YYYY'), 
+       USER_ACCOUNTREVIEWEDDATE = TO_TIMESTAMP(i_vcLastReviewedDate,'DD/MM/YYYY'), 
+       USERCASESTATUS = i_vcCaseStatus 
+ WHERE CASENO = i_vcCaseNos;
+
+END IF;
+
+IF(i_vcGroupCode = 'ROLE_AMLUSER') THEN
+
+IF(i_vcCaseStatus = '15') THEN
+
+ UPDATE COMAML.TB_CASEWORKFLOWDETAILS 
+    SET AMLUSERCODE = i_vcUserCode, AMLUSER_BRCOMMENTS = i_vcComments,
+        CASESTATUS = i_vcCaseStatus, AMLUSER_BRREASONCODE = i_vcFraudIndicator,
+	AMLUSER_BRADDEDTOFALSEPOSITIVE = i_vcAddedToFalsePositive, AMLUSER_BRTIMESTAMP = SYSTIMESTAMP, 
+	ACCOUNTREVIEWEDDATE = TO_TIMESTAMP(i_vcLastReviewedDate,'DD/MM/YYYY'), 
+	AMLUSER_BRACCOUNTREVIEWEDDATE = TO_TIMESTAMP(i_vcLastReviewedDate,'DD/MM/YYYY'), 
+	AMLUSER_BRCASESTATUS = i_vcCaseStatus
+  WHERE CASENO = i_vcCaseNos;
+END IF;
+ UPDATE COMAML.TB_CASEWORKFLOWDETAILS 
+    SET AMLUSERCODE = i_vcUserCode, AMLUSERCOMMENTS = i_vcComments,
+        CASESTATUS = i_vcCaseStatus, AMLUSERREASONCODE = i_vcFraudIndicator,
+	AMLUSERADDEDTOFALSEPOSITIVE = i_vcAddedToFalsePositive, AMLUSERTIMESTAMP = SYSTIMESTAMP, 
+	ACCOUNTREVIEWEDDATE = TO_TIMESTAMP(i_vcLastReviewedDate,'DD/MM/YYYY'), 
+	AMLUSER_ACCOUNTREVIEWEDDATE = TO_TIMESTAMP(i_vcLastReviewedDate,'DD/MM/YYYY'), 
+	AMLUSERCASESTATUS = i_vcCaseStatus
+  WHERE CASENO = i_vcCaseNos;
+
+END IF;
+
+IF(i_vcGroupCode = 'ROLE_AMLO') THEN
+IF(i_vcCaseStatus IS NOT NULL AND i_vcCaseStatus = '7') THEN
+
+ UPDATE COMAML.TB_CASEWORKFLOWDETAILS 
+    SET AMLOUSERCODE = i_vcUserCode, AMLOCOMMENTS = i_vcComments,
+        CASESTATUS = i_vcCaseStatus, AMLOREMOVALREASONCODE = i_vcRemovalReason,
+	AMLOADDEDTOFALSEPOSITIVE = i_vcAddedToFalsePositive, AMLOTIMESTAMP = SYSTIMESTAMP, 
+	ACCOUNTREVIEWEDDATE = TO_TIMESTAMP(i_vcLastReviewedDate,'DD/MM/YYYY'), 
+	AMLO_ACCOUNTREVIEWEDDATE = TO_TIMESTAMP(i_vcLastReviewedDate,'DD/MM/YYYY'), 
+	AMLOCASESTATUS = i_vcCaseStatus
+  WHERE CASENO = i_vcCaseNos;
+
+ELSIF(i_vcCaseStatus IS NOT NULL AND i_vcCaseStatus = '8') THEN
+
+ UPDATE COMAML.TB_CASEWORKFLOWDETAILS 
+    SET AMLOUSERCODE = i_vcUserCode, AMLOCOMMENTS = i_vcComments,
+        AMLOOUTCOMEINDICATOR = i_vcOutcomeIndicator, AMLOHIGHRISKREASONCODE = i_vcHighRiskReasonCode, 
+        CASESTATUS = i_vcCaseStatus, AMLOTIMESTAMP = SYSTIMESTAMP, 
+	ACCOUNTREVIEWEDDATE = TO_TIMESTAMP(i_vcLastReviewedDate,'DD/MM/YYYY'), 
+	AMLO_ACCOUNTREVIEWEDDATE = TO_TIMESTAMP(i_vcLastReviewedDate,'DD/MM/YYYY'), 
+	AMLOCASESTATUS = i_vcCaseStatus
+  WHERE CASENO = i_vcCaseNos;
+
+ELSE
+
+ UPDATE COMAML.TB_CASEWORKFLOWDETAILS 
+    SET AMLOUSERCODE = i_vcUserCode, AMLOCOMMENTS = i_vcComments,
+        AMLOTIMESTAMP = SYSTIMESTAMP
+  WHERE CASENO = i_vcCaseNos;
+
+END IF;
+
+END IF;
+
+IF(i_vcGroupCode = 'ROLE_MLRO') THEN
+IF(i_vcCaseStatus IS NOT NULL AND i_vcCaseStatus = '9') THEN
+
+ UPDATE COMAML.TB_CASEWORKFLOWDETAILS 
+    SET MLROUSERCODE = i_vcUserCode, MLROCOMMENTS = i_vcComments,
+        CASESTATUS = i_vcCaseStatus, MLROREMOVALREASONCODE = i_vcRemovalReason,
+	MLROADDEDTOFALSEPOSITIVE = i_vcAddedToFalsePositive, MLROTIMESTAMP = SYSTIMESTAMP, 
+	ACCOUNTREVIEWEDDATE = TO_TIMESTAMP(i_vcLastReviewedDate,'DD/MM/YYYY'), 
+	MLRO_ACCOUNTREVIEWEDDATE = TO_TIMESTAMP(i_vcLastReviewedDate,'DD/MM/YYYY'), 
+	MLROCASESTATUS = i_vcCaseStatus
+  WHERE CASENO = i_vcCaseNos;
+
+ELSIF(i_vcCaseStatus IS NOT NULL AND i_vcCaseStatus = '10') THEN
+
+ UPDATE COMAML.TB_CASEWORKFLOWDETAILS 
+    SET MLROUSERCODE = i_vcUserCode, MLROCOMMENTS = i_vcComments,
+        MLROOUTCOMEINDICATOR = i_vcOutcomeIndicator, MLROHIGHRISKREASONCODE = i_vcHighRiskReasonCode, 
+        CASESTATUS = i_vcCaseStatus, MLROTIMESTAMP = SYSTIMESTAMP, 
+	ACCOUNTREVIEWEDDATE = TO_TIMESTAMP(i_vcLastReviewedDate,'DD/MM/YYYY'), 
+	MLRO_ACCOUNTREVIEWEDDATE = TO_TIMESTAMP(i_vcLastReviewedDate,'DD/MM/YYYY'), 
+	MLROCASESTATUS = i_vcCaseStatus
+  WHERE CASENO = i_vcCaseNos;
+
+ELSE
+
+ UPDATE COMAML.TB_CASEWORKFLOWDETAILS 
+    SET MLROUSERCODE = i_vcUserCode, MLROCOMMENTS = i_vcComments,
+        MLROTIMESTAMP = SYSTIMESTAMP
+  WHERE CASENO = i_vcCaseNos;
+
+END IF;
+
+END IF;
+
+IF(nCountValue = 0) THEN
+  INSERT INTO COMAML.TB_CUSTOMERLASTREVIEWEDDETAILS(
+         CUSTOMERID, LASTREVIEWEDDATE, LASTREVIEWEDCOMMENTS, UPDATEDBY, UPDATETIMESTAMP) 
+  VALUES(vcCaseCustomerId, TO_TIMESTAMP(i_vcLastReviewedDate,'DD/MM/YYYY'), i_vcComments, i_vcUserCode, SYSTIMESTAMP );
+
+ELSE
+
+  UPDATE COMAML.TB_CUSTOMERLASTREVIEWEDDETAILS 
+     SET LASTREVIEWEDDATE = TO_TIMESTAMP(i_vcLastReviewedDate,'DD/MM/YYYY'),
+	 LASTREVIEWEDCOMMENTS = i_vcComments, UPDATEDBY = i_vcUserCode, UPDATETIMESTAMP =  SYSTIMESTAMP
+   WHERE CUSTOMERID = vcCaseCustomerId ;
+
+END IF;
+
+INSERT INTO COMAML.TB_USERLOG(
+       USERCODE, LOGMESSAGE, LOGDATETIME, TERMINALNAME, MODULE, LOGTYPE)
+VALUES (i_vcUserCode,'Added comment for Case '||i_vcCaseNos||' ', SYSTIMESTAMP, i_vcIPAddress,'CASEMANAGER','0');
+
+COMMIT;
+
+vcupdateMessage := 'The status of the case has been updated successfully';
+
+  OPEN io_cuRestultSet FOR 
+SELECT vcupdateMessage AS UPDATEMESSAGE 
+  FROM DUAL;
+
+END STP_SAVEAMLCASECOMMENTDETAILS;
+/

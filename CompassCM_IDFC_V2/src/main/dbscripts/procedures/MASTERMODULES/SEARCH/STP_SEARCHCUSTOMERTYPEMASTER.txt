@@ -1,0 +1,43 @@
+CREATE OR REPLACE PROCEDURE STP_SEARCHCUSTOMERTYPEMASTER(
+ i_vcCustomerType IN VARCHAR2, i_vcDescription IN VARCHAR2,
+ i_vcRiskRating IN VARCHAR2,   i_vcAccountHolderType IN VARCHAR2,
+ i_vcUserCode   IN VARCHAR2,   i_vcGroupCode  IN VARCHAR2,	
+ i_vcIPAddress  IN VARCHAR2,   io_cuRESTULTSET IN OUT SYS_REFCURSOR
+)
+-- EXEC STP_SEARCHCUSTOMERTYPEMASTER('','','','','','','',:KG);
+AS
+  vcQuery varchar2(5000);
+  vcCustomerType VARCHAR2(4000) := i_vcCustomerType;
+  vcDescription VARCHAR2(4000) := '%'||i_vcDescription||'%';
+BEGIN
+
+vcQuery :=' SELECT ROWNUM AS "app.common.serialNo", CUSTOMERTYPE AS "app.common.customerType", '
+	||'			   DESCRIPTION AS "app.common.description", CUSTOMERGROUPTYPE AS "app.common.customerGroupType", '
+	||'        CASE WHEN RISKRATING = ''1'' THEN ''LOW'' WHEN RISKRATING = ''2'' THEN ''MEDIUM'' '
+	||'             WHEN RISKRATING = ''3'' THEN ''HIGH'' ELSE ''LOW'' END "app.common.riskRating" '
+	||'   FROM COMAML.TB_CUSTOMERTYPEMASTER A '
+	||'  WHERE 1 = 1 ';
+
+IF TRIM(UPPER(i_vcCustomerType)) IS NOT NULL THEN
+vcQuery := vcQuery||' AND A.CUSTOMERTYPE = '''||vcCustomerType||''' ';
+END IF;
+IF TRIM(UPPER(i_vcDescription)) IS NOT NULL THEN
+vcQuery := vcQuery||' AND A.DESCRIPTION LIKE '''||vcDescription||''' ';
+END IF;
+IF TRIM(UPPER(i_vcRiskRating)) IS NOT NULL And UPPER(i_vcRiskRating) NOT IN('ALL') THEN
+vcQuery := vcQuery||' AND A.RISKRATING = '''||i_vcRiskRating||''' ';
+END IF;
+IF TRIM(UPPER(i_vcAccountHolderType)) IS NOT NULL AND UPPER(i_vcAccountHolderType) NOT IN ('ALL') THEN
+vcQuery := vcQuery||' AND A.CUSTOMERGROUPTYPE = '''||i_vcAccountHolderType||''' ';
+END IF;
+
+DELETE FROM COMAML.C;
+INSERT INTO COMAML.C VALUES(vcQuery);
+Commit;
+
+vcQuery := vcQuery || ' AND ROWNUM <= 500 ';
+
+OPEN io_cuRESTULTSET FOR vcQuery;
+
+END STP_SEARCHCUSTOMERTYPEMASTER;
+/

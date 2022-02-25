@@ -1,0 +1,71 @@
+CREATE OR REPLACE PROCEDURE STP_SEARCHALERTENGINES(
+i_vcFromDate      IN VARCHAR2, i_vcToDate IN VARCHAR2,     i_vcAccountNo IN VARCHAR2,
+i_vcCustomerId    IN VARCHAR2, i_vcFromAmount IN VARCHAR2, i_vcToAmount IN VARCHAR2,
+i_vcAlertPriority IN VARCHAR2, i_vcAlertCode IN VARCHAR2,  i_vcAlertNo IN VARCHAR2,
+i_vcProductCode   IN VARCHAR2, i_vcUserCode IN VARCHAR2,   i_vcGroupCode IN VARCHAR2,
+i_vcIPAddress     IN VARCHAR2, io_ResultSet IN OUT SYS_REFCURSOR
+)
+-- EXEC STP_SEARCHALERTENGINES('01/01/2011','01/01/2016','','','','','','','','','','','',:KG);
+AS
+  vcSql Varchar2(32000);
+BEGIN 
+
+vcSql := ' SELECT ROWNUM AS ROWPOSITION, ALERTNO, A.ALERTMESSAGE ALERTMESSAGE, ALERTPRIORITY, INSTRUMENTCODE, INSTRUMENTNAME, '||
+         '        ACCOUNTNO, CUSTOMERID, CUSTOMERNAME, BRANCHCODE, BRANCHNAME, '||
+	     '        NVL(TRIM(TRANSACTIONNO),''N.A.'') TRANSACTIONNO, FUN_DATETOCHAR(TRANSACTIONDATETIME) TRANSACTIONDATETIME, '||
+	     '        AMOUNT, FUN_DATETOCHAR(A.ALERTDATE) ALERTDATE, A.ALERTCODE ALERTCODE, A.ALERTSTATUS, '||
+	     '        DEPOSITORWITHDRAWAL, CALCULATEDVALUE, BENCHMARKVALUE, PRODUCTCODE, PRODUCTNAME, RISKRATING, '||
+	     '        B.ALERTNAME ALERTNAME, B.DESCRIPTION DESCRIPTION, B.ALERTTYPE ALERTTYPE '||
+	     '   FROM COMAML.TB_ALERTSGENERATED A '||
+         '   LEFT OUTER JOIN COMAML.TB_ALERTMASTER B ON B.ALERTCODE = A.ALERTCODE '||
+	     '  WHERE 1 = 1 ';
+
+IF(i_vcFromDate IS NOT NULL AND i_vcFromDate NOT IN ('')) THEN
+  vcSql := vcSql || ' AND A.ALERTDATE >= FUN_CHARTODATE(''||i_vcFromDate||'') ';
+END IF;
+
+IF(i_vcToDate IS NOT NULL AND i_vcToDate NOT IN ('')) THEN
+  vcSql := vcSql || ' AND A.ALERTDATE < FUN_CHARTODATE(''||i_vcToDate||'') + 1 ';
+END IF;
+
+IF(i_vcAccountNo IS NOT NULL AND i_vcAccountNo NOT IN ('')) THEN
+  vcSql := vcSql || ' AND A.ACCOUNTNO = '''||i_vcAccountNo||''' ';
+END IF;
+
+IF(i_vcCustomerId IS NOT NULL AND i_vcCustomerId NOT IN ('')) THEN
+  vcSql := vcSql || ' AND A.CUSTOMERID = '''||i_vcCustomerId||''' ';
+END IF;
+
+IF(i_vcFromAmount IS NOT NULL AND i_vcFromAmount NOT IN ('')) THEN
+  vcSql := vcSql || ' AND A.AMOUNT >= '||i_vcFromAmount||' ';
+END IF;
+
+IF(i_vcToAmount IS NOT NULL AND i_vcToAmount NOT IN ('')) THEN
+  vcSql := vcSql || ' AND A.AMOUNT <= '||i_vcToAmount||' ';
+END IF;
+
+IF(i_vcAlertPriority IS NOT NULL AND i_vcAlertPriority NOT IN ('','ALL')) THEN
+  vcSql := vcSql || ' AND A.ALERTPRIORITY = '||i_vcAlertPriority||' ';
+END IF;
+
+IF(i_vcAlertCode IS NOT NULL AND i_vcAlertCode  NOT IN ('')) THEN
+  vcSql := vcSql || ' AND A.ALERTCODE = '''||i_vcAlertCode ||''' ';
+END IF;
+
+IF(i_vcAlertNo IS NOT NULL AND i_vcAlertNo NOT IN ('')) THEN
+  vcSql := vcSql || ' AND A.ALERTNO = '''||i_vcAlertNo||''' ';
+END IF;
+
+IF(i_vcProductCode IS NOT NULL AND i_vcProductCode NOT IN ('')) THEN
+  vcSql := vcSql || ' AND A.PRODUCTCODE = '''||i_vcProductCode||''' ';
+END IF;
+
+vcSql := vcSql || ' AND ROWNUM <= 500 ';
+
+OPEN io_ResultSet FOR vcSql;
+
+
+END STP_SEARCHALERTENGINES;
+/
+
+

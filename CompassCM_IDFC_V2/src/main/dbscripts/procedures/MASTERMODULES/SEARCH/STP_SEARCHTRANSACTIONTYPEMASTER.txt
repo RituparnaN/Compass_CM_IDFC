@@ -1,0 +1,33 @@
+CREATE OR REPLACE PROCEDURE STP_SEARCHTRANSTYPEMASTER(
+ i_vcTransactionTypeCode IN VARCHAR2, i_vcDescription IN VARCHAR2,
+ i_vcTransactionType IN VARCHAR2, 	  i_vcUserCode    IN VARCHAR2,
+ i_vcGroupCode IN VARCHAR2, 		  i_vcIPAddress   IN VARCHAR2,  
+ io_cuRESTULTSET IN OUT SYS_REFCURSOR
+)
+-- EXEC STP_SEARCHTRANSTYPEMASTER('','','','','','',:KG);
+AS
+  vcQuery varchar2(5000);
+  vcTransactionTypeCode VARCHAR2(4000) := '%'||i_vcTransactionTypeCode||'%';
+  vcDescription VARCHAR2(4000) := '%'||i_vcDescription||'%';
+
+BEGIN
+
+vcQuery :=' SELECT ROWNUM AS ROWPOSITION, TRANSACTIONTYPE TRANSACTIONTYPECODE, CLS_CODE TRANSACTIONTYPE, DESCRIPTION '
+	||'   FROM COMAML.TB_TRANSACTIONMASTER A '
+	||'  WHERE 1 = 1 ';
+IF TRIM(UPPER(i_vcTransactionTypeCode)) IS NOT NULL THEN
+vcQuery := vcQuery||' AND A.TRANSACTIONTYPE||''/''||A.TRANSUBTYPE LIKE '''||vcTransactionTypeCode||''' ';
+END IF;
+IF TRIM(UPPER(i_vcDescription)) IS NOT NULL THEN
+vcQuery := vcQuery||' AND UPPER(A.DESCRIPTION) LIKE UPPER('''||vcDescription||''') ';
+END IF;
+IF TRIM(UPPER(i_vcTransactionType)) IS NOT NULL  AND UPPER(i_vcTransactionType) NOT IN ('A') THEN
+vcQuery := vcQuery||' AND A.CLS_SUB_CODE = '''||i_vcTransactionType||''' ';
+END IF;
+
+vcQuery := vcQuery || ' AND ROWNUM <= 500 ';
+
+OPEN io_cuRESTULTSET FOR vcQuery;
+
+END STP_SEARCHTRANSTYPEMASTER;
+/

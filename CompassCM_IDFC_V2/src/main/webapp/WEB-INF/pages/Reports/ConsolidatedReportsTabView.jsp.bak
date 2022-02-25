@@ -1,0 +1,124 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1" import="java.util.*"%>
+<%@ include file="../tags/tags.jsp"%>
+<%
+String contextPath = request.getContextPath()==null?"":request.getContextPath();
+%>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+	var id = '${UNQID}';
+	 		
+	
+	compassTopFrame.init(id, 'consolidatedReportsSearchTable', 'dd/mm/yy');
+	
+	$('.panelSlidingConsolidatedReports'+id).on("click", function (e) {
+		var mainRow = $(this).parents(".compassrow"+id);
+		compassTopFrame.searchPanelSliding(id, mainRow, 'consolidatedReportsSearchResultPanel');
+    });
+	
+	
+	$("#consolidatedReportsTab").tab();
+	
+		
+		$("#consolidatedReportsSearch").click(function(){			
+			var fromDate = $("#FROMDATE_"+id).val();
+			var toDate = $("#TODATE_"+id).val();
+			var sourceSystem = $("#consolidatedReportsSourceSystem").val();
+			$("#consolidatedReportsSearchResultPanel"+id).css("display", "block");
+			var mainRow = $(this).parents(".compassrow"+id);
+			var slidingDiv = $(mainRow).children().children().children();
+			var panelBody = $(mainRow).children().children().find(".panelSearchForm");
+			
+			$.ajax({
+				url: "${pageContext.request.contextPath}/common/getConsolidatedReportTabView",
+				cache: false,
+				type: "POST",
+				data: "FromDate="+fromDate+"&ToDate="+toDate+"&ReportFrequency="+sourceSystem,
+				success: function(res){
+					$("#consolidatedReportsSearchResult").html(res);
+					$(panelBody).slideUp();
+					$(slidingDiv).addClass('card-collapsed');
+					$(slidingDiv).find('i.collapsable').removeClass('fa-chevron-up').addClass('fa-chevron-down');
+					$(mainRow).next().find(".compassrow"+id).find(".card-header").next().slideDown();
+				},
+				error: function(a,b,c){
+					alert(a+b+c);
+				}
+			});
+		});
+		
+		
+		$("#consolidatedReportsDownloadXLS").click(function(){
+			var fromDate = $("#FROMDATE_"+id).val();
+			var toDate = $("#TODATE_"+id).val();
+			var sourceSystem = $("#consolidatedReportsSourceSystem").val();
+			var reportFrequency = $("#consolidatedReportsSourceSystem").val();
+			window.open("<%=contextPath%>/getConsolidatedReportTabXLS?FromDate="+fromDate+"&ToDate="+toDate+"&SourceSystem="+sourceSystem+"&ReportFrequency="+reportFrequency);
+		});
+	});	
+</script>
+
+<div class="row compassrow${UNQID}">
+	<div class="col-sm-12">
+		<div class="card card-primary panel_consolidatedReports">
+			<div class="card-header panelSlidingConsolidatedReports${UNQID} clearfix">
+				<h6 class="card-title pull-${dirL}">Consolidated Reports</h6>
+				<div class="btn-group pull-${dirR} clearfix">
+					<span class="pull-right"><i class="collapsable fa fa-chevron-up"></i></span>
+				</div>
+			</div>
+			<div class="panelSearchForm">
+			<table class="table table-bordered table-stripped consolidatedReportsSearchTable"  style="margin-bottom: 0px;">
+					<tbody>
+						<tr>
+							<td width="15%">
+								From Date
+							</td>
+							<td width="30%">
+								<input type="text" class="form-control input-sm datepicker" id="FROMDATE_${UNQID}" name="consolidatedReportsFromDate"/>
+							</td>
+							<td>&nbsp;</td>
+							<td width="15%">
+								To Date
+							</td>
+							<td width="30%">
+								<input type="text" class="form-control input-sm datepicker" id="TODATE_${UNQID}" name="consolidatedReportsToDate"/>
+							</td>
+						</tr>
+						<tr>
+							<td width="15%">
+								Frequency
+							</td>
+							<td width="30%">
+								<select name="SourceSystem" class="form-control" id="consolidatedReportsSourceSystem">
+									<option value="Daily">Daily</option>
+									<option value="Monthly">Monthly</option>
+									<option value="Quarterly">Quarterly</option>
+									<option value="MIS1">Quarterly</option>
+								</select>
+							</td>
+							<td colspan="3">&nbsp;</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="card-footer clearfix">
+				<div class="pull-${dirR}">
+					<button type="submit" class="btn btn-sm btn-primary" id="consolidatedReportsSearch">Search</button></td>
+					<button type="button" class="btn btn-sm btn-warning" id="consolidatedReportsDownloadXLS">View Excel</button></td>
+				</div>
+			</div>
+			</div>
+		</div>
+		<div class="card card-primary" id="consolidatedReportsSearchResultPanel${UNQID}" style="display: none;">
+			<div class="card-header panelSlidingConsolidatedReports${UNQID} clearfix">
+				<h6 class="card-title pull-${dirL}">Consolidated Reports Result</h6>
+				<div class="btn-group pull-${dirR} clearfix">
+					<span class="pull-right"><i class="collapsable fa fa-chevron-up"></i></span>
+				</div>
+			</div>
+			<div id="consolidatedReportsSearchResult"></div>
+			         
+		</div>
+	</div>
+</div>		

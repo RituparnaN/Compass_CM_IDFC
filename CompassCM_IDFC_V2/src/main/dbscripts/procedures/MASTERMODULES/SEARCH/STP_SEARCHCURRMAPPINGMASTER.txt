@@ -1,0 +1,30 @@
+CREATE OR REPLACE PROCEDURE STP_SEARCHCURRMAPPINGMASTER(
+i_vcFromCurrency IN VARCHAR2, i_vcToCurrency IN VARCHAR2,
+i_vcUserCode    IN VARCHAR2,  i_vcGroupCode IN VARCHAR2,
+i_vcIPAddress   IN VARCHAR2,  io_cuRESULTSET IN OUT SYS_REFCURSOR
+)
+-- EXEC STP_SEARCHCURRMAPPINGMASTER('','','','','',:KG);
+
+AS
+  vcQuery VARCHAR2(5000);
+  vcFromCurrency VARCHAR2(4000) := i_vcFromCurrency;
+  vcToCurrency   VARCHAR2(4000) := i_vcToCurrency;
+
+BEGIN
+
+ vcQuery := 'SELECT ROWNUM AS ROWPOSITION, FROMCURRENCY, TOCURRENCY, '
+         || '       TO_CHAR(UPDATETIMESTAMP, ''DD-MON-YYYY'') UPDATEDON, UPDATEDBY '
+	 || '  FROM COMAML.TB_CURRENCYMAPPING A'
+	 || ' WHERE 1 = 1 ';
+IF TRIM(UPPER(i_vcFromCurrency)) IS NOT NULL THEN
+  vcQuery := vcQuery || ' AND A.FROMCURRENCY = '''|| vcFromCurrency ||''' ';
+END IF;
+
+IF TRIM(UPPER(i_vcToCurrency)) IS NOT NULL THEN
+  vcQuery := vcQuery || ' AND A.TOCURRENCY = '''|| vcToCurrency ||''' ';
+END IF;
+
+OPEN io_cuRESULTSET FOR vcQuery;
+
+END STP_SEARCHCURRMAPPINGMASTER;
+/

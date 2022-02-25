@@ -1,0 +1,41 @@
+DROP TABLE TB_MODULEPARAMETERS;
+CREATE TABLE TB_MODULEPARAMETERS(
+MODULECODE					VARCHAR2(100),
+MODULENAME					VARCHAR2(100),
+MODULEPARAMNAME				VARCHAR2(100),
+MODULEPARAMALIASNAME		VARCHAR2(100),
+MODULEPARAMIDNAME 			VARCHAR2(100),
+MODULEPARAMINDEX			NUMBER,
+MODULEPARAMDATATYPE			VARCHAR2(100),
+MODULEPARAMVIEWNAME			VARCHAR2(100),
+MODULEPARAMSTATICVALUES		VARCHAR2(100),
+MODULEPARAMDEFAULTVALUE		VARCHAR2(100),
+MODULEPARAMVALIDATIONFIELD	VARCHAR2(100),
+MODULEPARAMVALIDATIONTYPE	VARCHAR2(100),
+UPDATEDBY					VARCHAR2(100),
+UPDATETIMESTAMP				TIMESTAMP
+);
+
+@C:\Users\QuantumDataEngines\sts_workspace\Compass\src\main\dbscripts\tables\MASTERMODULES\insert_queries\Accounts_Master.txt;
+@C:\Users\QuantumDataEngines\sts_workspace\Compass\src\main\dbscripts\tables\MASTERMODULES\insert_queries\Alert_Engine.txt;
+@C:\Users\QuantumDataEngines\sts_workspace\Compass\src\main\dbscripts\tables\MASTERMODULES\insert_queries\Bank_Master.txt;
+@C:\Users\QuantumDataEngines\sts_workspace\Compass\src\main\dbscripts\tables\MASTERMODULES\insert_queries\Branch_Master.txt;
+@C:\Users\QuantumDataEngines\sts_workspace\Compass\src\main\dbscripts\tables\MASTERMODULES\insert_queries\Branch_User_Mapping_Master.txt;
+@C:\Users\QuantumDataEngines\sts_workspace\Compass\src\main\dbscripts\tables\MASTERMODULES\insert_queries\Country_Master.txt;
+@C:\Users\QuantumDataEngines\sts_workspace\Compass\src\main\dbscripts\tables\MASTERMODULES\insert_queries\Currency_Mapping_Master.txt;
+@C:\Users\QuantumDataEngines\sts_workspace\Compass\src\main\dbscripts\tables\MASTERMODULES\insert_queries\Currency_Master.txt;
+@C:\Users\QuantumDataEngines\sts_workspace\Compass\src\main\dbscripts\tables\MASTERMODULES\insert_queries\Customer_Master.txt;
+@C:\Users\QuantumDataEngines\sts_workspace\Compass\src\main\dbscripts\tables\MASTERMODULES\insert_queries\Customer_Reviewed_Details.txt;
+@C:\Users\QuantumDataEngines\sts_workspace\Compass\src\main\dbscripts\tables\MASTERMODULES\insert_queries\CustomerType_Master.txt;
+@C:\Users\QuantumDataEngines\sts_workspace\Compass\src\main\dbscripts\tables\MASTERMODULES\insert_queries\Employee_Master.txt;
+@C:\Users\QuantumDataEngines\sts_workspace\Compass\src\main\dbscripts\tables\MASTERMODULES\insert_queries\FIU_Field_Mapping_Master.txt;
+@C:\Users\QuantumDataEngines\sts_workspace\Compass\src\main\dbscripts\tables\MASTERMODULES\insert_queries\Instrument_Master.txt;
+@C:\Users\QuantumDataEngines\sts_workspace\Compass\src\main\dbscripts\tables\MASTERMODULES\insert_queries\Products_Master.txt;
+@C:\Users\QuantumDataEngines\sts_workspace\Compass\src\main\dbscripts\tables\MASTERMODULES\insert_queries\Reference_Values_Master.txt;
+@C:\Users\QuantumDataEngines\sts_workspace\Compass\src\main\dbscripts\tables\MASTERMODULES\insert_queries\Transaction_Details_Master.txt;
+@C:\Users\QuantumDataEngines\sts_workspace\Compass\src\main\dbscripts\tables\MASTERMODULES\insert_queries\Transaction_Type_Master.txt;
+@C:\Users\QuantumDataEngines\sts_workspace\Compass\src\main\dbscripts\tables\MASTERMODULES\insert_queries\AccountProfiling.txt;
+
+UPDATE TB_MODULEPARAMETERS SET MODULEPARAMIDNAME = UPPER(SUBSTR(MODULEPARAMNAME, (INSTR(MODULEPARAMNAME, '.', -1))+1));
+COMMIT;
+

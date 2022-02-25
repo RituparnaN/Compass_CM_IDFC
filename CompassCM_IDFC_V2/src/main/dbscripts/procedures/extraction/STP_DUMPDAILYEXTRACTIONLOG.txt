@@ -1,0 +1,32 @@
+CREATE OR REPLACE PROCEDURE STP_DUMPDAILYEXTRACTIONLOG (
+ i_vcFromDate IN VARCHAR2, i_vcToDate IN VARCHAR2, i_vcProcessName IN VARCHAR2,
+ i_vcSubProcessName IN VARCHAR2, i_vcBatchName IN VARCHAR2, i_tsStartDateTime IN TIMESTAMP,
+ i_tsEndDateTime IN TIMESTAMP, i_vcRecordsCount IN VARCHAR2, i_vcUpdatedBy IN VARCHAR2,
+ i_vcTableName IN VARCHAR2)
+
+AS
+ vcSQL  VARCHAR2(4000);
+ nCount Number := i_vcRecordsCount;
+
+BEGIN
+  IF(i_vcTableName NOT IN ('N.A.')) THEN
+
+     BEGIN
+       vcSQL := 'SELECT COUNT(1) FROM '||i_vcTableName||' ';
+       EXECUTE IMMEDIATE vcSQL INTO nCount;
+
+     EXCEPTION
+     WHEN NO_DATA_FOUND THEN
+     nCount := i_vcRecordsCount;
+     WHEN OTHERS THEN
+     nCount := i_vcRecordsCount;
+   END;
+END IF;
+
+  INSERT INTO TB_DAILYEXTRACTIONLOG(STARTDATE, ENDDATE, PROCESSNAME, SUBPROCESSNAME, BATCHNAME, STARTDATETIME, ENDDATETIME, RECORDSCOUNT, UPDATEDBY, UPDATETIMESTAMP)
+  VALUES(TO_TIMESTAMP(i_vcFromDate,'DD/MM/YYYY'), TO_TIMESTAMP(i_vcToDate,'DD/MM/YYYY'), i_vcProcessName, i_vcSubProcessName,i_vcBatchName, i_tsStartDateTime, i_tsEndDateTime, nCount, i_vcUpdatedBy, SYSTIMESTAMP);
+
+  COMMIT;
+
+END STP_DUMPDAILYEXTRACTIONLOG;
+/

@@ -1,0 +1,16 @@
+#JSGF V1.0;
+
+grammar dialog;
+
+
+
+public <module_command> = open (customer master | customer type master | pending cases | bank master | accounts master 
+	  | country master | currency master | transaction type master | currency mapping master 
+      | employee master | branch master | products master | email question repository | nostro accounts master
+      | transaction dashboard | entity link analysis | most active accounts | cash transaction report | regulatory reports
+      | account profiling | real time scanning | template screening | raise suspicion);
+
+public <greetings>  = ( how many alerts are there for the day | how many suspicions have been filed in the day
+ | who has closed maximum number of alerts | how many reports are pending to be filed | what is the time | i am going to office);
+ 
+public <command> = (exit | stop | thank you please close);

@@ -1,0 +1,42 @@
+CREATE OR REPLACE PROCEDURE STP_SEARCHEMPLOYEEMASTER(
+ i_vcEmployeeId IN VARCHAR2, i_vcEmployeeName IN VARCHAR2,
+ i_vcBranchCode IN VARCHAR2, i_vcISAMLOfficer IN VARCHAR2, 
+ i_vcUserCode    IN VARCHAR2,i_vcGroupCode IN VARCHAR2,
+ i_vcIPAddress   IN VARCHAR2,io_cuRESTULTSET IN OUT SYS_REFCURSOR
+)
+-- EXEC STP_SEARCHEMPLOYEEMASTER('','','','','','','',:KG);
+
+AS
+  vcQuery varchar2(5000);
+  vcEmployeeId VARCHAR2(4000) := i_vcEmployeeId;
+  vcEmployeeName VARCHAR2(4000) := '%'||i_vcEmployeeName||'%';
+BEGIN
+
+vcQuery :=' SELECT ROWNUM AS ROWPOSITION, EMPCODE, EMPNAME, EMP_DESIGNATION, BRANCHCODE, '
+        ||'        TO_CHAR(DATEOFBIRTH,''DD-MON-YYYY'') DATEOFBIRTH, BIRTHPLACE, NATIONALITY, FATHERNAME, MOTHERNAME, '
+	||'        CASE WHEN SEX = ''M'' THEN ''MALE'' WHEN SEX = ''F'' THEN ''FEMALE'' ELSE ''OTHER'' END SEX, '
+        ||'        PANNO, DEPARTMENT, EMP_ADDRESSLINE1, EMP_ADDRESSLINE2, EMP_ADDRESSLINE3, EMP_CITY, '
+        ||'        EMP_STATE, EMP_COUNTRY, EMP_PINCODE, EMP_PHONENO, EMP_FAXNO, EMP_EMAILID, '
+	||'        CASE WHEN AML_FLAG = ''Y'' THEN ''YES'' ELSE ''NO'' END AML_FLAG '
+	||'   FROM COMAML.TB_EMPLOYEEMASTER A '
+	||'  WHERE 1 = 1 ';
+
+IF TRIM(UPPER(i_vcEmployeeId)) IS NOT NULL THEN
+vcQuery := vcQuery||' AND A.EMPCODE = '''||vcEmployeeId||''' ';
+END IF;
+IF TRIM(UPPER(i_vcEmployeeName)) IS NOT NULL THEN
+vcQuery := vcQuery||' AND A.EMPNAME LIKE '''||vcEmployeeName||''' ';
+END IF;
+IF TRIM(UPPER(i_vcBranchCode)) IS NOT NULL And UPPER(i_vcBranchCode) NOT IN('ALL') THEN
+vcQuery := vcQuery||' AND A.BRANCHCODE = '''||i_vcBranchCode||''' ';
+END IF;
+IF TRIM(UPPER(i_vcISAMLOfficer)) IS NOT NULL AND UPPER(i_vcISAMLOfficer) NOT IN ('ALL') THEN
+vcQuery := vcQuery||' AND A.AML_FLAG = '''||i_vcISAMLOfficer||''' ';
+END IF;
+
+vcQuery := vcQuery || ' AND ROWNUM <= 500 ';
+
+OPEN io_cuRESTULTSET FOR vcQuery;
+
+END STP_SEARCHEMPLOYEEMASTER;
+/

@@ -1,0 +1,1438 @@
+app.login.IMG=qde/Compass-Logo-Full.png
+app.login.NAME=Compass
+app.login.SYSTEMNAME=Your Anti Money Laundering System
+#app.login.SYSTEMNAME=Your FATCA / CRS System
+app.login.VERSION=Version : 4.01
+app.login.BUILDERIMG=qde/QDE-Logo-Full.png
+app.login.COPYRIGHTTEXT=All Rights Reserved. &copy; 2016-20 Quantum Data Engines
+app.login.USERNAME=Username
+app.login.PASSWORD=Password
+app.login.DOMAIN=Domain
+
+app.common.FROMDATE=From Date
+app.common.TODATE=To Date
+app.common.ACCOUNTNO=Account No
+app.common.CUSTOMERID=Customer Id
+app.common.FROMAMOUNT=From Amount
+app.common.TOAMOUNT=To Amount
+app.common.ALERTPRIORITY=Alert Priority
+app.common.ALERTCODE=Alert Code
+app.common.ALERTNO=AlertNo
+
+app.common.PRODUCTCODE=Product Code
+
+#12/09/2016
+app.common.BANKCODE=Bank Code
+app.common.BANKNAME=Bank Name
+app.common.BANKTYPE=Bank Type
+
+##03/05/2017 dynamic labels in bottom frame ##
+app.common.MDNAME=MD Name
+app.common.NOOFBRANCHES=No Of Branches
+app.common.AUTHORISEDFOREXDEALER=Authorised For Ex-Dealer
+app.common.UPDATETIMESTAMP=Action Date
+app.common.UPDATEDBY=Action By
+app.common.BSRCODE=BSR Code
+app.common.PRINCIPALOFFICER_EMP_ID=Principal Officer EMP_ID
+app.common.IDALLOCATEDBYFIU=ID Allocated By FIU
+app.common.ALERTMESSAGE = Alert Message
+app.common.TRANSACTIONS = Transactions
+app.common.TRANSACTIONDATETIME = Transaction DateTime
+app.common.AMOUNT = Amount
+app.common.ALERTDATE = Alert Date
+app.common.ALERTSTATUS = Alert Status
+app.common.DEPOSITORWITHDRAWAL= Credit/Debit
+app.common.CALCULATEDVALUE= Triggering Value
+app.common.BENCHMARKVALUE= Benchmark Value
+app.common.ALERTNAME = Alert Name
+app.common.ALERTTYPE = Alert Type
+app.common.CUSTOMERCATEGORY= Customer Category
+app.common.MINOR = Minor
+app.common.NATUREOFBUSINESS= Nature Of Business
+app.common.CREDITRATING= Credit Rating
+app.common.CREATEDDATETIME= Created DateTime
+app.common.CUSTOMERCREATEDDATETIME = Customer Created Date
+app.common.INTRODUCERCUSTOMERID= Introducer Customer Id
+app.common.INTRODUCERNAME= Introducer Name
+app.common.INTRODUCERCATEGORY= Introducer Category
+app.common.CUSTOMEREMPCODE= Customer EmpCode
+app.common.ESTIMATEDINCOMEFROMBUSINESS= Annual Income - Corporate
+app.common.OTHERINCOME= Other Income
+app.common.ANNUALINCOME= Annual Income
+app.common.NET_WORTH= Net Worth
+app.common.SALUTATION= Salutation
+app.common.FIRSTNAME= First Name
+app.common.MIDDLENAME= Middle Name
+app.common.LASTNAME= Last Name
+app.common.FATHERNAME= Father's Name
+app.common.MOTHERNAME= Mother's Name
+app.common.DATEOFBIRTH= Date Of Birth
+app.common.PLACEOFBIRTH= Place Of Birth
+app.common.NATIONALITY= Nationality
+app.common.AGE=Age
+app.common.SEX=Sex
+app.common.DRIVINGLICENSENO=Driving License No
+app.common.PASSPORTNO=Passport No
+app.common.VOTERIDENTITYCARDNO=Voter Identity card No
+app.common.MARITALSTATUS=Marital Status
+app.common.DEPENDENTS=Dependents
+app.common.OCCUPATION=Occupation
+app.common.ISSUINGAUTHORITY=Issuiing Authority
+app.common.PLACEOFISSUE=Place Of Issue
+app.common.IDCARD=ID card
+app.common.ADDRESSLINE1= Address Line 1
+app.common.ADDRESSLINE2= Address Line 2
+app.common.ADDRESSLINE3= Address Line 3
+app.common.CITY =City
+app.common.STATE= State
+app.common.COUNTRY= Country 
+app.common.PINCODE= PIN Code
+app.common.PHONENO= Phone No
+app.common.FAXNO =Fax No
+app.common.EMAILID = Email Id 
+app.common.WEBSITE = Website
+app.common.COMM_ADDRESSLINE1 = Comm_Address Line 1
+app.common.COMM_ADDRESSLINE2 =Comm_Address Line 2
+app.common.COMM_CITY =Comm_City
+app.common.COMM_STATE = Comm_State
+app.common.COMM_COUNTRY = Comm_Country
+app.common.COMM_PINCODE  = Comm_Pincode
+app.common.COMM_PHONENO  = Comm_PhoneNo
+app.common.COMM_FAXNO = Comm_FaxNo
+app.common.COMM_EMAILID = Comm_EmailId
+app.common.SERIALNO= Serial No
+app.common.TRANSACTIONAMOUNT= Transaction Amount
+app.common.CREDITAMOUNT= Credit Amount
+app.common.DEBITAMOUNT= Debit Amount 
+app.common.TRANSACTIONFREQUENCY = Transaction Frequency 
+app.common.CREDITFREQUENCY = Credit Frequency
+app.common.DEBITFREQUENCY =  Debit Frequency
+app.common.TEMPLATEID= Template Id
+app.common.TEMPLATENAME= Template Name
+app.common.TEMPLATESEQUENCENO = TemplateSeqNo
+app.common.TEMPLATESCREENINGSTATUS= Template Status
+app.common.LASTUPDATEDBYUSERCODE = LastUpdatedBy
+app.common.LASTUPDATEDBYUSERROLE = LastUpdatedByUserRole 
+app.common.LASTUPDATEDBYUSERIPADDRESS = LastUpdatedByUserIPAddress
+app.common.LASTUPDATEDBYUSERCOMMENTS = LastUpdatedComments
+app.common.attachEvidence = Attach Evidence
+app.common.attachOrViewEvidence = Attach/View Evidence
+app.common.viewEvidence = View Evidence
+app.common.COMMENTS = Comments
+app.common.SEQUENCENO = SeqNo
+app.common.TABLENAME = Table Name
+app.common.FIELDNAME= Field Name
+app.common.SCREENNAME= Screen Name 
+app.common.DISPLAYLABEL= Display Label 
+app.common.COMPLIANCESCORE= Compliance Score 
+app.common.ISCHECKED= Is Checked 
+app.common.COLUMNID= Column Id
+
+app.common.missingFieldsTemplateSearchHeader= Missing Fields Template
+app.common.addUpdateFieldsTemplateSearchHeader= Add/Update Fields To Template
+
+
+
+app.common.ROWPOSITION=Sr. No.
+app.common.ACCOUNTOPENEDDATE=AccountOpenedDate
+app.common.MODEOFOPERATION=Mode Of Operation
+app.common.ODLIMIT=OD Limit
+app.common.ACCOUNTCURRENCY=Account Currency
+app.common.CURRENTBALANCE=Current Balance
+app.common.ACCOUNTSTATUS = Account Status
+app.common.RISKRATING = Risk Rating
+app.common.RESIDENTIALSTATUS=Residential Status
+app.common.ACCOUNTTYPE=Account Type
+
+app.common.BRANCHAREA=Branch Area
+app.common.BRANCHMANAGERNAME=Branch Manager Name
+app.common.BRANCHEMAIL=Branch Email
+app.common.BRANCHFAX=Branch Fax
+app.common.BRANCHTELEPHONE=Branch Telephone
+app.common.BRANCHPINCODE=Branch Pin Code
+app.common.BRANCHADDR1=Branch Address 1
+app.common.BRANCHADDR2=Branch Address 2
+app.common.BRANCHADDR3=Branch Address 3
+app.common.BRANCHADDR4=Branch Address 4
+app.common.BRANCHADDR5=Branch Address 5
+app.common.BRANCHCOUNTRY=Branch Country
+app.common.UIDISSUEDBYFIU=UID Issued By FIU
+app.common.CATEGORYCODE=Category Code
+app.common.CLEARINGAREA=Clearing Area
+app.common.ISINCLUDED=Is Included
+app.common.ZONECODE=Zone Code
+app.common.VIGILANCECODE=Vigilance Code
+app.common.UPDATEDON=Updated On
+
+app.common.PRODUCTNAME=Product Name
+app.common.PRODUCTGROUPCODE=Product Group Code 
+
+app.common.CUSTOMERGROUPTYPE = Customer Group Type
+####
+app.common.GIINCODE=GIIN Code
+app.common.BRANCHCODE=Branch Details
+app.common.BRANCHNAME=Branch Details
+app.common.BRANCHCITY=Branch City
+app.common.USERCODE=User ID
+app.common.ACCOUNTNAME=Account Name
+app.common.OTHERINFORMATION=Other Information
+app.common.PRODUCTDESCRIPTION=Product Description
+app.common.INSTRUMENTCODE=Instrument Code
+app.common.INSTRUMENTNAME=Instrument Name 
+app.common.DESCRIPTION=Description
+app.common.EMPLOYEEID=Employee Id
+app.common.EMPLOYEENAME=Employee Name 
+app.common.ISAMLOFFICER=IsAMLOfficer
+app.common.COUNTRYCODE=Country Code
+app.common.COUNTRYNAME=Country Name
+app.common.ACCOUNTHOLDERTYPE=AccountHolder Type
+app.common.CUSTOMERTYPE= Constitution Type
+app.common.TRANSACTIONTYPECODE=TransactionTypeCode
+app.common.TRANSACTIONTYPE=TXN Mnemonic
+app.common.CURRENCYCODE=Currency Code
+app.common.CURRENCYNAME=Currency Name
+app.common.RATEDATE=Rate Date
+app.common.LOOKUPTYPE=Lookup Type
+app.common.FIUFIELDCODE=FIU Field Code
+app.common.FIUFIELDNAME=FIU Field Name
+app.common.CODE=Code
+app.common.REFERENCETYPE=Reference Type
+app.common.CUSTOMERNAME=Customer Name
+app.common.PANNO=Pan No
+app.common.AADHARCARDNO=Aadhar card No
+app.common.MOBILENO=Mobile No
+app.common.DEBITCREDIT=Debit/Credit
+app.common.TRANSACTIONNO=Transaction No
+app.common.CHANNELTYPE=Txn Literal
+app.common.FROMCURRENCY=From Currency
+app.common.TOCURRENCY=To Currency
+app.common.USINDICIA=US Indicia
+
+#button 20/09/2016
+app.common.searchButton=Search
+app.common.saveButton=Save
+app.common.closeButton=Close
+
+#20/09/2016
+app.common.alertSearchHeader=Alert Engines
+app.common.alertResultHeader=Alert Search Result
+
+app.common.accountSearchHeader=Account Master
+app.common.accountResultHeader=Account Search Result
+
+app.common.branchSearchHeader=Branch Master
+app.common.branchResultHeader=Branch Search Result
+
+app.common.branchUserMappingSearchHeader=Branch User Mapping Master
+app.common.branchUserMappingResultHeader=Branch User Mapping Search Result
+
+app.common.countrySearchHeader=Country Master
+app.common.countrySearchResultHeader=Country Search Result
+
+app.common.currencyMappingSearchHeader=Currency Mapping Master
+app.common.currencyMappingResultHeader=Currency Mapping Search Result
+
+app.common.currencySearchHeader=Currency Master
+app.common.currencySearchResultHeader=Currency Search Result
+
+app.common.CustomerReviewedDetailsSearchHeader=Customer Reviewed Details
+app.common.CustomerReviewedDetailsSearchResultHeader=Customer Reviewed Details Result
+
+app.common.CustomerTypeSearchHeader= Customer Type Master
+app.common.CustomerTypeSearchResultHeader= Customer Type Master Result
+
+app.common.EmployeeMasterSearchHeader= Employee Master
+app.common.EmployeeMasterSearchResultHeader= Employee Master Result
+
+#22/09/2016
+app.common.referenceValuesSearchHeader=Reference Values Search
+app.common.referenceValuesResultHeader=Reference Values Search Result
+app.common.productSearchHeader=Product Master Search
+app.common.productResultHeader=Product Search Result
+app.common.transactionTypeSearchHeader=Transaction Type Master
+app.common.transactionTypeResultHeader=Transaction Type Search Result
+app.common.instrumentSearchHeader=Instrument Master Master
+app.common.instrumentResultHeader=Instrument Search Result
+
+#23/09/2016
+app.common.fiuFieldMappingSearchHeader=FIUFieldMapping Master
+app.common.fiuFieldMappingSearchResultHeader=FIUFieldMapping Master Result
+app.common.customerSearchHeader=Customer Master
+app.common.customerResultHeader=Customer Master Result
+
+app.common.transactionDetailsHeader= Transaction DashBoard
+app.common.transactionDetailsResultHeader= Transaction DashBoard Result
+
+#20/09/2016
+app.common.accountProfileSearchHeader=Account Profiling
+app.common.accountProfileResultHeader=Account Profiling Result
+
+app.admin.loggedInUser=Logged In Users
+app.admin.serverInformation=Server Information
+app.admin.serverUtilization=Server Utilization
+app.common.USERNAME=User Name
+app.common.ROLE=Role
+app.common.LOGGEDON=Logged On
+app.common.LASTACCESS=Last Accessed
+app.common.IPADDRESS=Terminal
+app.common.ACTION=Action
+app.common.createUserHeader=Create User
+app.common.userResultHeader=Created / Searched Users
+app.common.editUserHeader=Edit User
+app.common.editIPAddressHeader=Edit IPAddress
+app.common.ipAddressResultHeader=Created / Searched IPAddresses
+app.common.createIPAddressHeader=Create IPAddress
+app.common.EDITIPADDRESSBUTTON=Update IPAddress
+
+#28/09/2016
+app.common.indexingResultHeader=Indexing Running Status
+
+## Govind Changes / Starts Here  ##
+app.common.HASANYOLDCASES=Related Cases
+app.common.STRALREADYFILED=STR Already Filed
+app.common.CASERATING=Case Rating
+app.common.FROMCASENO=From CaseNo
+app.common.TOCASENO=To CaseNo
+app.common.amlUserPendingCaseSearchHeader=Pending Cases
+app.common.amlUserPendingCaseResultHeader=Pending Cases Result
+
+
+## Govind Changes / Ends Here  ##
+
+#21/10/2016
+app.common.watchlistSearchHeader= Watchlist
+app.common.watchlistResultHeader= Watchlist Result
+
+#04/11/2016
+app.common.accountGroupingHeader= Account Grouping
+app.common.accountGroupingResultHeader= Account Group List
+
+#05/11/2016
+app.common.branchGroupingHeader= Branch Grouping
+app.common.branchGroupingResultHeader= Branch Group List
+
+#10/11/2016
+app.common.falsePositiveSearchHeader= Search False Positives
+app.common.falsePositiveResultHeader= False Positives 
+
+
+#15/11/2016
+app.common.alertCodesEditorHeader= Alerts Editor
+app.common.alertCodesEditorResultHeader= Alert Details
+
+#22/11/2016
+app.common.screeningMappingHeader= List Mapping
+app.common.screeningMappingResultHeader= Update Search Level
+app.common.fieldScreeningMappingResultHeader= Update Field Mapping
+
+#24/11/2016
+app.common.cashTransactionReportHeader= Cash Transaction Report
+app.common.cashTransactionReportResultHeader= Cash Transaction List
+app.common.REPORTINGMONTH= Month of Reporting
+app.common.REPORTINGYEAR= Year of Reporting
+
+#25/11/2016
+app.common.npoTransactionReportHeader= NPO Transaction Report
+app.common.npoTransactionReportResultHeader= NPO Transaction List
+app.common.counterfeitCurrencyReportHeader= Counterfeit Currency Report
+app.common.counterfeitCurrencyReportResultHeader= Counterfeit Currency List
+app.common.CCRNO= CCR No
+app.common.cbwtReportHeader= CBWT Report
+app.common.cbwtReportResultHeader= CBWT List
+
+#28/11/2016 
+app.common.alertRatingsDetailsHeader= Alerts Rating
+app.common.alertRatingsDetailsResultHeader= Alerts Rating Details
+
+#29/11/2016
+app.common.screeningExceptionsSearchHeader= Search Screening Exceptions
+app.common.screeningExceptionsResultHeader= Screening Exceptions List
+app.common.missingFieldsTemplateResultHeader= Missing Fields Template Details
+
+######################### FOR ALERTS AND REPORTS, STARTS HERE ###########################################3
+#10/11/2016
+PRODUCTCODE = ProductCode
+EXCLUDECHANNEL = ExcludeChannel
+CREDITDEBIT = CreditDebit
+TOTDEPAMOUNT = TotDepAmount
+OCCUPATIONTYPE = OCCUPATIONTYPE
+MCCCODES = MCCCodes
+NOOFDUEDAYS = NoOfDueDays
+MAXTHRESHOLDAMOUNT = MaxThresholdAmount
+TRANSTYPE = TransType
+THRESHOLD = Threshold
+TXNTYPE = TxnType
+
+FREQUENCY = Frequency
+MINAMOUNT = MinAmount
+MAXAMOUNT = MaxAmount
+LARGEVAL = LargeVal
+PERCENTAGE = Percentage
+ATMWDLTHRESHOLDVALUE = ATMWdlThresholdValue
+MINIMUMCOUNT = MinimumCount
+AMLUSERCODE = AMLUserCode
+RISKTYPE = RiskType
+TODATE = ToDate
+ACCOUNTNO = AccountNo
+EXCLUDEPRODUCT = ExcludeProduct
+THRESHOLDAMOUNT = ThresholdAmount
+TRANTYPE = TranType
+THRESHOLDVALUE = ThresholdValue
+FROMTHRESHOLDVALUE = FromThresholdValue
+TOTHRESHOLDVALUE = ToThresholdValue
+ACCOUNTSTATUS = AccountStatus
+TRANSCOUNT = TransCount
+TRANSACTIONTYPE = TransactionType
+DEPAMOUNT = DepAmount
+NOOFTIMES = NoOfTimes
+CUSTOMEROCCUPATION = CustomerOccupation
+MINIMUMAMOUNT = MinimumAmount
+THRESHOLDLIMIT = ThresholdLimit
+FROMDATE = FromDate
+
+ACCTOPENINGDATE = AcctOpeningDate
+CUSTOMERRISK = CustomerRisk
+
+AMTCLEAREDPERCENT = AmtClearedPercent
+DEBITORCREDIT = DebitOrCredit
+EXCLUDECUSTOMERTYPE = ExcludeCustomerType
+THRESHOLDCOUNT = ThresholdCount
+NOOFMONTHS = NoOfMonths
+ACCT_TYPE = Acct_Type
+
+DEBITCREDIT = DEBITCREDIT
+Min.AMOUNT = Min.Amount
+WTDRATIO = WTDRatio
+MINDEPAMOUNT = MinDepAmount
+MAXDEPAMOUNT = MaxDepAmount
+MINWDAMOUNT = MinWDAmount
+ACCTOUNTTYPE = AcctountType
+ATMWDLTHRESHOLDAMOUNT = ATMWdlThresholdAmount
+ACCOUNTTYPE = AccountType
+NTIMES = NTimes
+NOOFTIMESASSETVALUE = NoOfTimesAssetValue
+DEPOSITCOUNT = CreditCount
+WITHDRAWALCOUNT = DebitCount
+RISKRATING = RiskRating
+CUSTOMERTYPE = CustomerType
+NOOFTIMESEARNINGSCAPACITY = NoOfTimesEarningsCapacity
+TOTAMOUNT = TotAmount
+MAXTRANAMOUNT = MaxTranAmount
+MINTHRESHOLDCOUNT = MinThresholdCount
+WITHPANNO = WithPanNo
+MAXTHRESHOLDCOUNT = MaxThresholdCount
+TRANCOUNT = TranCount
+BRANCHCODE = BranchCode
+ACCTOPENEDDATE = AcctOpenedDate
+CASHPERCENT = CashPercent
+MAXWDAMOUNT = MaxWDAmount
+NATUREOFBUISNESS = NatureOfBuisness
+DAYSAFTERREACTIVATION = DaysAfterReactivation
+TRANSACTIONCOUNT = TransactionCount
+MINTRANAMOUNT = MinTranAmount
+MINTHRESHOLDAMOUNT = MinThresholdAmount
+ALERTSERIALNO = AlertSerialNo
+ALERTSERIALID = AlertSerialId
+
+app.common.alertBenchMarkDtlsSearchHeader=Alert BenchMark Details
+app.common.alertBenchMarkDtlsResultHeader=Alert BenchMark Search Result
+
+
+AMLCOCODE = AMLCOCode
+AMLOCODE = AMLOCode
+ACCOUNTOPENEDDATE = AccountOpenedDate
+ACCOUNTORCUSTOMERBASED = AccountOrCustomerBased
+ACCOUNTVINTAGEINDAYS = AccountVintageInDays
+ALERTCODE = AlertCode
+ALERTFROMDATE = AlertFromDate
+ALERTSTATUS = AlertStatus
+ALERTTODATE = AlertToDate
+BICCODE = BICCode
+CTRFROMDATE = CTRFromDate
+CTRTODATE = CTRToDate
+CASESTATUS = CaseStatus
+CASHCREDITTHRESHOLD = CashCreditThreshold
+CASHDEBITTHRESHOLD = CashDebitThreshold
+CHANNELIDS = ChannelIds
+CLEARINGCREDITTHRESHOLD = ClearingCreditThreshold
+CLEARINGDEBITTHRESHOLD = ClearingDebitThreshold
+COMPLETEDWITH = CompletedWith
+CONSTITUTIONCODE = ConstitutionCode
+CONSTITUTIONTYPE = ConstitutionType
+CREDITTHRESHOLDVALUE = CreditThresholdValue
+CROSSBORDERCREDITTHRESHOLD = CrossBorderCreditThreshold
+CROSSBORDERDEBITTHRESHOLD = CrossBorderDebitThreshold
+CUSTOMERID = CustomerId
+DAILYTHRESHOLDVALUE = DailyThresholdValue
+DEBITTHRESHOLDVALUE = DebitThresholdValue
+DEDUPCOLUMNNAME = DedupColumnName
+ELECTRONICCREDITTHRESHOLD = ElectronicCreditThreshold
+ELECTRONICDEBITTHRESHOLD = ElectronicDebitThreshold
+GROUPCODE = GroupCode
+ISAMLUSERASSIGNMENT = IsAMLUserAssignment
+ISACTIVE = IsActive
+ISDAILYFREQUENCY = IsDailyFrequency
+ISLASTFINYEAR = IsLastFinYear
+LISTNAME = ListName
+LOOKUPMONTHS = LookUpMonths
+MATCHSCORE = MatchScore
+MAXACCTBALANCE = MaxAcctBalance
+MAXTHRESHOLDVALUE = MaxThresholdValue
+MAXIMUMTXNAMOUNT = MaximumTxnAmount
+MESSAGETYPE = MessageType
+MINCOUNT = MinCount
+MINTHRESHOLDVALUE = MinThresholdValue
+MINIMUMACCOUNTSCOUNT = MinimumAccountsCount
+MINIMUMTXNAMOUNT = MinimumTxnAmount
+MINIMUMTXNCOUNT = MinimumTxnCount
+NCIFSOURCENAME = NCIFSOURCENAME
+NONCASHCREDITTHRESHOLD = NonCashCreditThreshold
+NONCASHDEBITTHRESHOLD = NonCashDebitThreshold
+OTHERTXNSCREDITTHRESHOLD = OtherTxnsCreditThreshold
+OTHERTXNSDEBITTHRESHOLD = OtherTxnsDebitThreshold
+OUTWARDORINWARD = OutwardOrInward
+PENDINGWITH = PendingWith
+REMITTANCEORBILL = RemittanceOrBill
+REPORTTYPE = ReportType
+RISKRATNG = RiskRatng
+ROUNDAMOUNTVALUE = RoundAmountValue
+SCHEMECODE = SchemeCode
+STATUS = Status
+STATUSCODE = StatusCode
+THRESHOLDPERCENTAGE = ThresholdPercentage
+TRANSACTIONDATE = TransactionDate
+TRANSACTIONTYPES = TransactionTypes
+TXNPURPOSECODE = TxnPurposeCode
+USERCODE = UserCode
+VALUEORVOLUME = ValueOrVolume
+WATCHLIST = WatchList
+WDLLOOKUPDAYS = WdlLookUpDays
+WDLTHRESHOLDPERCENTAGE = WdlThresholdPercentage
+app.common.reportBenchMarkDtlsSearchHeader=Report BenchMark Details
+app.common.reportBenchMarkDtlsResultHeader=Report BenchMark Search Result
+
+app.common.SAVEBUTTON=Post
+app.common.GENERATEBUTTON=Generate
+app.common.DELETEBUTTON=Delete
+
+app.common.EXPORTEXCELBUTTON=Export Excel
+app.common.EXPORTPDFBUTTON=Export PDF
+app.common.RESETREPORTCOLUMNSBUTTON=ResetColumns
+
+app.common.REPORTCODE = Report Code
+app.common.REPORTNAME = Report Name
+app.common.ISENABLED = Is Enabled
+app.common.reportWidgetsSearchHeader=Report Widgets Master
+app.common.reportWidgetsResultHeader=Report Widgets Search Result
+
+@param1 = param1
+@param2 = param2
+@param3 = param3
+@param4 = param4
+@param5 = param5
+@param6 = param6
+@param7 = param7
+@param8 = param8
+@param9 = param9
+
+######################### FOR ALERTS AND REPORTS, ENDS HERE ###########################################3
+
+
+######################### FOR MOST ACTIVE ACCOUNTS, STARTS HERE ###########################################3
+app.common.MOSTACTIVEBY = Most Active By
+app.common.mostActiveAcctSearchHeader = Most Active Accounts
+app.common.mostActiveAcctResultHeader = Most Active Accounts Result
+######################### FOR MOST ACTIVE ACCOUNTS, ENDS HERE ###########################################3
+
+######################### FOR SRILANKA CTR, IEFT, OEFT STARTS HERE ###########################################3
+app.common.FORTNIGHTOFMONTH = FortNight Of Reporting
+app.common.MONTHOFYEAR = Month Of Reporting
+app.common.YEAROFREPORTING = Year Of Reporting
+app.common.THRESHOLDAMOUNT = Threshold Amount
+app.common.SLCTRReportHeader = Cash Transaction Reporting
+app.common.SLCTRReportResultHeader = CTR Result
+
+app.common.SLIEFTReportHeader = IEFT Reporting
+app.common.SLIEFTReportResultHeader = IEFT Result
+
+app.common.SLOEFTReportHeader = OEFT Reporting
+app.common.SLOEFTReportResultHeader = OEFT Result
+
+app.common.MVTTRReportHeader = Threshold Transaction Reporting
+app.common.MVTTRReportResultHeader = TTR Result
+
+######################### FOR SRILANKA CTR, ENDS HERE ###########################################3
+
+######################### FOR ALERT USER MAPPING, STARTS HERE ###########################################3
+#5/11/2016
+app.common.userAlertMappingSearchHeader= User Alert Mapping 
+app.common.userAlertMappingResultHeader= User Alert Mapping Details 
+
+######################### FOR ALERT USER MAPPING, ENDS HERE ###########################################3
+
+######################### FOR AUDIT LOG, STARTS HERE ###########################################3
+#5/11/2016
+app.common.USERROLE = User Role
+app.common.MODULENAME = Module Name
+app.common.auditLogSearchHeader= Audit Log 
+app.common.auditLogResultHeader= Audit Log Result 
+
+app.common.systemLoginLogSearchHeader= System Login Log 
+app.common.systemLoginLogResultHeader= System Login Log Result 
+
+######################### FOR AUDIT LOG, ENDS HERE ###########################################3
+
+
+######################### FOR RuleWiese RiskCategorizatio, STARTS HERE ###########################################3
+#18/01/2017
+app.common.riskParametersTemplateSearchHeader= Risk Parameters Template
+app.common.riskParametersTemplateResultHeader= Risk Parameters Template Details
+app.common.amlUserClosedCaseSearchHeader=Search Cases
+app.common.amlUserClosedCaseResultHeader=Actioned Cases With Users
+app.common.auditUserReviewCaseResultHeader=Result List
+
+
+######################### FOR FATCA WorkFlow , STARTS HERE ###########################################3
+
+app.common.fatcaUserPendingCaseSearchHeader=Pending Cases
+app.common.fatcaUserPendingCaseResultHeader=Pending Cases Result
+
+app.common.fatcaOfficerPendingCaseSearchHeader=Pending Cases
+app.common.fatcaOfficerPendingCaseResultHeader=Pending Cases Result
+
+app.common.fatcaManagerPendingCaseSearchHeader=Pending Cases
+app.common.fatcaManagerPendingCaseResultHeader=Pending Cases Result
+
+app.common.KYCPARAMETERS=KYC Parameters
+app.common.fatcaCustomersSearchHeader=FATCA/CRS Customers
+app.common.fatcaCustomersResultHeader=FATCA/CRS Customers Result
+
+######################### FOR FATCA WorkFlow , ENDS HERE ###########################################3
+
+####
+######################### FOR Reports Wizard , STARTS HERE ###########################################3
+app.common.reportWizardSearchHeader= Reports Wizard
+app.common.reportWizardResultHeader= Reports List
+app.common.REPORTTYPE= Type
+
+######################### FOR Reports Wizard , ENDS HERE ###########################################3
+
+##Govind##
+######################### FOR Assign To BranchUser And Nepal TTR , STARTS HERE ###########################################3
+app.common.assignToBranchUserTableHeader = Assign To BranchUser 
+app.common.assignToRMUserTableHeader = Assign To RMUser 
+
+app.common.NPLTTRReportHeader = Nepal Threshold Transaction Reporting
+app.common.NPLTTRReportResultHeader = Nepal TTR Result
+
+######################### FOR Assign To BranchUser And Nepal TTR , ENDS HERE ###########################################3
+
+## (20/04/2017)##
+######################### Missing Fields Report ###########################
+app.common.missingFieldsReportSearchHeader= Missing Fields Report
+app.common.missingFieldsReportResultHeader= Missing Fields Report Details
+###########################################################################
+
+
+
+##GOVIND (14/05/2017)##
+######################### Starts Here ###########################
+app.common.MISSINGMANDATORYFIELD = Missing Mandatory Field 
+app.common.TOTALSCORE = Total Score 
+app.common.TRANSACTIONID = TransactionId
+app.common.INSTRUMENTNO = InstrumentNo
+app.common.INSTRUMENTDATE = InstrumentDate
+app.common.TRANSACTIONDATE = TransactionDate
+app.common.COUNTERPARTYID = CounterPartyId
+app.common.COUNTERPARTYTYPE = CounterPartyType
+app.common.COUNTERBRANCHCODE = CounterBranchCode 
+app.common.COUNTERBANKCODE = CounterBankCode 
+app.common.ACCTCURRENCYCODE = AcctCurrencyCode 
+app.common.RATECODE = RateCode 
+app.common.CONVERSIONRATE = Conversion Rate
+app.common.NARRATION = Narration
+app.common.CHANNELID = ChannelId
+app.common.COUNTERCOUNTRYCODE = Counter CountryCode
+app.common.COUNTERPARTYADDRESS = Counter PartyAddress
+app.common.COUNTERPARTYNAME = Counter PartyName
+app.common.COUNTERACCOUNTNO = Counter AccountNo
+app.common.FLOWCODE = Flow Code
+
+app.common.CTR_ID = CTR_ID
+app.common.ACCOUNTNUMBER = AccountNumber
+app.common.STATUS = Status
+app.common.GENERATEDBY = GeneratedBy
+app.common.ISAPPROVED = IsApproved
+app.common.APPROVEDBY = ApprovedBy
+app.common.REMARKS = Remarks
+app.common.ISFIUREPORTED = Is FIU Reported
+app.common.ISREPLACEMENT = IS Replacement
+app.common.ORIGINALREPORTSENTDATE = OriginalReportSentDate
+app.common.MONTHOFREPORT = MonthOfReport
+app.common.YEAROFREPORT = YearOfReport
+
+app.common.NTR_ID = NTR_ID
+app.common.MONTHOFREPORTING = MonthOfReporting
+app.common.LINENUMBER = LineNumber
+app.common.TRANSACTIONTIME = TransactionTime
+app.common.TRANSACTIONREFNO = TransactionRefNo
+app.common.INSTRUMENTTYPE = InstrumentType
+app.common.AMOUNTRUPEES = AmountRupees
+app.common.REPORTSERIALNUMBER = ReportSerialNo
+
+app.common.VALUEDATE = ValueDate
+app.common.CURCODE = CurCode
+app.common.CRDR = CRDR
+app.common.ACCTYPE = AccType
+app.common.TXNNATURE = TxnNature
+app.common.CUSFIRSTNAME = CusFirstName
+app.common.CUSLASTNAME = CusLastName
+app.common.ADDREESLINE2 = AddreesLine2
+app.common.IDNUMBER = IDNumber
+app.common.TEL = Tel
+app.common.FAX = Fax
+app.common.EMAIL = Email
+app.common.BUSINESSTYPE = BusinessType
+app.common.CUSTYPE = CusType
+app.common.ACCSTATUS = AccStatus
+app.common.TRANREFERENCE = TranReference
+app.common.ACCNUMBER = AccNumber
+app.common.TTR_CODE = TTR_Code
+app.common.REF = Ref
+app.common.TRANSACTION_DATE = Transaction_Date
+app.common.CURRENCY = Currency
+app.common.ORIG_NAME = Orig_Name
+app.common.ORIG_ID_NUMBER = Orig_Id_Number
+app.common.ORIG_ACCOUNT_NO = Orig_Account_No
+app.common.ORIG_BANK = Orig_Bank
+app.common.ORIG_COUNTRY = Orig_Country
+app.common.DEST_NAME = Dest_Name
+app.common.DEST_ID_NUMBER = Dest_Id_Number
+app.common.DEST_ACCOUNT_NO = Dest_Account_No
+app.common.DEST_BANK = Dest_Bank
+app.common.DEST_COUNTRY = Dest_Country
+app.common.SNO = S.N.
+app.common.BRANCH = Branch
+app.common.DATEOFTRANSACTION = Date Of Transaction
+app.common.NATUREOFTRANSACTION = Nature Of Transaction
+app.common.ACCOUNTTYPEANDNO = Account Type And No.
+app.common.AMOUNTINVOLVED = Amount Involved
+app.common.SOURCEOFFUND = Source Of Fund
+app.common.CASENO = Case No
+app.common.USERCOMMENTS = User Comments
+app.common.LASTUPDATEDON = Last Action Date
+app.common.CASESOURCESYSTEM = Associated Cases
+app.common.LISTCODE = List Code
+app.common.LISTNAME = List Name
+app.common.CREATEDTIME = Created Time
+app.common.CREATEDBY = CreatedBy
+app.common.MLRISKVALUE = ML RiskValue
+app.common.THRISKVALUE = TH RiskValue
+app.common.TFRISKVALUE = TF RiskValue
+app.common.RATE = Conversion Rate
+app.common.REFERENCECODE = Reference Code
+app.common.EMPCODE = Employee Code
+app.common.EMPNAME = Employee Name
+app.common.EMP_DESIGNATION = Designation
+app.common.BIRTHPLACE = Birth Place
+app.common.DEPARTMENT = Department
+app.common.EMP_ADDRESSLINE1 = Address Line1
+app.common.EMP_ADDRESSLINE2 = Address Line2
+app.common.EMP_ADDRESSLINE3 = Address Line3
+app.common.EMP_CITY = City
+app.common.EMP_STATE = State
+app.common.EMP_COUNTRY = Country
+app.common.EMP_PINCODE = PinCode
+app.common.EMP_PHONENO = PhoneNo
+app.common.EMP_FAXNO = FaxNo
+app.common.EMP_EMAILID = EmailId
+app.common.AML_FLAG = AML Flag
+app.common.GROUPCODE = Group Code
+app.common.GROUPNAME = Group Name
+app.common.PROFILEACCOUNTNO = Account No
+app.common.ACCT_OPENEDDATE = Account OpenedDate
+app.common.TRANSACTIONSTARTDATE = Transaction StartDate
+app.common.TRANSACTIONLASTDATE = Transaction EndDate
+app.common.LOGMESSAGE = Log Message
+app.common.LOGDATETIME = Log DateTime
+app.common.TERMINALNAME = Terminal Name
+app.common.LOGTYPE = Log Type
+app.common.LOGINSTATUS = Login Status
+app.common.LOGINSTATUSMESSAGE = Login Status Message
+app.common.LOGINDATETIME = Login DateTime
+app.common.LOGOUTDATETIME = Logout DateTime
+app.common.SESSIONID = SessionId
+app.common.ACTIVEFROMDATE = Active FromDate
+app.common.ACTIVETODATE = Active ToDate
+app.common.REASON = Reason
+app.common.TOLERANCELEVEL = Tolerance Level
+app.common.MATCHEDLIST = Matched List
+app.common.MATCHEDENTITY = Matched Entity
+app.common.LISTID = ListId
+app.common.ISREMOVED = Is Removed
+app.common.ISSELECTED = Is Selected
+app.common.USERLEVEL = User Level
+app.common.MAPPEDFIELDTYPE = Mapped FieldType
+app.common.MAPPEDFIELDVALUE = Mapped FieldValue
+app.common.REPORTWIDGETSID = Report Id
+app.common.ALERTSCORE = Alert Score
+app.common.RISKRATING_SCOREVALUE = Risk Rating Score Value
+app.common.ALERTCODE_SCOREVALUE	= AlertCode Score Value
+app.common.STATECODE = State Code
+app.common.STATECODE_SCOREVALUE	= StateCode Score Value
+app.common.PANAVAILIBILTY = PAN Availibility
+app.common.PANAVAILIBILTY_SCOREVALUE = PAN Availibility Score Value
+app.common.PHONEAVAILABILITY = Phone Availibility
+app.common.PHONEAVAILABILITY_SCOREVALUE	= Phone Availibility Score Value
+app.common.HIGHNETWORTH	= High Newtworth
+app.common.HIGHNETWORTH_SCOREVALUE = High Newtworth Score Value
+app.common.ISNEWACCOUNT	= Is New Account
+app.common.ISNEWACCOUNT_SCOREVALUE = Is New Account Score Value
+app.common.ISMINOR = Is Minor
+app.common.ISMINOR_SCOREVALUE = Is Minor Score Value
+app.common.ATTACHEDFILESCOUNT = Attachment Count
+app.common.ALERTRATING = Alert Rating
+app.common.ASSIGNEDCASENO = Case No
+app.common.AMLUSERCODE = AMLA ID
+app.common.AMLOUSERCODE = AMLO ID
+app.common.MLROUSERCODE = MLRO ID
+app.common.AMLUSERCOMMENTS = AMLUser Comments
+app.common.AMLOCOMMENTS = AMLO Comments
+app.common.MLROCOMMENTS = MLRO Comments
+app.common.USERTIMESTAMP = User Action Date
+app.common.AMLUSERTIMESTAMP = AML Action Date
+app.common.AMLOTIMESTAMP = AMLO TimeStamp
+app.common.MLROTIMESTAMP = MLRO TimeStamp
+app.common.REFERENCECASENO	= Reference CaseNo
+app.common.AMLREPUSERCODE	=  AMLRep User Code 
+app.common.AMLREPUSERCOMMENTS =	AMLRep User Comments 
+app.common.AMLREPUSERTIMESTAMP	= AMLRep User TimeStamp 
+app.common.AMLREPUSERCASESTATUS	= AMLRep User Case Status 
+app.common.FIUREFERENCENO = FIU ReferenceNo
+app.common.REFERENCECASEDATE =	Reference Case Date
+app.common.FIUREFERENCEUPDATEDATE = FIU Reference Update Date
+
+app.common.TRANSACTIONDAYCOUNT = Transactions DayCount
+app.common.ACCT_BRANCHCODE = Account BranchCode
+app.common.CONSTITUTIONTYPE = Customer Type
+app.common.TOTALTRANAMOUNT = Total Transaction Amount
+app.common.TOTALTRANCOUNT = Total Transaction Count
+app.common.TOTALCREDITAMOUNT = Total Credit Amount
+app.common.TOTALCREDITCOUNT = Total Credit Count
+app.common.TOTALDEBITAMOUNT = Total Debit Amount
+app.common.TOTALDEBITCOUNT = Total Debit Count
+app.common.TOTALCASHTRANAMOUNT = Total CashTranAmount
+app.common.TOTALCASHTRANCOUNT = Total CashTranCount
+app.common.TOTALTRANSFERTRANAMOUNT = Total TransferTranAmount
+app.common.TOTALTRANSFERTRANCOUNT = Total TransferTranCount
+app.common.TOTALCLEARINGTRANAMOUNT = Total ClearingTranAmount
+app.common.TOTALCLEARINGTRANCOUNT = Total ClearingTranCount
+app.common.TOTALNONCASHTRANAMOUNT = Total NonCashTranAmount
+app.common.TOTALNONCASHTRANCOUNT = Total NonCashTranCount
+app.common.TOTALCASHDEPOSITAMOUNT = Total CashCreditAmount
+app.common.TOTALCASHDEPOSITCOUNT = Total CashCreditCount
+app.common.TOTALTRANSFERDEPOSITAMOUNT = Total TransferCreditAmount
+app.common.TOTALTRANSFERDEPOSITCOUNT = Total TransferCreditCount
+app.common.TOTALCLEARINGDEPOSITAMOUNT = Total ClearingCreditAmount
+app.common.TOTALCLEARINGDEPOSITCOUNT = Total ClearingCreditCount
+app.common.TOTALNONCASHDEPOSITAMOUNT = Total NonCashCreditAmount
+app.common.TOTALNONCASHDEPOSITCOUNT = Total NonCashCreditCount
+app.common.TOTALCASHWITHDRAWALAMOUNT = Total CashDebitAmount
+app.common.TOTALCASHWITHDRAWALCOUNT = Total CashDebitCount
+app.common.TOTALTRANSFERWITHDRAWALAMOUNT = Total TransferDebitAmount
+app.common.TOTALTRANSFERWITHDRAWALCOUNT = Total TransferDebitCount
+app.common.TOTALCLEARINGWITHDRAWALAMOUNT = Total ClearingDebitAmount
+app.common.TOTALCLEARINGWITHDRAWALCOUNT = Total ClearingDebitCount
+app.common.TOTALNONCASHWITHDRAWALAMOUNT = Total NonCashDebitAmount
+app.common.TOTALNONCASHWITHDRAWALCOUNT = Total NonCashDebitCount
+app.common.MAXDEPOSITAMOUNT = Max CreditAmount
+app.common.MINDEPOSITAMOUNT = Min CreditAmount
+app.common.MAXWITHDRAWALAMOUNT = Max DebitAmount
+app.common.MINWITHDRAWALAMOUNT = Min Debitamount
+app.common.MAXCASHTRANAMOUNT = Max CashTranAmount
+app.common.MINCASHTRANAMOUNT = Min CashTranAmount
+app.common.MAXTRANSFERTRANAMOUNT = Max TransferTranAmount
+app.common.MINTRANSFERTRANAMOUNT = Min TransferTranAmount
+app.common.MAXCLEARINGTRANAMOUNT = Max ClearingTranAmount
+app.common.MINCLEARINGTRANAMOUNT = Min ClearingTranAmount
+app.common.MAXNONCASHTRANAMOUNT = Max NonCashTranAmount
+app.common.MINNONCASHTRANAMOUNT = Min NonCashTranAmount
+app.common.MAXCASHDEPOSITAMOUNT = Max CashCreditAmount
+app.common.MINCASHDEPOSITAMOUNT = Min CashCreditAmount
+app.common.MAXTRANSFERDEPOSITAMOUNT = Max TransferCreditAmount
+app.common.MINTRANSFERDEPOSITAMOUNT = Min TransferCreditAmount
+app.common.MAXCLEARINGDEPOSITAMOUNT = Max ClearingCreditAmount
+app.common.MINCLEARINGDEPOSITAMOUNT = Min ClearingCreditAmount
+app.common.MAXNONCASHDEPOSITAMOUNT = Max NonCashCreditAmount
+app.common.MINNONCASHDEPOSITAMOUNT = Min NonCashCreditAmount
+app.common.MAXCASHWITHDRAWALAMOUNT = Max CashDebitAmount
+app.common.MINCASHWITHDRAWALAMOUNT = Min CCashDebitAmount
+app.common.MAXTRANSFERWITHDRAWALAMOUNT = Max TransferDebitAmount
+app.common.MINTRANSFERWITHDRAWALAMOUNT = Min TransferDebitAmount
+app.common.MAXCLEARINGWITHDRAWALAMOUNT = Max ClearingDebitAmount
+app.common.MINCLEARINGWITHDRAWALAMOUNT = Min ClearingDebitAmount
+app.common.MAXNONCASHWITHDRAWALAMOUNT = Max NonCashDebitAmount
+app.common.MINNONCASHWITHDRAWALAMOUNT = Min NonCashDebitAmount
+app.common.TOTALATMTRANAMOUNT = Total ATM Tran Amount
+app.common.TOTALATMTRANCOUNT = Total ATM Tran Count
+app.common.TOTALALLATMTRANCOUNT = Total ALL ATM Tran Count
+app.common.TOTALATMREVERSALCOUNT = Total ATM Reversal Count
+app.common.TOTALPCICREDITAMOUNT = Total PCI CreditAmount
+app.common.TOTALPCICREDITCOUNT = Total PCI CreditCount
+app.common.TOTALPCIDEBITAMOUNT = Total PCI DebitAmount
+app.common.TOTALPCIDEBITCOUNT = Total PCI DebitCount
+app.common.TOTALPCDCREDITAMOUNT = Total PCD CreditAmount
+app.common.TOTALPCDCREDITCOUNT = Total PCD CreditCount
+app.common.TOTALPCDDEBITAMOUNT = Total PCD DebitAmount
+app.common.TOTALPCDDEBITCOUNT = Total PCD DebitCount
+app.common.TOTALINWARDNEFTAMOUNT = Total NEFT InwardAmount
+app.common.TOTALINWARDNEFTCOUNT = Total NEFT InwardCount
+app.common.TOTALOUTWARDNEFTAMOUNT = Total NEFT OutwardAmount
+app.common.TOTALOUTWARDNEFTCOUNT = Total NEFT OutwardCount
+app.common.TOTALINWARDRTGSAMOUNT = Total RTGS InwardAmount
+app.common.TOTALINWARDRTGSCOUNT = Total RTGS InwardCount
+app.common.TOTALOUTWARDRTGSAMOUNT = Total RTGS OutwardAmount
+app.common.TOTALOUTWARDRTGSCOUNT = Total RTGS OutwardCount
+app.common.TOTALINWARDIMPSAMOUNT = Total IMPS InwardAmount
+app.common.TOTALINWARDIMPSCOUNT = Total IMPS InwardCount
+app.common.TOTALOUTWARDIMPSAMOUNT = Total IMPS OutwardAmount
+app.common.TOTALOUTWARDIMPSCOUNT = Total IMPS OutwardCount
+app.common.TOTALINWARDREMITTAMOUNT = Total Remitance InwardAmount
+app.common.TOTALINWARDREMITTCOUNT = Total Remitance InwardCount
+app.common.TOTALOUTWARDREMITTAMOUNT = Total Remitance OutwardAmount
+app.common.TOTALOUTWARDREMITTCOUNT = Total Remitance OutwardCount
+app.common.TOTALINWARDBILLAMOUNT = Total BILL InwardAmount
+app.common.TOTALINWARDBILLCOUNT = Total BILL InwardCount
+app.common.TOTALOUTWARDBILLAMOUNT = Total BILL OutwardAmount
+app.common.TOTALOUTWARDBILLCOUNT = Total BILL OutwardCount
+app.common.PRIMARY_SEGMENT = MIS segment code
+app.common.CBS_RISKRATING = CBS RiskRating
+app.common.NATURE_OF_BUSINESS_LU_CODE1 = Nature Of Business Code1
+app.common.INCOME_SLAB_LU = Income Range
+app.common.EDUCATION = Education
+app.common.ISNPOCUSTOMER = NPO Customer
+app.common.ISPEPCUSTOMER = PEP Customer
+app.common.EMPLOYERCODE = Employer Code
+app.common.GENDER = Gender
+app.common.SSNO = SSNO
+app.common.GRADE = Grade
+app.common.REGISTRATIONNUMBER = RegistrationNo
+app.common.TIN = TIN
+app.common.REGISTRATIONPLACE = Registration Place
+app.common.REGISTRATIONDATE = Registration Date
+app.common.REGISTRATIONEXPIRYDATE = Registration Expiry Date
+app.common.CORPORATE_PARTY_ID = Corporate Party Id
+app.common.PROFIT_LOSS = Profit Loss
+app.common.NO_OF_DIRECTORS = No Of Directors
+app.common.AUTHORIZED_CAPITAL = Authorized Capital
+app.common.PAIDUP_CAPITAL = Paidup Capital
+app.common.TO_FINANCIAL_DATE = Date Range
+app.common.FROM_FINANCIAL_DATE = Date Range
+app.common.RM_CODE = RM Code
+app.common.RM_EMAIL = RM Email
+app.common.RM_NAME = RM Name
+app.common.RM_MOBILE = RM Mobile
+app.common.NATURE_OF_BUSINESS_LU = Nature Of Business
+app.common.GUARDIANNAME = Guardian Name
+app.common.GUARDIANRELATION = Guardian Relation
+app.common.GUARDIANADDRESSLINE1 = Guardian AddressLine1
+app.common.GUARDIANADDRESSLINE2 = Guardian AddressLine2
+app.common.GUARDIANCITY = Guardian City
+app.common.GUARDIANSTATE = Guardian State
+app.common.GUARDIANPINCODE = Guardian PinCode
+app.common.GUARDIANCOUNTRY = Guardian Country
+app.common.GUARDIANPHONENO = Guardian PhoneNo
+app.common.PHONE_DETAILS = Phone Details
+app.common.JOINTACCOUNTNO = Joint AccountNo
+app.common.JOINTCUSTOMERID = Joint CustomerId
+app.common.JOINTHOLDERNAME = Joint HolderName
+app.common.JOINTHOLDERTYPE = Joint HolderType
+app.common.RELATIONCODE = Relation Code
+app.common.INEFFECTIVE_DATE = InEffective Date
+app.common.SOURCESYSTEM = Source System
+app.common.DOC_CODE = Doc Code
+app.common.DOC_RECEIPT_DATE = Doc Receipt Date
+app.common.DOC_VALID_FROM_DATE = Doc Valid FromDate
+app.common.DOC_VALID_TO_DATE = Doc Valid ToDate
+app.common.GREENCARDHOLDER = GreenCard Holder
+app.common.SUBSTANTIALPRESENCEINUS = Substantial Presence In US
+app.common.RESIDENCEADDRESSINUS = Residence Address In US
+app.common.POSTALADDRESSINUS = Postal Address In US
+app.common.PLACEOFBIRTHINUS = Place Of Birth In US
+app.common.COUNTRYOFBIRTHINUS = Country Of Birth In US
+app.common.CAREOFADDRESSINUS = Care Of Address In US
+app.common.HOLDMAILADDRESSINUS = Hold Mail Address In US
+app.common.POBOXNOINUS = PO BoxNO In US
+app.common.PHONENUMBERINUS = Phone Number In US
+app.common.STANDINGINSTRUCTIONTOUS = Standing Instruction To US
+app.common.INCORPORATIONTOWNINUS = Incorporation Town In US
+app.common.INCORPORATIONCOUNTRYINUS = Incorporation Country In US
+app.common.REGISTRATIONADDRESSINUS = Registration Address In US
+app.common.INVOLVEDINACTIVETRADE = Involved In Active Trade
+app.common.USPERSONS10SHAREHOLDING = US Persons 10% Share Holding
+app.common.NFFEFLAG = NFFE Flag
+app.common.W8W9FORMATTACHED = W8/W9 Form Attached
+app.common.OTHERCARDHOLDER = Other card Holder
+app.common.SUBSTANTIALPRESENCEINOTHER = SubstantialPresence In Other
+app.common.OTHERCOUNTRYRESIDENCEADDRESS = OtherCountry ResidenceAddress
+app.common.OTHERCOUNTRYPOSTALADDRESS = OtherCountry PostalAddress
+app.common.OTHERCOUNTRYPLACEOFBIRTH = OtherCountry PlaceOfBirth
+app.common.OTHERCOUNTRYBIRTH = OtherCountry Birth
+app.common.OTHERCOUNTRYCAREOFADDRESS = OtherCountry CareOfAddress
+app.common.OTHERCOUNTRYHOLDMAILADDRESS = OtherCountry HoldMailAddress
+app.common.OTHERCOUNTRYPOBOXNO = OtherCountry POBoxNO
+app.common.OTHERCOUNTRYPHONENUMBER = OtherCountry PhoneNumber
+app.common.OTHERCOUNTRYSTANDINGINSTRUCT = OtherCountry StandingInstruct
+app.common.OTHERCOUNTRYINCORPORATIONTOWN = OtherCountry IncorporationTown
+app.common.INCORPORATIONINOTHERCOUNTRY = Incorporation In OtherCountry
+app.common.OTHERCOUNTRYREGISTRATIONADDR = OtherCountry RegistrationAddr
+app.common.OTHERCOUNTRYPERSONS10SHARE = OtherCountry Persons 10% Share
+app.common.DOCUMENTRYEVIDENCEATTACHED = Documentary Evidence Attached
+app.common.FIELD1  = Field1 
+app.common.FIELD2 = Field2
+app.common.FIELD3 = Field3
+app.common.FIELD4 = Field4
+app.common.FIELD5 = Field5
+app.common.FIELD6 = Field6
+app.common.FIELD7 = Field7
+app.common.FIELD8 = Field8
+app.common.FIELD9 = Field9
+app.common.FIELD10 = Field10
+app.common.UIDISSUDBYFIU = UID Issued By FIU
+app.common.GEOGRAPHICREGIONCODE = Geographical Code
+app.common.TRANSUBTYPE = Transaction SubType
+app.common.ALERTNUMBER=AlertNo
+app.common.CREDITCARDNO = CCard No
+app.common.CREDITCARDLIMIT = CCard Limit 
+app.common.CREDITCARDCASHLIMIT = CCard Cash Limit
+app.common.AGREEMENTDATE = Agreement Date
+app.common.MATURITYDATE = Maturity Date
+app.common.EVENTDATE = Event Date
+app.common.SOURCESYSTEMS = System
+app.common.ISCASH = Is Cash
+app.common.generateSubjectiveAlert = Generated Subjective Alert
+app.common.PURPOSEOFREMITTANCECODE = Purpose Of RemittanceCode
+app.common.PSTD_DATE = Posted Date
+app.common.MCCCODE = MCC Code
+app.common.REF_AMT = Reference Amount
+app.common.SONO = S.No.
+app.common.LINKEDTYPE = LinkedType
+app.common.LINKEDACCOUNTNO = LinkedAccountNo
+app.common.LINKEDCUSTOMERID = LinkedCustomerId
+app.common.LINKEDNAME = LinkedName
+app.common.FORCELINK = ForceLink
+app.common.IFEXISTINGTAB = IfExistingTab
+app.common.TRANSACTEDCOUNT = TransactedCount
+app.common.TRANSACTEDAMOUNT = TransactedAmount
+app.common.DUPLICATEVALUE = DuplicateValue
+app.common.TOTALASSIGNED = TotalAssigned
+app.common.PENDING = Pending
+app.common.DESKTOPCLOSURE = Desktop Closure
+app.common.RAISEDTOBRANCHES = Raised To Branches
+app.common.ASSIGNEDTOUSER = Assigned To User
+app.common.PENDINGWITHUSERS = Pending With Users
+app.common.DESKTOPCLOSUREBYUSERS = Desktop Closure By Users
+app.common.ESCALATEDBYUSERS = Escalated By Users
+app.common.PARKEDTOWATCH = ParkedTo WatchList
+app.common.CLOSEDWITHOUTSTRS = Actioned Without STRS
+app.common.CLOSEDWITHSTRS = ActionedWith STRS
+app.common.CONFIRMEDSTRS = Confirmed STRS
+app.common.REJECTEDSTRS = Rejected STRS
+app.common.WITHHINDSIGHTING = With HindSighting
+app.common.WITHOUTHINDSIGHTING = Without HindSighting
+app.common.TOTAL = Total
+app.common.BUCKETNAME = Bucket_Name
+app.common.COUNT_ASSIGNED = Count_Assigned
+app.common.COUNT_PENDING = Count_Pending
+app.common.COUNT_DESKTOPCLOSURE = Count_DesktopClosure
+app.common.COUNT_ESCALATEDTOAMLUSER = Count_EscalatedToAMLUser
+app.common.COUNT_RAISEDTOBRANCHES = Count_RaisedToBranches
+app.common.COUNT_CLOSEWITHOUTSTR = Count_CloseWithoutSTR
+app.common.COUNT_CLOSEWITHSTR = Count_CloseWithSTR
+app.common.COUNT_PARKEDTOWATCHLIST = Count_ParkedToWatchlist
+app.common.RISKPARAMETER = Risk Parameter
+app.common.PARAMETERCODE = Parameter Code
+app.common.RISKPARAMDISPLAY = Risk Param Display
+app.common.PARAMETERDESCRIPTION = Parameter Description
+app.common.PARAMETERRISKVALUE = Parameter RiskValue
+
+######################### Ends Here ###########################
+########### Transaction Dashboard Ritu 19May2017 ###############
+app.common.viewAccountStatement = View Account Statement
+app.common.accountStatementHeader = Account Statement
+app.common.accountStatementResultHeader = Account Statement List
+
+########### RPT WatchList Module Bitan 26May2017 ###############
+app.common.RPTLISTCODE=List Code
+app.common.RPTENTITYID=Entity ID
+app.common.LISTTYPE=List Type
+app.common.rptWatchListHeader=RPT WatchList
+app.common.rptWatchListResultHeader=RPT Watch List Search Result
+app.common.ADDEDON=Added On
+app.common.ADDEDBY=Added By
+app.common.ENTITYNAME=Entity Name
+app.common.ENTITYID=Entity ID
+app.common.IDNO=ID No
+app.common.CUSTSTATUS=Customer Status
+app.common.rptWatchListAddEntityHeader=RPT WatchList Add Entity
+app.common.IDTYPE=ID Type
+app.common.RELATEDTHROUGH=Related Through
+app.common.SHAREHOLDING=Share Holding %
+app.common.RELATION=Relation
+app.common.SUBRELATION=Sub-Relation
+app.common.DROPDOWN1=Dropdown1
+app.common.DROPDOWN2=Dropdown2
+app.common.REMARK=Remarks
+app.common.AUTHORIZER=Authorizer
+app.common.CHECKEDBY=Authorizer
+app.common.createButton=Create
+#app.common.CASESTATUS=Case Status
+app.common.CASESTATUS=Case Action
+app.common.closedcasesBySelfSearchHeader=Actioned Cases By Self
+app.common.closedcasesBySelfResultHeader=List Of Actioned cases
+app.common.strClosedcasesBySelfSearchHeader=Actioned Cases With STR By Self
+app.common.strClosedcasesBySelfResultHeader=List Of Actioned cases With STR
+############Case Reassignment########
+app.common.caseReassignmentSearchHeader = Case Reassignment
+app.common.reassignmentFor = Reassignment For
+app.common.pendingWith = Pending With
+app.common.closedBy = Closed By
+app.common.userList = Users List
+app.common.amlosList = AMLOs List
+app.common.amlusersList = AMLUsers List
+app.common.caseReassignmentResultHeader = Case List
+app.common.reAssignToUserTableHeader = Reassign To User 
+app.common.CASEDATE = Case Date
+#####################################
+app.common.CBS_REMARKS_EUC = GBASE EUC Remarks
+app.common.CBS_REFERENCENO = GBASE ReferenceNo
+app.common.CBS_BILLOFENTRY_IMPEXP_YN = Bill Of Entry IMP/EXP
+app.common.CBS_BILLOFENTRY_INOUT_YN = Bill Of Entry IN/OUT Remittance\t
+app.common.EXPORTCSVBUTTON= Export CSV
+######Template Screening########
+##### 18/10/2017 ###### Ravi #####
+app.common.createTemplateScreeningHeader = Template Screening
+app.common.createTemplateScreeningResult = Template List
+app.common.TEMPLATETYPE = Template Type
+app.common.TEMPLATEDATE = Template Date
+app.common.SEQNO = Sequence Number
+app.common.NAME = Name
+app.common.FIELDTYPE = Field Type
+app.common.FIELDVALUE = Field Value
+app.common.TEMPLATESCAN = Scan
+##########################################
+####13/07/2018########
+app.common.label.logout=Logout
+app.common.label.settings=Settings
+app.common.label.switchProfile=Switch to [0] profile
+app.common.label.currentProfile=[1] AS [0]
+#####################################################
+####20-07-2018########
+app.common.staticCRC = Static - Customer Risk Categorization
+app.common.dynamicCRC = Dynamic - Customer Risk Categorization
+##############################################################
+####12-08-2018####DocFromWSDL########
+## , DOWNLOAD GENERATED CTR FILES##
+app.common.FILESEQUENCENO = File SeqNo
+app.common.FILENAME = File Name
+app.common.FILEPATH = File Path
+app.common.FIUREMARKS = FIU Remarks
+app.common.UPDATEDTIMESTAMP = UpdatedOn
+app.common.APPROVEBUTTON = Approve
+app.common.REJECTBUTTON = Reject
+app.common.SIMULATEBUTTON = Simulate Alert
+####CUSTOMER OVERRIDING#####19/08/2018##################################
+app.common.OVERRIDERISKRATINGDATE = Overriding Risk Rating Date
+app.common.OVERRIDERISKRATINGBYUSER = Overriding Risk Rating User Code
+app.common.OVERRIDERISKRATING = Overriding Risk Rating
+app.common.OVERRIDERISKRATINGCOMMENTS = Overriding Risk Rating Comments
+app.common.OVERRIDERISKRATINGMAKERDATE = Maker Timestamp
+app.common.OVERRIDDINGMAKERCODE = Maker Code
+app.common.OVERRIDDINGMAKERCOMMENTS = Maker Comments
+app.common.OVERRIDERISKRATINGCHECKERDATE = Checker Timestamp
+app.common.OVERRIDDINGCHECKERCODE = Checker Code
+app.common.OVERRIDDINGCHECKERCOMMENTS = Checker Comments
+########################################################################
+
+####CASE WORKFLOW COMMENTS LOG##################
+app.common.SEQUENCENO = Sequence Number
+app.common.REASONCODE = Reason Code
+app.common.ADDEDTOFALSEPOSITIVE = Added To False Positive
+app.common.REMOVALREASONCODE = Removal Reason Code
+app.common.HIGHRISKREASONCODE = High Risk Reason Code
+app.common.LASTREVIEWEDDATE = Account Reviewed Date
+app.common.COMMENTS = Comments
+app.common.FRAUDINDICATOR = Fraud Indicator
+app.common.OUTCOMEINDICATOR = Outcome Indicator
+app.common.ADDEDTOMARKALL = Added To Mark All
+app.common.UPDATEMESSAGE = Update Message
+##########################################################
+####CRP(Customer Risk Profiling)#####
+app.common.RiskRulesearchHeader = Search Rule
+app.common.RULEID  = Rule Id
+app.common.RULENAME = Rule Name
+app.common.RULECODE = Rule Code
+app.common.ISENABLE = Is Enable
+app.common.RISK = Risk Value
+app.common.RULE1_RISKVALUE = Rule1_RiskValue
+app.common.RULE2_RISKVALUE = Rule2_RiskValue
+app.common.RULE3_RISKVALUE = Rule3_RiskValue
+app.common.RULE4_RISKVALUE = Rule4_RiskValue
+app.common.RULE5_RISKVALUE = Rule5_RiskValue
+app.common.RULE6_RISKVALUE = Rule6_RiskValue
+app.common.RULE7_RISKVALUE = Rule7_RiskValue
+app.common.RULE8_RISKVALUE = Rule8_RiskValue
+app.common.RULE9_RISKVALUE = Rule9_RiskValue
+app.common.RULE10_RISKVALUE = Rule10_RiskValue
+app.common.RULE11_RISKVALUE = Rule11_RiskValue
+app.common.RULE12_RISKVALUE = Rule12_RiskValue
+app.common.RULE13_RISKVALUE = Rule13_RiskValue
+app.common.RULE14_RISKVALUE = Rule14_RiskValue
+app.common.RULE15_RISKVALUE = Rule15_RiskValue
+app.common.RULE16_RISKVALUE = Rule16_RiskValue
+app.common.RULE17_RISKVALUE = Rule17_RiskValue
+app.common.RULE18_RISKVALUE = Rule18_RiskValue
+app.common.TOTALDEPOSITAMOUNT_CASH = TotalCreditAmount_Cash
+app.common.TOTALWITHDRAWALAMOUNT_CASH = TotalDebitAmount_Cash
+app.common.TOTALTRANAMOUNT_CLEARING = TotalTransactionAmount_Clearing
+app.common.TOTALDEPOSITAMOUNT_CLEARING = TotalCreditAmount_Clearing
+app.common.TOTALWITHDRAWALAMOUNT_CLEARING = TotalDebitAmount_Clearing
+app.common.TOTALTRANAMOUNT_FT = TotalTransactionAmount_FT
+app.common.TOTALDEPOSITAMOUNT_FT = TotalCreditAmount_FT
+app.common.TOTALWITHDRAWALAMOUNT_FT = TotalDebitAmount_FT
+app.common.TOTALTRANAMOUNT_NRTGS = TotalTransactionAmount_NRTGS
+app.common.TOTALDEPOSITAMOUNT_NRTGS = TotalCreditAmount_NRTGS
+app.common.TOTALWITHDRAWALAMOUNT_NRTGS = TotalDebitAmount_NRTGS
+app.common.CUSTOMERTYPE_DESCRIPTION = CustomerType_Description
+app.common.OCCUPATION_DESCRIPTION = Occupation_Description
+app.common.NATUREOFBUSINESS_DESCRIPTION = NatureOfBusiness_Description
+app.common.ANNUALINCOME_DESCRIPTION = AnnualIncome_Description
+app.common.RESIDENCETYPE_DESCRIPTION = ResidenceType_Description
+app.common.TOTALTRANAMOUNT_CASH = TotalTranAmount_Cash
+app.common.TOTALDEPOSITAMOUNT_CASH = TotalCreditAmount_Cash
+app.common.TOTALWITHDRAWALAMOUNT_CASH = TotalDebitAmount_Cash
+app.common.TOTALTRANAMOUNT_CLEARING = TotalTransactionAmount_Clearing
+app.common.TOTALDEPOSITAMOUNT_CLEARING = TotalCreditAmount_Clearing 
+app.common.TOTALWITHDRAWALAMOUNT_CLEARING = TotalDebitAmount_Clearing
+app.common.TOTALTRANAMOUNT_FT = TotalTransactionAmount_FT
+app.common.TOTALDEPOSITAMOUNT_FT = TotalCreditAmount_FT
+app.common.TOTALWITHDRAWALAMOUNT_FT = TotalDebitAmount_FT
+app.common.TOTALTRANAMOUNT_NRTGS = TotalTransactionAmount_NRTGS
+app.common.TOTALDEPOSITAMOUNT_NRTGS = TotalCreditAmount_NRTGS
+app.common.TOTALWITHDRAWALAMOUNT_NRTGS = TotalDebitAmount_NRTGS
+app.common.LASTREVIEWEDDATE = LastReviewedDate
+app.common.LASTREVIEWEDBYUSER = LastReviewedByUser
+app.common.LASTREVIEWEDCOMMENTS = LastReviewedComments
+app.common.NEXTREVIEWDATE = NextReviewDate
+app.common.CDDREVIEWCOMMENTS = CDDReviewComments
+app.common.OVERRIDERISKRATINGMAKERDATE = OverRideRiskRatingMakerDate
+app.common.OVERRIDDINGMAKERCODE = OverRiddingMakerCode
+app.common.OVERRIDERISKRATING = OverRideRiskRating
+app.common.OVERRIDDINGMAKERCOMMENTS = OverRiddingMakerComments
+app.common.OVERRIDERISKRATINGCHECKERDATE = OverRideRiskRatingCheckerDate
+app.common.OVERRIDDINGCHECKERCODE = OverRiddingCheckerCode
+app.common.OVERRIDDINGCHECKERCOMMENTS = OverRiddingCheckerComments
+app.common.CLS_CODE = Cash/NonCash
+app.common.CLS_SUB_CODE =  Cash/Transfer/Clearing
+app.common.SUBGROUPINGCODE =  SubgroupingCode
+app.common.COD_CCY = Currency_Code
+app.common.NAM_CCY_COUNTRY= Currency_Country
+app.common.ACL_SUBGROUPINGCODE =  Transaction SubgroupingCode
+app.common.RAISESUSPICION_USERCODE = RaiseSuspicion_UserCode
+app.common.RAISESUSPICION_USERTIMESTAMP = RaiseSuspicion_UserTimeStamp
+app.common.RAISESUSPICION_USERCOMMENTS = RaiseSuspicion_UserComments
+app.common.RAISESUSPICION_OTHERS = RaiseSuspicion_Others
+app.common.DTL_ACTIVITY = Details Of Activitiy
+app.common.ALERTEDFORSTARTDATE = Txn from
+app.common.ALERTEDFORENDDATE = Txn up to
+app.common.ASSIGNEDUSER = Assigned User
+app.common.MERGEDCASE_FLAG = Merged Case
+app.common.USERACTIONTYPE = Action Taken
+app.common.REASSIGNED_AMLUSERCODE = ReAssignedBy_AMLUSERCODE
+app.common.REASSIGNED_AMLUSERCOMMENTS = ReAssignedBy_Comments
+app.common.REASSIGNED_AMLUSERCASESTATUS = ReAssignedBy_CaseStatus
+app.common.REASSIGNED_AMLUSERTIMESTAMP = ReAssignedBy_TimeStamp
+app.common.OLD_ACCOUNTSTATUS = Old_AccountStatus
+app.common.NEW_ACCOUNTSTATUS = New_AccountStatus
+app.common.ACCOUNTSTATUS_CHANGEDTIME = Acct Status & Date
+app.common.BUSINESSUSER = BusinessUser
+app.common.SUBACTION = SubAction
+app.common.ASSIGNEDDATETIME = Assigned Date
+app.common.RISKVALUE = RiskValue
+app.common.RULEDETAILS = RuleDetails
+app.common.RULEFOR = RuleFor
+app.common.EMPLOYER_TYPE = Employer_Type
+app.common.EMPLOYER_TYPE_DESCRIPTION = Employer_Type_Description
+app.common.PROFESSION_TYPE = Profession_Type
+app.common.PROFESSION_TYPE_DESCRIPTION = Profession_Type_Description
+app.common.RESIDENCETYPE = ResidenceType
+app.common.DEP_AMOUNT_SALARY = Credit_Amount_Salary
+app.common.WDL_AMOUNT_SALARY = Debit_Amount_Salary
+app.common.TOT_AMOUNT_SALARY = Total_Amount_Salary
+app.common.HASNAMEFOUND = HasNameFound
+app.common.CASESUBSTATUS = Case Sub-Action
+app.common.ACTIONED_CASESTATUS = Actioned CaseStatus
+#######################################################################
+########CASE WORKFLOW FALSE POSITIVE ########19/12/2018########
+app.common.REFERENCENO = Reference No
+app.common.ISTOBEDELETED = Is To Be Deleted
+##################################################################
+##### 22.12.2018#########OVERRIDE RISK RATING###################
+app.common.OVERRIDERISKRATING_SEGMENT = OverrideRiskRating_Segment
+app.common.OVERRIDDINGSTATUS = OverRiddingStatus
+app.common.ISMANUALALERT = Manual Alert
+app.common.ISMANUALCASE = Manual Case
+app.common.INR_AMOUNT = INR_Amount
+app.common.PRIMARY_AMLUSERCODE = System Owner
+app.common.ACTIONEDASBONAFIDEOK = Action_BonafideOk
+app.common.BO_BONAFIDE_OK = BO_SubAction_Bonafide_Ok
+app.common.BO_WITH_BUSINES_INVESTIGATION = BO_With_Busines_Investigation
+app.common.BO_DROPPED_WITH_RECOMMENDATION = BO_Dropped_With_Recommendation
+app.common.RAISEDFORREVIEW = Action_RaisedForReview
+app.common.RFR_WT_BUSINESS_RECOMMEND = RFR_As_With_Business_Recommendation
+app.common.RFR_WTH_BUSINESS_RECOMMEND = RFR_As_Without_Business_Recommendation
+app.common.RFR_OTHERS = RFR_As_Others
+app.common.RECOMMENDEDFORSUPPRESSION = Action_RecommendedForSuppression
+app.common.RFS_WT_BUSINESS_RECOMMEND = RFS_As_With_Business_Recommendation
+app.common.RFS_WTH_BUSINESS_RECOMMEND = RFS_As_Without_Business_Recommendation
+app.common.RFS_OTHERS = RFS_As_Others
+app.common.RAISEDFORSTR = Action_RaisedForSTR
+app.common.RFSTR_WT_BUSINESS_RECOMMEND = RFSTR_As_With_Business_Recommendation
+app.common.RFSTR_WTH_BUSINESS_RECOMMEND = RFSTR_As_Without_Business_Recommendation
+app.common.RFSTR_OTHERS = RFSTR_As_Others
+app.common.COUNT_ACTIONEDASBONAFIDEOK = Count_ActionedAsBonafideOkay
+app.common.COUNT_RAISEDFORREVIEW = Count_RaisedForReview
+app.common.COUNT_RECOMMENDFORSUPPRESSION = Count_RecommendedForSuppression
+app.common.COUNT_RAISEDFORSTR = Count_RaisedForSTR
+app.common.FILEUPLOADTYPE = FileType
+app.common.FILEUPLOADSTATUS = FileStatus
+app.common.CRPRULEID = Rule Id
+app.common.RULESTATUS = Rule Status
+######################### 05/01/2019########CASE USER MAPPING, STARTS HERE ######
+app.common.userCaseMappingSearchHeader= User Case Mapping 
+app.common.userCaseMappingResultHeader= User Case Mapping Details 
+######################### FOR CASE USER MAPPING, ENDS HERE ###############################
+##########Products Master Maker Checker######10/01/2019#################
+app.common.ISEXCLUDED = IsExcluded
+app.common.MAKERCODE = Maker Code
+app.common.MAKERCOMMENTS = Maker Comments
+app.common.MAKERTIMESTAMP = Maker Timestamp
+app.common.CHECKERCODE = Checker Code
+app.common.CHECKERCOMMENTS = Checker Comments
+app.common.CHECKERTIMESTAMP = Checker Timestamp
+app.common.pendingFilesSearchHeader = ManualUploadedFiles
+app.common.pendingFilesResultHeader = PendingRecords
+app.common.actionedFilesSearchHeader = UploadedFilesLog
+app.common.actionedFilesResultHeader = ActionedRecords
+app.common.ISMARKEDALL = IsMarkedAll
+app.common.PRIMARY_USERCODE = Primary_UserCode
+app.common.CURRENT_USERCODE = Current_UserCode
+app.common.CASESTATUS_SUBACTION = Sub Action
+app.common.AMLUSERLCODE = AMLUser1/2 Code
+app.common.AMLUSERLCOMMENTS = AMLUser1/2 Comments
+app.common.AMLUSERLTIMESTAMP = AMLUser1/2 TimeStamp
+app.common.viewCasesSearchHeader = View Cases
+app.common.viewCasesResultHeader = List Of Cases
+app.common.viewEvidence = View Evidence
+app.common.OLDCASENO = Old CaseNo
+app.common.ISMIGRATED = IsMigrated
+app.common.SEGMENT_ID = Segment_Id
+app.common.PRODUCT_TYPE = Product_Type
+app.common.ALERT_STATUS_CODE = Alert_Status_Code
+app.common.MONEY_LAUNDERING_RISK_SCORE = Money_Laundering_Risk_Score
+app.common.TERROR_FINANCING_RISK_SCORE = Terror_Financing_Risk_Score
+app.common.ALERT_DESCRIPTION = AlertDescription
+app.common.PRIMARY_ENTITY_LEVEL_CODE = Primary_Entity_Level_Code
+app.common.SCENARIO_ID = Scenario_Id
+app.common.SCENARIO_NAME = Scenario_Name
+app.common.SUPPRESSION_END_DATE = Suppression_End_Date
+app.common.ACTUAL_VALUES_TEXT = Actual_Values_Text
+app.common.RUN_DATE = Run_Date
+app.common.CREATE_DATE = Create_Date
+app.common.CREATE_USER_ID = Create_User_Id
+app.common.EMPLOYEE_IND = Employee_Indicator
+app.common.VERSION_NUMBER = Version_Number
+app.common.ALERT_TYPE_CD = Alert_Type_Cd
+app.common.ALERT_CATEGORY_CD = Alert_Category_Cd
+app.common.ALERT_SUBCATEGORY_CD = Alert_Subcategory_Cd
+app.common.LOGICAL_DELETE_IND = Logical_Delete_Ind
+app.common.OWNER_USER_LONG_ID = Owner_User_Long_Id
+app.common.PARTY_NUMBER = Party_Number
+app.common.RISK_DEC2007 = Risk_DEC2007
+app.common.RISK_JUN2008 = Risk_JUN2008
+app.common.RISK_DEC2008 = Risk_DEC2008
+app.common.RISK_JUN2009 = Risk_JUN2009
+app.common.RISK_DEC2009 = Risk_DEC2009
+app.common.RISK_JUN2010 = Risk_JUN2010
+app.common.RISK_DEC2010 = Risk_DEC2010
+app.common.RISK_JUN2011 = Risk_JUN2011
+app.common.RISK_DEC2011 = Risk_DEC2011
+app.common.RISK_JUN2012 = Risk_JUN2012
+app.common.RISK_DEC2012 = Risk_DEC2012
+app.common.RISK_JUN2013 = Risk_JUN2013
+app.common.RISK_DEC2013 = Risk_DEC2013
+app.common.RISK_JUN2014 = Risk_JUN2014
+app.common.RISK_DEC2014 = Risk_DEC2014
+app.common.RISK_JUN2015 = Risk_JUN2015
+app.common.RISK_DEC2015 = Risk_DEC2015
+app.common.RISK_JUN2016 = Risk_JUN2016
+app.common.RISK_DEC2016 = Risk_DEC2016
+app.common.RISK_JUN2017 = Risk_JUN2017
+app.common.RISK_DEC2017 = Risk_DEC2017
+app.common.RISK_JUN2018 = Risk_JUN2018
+app.common.RISK_DEC2018 = Risk_DEC2018
+app.common.RISK_JUN2019 = Risk_JUN2019
+app.common.RISK_DEC2019 = Risk_DEC2019
+app.common.PARTY_NUMBER_SRC = Party_Number_SRC
+app.common.emailRepositorySearchHeader = EmailsRepository
+app.common.emailRepositoryMasterTable = EmailsQuestions
+app.common.QUESTIONGROUP = QuestionGroup
+app.common.EMAILQUESTIONID = QuestionId
+app.common.QUESTIONGROUPTITLE = GroupTitle
+app.common.QUESTION = EmailQuestion
+app.common.CURRENTSTATUS = CurrentStatus
+app.common.COUNT_CLOSUREWITHFILINGSTR=Count_WithFilingSTR
+app.common.COUNT_CLOSUREWITHOUTFILINGSTR=Count_WithoutFilingSTR
+app.common.CLOSUREWITHFILINGSTR=WithFilingSTR
+app.common.CLOSUREWITHOUTFILINGSTR=WithoutFilingSTR
+app.common.APPROVEDCASES = ApprovedCases
+app.common.REJECTEDCASES = RejectedCases
+app.common.RAISEDFORREVIEW = RaisedForReview
+app.common.REVIEWEDANDFOUNDOK = ReviewedAndFoundOk
+app.common.REOPENEDBYAMLO = ReopenedCases
+app.common.REASSIGNBACKTOAMLUSER = ReassignedBack
+app.common.ISREVIEWRECOMMENDED = IsReviewRecommended
+app.common.EVENT_ID = Event_Id
+app.common.EVENT_DESCRIPTION = Event_Description
+app.common.EVENT_TYPE_CODE = Event_Type_Code
+app.common.CLOSE_DTTM = Close_DateTime
+app.common.INCIDENT_RK = Incident_RK
+app.common.COMMENT_TXT = Comment_Text
+app.common.STR_FLAG = STR_Flag
+app.common.INVESTIGATOR_USER_ID = Investigator_User
+app.common.CREATED_DTTM = Created_DTTM
+app.common.ASSIGNEDUSER_CASESTATUS = AssignedUser_CaseStatus
+app.common.MIGRATED_STR_FLAG = Migrated_STRFlag
+app.common.AGEINGFOR = Ageing For
+app.common.ALERTDETAILS = AlertDetails
+app.common.REPORTINGON = ReportingOn
+app.common.NAMEOFTHEPERSON = NameOfThePerson
+app.common.ADDRESSDETAILS = AddressDetails
+app.common.OTHERDETAILS = OtherDetails
+app.common.TYPEOFSUSPICIONCODE = SuspicionCode
+app.common.REASONOFSUSPCIONS = ReasonOfSuspcions
+app.common.AMLUSER = AMLUserCode
+app.common.CHECKERSTATUS= CheckerActionedStatus
+app.common.CHECKERUSERCODE = CheckerCode
+app.common.CHECKERUSERROLE = CheckerRole
+app.common.CHECKERIPADDRESS = Checker IPAddress
+app.common.UPLOADEDFILETYPE = UploadedFileType
+app.common.RECORDSEQUENCENO = RecordSequenceNo
+app.common.RISKRATING_SEGMENT = RiskRating_Segment
+app.common.RISKRATING_COMMENTS = RiskRating_Comments
+##########CRP High Risk Word######26/03/2019#################
+app.common.WORD = HighRiskWord
+app.common.AMLOCODE = AMLO CODE
+app.common.SCREENINGSTATUS = Screening Status
+app.common.USERBRANCHCODE = User BranchCode
+app.common.USERIPADDRESS  = User IPAddress

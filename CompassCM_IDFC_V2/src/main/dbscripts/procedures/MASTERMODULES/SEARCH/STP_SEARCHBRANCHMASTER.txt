@@ -1,0 +1,52 @@
+CREATE OR REPLACE PROCEDURE STP_SEARCHBRANCHMASTER(
+i_vcBranchCode IN VARCHAR2, i_vcBranchName IN VARCHAR2,
+i_vcBranchCity IN VARCHAR2, i_vcUserCode   IN VARCHAR2,  
+i_vcGroupCode  IN VARCHAR2,	i_vcIPAddress  IN VARCHAR2, 
+io_cuRESULTSET IN OUT SYS_REFCURSOR
+)
+
+-- EXEC STP_SEARCHBRANCHMASTER('1995','','','','','',:KG);
+
+AS
+  vcQuery VARCHAR2(5000);
+  vcBranchCode VARCHAR2(4000) := i_vcBranchCode;
+  vcBranchName VARCHAR2(4000) := '%' || i_vcBranchName || '%';
+  vcBranchCity VARCHAR2(4000) := '%' || i_vcBranchCity || '%';
+
+BEGIN
+
+ vcQuery := 'SELECT ROWNUM AS "app.common.serialNo", BRANCHCODE AS "app.common.branchCode", '
+ 	 ||'		REPLACE(REPLACE(REPLACE(A.BRANCHNAME,CHR(10)),CHR(13)),CHR(39)) AS "app.common.branchName", '
+     || '       BRANCHAREA AS "app.common.branchArea", BANKCODE AS "app.common.bankCode", BRANCHMANAGERNAME AS "app.common.branchManagerName",'
+	 || '       BRANCHEMAIL AS "app.common.branchEmail", BRANCHFAX AS "app.common.branchFax", BRANCHTELEPHONE AS "app.common.branchTelephone", '
+	 ||'		BRANCHPINCODE AS "app.common.branchPinCode", REPLACE(REPLACE(REPLACE(A.BRANCHADDR1,CHR(10)),CHR(13)),CHR(39))  AS "app.common.branchAddr1", '
+	 || '       REPLACE(REPLACE(REPLACE(A.BRANCHADDR1,CHR(10)),CHR(13)),CHR(39)) AS "app.common.branchAddr2", '
+	 || '       REPLACE(REPLACE(REPLACE(A.BRANCHADDR1,CHR(10)),CHR(13)),CHR(39)) AS "app.common.branchAddr3", '
+	 || '       REPLACE(REPLACE(REPLACE(A.BRANCHADDR1,CHR(10)),CHR(13)),CHR(39)) AS "app.common.branchAddr4", '
+	 || '       REPLACE(REPLACE(REPLACE(A.BRANCHADDR1,CHR(10)),CHR(13)),CHR(39)) AS "app.common.branchAddr5", '
+	 || '	    BRANCHCOUNTRY AS "app.common.branchCountry", BSRCODE AS "app.common.bsrCode", UIDISSUDBYFIU AS "app.common.uidIssuedByFIU", CATEGORYCODE AS "app.common.categoryCode", '
+	 || ' 		CLEARINGAREA AS "app.common.clearingArea", ISINCLUDED AS "app.common.isIncluded" '
+	 || '  FROM COMAML.TB_BRANCHMASTER A '
+	 || ' WHERE 1 = 1 ';
+	 
+IF TRIM(UPPER(i_vcBranchCode)) IS NOT NULL and UPPER(i_vcBranchCode) NOT IN('ALL') THEN
+  vcQuery := vcQuery || ' AND A.BRANCHCODE = '''|| vcBranchCode ||''' ';
+END IF;
+
+IF TRIM(UPPER(i_vcBranchName)) IS NOT NULL THEN
+  vcQuery := vcQuery || ' AND A.BRANCHNAME LIKE '''|| vcBranchName ||''' ';
+END IF;
+
+IF TRIM(UPPER(i_vcBranchCity)) IS NOT NULL THEN
+  vcQuery := vcQuery || ' AND A.BRANCHADDR4 LIKE '''|| vcBranchCity ||''' ';
+END IF;
+
+ vcQuery := vcQuery || ' AND ROWNUM <= 500 ';
+ 
+ DELETE FROM COMAML.C;
+ INSERT INTO COMAML.C VALUES (vcQuery);
+ COMMIT;
+OPEN io_cuRESULTSET FOR vcQuery;
+
+END STP_SEARCHBRANCHMASTER;
+/

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurations xmlns:aml="aml" xmlns:etl="etl"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="config/schema/CompassSchema.xsd">
+
+<!--	<configuration entityName="BANK 1">
+		<jndiDetails jndiName="qde1Jndi"/>
+		<authentication provider="ldap">
+			<ldapProvider providerType="other">
+				<ldapDetails>
+					<domain value=""/>
+					<baseDN value="dc=quantumdataengines,dc=com"/>
+					<ldapHostIP value="localhost"/>
+					<ldapHostPort value="10389"/>
+					<manager>
+						<ldapUsername value="uid=admin,ou=system"/>
+						<ldapPassword value="secret"/>
+					</manager>
+				</ldapDetails>
+			</ldapProvider>
+		</authentication>
+		<email>
+			<smtpHost value=""/>
+			<smtpPort value="25"/>
+			<imapProtocol>imaps</imapProtocol>
+			<imapHost value="imap.gmail.com"/>
+			<imapPort value="993"/>
+			<amlEmail>
+				<amlAuthId value="compassaml2@gmail.com"/>
+				<amlEmailId value="compassaml2@gmail.com"/>
+				<amlEmailPassword value="Compass@123 fjttntsneciuvmqi"/>
+			</amlEmail>
+			<etlEmail>
+				<etlAuthId value="qde1etl@gmail.com"/>
+				<etlEmailId value="qde1etl@gmail.com"/>
+				<etlEmailPassword value="Compass@123 ltxmuqqashyrsekx"/>
+			</etlEmail>
+		</email>
+		<paths indexingPath="C:\eclipse\aml\APPFOLDER\BANK_1" emailPath="C:\eclipse\aml\APPFOLDER\BANK_1"/>
+	</configuration>
+-->	
+	<configuration entityName="IDFC BANK">
+		<jndiDetails jndiName="comamlCMJndi"/>
+		<authentication provider="database"/>
+		<email>
+			<smtpHost value="smtp.gmail.com"/>
+			<smtpPort value="587"/>
+			<imapProtocol>imaps</imapProtocol>
+			<imapHost value="imap.gmail.com"/>
+			<imapPort value="993"/>
+			<amlEmail>
+				<amlAuthId value="compassaml2@gmail.com"/>
+				<amlEmailId value="compassaml2@gmail.com"/>
+				<amlEmailPassword value="ComPass@1234 ttoooxazxvhpqkgp"/>
+			</amlEmail>
+			<etlEmail>
+				<etlAuthId value="compassaml2@gmail.com"/>
+				<etlEmailId value="compassaml2@gmail.com"/>
+				<etlEmailPassword value="Compass@123 ttoooxazxvhpqkgp"/>
+			</etlEmail>
+		</email>
+		<paths indexingPath="C:\eclipse\aml\APPFOLDER\BANK_2" emailPath="C:\eclipse\aml\APPFOLDER\BANK_2"/>
+	</configuration>
+	
+<!--	<configuration entityName="BANK 3">
+		<jndiDetails jndiName="qde3Jndi"/>
+		<authentication provider="database"/>
+		<email>
+			<smtpHost value="74.125.25.105"/>
+			<smtpPort value="25"/>
+			<imapProtocol>imaps</imapProtocol>
+			<imapHost value="imap.gmail.com"/>
+			<imapPort value="993"/>
+			<amlEmail>
+				<amlAuthId value="qde3aml@gmail.com"/>
+				<amlEmailId value="qde3aml@gmail.com"/>
+				<amlEmailPassword value="Compass@123 dsvdpwqtuwmdadod"/>
+			</amlEmail>
+			<etlEmail>
+				<etlAuthId value="qde3etl@gmail.com"/> 
+ 				<etlEmailPassword value="Compass@123 hiyzhdzlhevumgvk"/>
+			</etlEmail>
+		</email>
+		<paths indexingPath="C:\eclipse\aml\APPFOLDER\BANK_3" emailPath="C:\eclipse\aml\APPFOLDER\BANK_3"/>
+	</configuration>
+-->
+</configurations>

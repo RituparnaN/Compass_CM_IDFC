@@ -1,0 +1,77 @@
+CREATE OR REPLACE PROCEDURE STP_AMLCWF_GETPENDINGCASES (
+ i_vcFromDate  	    IN VARCHAR2, i_vcToDate      IN VARCHAR2,
+ i_vcAlertCode	    IN VARCHAR2, i_vcBranchCode  IN VARCHAR2,
+ i_vcAccountNo      IN VARCHAR2, i_vcCustomerId  IN VARCHAR2,
+ i_vcHasAnyOldCases IN VARCHAR2, i_vcCaseRating  IN VARCHAR2,
+ i_vcFromCaseNo     IN VARCHAR2, i_vcToCaseNo    IN VARCHAR2,
+ i_vcUserCode       IN VARCHAR2, i_vcGroupCode   IN VARCHAR2,
+ i_vcIPAddress      IN VARCHAR2, io_cuRestultSet IN OUT SYS_REFCURSOR
+)
+-- EXEC STP_AMLCWF_GETPENDINGCASES('','','','','','','','','','','','','',:KG);
+AS
+  vcQuery varchar2(32000);
+BEGIN
+
+vcQuery :=' SELECT ROWNUM AS ROWPOSITION, A.* FROM '||
+          ' (SELECT /*+INDEX (A IDX_CASEWORKFLOWDTLS_AMLUSER) */ '||
+	  '        A.CASENO, A.CUSTOMERID, '||
+	  '        REPLACE(REPLACE(REPLACE(A.CUSTOMERNAME,CHR(10)),CHR(13)),CHR(39)) CUSTOMERNAME, A.ACCOUNTNO, '||
+	  '        A.BRANCHCODE, A.CASERATING, '||
+          '        FUN_DATETOCHAR(A.STARTDATE) ALERTDATE, '||
+	  '        NVL(TRIM(A.USERCOMMENTS),''NOTAVAIL'') USERCOMMENTS, A.USERCODE, '||
+          '        FUN_DATETOCHAR(A.LASTUPDATEDON) LASTUPDATEDON, '||
+	  '        A.SOURCESYSTEM CASESOURCESYSTEM, A.HASANYOLDCASES  '||
+	  '   FROM COMAML.TB_CASEWORKFLOWDETAILS A '||
+          '  WHERE AMLUSERCODE = '''||i_vcUserCode||''' '||
+          '    AND CASESTATUS = ''0'' '||
+          '    AND REGENRATE_FLAG = ''N'' ';
+
+IF (i_vcFromDate IS NOT NULL AND i_vcFromDate NOT IN (' ')) THEN
+   vcQuery := vcQuery||' AND A.CASEDATE >= FUN_CHARTODATE('''||i_vcFromDate||''' )';
+END IF;
+
+IF (i_vcToDate IS NOT NULL AND i_vcToDate NOT IN (' ')) THEN
+   vcQuery := vcQuery||' AND A.CASEDATE < FUN_CHARTODATE('''||i_vcToDate||''' )+1';
+END IF;
+
+IF(i_vcAlertCode IS NOT NULL AND i_vcAlertCode  NOT IN ('')) THEN
+  vcQuery := vcQuery || ' AND A.ALERTCODE = '''||i_vcAlertCode ||''' ';
+END IF;
+
+IF (i_vcBranchCode IS NOT NULL AND i_vcBranchCode NOT IN ('ALL')) THEN
+  vcQuery := vcQuery||' AND A.BRANCHCODE = '''||i_vcBranchCode||''' ';
+END IF;
+
+IF (i_vcAccountNo IS NOT NULL AND i_vcAccountNo NOT IN (' ')) THEN
+  vcQuery := vcQuery||' AND A.ACCOUNTNO = '''||i_vcAccountNo||''' ';
+END IF;
+
+IF (i_vcCustomerId IS NOT NULL AND i_vcCustomerId NOT IN (' ')) THEN
+  vcQuery := vcQuery||' AND A.CUSTOMERID = '''||i_vcCustomerId||''' ';
+END IF;
+
+IF (i_vcHasAnyOldCases IS NOT NULL AND i_vcHasAnyOldCases NOT IN ('ALL')) THEN
+  vcQuery := vcQuery||' AND A.HASANYOLDCASES = '''||i_vcHasAnyOldCases||''' ';
+END IF;
+
+IF (i_vcCaseRating IS NOT NULL AND i_vcCaseRating NOT IN ('ALL')) THEN
+  vcQuery := vcQuery||' AND NVL(TRIM(A.CASERATING),''LOW'') = '''||i_vcCaseRating||''' ';
+END IF;
+
+
+IF (i_vcFromCaseNo IS NOT NULL AND i_vcFromCaseNo NOT IN (' ')) THEN
+  vcQuery := vcQuery||' AND TO_NUMBER(A.CASENO) >= '''||i_vcFromCaseNo||''' ';
+END IF;
+
+IF (i_vcToCaseNo IS NOT NULL AND i_vcToCaseNo NOT IN (' ')) THEN
+  vcQuery := vcQuery||' AND TO_NUMBER(A.CASENO) <= '''||i_vcToCaseNo||''' ';
+END IF;
+
+vcQuery := vcQuery || ' AND ROWNUM <= 500  ';
+vcQuery := vcQuery || ' ORDER BY A.LASTUPDATEDON DESC ) A ';
+
+OPEN io_cuRestultSet FOR vcQuery;
+
+END STP_AMLCWF_GETPENDINGCASES;
+/
+ 

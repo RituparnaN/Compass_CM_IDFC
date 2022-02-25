@@ -1,0 +1,63 @@
+CREATE OR REPLACE PROCEDURE STP_SEARCHACCOUNTSMASTER (
+i_vcAccountNo   IN VARCHAR2,  i_vcAccountName IN VARCHAR2,
+i_vcBranchCode  IN VARCHAR2,  i_vcRiskRating IN VARCHAR2,
+i_vcCustomerId  IN VARCHAR2,  i_vcOtherInformation IN VARCHAR2,
+i_vcUserCode    IN VARCHAR2,  i_vcGroupCode IN VARCHAR2,
+i_vcIPAddress   IN VARCHAR2,  io_ResultSet IN OUT SYS_REFCURSOR
+)
+-- EXEC STP_SEARCHACCOUNTSMASTER('1234','','','','','','','','',:KG);
+AS
+  vcSql Varchar2(32000);
+BEGIN
+
+vcSql := 'SELECT ROWNUM AS "app.common.serialNo", ACCOUNTNO AS "app.common.accountNo", CUSTOMERID AS "app.common.customerId", PRODUCTCODE AS "app.common.productCode", '||
+	 '	 ACCOUNTTYPE AS "app.common.accountType", BANKCODE AS "app.common.bankCode", '||
+ 	 '       BRANCHCODE AS "app.common.branchCode", FUN_DATETOCHAR(ACCOUNTOPENEDDATE) AS "app.common.accountOpenedDate", '||
+	 '       CASE WHEN MODEOFOPERATION=''I'' THEN ''INDIVIDUAL'' WHEN MODEOFOPERATION=''J'' THEN ''JOINT'' '||
+	 '            ELSE ''OTHERS'' END AS "app.common.modeOfOperation", '||
+	 '       ODLIMIT AS "app.common.odLimit", ACCOUNTCURRENCY AS "app.common.accountCurrency", CURRENTBALANCE AS "app.common.currentBalance", '||
+	 '       CASE WHEN ACCOUNTSTATUS=''A'' THEN ''ACTIVE'' WHEN ACCOUNTSTATUS=''I'' THEN ''INACTIVE'' '||
+	 '            WHEN ACCOUNTSTATUS=''D'' THEN ''DORMANT'' END AS "app.common.accountStatus", '||
+	 '       CASE WHEN RISKRATING=''1'' THEN ''LOW'' WHEN RISKRATING=''2'' THEN ''MEDIUM'' '||
+	 '            WHEN RISKRATING=''3'' THEN ''HIGH'' ELSE ''LOW'' END AS "app.common.riskRating", '||
+	 '       FUN_DATETOCHAR(UPDATETIMESTAMP) AS "app.common.updateTimeStamp", CUSTOMERNAME AS "app.common.customerName", '||
+	 '       CASE WHEN RESIDENTIALSTATUS=''Y'' THEN ''NRE/NRO CUSTOMER'' '||
+	 '            WHEN RESIDENTIALSTATUS=''N'' THEN ''DOMESTIC CUSTOMER'' END AS "app.common.residentialStatus" '||
+	 '  FROM COMAML.TB_ACCOUNTSMASTER A '||
+	 ' WHERE 1 = 1 ';
+
+IF (i_vcAccountNo IS NOT NULL AND i_vcAccountNo NOT IN (' ')) THEN
+   vcSql := vcSql || ' AND A.ACCOUNTNO = '''||i_vcAccountNo||''' ';
+END IF;
+
+IF (i_vcAccountName IS NOT NULL AND i_vcAccountName NOT IN (' ')) THEN
+   vcSql := vcSql || ' AND A.ACCOUNTNAME = '''||i_vcAccountName||''' ';
+END IF;
+
+IF (i_vcBranchCode IS NOT NULL AND i_vcBranchCode NOT IN ('ALL')) THEN
+   vcSql := vcSql || ' AND A.BRANCHCODE = '''||i_vcBranchCode||''' ';
+END IF;
+
+IF (i_vcRiskRating IS NOT NULL AND i_vcRiskRating NOT IN ('ALL')) THEN
+   vcSql := vcSql || ' AND A.RISKRATING ='''||i_vcRiskRating||''' ';
+END IF;
+
+IF (i_vcCustomerId IS NOT NULL AND i_vcCustomerId NOT IN (' ')) THEN
+   vcSql := vcSql || ' AND A.CUSTOMERID = '''||i_vcCustomerId||''' ';
+END IF;
+
+IF (i_vcOtherInformation IS NOT NULL AND i_vcOtherInformation NOT IN (' ')) THEN
+   vcSql := vcSql || ' AND OTHERINFORMATION = '''||i_vcOtherInformation||''' ';
+END IF;
+
+vcSql := vcSql || ' AND ROWNUM <= 500 ';
+
+DELETE FROM COMAML.C;
+INSERT INTO COMAML.C VALUES(vcSql);
+COMMIT;
+
+OPEN io_ResultSet FOR vcSql;
+
+END STP_SEARCHACCOUNTSMASTER;
+
+/

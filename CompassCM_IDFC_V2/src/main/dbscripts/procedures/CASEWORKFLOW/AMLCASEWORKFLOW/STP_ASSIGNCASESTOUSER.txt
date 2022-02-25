@@ -1,0 +1,44 @@
+CREATE OR REPLACE PROCEDURE STP_ASSIGNCASESTOUSER
+(
+ i_vcCaseNo               IN VARCHAR2,  i_vcCaseStatus           IN VARCHAR2,
+ i_vcCaseRangeFrom        IN VARCHAR2,  i_vcCaseRangeTo          IN VARCHAR2,  
+ i_vcHasOldCases          IN VARCHAR2,  i_vcCaseRating           IN VARCHAR2,  
+ i_vcBranchCode           IN VARCHAR2,  i_vcListOfCaseNos        IN VARCHAR2,  
+ i_vcListOfUsers          IN VARCHAR2,  i_vcComments  	         IN VARCHAR2,  
+ i_vcUserCode             IN VARCHAR2,  i_vcIPAddress            IN VARCHAR2,  
+ i_vcUserRole             IN VARCHAR2,  io_cuResultSet           IN OUT SYS_REFCURSOR
+)
+-- EXEC STP_ASSIGNCASESTOUSER('119827','','','','','','','','','','','','',:KG);
+AS
+  vcQuery                 VARCHAR2(5000);
+  nCount 		  NUMBER := 0 ;
+BEGIN
+
+vcQuery := 
+' UPDATE COMAML.TB_CASEWORKFLOWDETAILS A
+     SET USERCODE = i_vcListOfUsers, CASESTATUS = i_vcCaseStatus,
+ 	 USERASSIGNEE_CODE = i_vcUserCode, USERASSIGNEE_DATE = SYSTIMESTAMP,
+	 USERASSIGNEE_COMMENTS = i_vcComments,
+	 STARTDATE = SYSTIMESTAMP, DUEDATE = (SYSTIMESTAMP + 10),
+	 LASTUPDATEDBY = i_vcUserCode, LASTUPDATEDON = SYSTIMESTAMP
+   WHERE CASENO IN ('||i_vcCaseNo||') ';
+  
+  DELETE FROM COMAML.C;
+  INSERT INTO COMAML.C VALUES (vcQuery);
+  COMMIT;
+
+UPDATE COMAML.TB_CASEWORKFLOWDETAILS A
+    SET USERCODE = i_vcListOfUsers, CASESTATUS = i_vcCaseStatus,
+	USERASSIGNEE_CODE = i_vcUserCode, USERASSIGNEE_DATE = SYSTIMESTAMP,
+	USERASSIGNEE_COMMENTS = i_vcComments,
+	STARTDATE = SYSTIMESTAMP, DUEDATE = (SYSTIMESTAMP + 10),
+	LASTUPDATEDBY = i_vcUserCode, LASTUPDATEDON = SYSTIMESTAMP
+  WHERE CASENO IN (REPLACE(i_vcCaseNo,CHR(39)));
+
+nCount := SQL%ROWCOUNT;
+
+OPEN io_cuResultSet FOR 
+SELECT nCount||' Cases assigned to user successfully.' AS RESULTMESSAGE FROM DUAL;
+
+END STP_ASSIGNCASESTOUSER;
+/

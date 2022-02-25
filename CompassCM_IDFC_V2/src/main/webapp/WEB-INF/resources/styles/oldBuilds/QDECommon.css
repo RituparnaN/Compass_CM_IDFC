@@ -1,0 +1,817 @@
+table {  border-color: #000000 #000000 #000000 #000000;  font-family: "Arial"; font-size: 11px; color: #000000}
+
+BODY {
+SCROLLBAR-HIGHLIGHT-COLOR: #6d99ca;
+SCROLLBAR-ARROW-COLOR: #6d99ca; SCROLLBAR-TRACK-COLOR:
+#ffffff; SCROLLBAR-DARKSHADOW-COLOR: #ffffff;
+SCROLLBAR-BASE-COLOR: #ffffff
+}
+
+a:link { color: #000000;font-size: 8pt; }
+a:visited { color: #FF66666;font-size: 8pt;}
+a:active { color: #6633FF;font-size: 8pt; }
+a:hover { color: #6633FF;font-size: 8pt; }
+
+.butSmall {  font-size: 10px; color: #000000; text-align: center;background-color: #DDDDDD; background-repeat: no-repeat;height: 18px; width: 20px;border: 1px #000000 solid; clip:  rect(   )}
+.but {  font-size: 10px; color: #000000; text-align: center;background-color: #DDDDDD; background-repeat: no-repeat;height: 18px; width: 60px;border: 1px #000000 solid; clip:  rect(   )}
+.butA {  font-size: 10px; color: #000000; text-align: center;background-color: #DDDDDD; background-repeat: no-repeat;height: 18px; width: 60px;border: 1px #000000 solid; clip:  rect(   )}
+.but1 {  font-size: 10px; color: #000000; text-align: center;background-color: #DDDDDD; background-repeat: no-repeat;height: 17px; width: 140px;border: 1px #000000 solid; clip:  rect(   )}
+.butc {  font-size: 10px; color: #000000; text-align: center;background-color: #DDDDDD; background-repeat: no-repeat;height: 20px; width: 100px;border: 1px #000000 solid; clip:  rect(   )}
+.butGo {  font-size: 10px; color: #000000; text-align: right;background-color: #DDDDDD; background-repeat: no-repeat;height: 18px; width: 36px;border: 1px #000000 solid;background-image: url(); clip:  rect(   )}
+.butNew {  font-size: 10px; color: #000000; text-align: right;background-color: #DDDDDD; background-repeat: no-repeat;height: 20px; width: 60px;border: 1px #000000 solid;background-image: url(); clip:  rect(   )}
+.butSave {  font-size: 10px; color: #000000; text-align: right;background-color: #DDDDDD; background-repeat: no-repeat;height: 20px; width: 60px;border: 1px #000000 solid;background-image: url(); clip:  rect(   )}
+.butSave1 {  font-size: 10px; color: #000000; text-align: right;background-color: #DDDDDD; background-repeat: no-repeat;height: 20px; width: 120px;border: 1px #000000 solid;background-image: url(); clip:  rect(   )}
+.butEdit {  font-size: 10px; color: #000000; text-align: right;background-color: #DDDDDD; background-repeat: no-repeat;height: 20px; width: 60px;border: 1px #000000 solid;background-image: url(); clip:  rect(   )}
+.butCancel {  font-size: 10px; color: #000000; text-align: right;background-color: #DDDDDD; background-repeat: no-repeat;height: 20px; width: 62px;border: 1px #000000 solid;background-image: url(); clip:  rect(   )}
+.butRefresh {  font-size: 10px; color: #000000; text-align: right;background-color: #DDDDDD; background-repeat: no-repeat;height: 20px; width: 58px;border: 1px #000000 solid;background-image: url(); clip:  rect(   )}
+.butDelete {  font-size: 10px; color: #000000; text-align: right;background-color: #DDDDDD; background-repeat: no-repeat;height: 20px; width: 55px;border: 1px #000000 solid;background-image: url(); clip:  rect(   )}
+.butCreate {  font-size: 10px; color: #000000; text-align: right;background-color: #DDDDDD; background-repeat: no-repeat;height: 20px; width: 55px;border: 1px #000000 solid;background-image: url(); clip:  rect(   )}
+.butAdd {  font-size: 10px; color: #000000; text-align: right;background-color: #DDDDDD; background-repeat: no-repeat;height: 20px; width: 55px;border: 1px #000000 solid;background-image: url(); clip:  rect(   )}
+.butOK {  font-size: 10px; color: #000000; text-align: right;background-color: #DDDDDD; background-repeat: no-repeat;height: 20px; width: 55px;border: 1px #000000 solid;background-image: url(images/OK.gif); clip:  rect(   )}
+.butRIGHT {  font-size: 10px; color: #000000; text-align: right;background-color: #DDDDDD; background-repeat: no-repeat;height: 20px; width: 80px;border: 1px #000000 solid;background-image: url(images/right.gif); clip:  rect(   )}
+.butMove {  font-size: 10px; color: #000000; text-align: right;background-color: #DDDDDD; background-repeat: no-repeat;height: 20px; width: 75px;border: 1px #000000 solid;background-image: url(); clip:  rect(   )}
+.butSubmit {  font-size: 10px; color: #000000; text-align: right;background-color: #DDDDDD; background-repeat: no-repeat;height: 20px; width: 135px;border: 1px #000000 solid;background-image: url(images/right.gif); clip:  rect(   )}
+.butRefresh1 {  font-size: 10px; color: #000000; text-align: right;background-color: #DDDDDD; background-repeat: no-repeat;height: 16px; width: 13px;border: 0px #000000 solid;background-image: url(images/refresh.gif); clip:  rect(   )}
+.butSearch {  font-size: 10px; color: #000000; text-align: center;background-color: #CFDFEB; background-repeat: no-repeat;height: 20px; width: 40px;border: 0px #CFDFEB solid;background-image: url(images/find.gif); clip:  rect(   )}
+.butredA {  font-size: 10px; color: #000000; text-align: right;background-color: #DDDDDD; background-repeat: no-repeat;height: 16px; width: 70px;border: 1px #000000 solid;background-image: url(images/redarrow.gif); clip:  rect(   )}
+.generate {  font-size: 10px; color: #000000; text-align: center;background-color: #DDDDDD; background-repeat: no-repeat;height: 16px; width: 80px;border: 1px #000000 solid; clip:  rect(   )}
+
+.reportColor{ background-color: #F0F0FF;}
+.txt {  font-family: "MS Sans Serif"; font-size: 10px; color: #000000; border-color: #000000 #000000 #000000 #000000; background-color: #FFFFFF; background-repeat: no-repeat;text-align: left;height: 19px;  border: 1px #000000 solid; ; clip:  rect(   )}
+.txt1 {font-family: "MS Sans Serif"; font-size: 10px; color: #000000; border-color: #000000 #000000 #000000 #000000; background-color: #EEEEEE; background-repeat: no-repeat;text-align: left;height: 17px;  border: 1px #000000 solid; ; clip:  rect(   )}
+.txt2 {font-family: "MS Sans Serif"; font-size: 10px; color: #000000; border-color: #000000 #000000 #000000 #000000; background-color: #FFFFFF; background-repeat: no-repeat;text-align: left;overflow: auto;cursor: text;page-break-before: auto;page-break-after: auto;height: 35px;  border: 1px #000000 solid; ; clip:  rect(   )}
+.txt3 {font-family: "MS Sans Serif"; font-size: 10px; color: #003399; border-color: #CCCCCC #CCCCCC #CCCCCC #CCCCCC; background-color: #FFFFFF; background-repeat: no-repeat;text-align: right;height: 17px;  border: 1px #CCCCCC solid; ; clip:  rect(   )}
+.txt4 {font-family: "MS Sans Serif"; font-size: 10px; color: #000000; border-color: #000000 #000000 #000000 #000000; background-color: #DDEEFF; background-repeat: no-repeat;text-align: right;height: 17px;  border: 1px #000000 solid; ; clip:  rect(   )}
+.txt5 {font-family: "MS Sans Serif"; font-size: 10px; color: #000000; border-color: #000000 #000000 #000000 #000000; background-color: #FFFFFF; background-repeat: no-repeat;text-align: right;height: 17px;  border: 1px #000000 solid; ; clip:  rect(   )}
+.txt6 {font-family: "MS Sans Serif"; font-size: 10px; color: #003399; border-color: #CCCCCC #CCCCCC #CCCCCC #CCCCCC; background-color: #FFFFFF; background-repeat: no-repeat;text-align: left;height: 17px;  border: 1px #CCCCCC solid; ; clip:  rect(   )}
+.txt9 {font-family: "MS Sans Serif"; font-size: 10px; color: #000000; border-color: #000000 #000000 #000000 #000000; background-color: #FFE9D2; background-repeat: no-repeat;text-align: left;height: 17px;   width: 155px;border: 0px #000000 solid; ; clip:  rect(   )}
+
+.area {  font-family: "MS Sans Serif"; font-size: 10px; font-style: normal; color: #000000; background-repeat: no-repeat; letter-spacing: normal; text-align: left; background-color: #FFFFFF;word-spacing: normal;border: 1px #000000 solid;scroll:=NO;  clip:  rect(   );}
+.area1 {  font-family: "MS Sans Serif"; font-size: 10px; font-style: normal; color:#003399; background-repeat: no-repeat; letter-spacing: normal; text-align: left; background-color: #FFFFFF;word-spacing: normal;border: 1px #000000 solid;scroll:=NO;  clip:  rect(   );}
+.List {  font-family: "MS Sans Serif"; font-size: 10px; font-style: normal; color: #000000; background-repeat: no-repeat; letter-spacing: normal; text-align: left; background-color: #FFFFFF;word-spacing: normal;border: 1px #000000 solid;scroll:=NO;  clip:  rect(   );}
+.box{  font-size: 10px;height: 11px; width: 11px;clip:  rect(   )}
+
+
+.menuButtonA { background: #C16100; border-style: groove; border-width:2px;border-color:#ffffff; color:#FFFFFF; text-align: center; white-space: nowrap; font-weight: bold;}
+.menuButtonB{ background: #804000; border-style: groove; border-width:2px;border-color:#ffffff; color:#FFFFFF; text-align: center; white-space: nowrap; font-weight: bold;}
+.menuButtonC{ background: #4B5E78; border-style: groove; border-width:2px;border-color:#ffffff; color:#FFFFFF; text-align: center; white-space: nowrap; font-weight: bold;}
+.menuButtonP{ background: #00009B; border-style: groove; border-width:2px;border-color:#ffffff; color:#FFFFFF; text-align: center; white-space: nowrap; font-weight: bold;}
+.menuButtonAM{ background: #0078B9; border-style: groove; border-width:2px;border-color:#ffffff; color:#FFFFFF; text-align: center; white-space: nowrap; font-weight: bold;}
+.menuButtonLM{ background: #536982; border-style: groove; border-width:2px;border-color:#ffffff; color:#FFFFFF; text-align: center; white-space: nowrap; font-weight: bold;}
+.menuButtonServerNormal { background: #F4F4FF; border-style: groove; border-width:2px;border-color:#ffffff; color:#FFFFFF; text-align: left; white-space: nowrap;}
+.menuButtonServerHighlighted { background: #B5F4EE; border-style: groove; border-width:2px;border-color:#ffffff; color:#FFFFFF; text-align: left; white-space: nowrap;}
+
+.menuButton{ background: #4682B4; border-style: groove; border-width:2px;border-color:#ffffff; color:#FFFFFF; text-align: center; white-space: nowrap; font-weight: bold;}
+.menuButton1 { background: #996666; border-style: groove; border-width:2px;border-color:#ffffff; color:#FFFFFF; text-align: center; white-space: nowrap; font-weight: bold;}
+.menuButton2 {font-size: 11px; color: #FFFFFF; background: #666699; border-style: groove; border-width:2px;border-color:#ffffff; text-align: center; white-space: nowrap; font-weight: bold;}
+.menuButton3 { background: #C4CDDB; border-style: groove; border-width:2px;border-color:#ffffff; text-align: center;}
+.menuButton4 { background: #99CCFF; border-style: groove; border-width:2px;border-color:#ffffff; text-align: center;}
+.menuButton5 { border-style: groove; border-width:1px;border-color:#ffffff; filter:Shadow{color='#ffffff', Direction=135, Strength=3};}
+.menuButton6 { border-style: solid; border-width:1px;border-color:#C4CDDB;}
+.menuButton7{ background: #CEE4FB; border-style: groove; border-width:2px;border-color:#ffffff; color:#000000; text-align: center; white-space: nowrap; font-weight: plain;}
+.menuButton8{ background: #FFBA75; border-style: groove; border-width:2px;border-color:#ffffff; color:#000000; text-align: center; white-space: nowrap; font-weight: plain;}
+.menuEveidenceButton { background: #00BFFF; border-style: groove; border-width:2px;border-color:#ffffff; color:#FFFFFF; text-align: center; white-space: nowrap; font-weight: bold;}
+
+.normal{background: #F4F4FF; border-style: solid; border-width:1px;border-color:#999999;}
+.normal1{background: #FFFFFF; border-style: inset; border-width:1px;border-color:#999999;}
+.normalNG{background: #FFFFFF; border-style: solid; border-width:1px;border-color:#999999;}
+
+.linksHighlighted{background: #CCCCCC;border-style: solid; border-width:1px;border-color:#999999;}
+.highlighted{background: #FFCC99;border-style: solid; border-width:1px;border-color:#999999;}
+.linksHighlightedNS{background: #DFE7F4;border-style: solid; border-width:1px;border-color:#999999;}
+
+.normalCust{background: #F8F8FC}
+.normalCustNew{background: #F3E2D1}
+
+.highlightedCust{background: #C6C6FF}
+
+.normalAccounts{background: #FFC488}
+.normalAccountsNew{background: #F3E2D1}
+
+.highlightedAccounts{background: #2CE0B8}
+
+.normalAddress{background: #DFF4FF}
+
+.normalPersonal{background: #DDDDFF}
+
+.normalIntroducer{background: #FFC488}
+
+.IInormal{background: #CFF3FE}
+.IIhighlighted{background: #2CE0B8}
+
+.ICnormal{background: #C2F0FE}
+.IChighlighted{background: #2CE0B8}
+
+
+.CCnormal{background: #CFF3FE}
+.CChighlighted{background: #2CE0B8}
+
+.CCBlackList(background: #DBB5EB}
+.CCWatchList(background: #F4FCC2}
+.CCBothBlackAndWatchList(background: #D6D6AD}
+
+.CAnormal{background: #C2F0FE}
+.CAhighlighted{background: #2CE0B8}
+
+
+.normalBlack{  background: #EFF4F8 }
+.highlightedBlack{ background: #B5F4EE  }
+
+.normalWatchList{  background: #F8F8FF }
+.highlightedWatchList{ background: #B5F4EE  }
+
+.normalWatch{  background: #DAE6EF }
+.highlightedWatch{ background: #B5F4EE  }
+
+.normalBusiness{background: #F4F4FF}
+.highlightedBusiness{background: #006699;color: #FFFFFF}
+.linksHighlightedNS{background: #DFE7F4;border-style: solid; border-width:1px;border-color:#999999;}
+
+
+.realtimeAlert{  background: #FFD1A4 }
+.offLineAlert{  background: #FFCCCC }
+.subjectiveAlert{ background: #FFFFCC }
+.highlightAlert{  background: #DAE6EF }
+
+.customerWatchList{  background: #DAE6EF }
+.nonCustomerWatchList{  background: #AAAAAA }
+
+.RButton{ BACKGROUND-POSITION: left center;FONT-SIZE: 8pt;BACKGROUND-IMAGE: url(images/left-arrow.gif);WIDTH: 100px;COLOR: darkblue; BACKGROUND-REPEAT: no-repeat;TEXT-ALIGN: center; border: 1px #CCCCCC solid; ; clip:  rect(   )}
+.LButton{ BACKGROUND-POSITION: right center;FONT-SIZE: 8pt;BACKGROUND-IMAGE: url(images/right-arrow.gif);WIDTH: 100px;COLOR: darkblue;BACKGROUND-REPEAT: no-repeat;TEXT-ALIGN: center; border: 1px #CCCCCC solid; ; clip:  rect(   )}
+.lists {  font-family: "MS Sans Serif"; font-size: 10px; color: #000000; border-color: #000000 #000000 #000000 #000000; background-color: #00FFFF; background-repeat: no-repeat;text-align: left;width: 125px;  border: 1px #000000 solid; ; clip:  rect(   )}
+
+.lbl {  font-family: "MS Sans Serif"; font-size: 10px; color: #000000; border-color: #000000 #000000 #000000 #000000; background-color: #F4F4FF; background-repeat: no-repeat;text-align: left;height: 19px;  border: 0px #F4F4FF solid; ; clip:  rect(   )}
+
+
+.butnext {  font-size: 10px; color: #000000; text-align: right;background-color: #DDDDDD; background-repeat: no-repeat;height: 16px; width: 70px;border: 1px #000000 solid;background-image: url(images/nexto.gif); clip:  rect(   )}
+.butprev {  font-size: 10px; color: #000000; text-align: right;background-color: #DDDDDD; background-repeat: no-repeat;height: 16px; width: 70px;border: 1px #000000 solid;background-image: url(images/prevo.gif); clip:  rect(   )}
+
+
+.dd {font-family: Verdana, Arial, Helvetica, sans-serif;font-size: 9pt;height: 15pt;border: 0px solid #CCCCCC; background-repeat: no-repeat;background-image: url(images/dd.gif); clip:  rect(   )}
+.mm {font-family: Verdana, Arial, Helvetica, sans-serif;font-size: 9pt;height: 15pt;border: 0px solid #CCCCCC; background-repeat: no-repeat;background-image: url(images/mm.gif); clip:  rect(   )}
+.yyyy {font-family: Verdana, Arial, Helvetica, sans-serif;font-size: 9pt;height: 15pt;border: 0px solid #CCCCCC; background-repeat: no-repeat;background-image: url(images/yyyy.gif); clip:  rect(   )}
+
+
+.ts {font-family: Verdana, Arial, Helvetica, sans-serif;font-size: 9pt;height: 10pt;border: 0px solid #FFFFFF; background-repeat: no-repeat;background-image: url(images/dd.gif); clip:  rect(   )}
+.co {	height: 10pt;border: 0px solid #FFFFFF;font-family: Verdana, Arial, Helvetica, sans-serif;font-size: 9pt;padding-right: 12pt;}
+
+.menuButtonCaseManager { background:#F4F4FF; color:#000033;height: 15pt;border-style: groove; border-width:1px;border-color:#CCCCCC; text-align: left; white-space: nowrap;}
+.labelCaseManager { background:#F0FFFF; color:#000033;height: 15pt;border-style: groove; border-width:1px;border-color:#F4F4FF; text-align: right; white-space: nowrap;}
+
+
+.dupHighLighted{ background: #FFCC99}
+.dupRecHighLighted{ background: #FFFFCA}
+
+.normalMinor{background: #e9f8e6}
+.highlightedMinor{background: #006699;color: #FFFFFF}
+
+.normalNRE{background: #FFF9E1}
+.highlightedNRE{background: #006699;color: #FFFFFF}
+
+.normalProduct{background: #e6f2ff}
+.highlightedProduct{background: #006699;color: #FFFFFF}
+.normalNRE{background: #FFF9E1}
+.highlightedNRE{background: #006699;color: #FFFFFF}
+.menuButtonZ{ background: #D29251; border-style: groove; border-width:2px;border-color:#ffffff; color:#FFFFFF; text-align: center; white-space: nowrap; font-weight: bold;}
+.normalGroup{background: #F3E2D1}
+.highlightedGroup{background: #DDDDDD;color: #000000}
+.butDelete {  font-size: 10px; color: #000000; text-align: right;background-color: #DDDDDD; background-repeat: no-repeat;height: 20px; width: 80px;border: 1px #000000 solid;background-image: url(images/Delete.gif); clip:  rect(   )}
+.menuButtonz{font-size: 9pt; background: #D29251; border-style: groove; border-width:2px;border-color:#ffffff; color:#FFFFFF; text-align: center;height: 22px; width: 110px;white-space: nowrap; font-weight: bold; font-family: "Arial"}
+.butDel{  font-size: 10px; color: #000000; text-align: right;background-color: #DDDDDD; background-repeat: no-repeat;height: 20px; width: 80px;border: 1px #000000 solid;background-image: url(images/Delete.gif); clip:  rect(   )}
+.normalFalsePositive{background: #E4ECF4}
+.highlightedFalsePositive{background: #FFEBCD}
+
+.lblFalsePositive {  font-family: "MS Sans Serif"; font-size: 10px; color: #000000; border-color: #000000 #000000 #000000 #000000; background-color: #FFFFFF; background-repeat: no-repeat;text-align: left;height: 19px;  border: 0px #F4F4FF solid; ; clip:  rect(   )}
+.butFalsePositive {  font-size: 10px; color: #000000; text-align: center;background-color: #DDDDDD; background-repeat: no-repeat;height: 17px; width: 100px;border: 1px #000000 solid; clip:  rect(   )}
+.tableHeading{ 
+	background: #575C62; 
+	border-style: groove; 
+	border-width:2px;
+	border-color:#ffffff; 
+	color:#FFFFFF; 
+	text-align: center; 
+	white-space: nowrap;
+	font-size: 11px; 
+	font-weight: bold;
+}
+
+.spanTab{
+	 background-image:url(images/TabExGW.gif);
+	 width:100px;
+	 height:25px;
+	 text-align: center; 
+	 color:black;
+	 padding-top: 4px;
+	 font-size: 10px;
+	 font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+.tab-page{
+	clear:			both;
+	border:			1px solid rgb( 145, 155, 156 );
+	background:		rgb( 252, 252, 254 );
+	z-index:		2;
+	position:		relative;
+	top:			-2px;
+	font:			11px Tahoma;
+	color:			Black;
+}
+
+table#pane {
+border-collapse: collapse;
+background-color: #ffffff;
+}
+
+tr#pane {}
+td#pane {}
+
+table#list {
+border-bottom: 1px #cccccc solid;
+border-top: 1px #cccccc solid;
+border-left: 1px #cccccc solid;
+border-right: 1px #cccccc solid;
+width=100%;
+}
+
+tr#blank {
+background-color: #ffffff;
+font-family: Verdana, Helvetica, Arial, sans-serif;
+font-size: 8pt;
+color: #333333;
+}
+
+td#run {
+background-color: #FFFFFF;
+border-bottom: 1px #cccccc solid;
+font-family: Arial, sans-serif;
+color: #000000;
+font-size: 8pt;
+padding-right: 15px;
+}
+
+tr#footer_cap {
+background-color: #ddeeff;
+font-family: Verdana, Helvetica, Arial, sans-serif;
+font-size: 8pt;
+color: #000000;
+}
+
+td#footer_cap {
+background-color: #ddeeff;
+border-bottom: 1px #cccccc solid;
+font-family: Verdana, Helvetica, Arial, sans-serif;
+color: #000000;
+font-size: 8pt;
+}
+
+
+table#list {
+border-bottom: 1px #cccccc solid;
+border-top: 1px #cccccc solid;
+border-left: 1px #cccccc solid;
+border-right: 1px #cccccc solid;
+width=100%;
+}
+
+tr{
+font-size:8pt;
+}
+
+td{
+font-size:8pt;
+}
+
+th {
+background-color: #eeeeee;
+border-bottom: 1px #cccccc solid;
+border-top: 1px #cccccc solid;
+font-family: Verdana, Helvetica, Arial, sans-serif;
+color: #666666;
+font-size: 8pt;
+text-align: left;
+font-weight: bold;
+}
+
+th#caption {
+background-color: #ddeeff;
+border-bottom: 1px #cccccc solid;
+border-top: 1px #cccccc solid;
+font-family: Verdana, Helvetica, Arial, sans-serif;
+color: #666666;
+font-size: 8pt;
+text-align: left;
+font-weight: bold;
+}
+
+td#contexttitle {
+display: table-cell;
+font-family: Verdana, Helvetica, Arial, sans-serif;
+color: #000000;
+font-size: 9pt;
+font-weight: bold;
+
+table#context {
+border-bottom: 1px #cccccc solid;
+border-top: 1px #cccccc solid;
+border-left: 1px #cccccc solid;
+border-right: 1px #cccccc solid;
+background-color: #eeeeee;}
+}
+
+table#pane {
+border-collapse: collapse;
+background-color: #ffffff;
+}
+
+tr#pane {}
+td#pane {}
+
+
+table#list {
+border-bottom: 1px #cccccc solid;
+border-top: 1px #cccccc solid;
+border-left: 1px #cccccc solid;
+border-right: 1px #cccccc solid;
+width=100%;
+}
+
+
+tr#blank {
+background-color: #ffffff;
+font-family: Verdana, Helvetica, Arial, sans-serif;
+font-size: 8pt;
+color: #333333;
+}
+
+td#run {
+background-color: #FFFFFF;
+border-bottom: 1px #cccccc solid;
+font-family: Arial, sans-serif;
+color: #000000;
+font-size: 8pt;
+padding-right: 15px;
+}
+
+tr#footer_cap {
+background-color: #ddeeff;
+font-family: Verdana, Helvetica, Arial, sans-serif;
+font-size: 8pt;
+color: #000000;
+}
+
+td#footer_cap {
+background-color: #ddeeff;
+border-bottom: 1px #cccccc solid;
+font-family: Verdana, Helvetica, Arial, sans-serif;
+color: #000000;
+font-size: 8pt;
+}
+
+
+table#list {
+border-bottom: 1px #cccccc solid;
+border-top: 1px #cccccc solid;
+border-left: 1px #cccccc solid;
+border-right: 1px #cccccc solid;
+width=100%;
+}
+
+tr{
+	
+font-size:8pt;
+}
+
+td{
+font-size:8pt;
+}
+
+th {
+background-color: #eeeeee;
+border-bottom: 1px #cccccc solid;
+border-top: 1px #cccccc solid;
+font-family: Verdana, Helvetica, Arial, sans-serif;
+color: #666666;
+font-size: 8pt;
+
+font-weight: bold;
+}
+
+th#caption {
+background-color: #ddeeff;
+border-bottom: 1px #cccccc solid;
+border-top: 1px #cccccc solid;
+font-family: Verdana, Helvetica, Arial, sans-serif;
+color: #666666;
+font-size: 8pt;
+text-align: left;
+font-weight: bold;
+}
+
+td#contexttitle {
+display: table-cell;
+font-family: Verdana, Helvetica, Arial, sans-serif;
+color: #000000;
+font-size: 9pt;
+font-weight: bold;
+
+table#context {
+border-bottom: 1px #cccccc solid;
+border-top: 1px #cccccc solid;
+border-left: 1px #cccccc solid;
+border-right: 1px #cccccc solid;
+background-color: #eeeeee;}
+
+}
+
+.menuButton9{ background: #F4F4Fa; border-style: groove; border-width:2px;border-color:#ffffff; color:#000000; text-align: center; white-space: nowrap; font-weight: bold;}
+.txt10 {font-family: "MS Sans Serif"; font-size: 10px; color: #000000; border-color: #000000 #000000 #000000 #000000; background-color: #E3DDBa; background-repeat: no-repeat;text-align: left;height: 17px;   width: 100px;border: 0px #000000 solid; ; clip:  rect(   )}
+.txt11{  font-family: "MS Sans Serif"; font-size: 10px; color: #ffffff; border-color: #000000 #000000 #000000 #000000; background-color: #FFFFFF; background-repeat: no-repeat;text-align: left;height: 19px;  border: 1px #000000 solid; ; clip:  rect(   )}
+.but2 {  font-size: 10px; color: #000000; text-align: center;background-color: #DDDDDD; background-repeat: no-repeat;height: 18px; width: 110px;border: 1px #000000 solid;cursor:hand; clip:  rect(   )}
+
+.WarningBoxBG {  background-color: #FF9900}
+.WarningBoxHeaderTxt { font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-style: normal; }
+
+.bt3dbuttons {
+font-family: Verdana, Arial, Helvetica, sans-serif;
+font-size: 11px;
+border-color: #FFFFFF #666666 #666666 #FFFFFF;
+background-color: #6495ED; border-style: solid;
+border-top-width: 1px; border-right-width: 1px;
+border-bottom-width: 1px; border-left-width: 1px;
+border-style: inset;
+border: 1px #CCCCCC solid;
+color: #F0FFFF;
+font-weight: bold;
+height:21;
+background-repeat: no-repeat;
+cursor:hand;
+	
+} 
+
+.bt3dbuttonsHover {
+font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	border-color: #FFFFFF #666666 #666666 #FFFFFF;
+	background-color: #3F7DED;
+	border-style: solid;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-style: none;
+	border: 1px #CCCCCC solid;
+	font-weight: bold;
+	color:White;
+    height:21;
+	background-repeat: no-repeat;
+	cursor:hand;
+
+} 
+
+.bt4dbuttons {
+font-family: Verdana, Arial, Helvetica, sans-serif;
+font-size: 11px;
+border-color: #FFFFFF #666666 #666666 #FFFFFF;
+background-color: #6495ED; border-style: solid;
+border-top-width: 1px; border-right-width: 1px;
+border-bottom-width: 1px; border-left-width: 1px;
+border-style: inset;
+border: 1px #CCCCCC solid;
+color: #F0FFFF;
+font-weight: bold;
+width:165px;
+background-repeat: no-repeat;
+cursor:hand;
+height:21;
+	
+} 
+
+.bt4dbuttonsHover {
+font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	border-color: #FFFFFF #666666 #666666 #FFFFFF;
+	background-color: #3F7DED;
+	border-style: solid;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-style: none;
+	border: 1px #CCCCCC solid;
+	font-weight: bold;
+	color:White;
+	width:165px;
+	background-repeat: no-repeat;
+	cursor:hand;
+	height:21;
+
+} 
+
+td#footer_cap_rule {
+background-color: #ff7f4f;
+border-bottom: 1px #cccccc solid;
+font-family: Verdana, Helvetica, Arial, sans-serif;
+color: #000000;
+font-size: 8pt;
+}
+
+table#list_rule {
+border-bottom: 1px #000000 solid;
+border-top: 1px #000000 solid;
+border-left: 1px #000000 solid;
+border-right: 1px #000000 solid;
+width=100%;
+}
+
+.thclass1 {
+background-color: #eeeeee;
+border-bottom: 1px #cccccc solid;
+border-top: 1px #cccccc solid;
+font-family: Verdana, Helvetica, Arial, sans-serif;
+color: #666666;
+font-size: 8pt;
+text-align: left;
+font-weight: bold;
+text-align: center;
+}
+.thclass1L {
+background-color: #eeeeee;
+border-bottom: 1px #cccccc solid;
+border-top: 1px #cccccc solid;
+font-family: Verdana, Helvetica, Arial, sans-serif;
+color: #666666;
+font-size: 8pt;
+text-align: left;
+font-weight: bold;
+text-align: center;
+}
+.thclass1R {
+background-color: #eeeeee;
+border-bottom: 1px #cccccc solid;
+border-top: 1px #cccccc solid;
+font-family: Verdana, Helvetica, Arial, sans-serif;
+color: #666666;
+font-size: 8pt;
+text-align: left;
+font-weight: bold;
+text-align: right;
+}
+.thclass1C {
+background-color: #eeeeee;
+border-bottom: 1px #cccccc solid;
+border-top: 1px #cccccc solid;
+font-family: Verdana, Helvetica, Arial, sans-serif;
+color: #666666;
+font-size: 8pt;
+text-align: left;
+font-weight: bold;
+text-align: center;
+}
+
+.thclass2 {
+background-color: #ffffff;
+border-bottom: 1px #cccccc solid;
+border-top: 1px #cccccc solid;
+font-family: Verdana, Helvetica, Arial, sans-serif;
+color: #666666;
+font-size: 8pt;
+text-align: left;
+font-weight: bold;
+}
+
+.thclass2R {
+background-color: #ffffff;
+border-bottom: 1px #cccccc solid;
+border-top: 1px #cccccc solid;
+font-family: Verdana, Helvetica, Arial, sans-serif;
+color: #666666;
+font-size: 8pt;
+text-align: right;
+font-weight: bold;
+}
+
+.thclass2L {
+background-color: #ffffff;
+border-bottom: 1px #cccccc solid;
+border-top: 1px #cccccc solid;
+font-family: Verdana, Helvetica, Arial, sans-serif;
+color: #666666;
+font-size: 8pt;
+text-align: left;
+font-weight: bold;
+}
+
+.thclass2C {
+background-color: #ffffff;
+border-bottom: 1px #cccccc solid;
+border-top: 1px #cccccc solid;
+font-family: Verdana, Helvetica, Arial, sans-serif;
+color: #666666;
+font-size: 8pt;
+text-align: center;
+font-weight: bold;
+}
+
+.textareaClass{
+font-family: "MS Sans Serif"; font-size: 10px; color: #000000; border-color: #000000 #000000 #000000 #000000; background-color: #FFFFFF; background-repeat: no-repeat;text-align: left;  border: 1px #000000 solid; ; width:300px;clip:  rect(   );		
+}
+
+.THC{ 
+ background:#ddeeff;
+ border-style: groove; 
+ border-width:2px;
+ border-bottom: 1px #cccccc solid;
+ border-top: 1px #cccccc solid;
+ color:black;
+ text-align: center;
+ white-space: nowrap;
+ font-weight: bold;
+} 
+.normalN{background: #FFFFFF; border-style: solid; border-width:1px;border-color:#999999;}
+
+.thclassWhiteC {
+background-color: White;
+border-bottom: 1px #cccccc solid;
+border-top: 1px #cccccc solid;
+font-family: Verdana, Helvetica, Arial, sans-serif;
+color: #666666;
+font-size: 8pt;
+font-weight: bold;
+text-align: center;
+}
+.thclassWhiteL {
+background-color: White;
+border-bottom: 1px #cccccc solid;
+border-top: 1px #cccccc solid;
+font-family: Verdana, Helvetica, Arial, sans-serif;
+color: #666666;
+font-size: 8pt;
+font-weight: bold;
+text-align:left
+}
+.thclassWhiteR {
+background-color: White;
+border-bottom: 1px #cccccc solid;
+border-top: 1px #cccccc solid;
+font-family: Verdana, Helvetica, Arial, sans-serif;
+color: #666666;
+font-size: 8pt;
+font-weight: bold;
+text-align: right;
+}
+
+.thclassWhiteZ {
+background-color: White;
+border-bottom: 0px #cccccc solid;
+border-top: 0px #cccccc solid;
+font-family: Verdana, Helvetica, Arial, sans-serif;
+color: #666666;
+font-size: 8pt;
+font-weight: bold;
+text-align: center;
+}
+
+.buttonOutset{ background: #ddeeff; border-style: groove; border-width:2px;border-color:#ffffff; color:black; text-align: center; white-space: nowrap; font-weight: bold;}
+.selectedItem{ background: #DDF4FF;
+ border-style: outset;
+ border-width:2px;
+ border-color:#ffffff; 
+ color:#000000; 
+ text-align: center; 
+ white-space: nowrap; 
+ font-weight: plain;}
+
+.spanTab{
+	 background-image:url(images/TabExGW.gif);
+	 width:100px;
+	 height:25px;
+	 text-align: center; 
+	 color:black;
+	 padding-top: 4px;
+	 font-size: 10px;
+	 font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+.tab-page{
+	clear:			both;
+	border:			1px solid rgb( 145, 155, 156 );
+	background:		rgb( 252, 252, 254 );
+	z-index:		2;
+	position:		relative;
+	top:			-2px;
+	font:			11px Tahoma;
+	color:			Black;
+}
+
+.span1{
+	background-color: #89919A;
+	color: White;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-weight: bolder;
+	width: 100%;
+	font-size:12px;
+}
+
+.forMenu {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	background-color: #D2D4D6;
+	padding-left: 10px;
+}
+
+.tableHeading{ 
+	background: #575C62; 
+	border-style: groove; 
+	border-width:2px;
+	border-color:#ffffff; 
+	color:#FFFFFF; 
+	text-align: center; 
+	white-space: nowrap;
+	font-size: 11px; 
+	font-weight: bold;
+}
+
+.forContent {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	background-color: #F1F2F3;
+	padding-left: 10px;
+}
+
+.spanTabEx{
+	 background-image:url(images/tabExt.gif);
+	 width:140px;
+	 height:25px;
+	 text-align: center; 
+	 color:black;
+	 padding-top: 4px;
+	 font-size: 10px;
+	 font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;
+	 	cursor: default;
+}
+
+.spanTabExHov{
+	 background-image:url(images/tabHoverExt.gif);
+	 width:140px;
+	 height:25px;
+	 text-align: center; 
+	 color:black;
+	 padding-top: 4px;
+	 font-size: 10px;
+	 font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;
+	 cursor: default;
+}
+
+.butAssign {
+ font-size: 10px;
+ color: #000000;
+ text-align: center;
+ cursor:hand;
+ background-color: #DDDDDD;
+ background-repeat: no-repeat;
+ height: 18px;
+ width: 100px;
+ border: 1px #000000 solid;
+ clip:  rect(   )}
+
+.bt5dbuttons {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	border-color: #FFFFFF #666666 #666666 #FFFFFF;
+	background-color: #BADAFA;
+	border-style: solid;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	clip: rect(   );
+	cursor:hand;
+	border-style: outset;
+	border: 1px #CCCCCC solid;
+} 
+
+.bt5dbuttonsHover {
+font-family: Verdana, Arial, Helvetica, sans-serif;
+font-size: 12px;
+font-weight: bold;
+border-color: #FFFFFF #666666 #666666 #FFFFFF;
+background-color: #DCECFC; border-style: solid;
+border-top-width: 1px; border-right-width: 1px;
+border-bottom-width: 1px; border-left-width: 1px;
+clip:  rect(   );
+cursor:hand;
+border-style: inset;
+border: 1px #CCCCCC solid;
+} 
+
+button{font-family: "MS Sans Serif"; 
+font-size: 10px; 
+color: #003399; 
+cursor:hand;
+border-color: #CCCCCC #CCCCCC #CCCCCC #CCCCCC;
+background-color: #FFFFFF; 
+background-repeat: no-repeat;
+text-align: left;height: 17px; 
+border: 1px #CCCCCC solid; ; clip:  rect(   )}
+
+
+.combo {  font-family: "MS Sans Serif"; font-size: 13px; color:red; border-color: #000000 #000000 #000000 #000000; background-color: #FFFFFF; background-repeat: no-repeat;text-align: left;height: 19px;  border: 1px #000000 solid; ; clip:  rect(   )}

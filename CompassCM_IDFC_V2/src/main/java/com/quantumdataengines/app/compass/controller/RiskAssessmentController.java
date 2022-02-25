@@ -1,0 +1,466 @@
+package com.quantumdataengines.app.compass.controller;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.ClientAnchor;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.Drawing;
+import org.apache.poi.ss.usermodel.Picture;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.ClientAnchor.AnchorType;
+import org.apache.poi.util.IOUtils;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.quantumdataengines.app.compass.controller.reports.MultiSheetExcelView;
+import com.quantumdataengines.app.compass.controller.reports.MultiSheetExcelViewChart;
+import com.quantumdataengines.app.compass.model.riskAssessment.MakerCheckerDataModel;
+import com.quantumdataengines.app.compass.otherservice.OtherCommonService;
+import com.quantumdataengines.app.compass.service.CommonService;
+import com.quantumdataengines.app.compass.service.master.GenericMasterService;
+import com.quantumdataengines.app.compass.service.riskAssessment.RiskAssessmentService;
+
+@Controller
+@RequestMapping(value="/common")
+public class RiskAssessmentController {
+	
+	private static final Model Model = null;
+	@Autowired
+	private OtherCommonService otherCommonService;
+	@Autowired
+	private CommonService commonService;
+	@Autowired
+	private GenericMasterService genericMasterService;
+	@Autowired
+	private RiskAssessmentService riskAssessmentService;
+	
+
+	@RequestMapping(value={"/riskAssessment"}, method=RequestMethod.GET)
+	public String getCddFormMakerIndex(HttpServletRequest request, HttpServletResponse response, 
+			Authentication authentication) throws Exception{
+		String CURRENTROLE = (String) request.getSession(false).getAttribute("CURRENTROLE");
+		
+		request.setAttribute("ASSESSMENTUNITS", riskAssessmentService.getDistinctAssessmentUnits());
+		request.setAttribute("CURRENTROLE", CURRENTROLE);
+		request.setAttribute("UNQID", otherCommonService.getElementId());
+		commonService.auditLog(authentication.getPrincipal().toString(), request, "Risk Assessment", "OPEN", "Module Accessed");
+		return "RiskAssessment/index";
+	}
+	
+	@RequestMapping(value="/searchRiskAssessment", method=RequestMethod.POST)
+	public String searchCDDForm(HttpServletRequest request, HttpServletResponse response, 
+			Authentication authentication) throws Exception{
+		String COMPASSREFERENCENO = request.getParameter("COMPASSREFERENCENO");
+		String ASSESSMENTUNIT = request.getParameter("ASSESSMENTUNIT");
+		String CURRENTROLE = (String) request.getSession(false).getAttribute("CURRENTROLE");
+		
+		request.setAttribute("CURRENTROLE", CURRENTROLE);
+		request.setAttribute("RISKASSESSMENTDATA", riskAssessmentService.searchRiskAssessmentData(ASSESSMENTUNIT, COMPASSREFERENCENO));
+		request.setAttribute("UNQID", otherCommonService.getElementId());
+		commonService.auditLog(authentication.getPrincipal().toString(), request, "Risk Assessment", "SEARCH", "Module Accessed");
+		return "RiskAssessment/SearchBottomPage";
+	}
+	
+	@RequestMapping(value="/openNewRiskAssessment", method=RequestMethod.POST)
+	public String openNewRiskAssessment(HttpServletRequest request, HttpServletResponse response, 
+			Authentication authentication) throws Exception{
+		String ASSESSMENTUNIT = request.getParameter("ASSESSMENTUNIT");
+		String COMPASSREFERENCENO = "";
+		String ISNEWFORM = request.getParameter("ISNEWFORM");
+		String UNQID = request.getParameter("UNQID");
+		String CURRENTROLE = (String) request.getSession(false).getAttribute("CURRENTROLE");
+		String userCode = authentication.getPrincipal().toString();
+		//System.out.println("in open risk form FOR "+COMPASSREFERENCENO);
+		
+		request.setAttribute("UNQID", UNQID);
+		request.setAttribute("CURRENTROLE", CURRENTROLE);
+		request.setAttribute("CURRENTUSERCODE", userCode);
+		request.setAttribute("ASSESSMENTUNIT", ASSESSMENTUNIT);
+		if(ISNEWFORM.equalsIgnoreCase("N")) {
+			COMPASSREFERENCENO = request.getParameter("COMPASSREFERENCENO");
+		}else {
+			COMPASSREFERENCENO = riskAssessmentService.generateCompassRefNo();
+		}
+		request.setAttribute("COMPASSREFERENCENO", COMPASSREFERENCENO);
+		request.setAttribute("ISNEWFORM", ISNEWFORM);
+		Map<String, Object> riskAssessmentForm = riskAssessmentService.getRiskAssessmentForm(ASSESSMENTUNIT, "", COMPASSREFERENCENO, ISNEWFORM);
+		request.setAttribute("GENERALTABDATA", riskAssessmentForm.get("GENERALDATAMAP"));
+		//System.out.println(riskAssessmentForm.get("GENERALDATAMAP"));
+		commonService.auditLog(authentication.getPrincipal().toString(), request, "Risk Assessment", "OPEN", "Module Accessed");
+				
+		return "RiskAssessment/questionsForm";
+	}
+	
+	@RequestMapping(value="/loadCustomerTab", method=RequestMethod.POST)
+	public String loadCustomerTab(HttpServletRequest request, HttpServletResponse response, 
+			Authentication authentication) throws Exception{
+		String ASSESSMENTUNIT = request.getParameter("ASSESSMENTUNIT");
+		String ASSESSMENTSECTIONCODE = request.getParameter("ASSESSMENTSECTIONCODE");
+		String COMPASSREFERENCENO = request.getParameter("COMPASSREFERENCENO");
+		String ISNEWFORM = request.getParameter("ISNEWFORM");
+		/*System.out.println("ASSESSMENTUNIT = "+ASSESSMENTUNIT);
+		System.out.println("ASSESSMENTSECTIONCODE = "+ASSESSMENTSECTIONCODE);*/
+		
+		Map<String, Object> riskAssessmentForm = riskAssessmentService.getRiskAssessmentForm(ASSESSMENTUNIT, ASSESSMENTSECTIONCODE, COMPASSREFERENCENO, ISNEWFORM);
+		request.setAttribute("SUBGROUPSLIST", riskAssessmentForm.get("SUBGROUPSLIST"));
+		request.setAttribute("QUESTIONNAIRESLIST", riskAssessmentForm.get("QUESTIONNAIRESLIST"));
+		request.setAttribute("OPTIONSLIST", riskAssessmentForm.get("OPTIONSLIST"));
+		//request.setAttribute("CUSTOMERTABDATA", riskAssessmentForm.get("FORMDATALIST"));
+		request.setAttribute("CUSTOMERRISKTABDATA", riskAssessmentForm.get("GENERALDATAMAP"));
+		request.setAttribute("ASSESSMENTUNIT", ASSESSMENTUNIT);
+		request.setAttribute("ASSESSMENTSECTIONCODE", ASSESSMENTSECTIONCODE);
+		request.setAttribute("CUSTOMER_WEIGHTAGE", riskAssessmentForm.get("A-CUSTOMER"));
+		request.setAttribute("COMPASSREFERENCENO", COMPASSREFERENCENO);
+		request.setAttribute("UNQID", otherCommonService.getElementId());
+		request.setAttribute("CURRENTROLE", (String) request.getSession(false).getAttribute("CURRENTROLE"));
+		
+		commonService.auditLog(authentication.getPrincipal().toString(), request, "Risk Assessment", "OPEN", "Module Accessed");
+		
+		return "RiskAssessment/customerTab";	
+	}
+	
+	@RequestMapping(value="/loadGeographyTab", method=RequestMethod.POST)
+	public String loadGeographyTab(HttpServletRequest request, HttpServletResponse response, 
+			Authentication authentication) throws Exception{
+		String ASSESSMENTUNIT = request.getParameter("ASSESSMENTUNIT");
+		String ASSESSMENTSECTIONCODE = request.getParameter("ASSESSMENTSECTIONCODE");
+		String COMPASSREFERENCENO = request.getParameter("COMPASSREFERENCENO");
+		String ISNEWFORM = request.getParameter("ISNEWFORM");
+		/*System.out.println("ASSESSMENTUNIT = "+ASSESSMENTUNIT);
+		System.out.println("ASSESSMENTSECTIONCODE = "+ASSESSMENTSECTIONCODE);*/
+		
+		Map<String, Object> riskAssessmentForm = riskAssessmentService.getRiskAssessmentForm(ASSESSMENTUNIT, ASSESSMENTSECTIONCODE, COMPASSREFERENCENO, ISNEWFORM);
+		request.setAttribute("SUBGROUPSLIST", riskAssessmentForm.get("SUBGROUPSLIST"));
+		request.setAttribute("QUESTIONNAIRESLIST", riskAssessmentForm.get("QUESTIONNAIRESLIST"));
+		request.setAttribute("OPTIONSLIST", riskAssessmentForm.get("OPTIONSLIST"));
+		request.setAttribute("GEORISKTABDATA", riskAssessmentForm.get("GENERALDATAMAP"));
+		request.setAttribute("ASSESSMENTUNIT", ASSESSMENTUNIT);
+		request.setAttribute("ASSESSMENTSECTIONCODE", ASSESSMENTSECTIONCODE);
+		request.setAttribute("GEOGRAPHY_WEIGHTAGE", riskAssessmentForm.get("B-GEOGRAPHY"));
+		request.setAttribute("COMPASSREFERENCENO", COMPASSREFERENCENO);
+		request.setAttribute("UNQID", otherCommonService.getElementId());
+		request.setAttribute("CURRENTROLE", (String) request.getSession(false).getAttribute("CURRENTROLE"));
+		
+		commonService.auditLog(authentication.getPrincipal().toString(), request, "Risk Assessment", "OPEN", "Module Accessed");
+		/*System.out.println(riskAssessmentForm.get("SUBGROUPSLIST"));
+		System.out.println(riskAssessmentForm.get("QUESTIONNAIRESLIST"));*/
+		return "RiskAssessment/geographyTab";	
+	}
+	
+	@RequestMapping(value="/loadProductsServicesTab", method=RequestMethod.POST)
+	public String loadProductsServicesTab(HttpServletRequest request, HttpServletResponse response, 
+			Authentication authentication) throws Exception{
+		String ASSESSMENTUNIT = request.getParameter("ASSESSMENTUNIT");
+		String ASSESSMENTSECTIONCODE = request.getParameter("ASSESSMENTSECTIONCODE");
+		String COMPASSREFERENCENO = request.getParameter("COMPASSREFERENCENO");
+		String ISNEWFORM = request.getParameter("ISNEWFORM");
+		/*System.out.println("ASSESSMENTUNIT = "+ASSESSMENTUNIT);
+		System.out.println("ASSESSMENTSECTIONCODE = "+ASSESSMENTSECTIONCODE);*/
+		
+		Map<String, Object> riskAssessmentForm = riskAssessmentService.getRiskAssessmentForm(ASSESSMENTUNIT, ASSESSMENTSECTIONCODE, COMPASSREFERENCENO, ISNEWFORM);
+		request.setAttribute("SUBGROUPSLIST", riskAssessmentForm.get("SUBGROUPSLIST"));
+		request.setAttribute("QUESTIONNAIRESLIST", riskAssessmentForm.get("QUESTIONNAIRESLIST"));
+		request.setAttribute("OPTIONSLIST", riskAssessmentForm.get("OPTIONSLIST"));
+		request.setAttribute("PRODUCTRISKTABDATA", riskAssessmentForm.get("GENERALDATAMAP"));
+		request.setAttribute("ASSESSMENTUNIT", ASSESSMENTUNIT);
+		request.setAttribute("ASSESSMENTSECTIONCODE", ASSESSMENTSECTIONCODE);
+		request.setAttribute("PRODUCTSSERVICES_WEIGHTAGE", riskAssessmentForm.get("C-PRODUCTSSERVICES"));
+		request.setAttribute("COMPASSREFERENCENO", COMPASSREFERENCENO);
+		request.setAttribute("UNQID", otherCommonService.getElementId());
+		request.setAttribute("CURRENTROLE", (String) request.getSession(false).getAttribute("CURRENTROLE"));
+		
+		commonService.auditLog(authentication.getPrincipal().toString(), request, "Risk Assessment", "OPEN", "Module Accessed");
+		
+		/*System.out.println(riskAssessmentForm.get("QUESTIONNAIRESLIST"));
+		System.out.println(riskAssessmentForm.get("OPTIONSLIST"));*/
+		
+		return "RiskAssessment/productsServicesTab";	
+	}
+	
+	@RequestMapping(value="/loadTransactionsTab", method=RequestMethod.POST)
+	public String loadTransactionsTab(HttpServletRequest request, HttpServletResponse response, 
+			Authentication authentication) throws Exception{
+		String ASSESSMENTUNIT = request.getParameter("ASSESSMENTUNIT");
+		String ASSESSMENTSECTIONCODE = request.getParameter("ASSESSMENTSECTIONCODE");
+		String COMPASSREFERENCENO = request.getParameter("COMPASSREFERENCENO");
+		String ISNEWFORM = request.getParameter("ISNEWFORM");
+		/*System.out.println("ASSESSMENTUNIT = "+ASSESSMENTUNIT);
+		System.out.println("ASSESSMENTSECTIONCODE = "+ASSESSMENTSECTIONCODE);*/
+		
+		Map<String, Object> riskAssessmentForm = riskAssessmentService.getRiskAssessmentForm(ASSESSMENTUNIT, ASSESSMENTSECTIONCODE, COMPASSREFERENCENO, ISNEWFORM);
+		request.setAttribute("SUBGROUPSLIST", riskAssessmentForm.get("SUBGROUPSLIST"));
+		request.setAttribute("QUESTIONNAIRESLIST", riskAssessmentForm.get("QUESTIONNAIRESLIST"));
+		request.setAttribute("OPTIONSLIST", riskAssessmentForm.get("OPTIONSLIST"));
+		request.setAttribute("TXNRISKTABDATA", riskAssessmentForm.get("GENERALDATAMAP"));
+		request.setAttribute("ASSESSMENTUNIT", ASSESSMENTUNIT);
+		request.setAttribute("ASSESSMENTSECTIONCODE", ASSESSMENTSECTIONCODE);
+		request.setAttribute("TRANSACTIONS_WEIGHTAGE", riskAssessmentForm.get("D-TRANSACTIONS"));
+		request.setAttribute("COMPASSREFERENCENO", COMPASSREFERENCENO);
+		request.setAttribute("UNQID", otherCommonService.getElementId());
+		request.setAttribute("CURRENTROLE", (String) request.getSession(false).getAttribute("CURRENTROLE"));
+		
+		commonService.auditLog(authentication.getPrincipal().toString(), request, "Risk Assessment", "OPEN", "Module Accessed");
+				
+		return "RiskAssessment/transactionsTab";	
+	}
+	
+	@RequestMapping(value="/loadDeliveryChannelsTab", method=RequestMethod.POST)
+	public String loadDeliveryChannelsTab(HttpServletRequest request, HttpServletResponse response, 
+			Authentication authentication) throws Exception{
+		String ASSESSMENTUNIT = request.getParameter("ASSESSMENTUNIT");
+		String ASSESSMENTSECTIONCODE = request.getParameter("ASSESSMENTSECTIONCODE");
+		String COMPASSREFERENCENO = request.getParameter("COMPASSREFERENCENO");
+		String ISNEWFORM = request.getParameter("ISNEWFORM");
+		/*System.out.println("ASSESSMENTUNIT = "+ASSESSMENTUNIT);
+		System.out.println("ASSESSMENTSECTIONCODE = "+ASSESSMENTSECTIONCODE);*/
+		
+		Map<String, Object> riskAssessmentForm = riskAssessmentService.getRiskAssessmentForm(ASSESSMENTUNIT, ASSESSMENTSECTIONCODE, COMPASSREFERENCENO, ISNEWFORM);
+		request.setAttribute("SUBGROUPSLIST", riskAssessmentForm.get("SUBGROUPSLIST"));
+		request.setAttribute("QUESTIONNAIRESLIST", riskAssessmentForm.get("QUESTIONNAIRESLIST"));
+		request.setAttribute("OPTIONSLIST", riskAssessmentForm.get("OPTIONSLIST"));
+		request.setAttribute("DELIVERYRISKTABDATA", riskAssessmentForm.get("GENERALDATAMAP"));
+		request.setAttribute("ASSESSMENTUNIT", ASSESSMENTUNIT);
+		request.setAttribute("ASSESSMENTSECTIONCODE", ASSESSMENTSECTIONCODE);
+		request.setAttribute("DELIVERYCHANNELS_WEIGHTAGE", riskAssessmentForm.get("E-DELIVERYCHANNELS"));
+		request.setAttribute("COMPASSREFERENCENO", COMPASSREFERENCENO);
+		request.setAttribute("UNQID", otherCommonService.getElementId());
+		request.setAttribute("CURRENTROLE", (String) request.getSession(false).getAttribute("CURRENTROLE"));
+		
+		commonService.auditLog(authentication.getPrincipal().toString(), request, "Risk Assessment", "OPEN", "Module Accessed");
+				
+		return "RiskAssessment/deliveryChannelsTab";	
+	}
+	
+	@RequestMapping(value="/loadControlParametersTab", method=RequestMethod.POST)
+	public String loadControlParametersTab(HttpServletRequest request, HttpServletResponse response, 
+			Authentication authentication) throws Exception{
+		String ASSESSMENTUNIT = request.getParameter("ASSESSMENTUNIT");
+		String ASSESSMENTSECTIONCODE = request.getParameter("ASSESSMENTSECTIONCODE");
+		String COMPASSREFERENCENO = request.getParameter("COMPASSREFERENCENO");
+		String ISNEWFORM = request.getParameter("ISNEWFORM");
+		/*System.out.println("ASSESSMENTUNIT = "+ASSESSMENTUNIT);
+		System.out.println("ASSESSMENTSECTIONCODE = "+ASSESSMENTSECTIONCODE);*/
+		
+		Map<String, Object> riskAssessmentForm = riskAssessmentService.getRiskAssessmentForm(ASSESSMENTUNIT, ASSESSMENTSECTIONCODE, COMPASSREFERENCENO, ISNEWFORM);
+		request.setAttribute("SUBGROUPSLIST", riskAssessmentForm.get("SUBGROUPSLIST"));
+		request.setAttribute("QUESTIONNAIRESLIST", riskAssessmentForm.get("QUESTIONNAIRESLIST"));
+		request.setAttribute("OPTIONSLIST", riskAssessmentForm.get("OPTIONSLIST"));
+		//request.setAttribute("CONTROLPARAMSDATA", riskAssessmentForm.get("FORMDATALIST"));
+		request.setAttribute("CONTROLPARAMSDATA", riskAssessmentForm.get("GENERALDATAMAP"));
+		request.setAttribute("ASSESSMENTUNIT", ASSESSMENTUNIT);
+		request.setAttribute("ASSESSMENTSECTIONCODE", ASSESSMENTSECTIONCODE);
+		request.setAttribute("CONTROLPARAMSWEIGHTAGE", riskAssessmentForm.get("CONTROLPARAMSWEIGHTAGE"));
+		request.setAttribute("COMPASSREFERENCENO", COMPASSREFERENCENO);
+		request.setAttribute("UNQID", otherCommonService.getElementId());
+		request.setAttribute("CURRENTROLE", (String) request.getSession(false).getAttribute("CURRENTROLE"));
+		
+		commonService.auditLog(authentication.getPrincipal().toString(), request, "Risk Assessment", "OPEN", "Module Accessed");
+				
+		return "RiskAssessment/controlParametersTab";	
+	}
+	
+	@RequestMapping(value="/loadRiskRatingTab", method=RequestMethod.POST)
+	public String loadRiskRatingTab(HttpServletRequest request, HttpServletResponse response, 
+			Authentication authentication) throws Exception{
+		String ASSESSMENTUNIT = request.getParameter("ASSESSMENTUNIT");
+		String ASSESSMENTSECTIONCODE = request.getParameter("ASSESSMENTSECTIONCODE");
+		String COMPASSREFERENCENO = request.getParameter("COMPASSREFERENCENO");
+		String ISNEWFORM = request.getParameter("ISNEWFORM");
+		//String nextReviewDate = cddFormService.getCDDFormFieldData("FUN_DATETOCHAR(NEXTREVIEWDATE)", compassRefNo, lineNo);
+		
+		Map<String, Object> riskAssessmentForm = riskAssessmentService.getRiskAssessmentForm(ASSESSMENTUNIT, ASSESSMENTSECTIONCODE, COMPASSREFERENCENO, ISNEWFORM);
+		request.setAttribute("RISKTABDATA", riskAssessmentForm.get("GENERALDATAMAP"));
+		request.setAttribute("CURRENTROLE", (String) request.getSession(false).getAttribute("CURRENTROLE"));
+		request.setAttribute("UNQID", otherCommonService.getElementId());
+		//System.out.println("RISKTABDATA = "+ riskAssessmentForm.get("GENERALDATAMAP"));
+		commonService.auditLog(authentication.getPrincipal().toString(), request, "Risk Assessment", "READ", "Module Accessed");
+		return "RiskAssessment/riskRatingTab";
+	}
+	
+	@RequestMapping(value="/loadStatusAndApprovalTab", method=RequestMethod.POST)
+	public String loadStatusAndApprovalTab(HttpServletRequest request, HttpServletResponse response, 
+			Authentication authentication) throws Exception{
+		String compassRefNo = request.getParameter("COMPASSREFERENCENO");
+		String ASSESSMENTUNIT = request.getParameter("ASSESSMENTUNIT");
+		String CURRENTROLE = (String) request.getSession(false).getAttribute("CURRENTROLE");
+		String COMPASSREFERENCENO = request.getParameter("COMPASSREFERENCENO");
+		String ISNEWFORM = request.getParameter("ISNEWFORM");
+		//String nextReviewDate = cddFormService.getCDDFormFieldData("FUN_DATETOCHAR(NEXTREVIEWDATE)", compassRefNo, lineNo);
+		
+		request.setAttribute("UNQID", otherCommonService.getElementId());
+		request.setAttribute("COMPASSREFERENCENO", compassRefNo);
+		request.setAttribute("CURRENTROLE", CURRENTROLE);
+		Map<String, Object> riskAssessmentForm = riskAssessmentService.getRiskAssessmentForm(ASSESSMENTUNIT, "", COMPASSREFERENCENO, ISNEWFORM);
+		request.setAttribute("STATUSTABDATA", riskAssessmentForm.get("GENERALDATAMAP"));
+		request.setAttribute("STATUSAUDITLOGDATA", riskAssessmentForm.get("STATUSAUDITLOG"));
+		//System.out.println("statusdata = "+riskAssessmentForm.get("GENERALDATAMAP"));
+		commonService.auditLog(authentication.getPrincipal().toString(), request, "Risk Assessment", "READ", "Module Accessed");
+		return "RiskAssessment/getStatusAndApproval";
+	}
+	
+	@RequestMapping(value="/saveRiskAssessmentData", method=RequestMethod.POST)
+	@ResponseBody
+	public String saveRiskAssessmentData(HttpServletRequest request, HttpServletResponse response,Authentication authentication)throws Exception{
+		String userCode = authentication.getPrincipal().toString();
+		String userRole= (String) request.getSession(false).getAttribute("CURRENTROLE");
+		String ipAddress = request.getRemoteAddr();
+		//String formData = request.getParameter("formData");
+		String status = request.getParameter("status");
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		
+		Enumeration enumObj =  request.getParameterNames();
+		while(enumObj.hasMoreElements()){
+			String paramName = (String) enumObj.nextElement();
+			String paramValue = request.getParameter(paramName);
+			/*if(paramName.contains("FINALRISK")) {
+				if(paramValue.equals("1")){
+					paramValue = "Low - 1";
+				}else if(paramValue.equals("2")) {
+					paramValue = "Medium - 2";
+				}else if(paramValue.equals("3")) {
+					paramValue = "High - 3";
+				}
+			}*/
+			paramMap.put(paramName, paramValue);	
+			//System.out.println(paramMap);
+		}
+		
+		commonService.auditLog(authentication.getPrincipal().toString(), request, "Risk Assesment", "UPDATE", "Module Accessed");
+		//System.out.println(riskAssessmentService.saveRiskAssessmentData(paramMap, status, userCode, userRole, ipAddress));
+		return riskAssessmentService.saveRiskAssessmentData(paramMap, status, userCode, userRole, ipAddress);
+		//return "";
+	}
+	
+	@RequestMapping(value = "/generateCMReport") 
+	public ModelAndView generateCMReport(HttpServletRequest request, HttpServletResponse response, 
+			Authentication authentication) throws Exception {
+		String compassRefNo = request.getParameter("compassRefNo");
+		String userCode = authentication.getPrincipal().toString();
+		String userRole = request.getSession(false) != null ? (String) request.getSession(false).getAttribute("CURRENTROLE") : "";
+		String ipAddress = request.getRemoteAddr();
+		
+		Map<String, Object> mainMap = riskAssessmentService.generateCMReport(compassRefNo, userCode, userRole, ipAddress);
+		Iterator<String> itr = mainMap.keySet().iterator();
+		List<String> tabOrder = new Vector<String>();
+		while(itr.hasNext()){
+			tabOrder.add(itr.next());
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyyHHmmss");
+		Date date = new Date();
+		mainMap.put("TABORDER", tabOrder);
+		mainMap.put("FILENAME", compassRefNo+"_"+userCode+"_"+sdf.format(date));
+		ModelAndView modelAndView = new ModelAndView(new MultiSheetExcelViewChart(), mainMap);
+		//System.out.println("MAINMAP: "+mainMap);
+		commonService.auditLog(authentication.getPrincipal().toString(), request, "REPORTS", "DOWNLOAD", "File Downloaded");
+		return modelAndView;	
+	}
+	
+			@RequestMapping(value={"/saveChartImage"}, method=RequestMethod.POST)
+	public ResponseEntity<String> saveChartImage(HttpServletRequest request, HttpServletResponse response, 
+			Authentication authentication) throws Exception{
+		String CURRENTROLE = (String) request.getSession(false).getAttribute("CURRENTROLE");
+//		String data = request.getParameter("makerCheckerData");
+		StringBuilder buffer = new StringBuilder();
+	    BufferedReader reader = request.getReader();
+	    String line;
+	    while ((line = reader.readLine()) != null) {
+	        buffer.append(line);
+	        buffer.append(System.lineSeparator());
+	    }
+	    String data = buffer.toString();
+	    System.out.println("data:"+data);
+	    JSONObject jObj = new JSONObject(data);
+	    String ImageUrl = jObj.getString("data");
+	    String imageId = riskAssessmentService.saveImageUrlData(ImageUrl);
+		return ResponseEntity.ok(imageId);
+	}
+		
+		@RequestMapping(value={"/saveRaiseToRFI"}, method=RequestMethod.POST)
+	public ResponseEntity<Map<String,Object>> raiseToRfi(HttpServletRequest request, HttpServletResponse response, 
+			Authentication authentication) throws Exception{
+		String CURRENTROLE = (String) request.getSession(false).getAttribute("CURRENTROLE");
+//		String data = request.getParameter("makerCheckerData");
+		StringBuilder buffer = new StringBuilder();
+	    BufferedReader reader = request.getReader();
+	    String line;
+	    while ((line = reader.readLine()) != null) {
+	        buffer.append(line);
+	        buffer.append(System.lineSeparator());
+	    }
+	    String data = buffer.toString();
+	    String userCode = authentication.getPrincipal().toString();
+	    String ipAddress = request.getRemoteAddr();
+	    
+		MakerCheckerDataModel makerCheckerData = new MakerCheckerDataModel(data, CURRENTROLE, userCode, ipAddress);
+		Map<String, Object> caseRaisedData = riskAssessmentService.saveRaiseToRFI(makerCheckerData);
+		System.out.println("qId:"+makerCheckerData.questionId);
+		System.out.println("compass Reference NO.:"+makerCheckerData.compassRefNo);
+		
+		commonService.auditLog(authentication.getPrincipal().toString(), request, "Risk Assessment", "RAISETORFI", "Module Accessed");
+		return ResponseEntity.ok(caseRaisedData);
+	}
+	
+	@RequestMapping(value={"/getMakerCheckerList"}, method=RequestMethod.POST)
+	public ResponseEntity<String> getMakerCheckerList(HttpServletRequest request, HttpServletResponse response, 
+			Authentication authentication) throws Exception{
+		StringBuilder buffer = new StringBuilder();
+	    BufferedReader reader = request.getReader();
+	    String line;
+	    while ((line = reader.readLine()) != null) {
+	        buffer.append(line);
+	        buffer.append(System.lineSeparator());
+	    }
+	    String data = buffer.toString();
+	    System.out.println("string data:"+data);
+	    String qId = new JSONObject(data).getString("qId");
+	    String compassRefNo = new JSONObject(data).getString("compassRefNo");
+	    System.out.println("row details:"+riskAssessmentService.getMakerCheckerList(qId,compassRefNo).toString());
+		return ResponseEntity.ok(riskAssessmentService.getMakerCheckerList(qId,compassRefNo).toString());
+	}
+	
+	@RequestMapping(value="/mixedChart", method=RequestMethod.POST)
+	public String chart(HttpServletRequest request, HttpServletResponse response, 
+			Authentication authentication) throws Exception{
+		String cmRefNo = request.getParameter("CRMREFNO");
+		request.setAttribute("DATAPOINTS", riskAssessmentService.getGraphDataPoints(cmRefNo));
+		
+		return "RiskAssessment/mixedChart";
+	}
+	
+}

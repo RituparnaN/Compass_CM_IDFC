@@ -1,0 +1,31 @@
+CREATE OR REPLACE PROCEDURE STP_SEARCHCOUNTRYMASTER(
+
+ i_vcCountryCode IN VARCHAR2, i_vcCountryName IN VARCHAR2,
+ i_vcUserCode    IN VARCHAR2, i_vcGroupCode IN VARCHAR2, 
+ i_vcIPAddress   IN VARCHAR2, io_cuRESTULTSET IN OUT SYS_REFCURSOR
+)
+-- EXEC STP_SEARCHCOUNTRYMASTER('','','','','',:KG);
+
+AS
+  vcQuery varchar2(5000);
+  vcCountryCode VARCHAR2(4000) := i_vcCountryCode;
+  vcCountryName VARCHAR2(4000) := '%'||i_vcCountryName||'%';
+BEGIN
+vcQuery := ' SELECT ROWNUM AS ROWPOSITION, NVL(TRIM(COUNTRYCODE),''N'') COUNTRYCODE, REPLACE(NVL(TRIM(COUNTRYNAME),''N''),CHR(39),'''') COUNTRYNAME, '
+        || '        MLRISKVALUE, THRISKVALUE, TFRISKVALUE  '
+        || '   FROM COMAML.TB_COUNTRYMASTER A '
+	|| '  WHERE 1 = 1 ';
+IF TRIM(UPPER(i_vcCountryCode)) IS NOT NULL THEN
+vcQuery := vcQuery||' AND A.COUNTRYCODE = '''||vcCountryCode||''' ';
+END IF;
+
+IF TRIM(UPPER(i_vcCountryName)) IS NOT NULL THEN
+  vcQuery := vcQuery||' AND A.COUNTRYNAME LIKE '''||vcCountryName||''' ';
+END IF;
+
+vcQuery := vcQuery || ' AND ROWNUM <= 500 ';
+
+OPEN io_cuRESTULTSET FOR vcQuery;
+
+END STP_SEARCHCOUNTRYMASTER;
+/

@@ -1,0 +1,48 @@
+CREATE OR REPLACE PROCEDURE STP_FETCHEXCEPTIONLISTRECORDS (
+i_vcListCode	 	 IN VARCHAR2,		i_vcListCode_Id    IN VARCHAR2, 
+i_vcListCode_Name    IN VARCHAR2,		i_vcResultSet  	   IN OUT SYS_REFCURSOR)
+AS
+
+vcSql Varchar2(4000):= '';
+
+BEGIN
+    IF(UPPER(i_vcListCode) = 'NCIFLIST' ) THEN
+	    vcSql := 'SELECT NCIF_ID LISTEDID, FULL_NAME, DEDUP_KEY, TO_CHAR(DATE_OF_BIRTH,''DD-MON-YYYY'') DATE_OF_BIRTH, '||
+                 '       GENDER, PANNO, DRIVINGLICENSENO, PASSPORTNO, VOTERIDENTITYNO, '||
+                 '       REGISTRATIONNUMBER, REGISTRATIONDATE, MOBILENO, FAXNO, OCCUPATION, '||
+                 '       IT_STATUS, ADDRESSLINE1, ADDRESSLINE2, ADDRESSLINE3, CITYCODE, '||
+                 '       CITY, PINCODE, LASTUPDATEDDATE, ORIGINALSOURCE '||
+	             '  FROM COMAML.TB_NCIFLIST A '||
+	             ' WHERE 1 = 1';
+	    IF(i_vcListCode_Id IS NOT NULL ) THEN
+	    vcSql := vcSql || 'AND A.NCIF_ID = '''||i_vcListCode_Id||''' ';
+	    END IF;
+	    
+	    IF(i_vcListCode_Name IS NOT NULL ) THEN
+	    vcSql := vcSql || 'AND A.FULL_NAME LIKE ''%'||i_vcListCode_Name||'%'' ';
+	    END IF;
+    END IF;
+    
+    IF(UPPER(i_vcListCode) = UPPER('NcifAliasList') ) THEN
+	    vcSql := 'SELECT NCIF_ID LISTEDID, RECORD_ID, FULL_NAME, FIRST_NAME, A.MIDDLE_NAME, A.LAST_NAME, '||
+	           	 '       TO_CHAR(DATEOFBIRTH,''DD-MON-YYYY'') DATEOFBIRTH, '||
+                 '       DESIGNATION, ADDRESSLINE1, ADDRESSLINE2, ADDRESSLINE3, CITYCODE, '||
+                 '       CITY, PINCODE, PHONENO, REMARKS, LASTUPDATEDDATE, ORIGINALSOURCE '||
+	             '  FROM COMAML.TB_NCIFLIST_ALIASES A '||
+	             ' WHERE 1 = 1';
+	    IF(i_vcListCode_Id IS NOT NULL ) THEN
+	    vcSql := vcSql || 'AND A.NCIF_ID = '''||i_vcListCode_Id||''' ';
+	    END IF;
+	    
+	    IF(i_vcListCode_Name IS NOT NULL ) THEN
+	    vcSql := vcSql || 'AND A.FULL_NAME LIKE ''%'||i_vcListCode_Name||'%'' ';
+	    END IF;
+    END IF;
+    insert into comaml.c values(vcSql);
+    commit;
+	OPEN i_vcResultSet FOR vcSql;
+
+END STP_FETCHEXCEPTIONLISTRECORDS;
+/
+
+ 
