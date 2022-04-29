@@ -39,7 +39,7 @@ public class MultiSheetExcelViewChart extends AbstractExcelView {
 		 	String imgId=request.getParameter("imageId");
 	 		System.out.println("image Id: "+imgId);
 	 		String imageData = "";
-	 		String url = "jdbc:oracle:thin:@localhost:1521:orcl";
+	 		String url = "jdbc:oracle:thin:@localhost:1521/XE";
 	        String user = "COMAML_CM";
 	        String pass = "ORACLE";
 	 
@@ -152,7 +152,7 @@ public class MultiSheetExcelViewChart extends AbstractExcelView {
 				
 				if(sheet.getSheetName().equals("RESIDUAL RISK RATING"))
 		 		  {System.out.println("true");
-		 		 InputStream baseimage = new FileInputStream("C:\\APPFOLDER\\resources\\ExcelHeatMap\\HeatMap_BaseImage.png");
+		 		 InputStream baseimage = new FileInputStream("C:\\APPFOLDER\\resources\\CM_MatrixHeatChart\\HeatMap_BaseImage.png");
 		 		//InputStream baseimage = new FileInputStream("C:\\Users\\kumar_comh5ib\\Downloads\\blank2.png");
 		 		byte[] bytesBi = IOUtils.toByteArray(baseimage);
 		 		int pictureBi = workbook.addPicture(bytesBi, Workbook.PICTURE_TYPE_PNG);
