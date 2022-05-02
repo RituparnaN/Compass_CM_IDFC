@@ -99,10 +99,8 @@
 	function generateRAReport(elm){
 		var id = '${UNQID}';
 		var compassRefNo = $(elm).attr("compassRefNo");
-		alert("Button hitted!!")
-		//alert(compassRefNo);
-		 //$(elm).html("Generating...");
-		 var fromDate = "01/01/2000";
+		var assessmentUnit = $(elm).attr("assessmentUnit");
+		var fromDate = "01/01/2000";
 		 
 		 if(confirm("Are you sure you want to Generate Excel Report?")){
 			  $.ajax({
@@ -114,16 +112,14 @@
 						$("#chartDiv").html(res);
 						var data = $("#demo").val();
 						document.getElementById("chartDiv").style.display = "none";
-						
-						console.log()
+
 						$.ajax({
 								url : "${pageContext.request.contextPath}/common/saveChartImage",
 								type : "POST",
 								cache : false,
 								data: JSON.stringify({"data":data}),
 								success : function(res){
-									alert("DATA SAVED SUCCESSFULLY!!");
-									$.fileDownload("${pageContext.request.contextPath}/common/generateCMReportNew?compassRefNo="+compassRefNo+"&imageId="+res , {
+									$.fileDownload("${pageContext.request.contextPath}/common/generateCMReportNew?compassRefNo="+compassRefNo+"&imageId="+res+"&assessmentUnit="+assessmentUnit , {
 									    httpMethod : "GET",
 									    successCallback: function (url) {	
 											alert("done")

@@ -266,11 +266,12 @@ private static final Logger log = LoggerFactory.getLogger(CommonController.class
 	public ModelAndView generateCMReportNew(HttpServletRequest request, HttpServletResponse response, 
 			Authentication authentication) throws Exception {
 		String compassRefNo = request.getParameter("compassRefNo");
+		String assessmentUnit = request.getParameter("assessmentUnit");
 		String userCode = authentication.getPrincipal().toString();
 		String userRole = request.getSession(false) != null ? (String) request.getSession(false).getAttribute("CURRENTROLE") : "";
 		String ipAddress = request.getRemoteAddr();
 		
-		Map<String, Object> mainMap = riskAssessmentNewService.generateCMReportNew(compassRefNo, userCode, userRole, ipAddress);
+		Map<String, Object> mainMap = riskAssessmentNewService.generateCMReportNew(compassRefNo, assessmentUnit, userCode, userRole, ipAddress);
 		Iterator<String> itr = mainMap.keySet().iterator();
 		List<String> tabOrder = new Vector<String>();
 		while(itr.hasNext()){
@@ -292,7 +293,7 @@ private static final Logger log = LoggerFactory.getLogger(CommonController.class
 		String cmRefNo = request.getParameter("CRMREFNO");
 		request.setAttribute("DATAPOINTS", riskAssessmentNewService.getGraphDataPoints(cmRefNo));
 		
-		return "RiskAssessment/mixedChart";
+		return "RiskAssessmentNew/mixedChartNew";
 	}
 	
 	

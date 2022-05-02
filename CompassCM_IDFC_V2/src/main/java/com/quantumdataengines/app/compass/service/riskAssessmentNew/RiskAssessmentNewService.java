@@ -19,7 +19,7 @@ public interface RiskAssessmentNewService {
 	public String generateCompassRefNo();
 	public Map<String, Object> generateCMReport(String compassRefNo, String userCode, String userRole, String ipAddress);
 	
-	public Map<String, Object> generateCMReportNew(String compassRefNo, String userCode, String userRole, String ipAddress);
+	public Map<String, Object> generateCMReportNew(String compassRefNo, String assessmentUnit, String userCode, String userRole, String ipAddress);
 	
 	public JSONObject getMakerCheckerList(String qId,String compassRefId);
 	public Map<String, Object> saveRaiseToRFI(MakerCheckerDataModel makerCheckerData);

@@ -4,8 +4,11 @@
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<script>
 	
-	/* Chart.defaults.scales.linear.max = 30; //set lebel max on y axis */
+	<!-- Chart.defaults.scales.linear.max = 30; //set lebel max on y axis -->
+
+	console.log("mixed chart new loaded!!")
 
 	var chartDataPoints = []
 	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.labels}">

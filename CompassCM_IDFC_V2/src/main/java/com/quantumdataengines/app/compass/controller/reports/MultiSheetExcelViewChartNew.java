@@ -211,45 +211,48 @@ public class MultiSheetExcelViewChartNew extends AbstractExcelView {
 			//System.out.println("total rows: "+currentRow);
 			
 			int totalRows=currentRow;
+			int noOfColumns = sheet.getRow(0).getLastCellNum();
+			System.out.println("Total Column: "+noOfColumns);
 			
 			try {
 				
-				if(sheet.getSheetName().equals("ASSESSSMENTWISE RISK RATING")){
-				System.out.println("true");
-		 		InputStream baseimage = new FileInputStream("C:\\APPFOLDER\\resources\\CM_MatrixHeatChart\\HeatMap_BaseImage.png");
-		 		byte[] bytesBi = IOUtils.toByteArray(baseimage);
-		 		int pictureBi = workbook.addPicture(bytesBi, Workbook.PICTURE_TYPE_PNG);
+				//if(sheet.getSheetName().equals("ASSESSSMENTWISE RISK RATING")){
+
+		 		InputStream baseimageResidualRisk = new FileInputStream("C:\\APPFOLDER\\resources\\CM_MatrixHeatChart\\AssessmentWise\\ResidualRisk.png");
+		 		byte[] bytesResidualRisk = IOUtils.toByteArray(baseimageResidualRisk);
+		 		int pictureResidualRiskBase = workbook.addPicture(bytesResidualRisk, Workbook.PICTURE_TYPE_PNG);
+		 		
+		 		InputStream baseimageAssessment = new FileInputStream("C:\\APPFOLDER\\resources\\CM_MatrixHeatChart\\AssessmentWise\\AssessmentWiseUnitLevelResidualRisk.png");
+		 		byte[] bytesAssessment = IOUtils.toByteArray(baseimageAssessment);
+		 		int pictureAssessmentBase = workbook.addPicture(bytesAssessment, Workbook.PICTURE_TYPE_PNG);
+		 		
 		 		//chart
-		 		int pictureIdx = workbook.addPicture(imageBytes, Workbook.PICTURE_TYPE_PNG);
+		 		int pictureResidualRiskChart = workbook.addPicture(imageBytes, Workbook.PICTURE_TYPE_PNG);
+		 		int pictureAssessmentChart = workbook.addPicture(imageBytes, Workbook.PICTURE_TYPE_PNG);
 		 		 
 		 		CreationHelper helper = workbook.getCreationHelper();
-		 		Drawing drawing1 = sheet.createDrawingPatriarch();
-		 		ClientAnchor anchorBi = helper.createClientAnchor();
 		 		
-		 		ClientAnchor anchor1 = helper.createClientAnchor();
-		 		
-		 		//create an anchor with upper left cell _and_ bottom right cell
+		 		////////////////////////////
+		 		Drawing drawingResidualRisk = sheet.createDrawingPatriarch();
+		 		ClientAnchor anchorBaseResidualRisk = helper.createClientAnchor();		 		
+		 		ClientAnchor anchorChartResidualRisk = helper.createClientAnchor();		 		
 		 		//base image 
-		 		   anchorBi.setCol1(0); //Column B
-				   anchorBi.setRow1(totalRows+3); //Row 3
-				   anchorBi.setCol2(6); //Column C
-				   anchorBi.setRow2(totalRows+13); //Row 4
-				//base image ended
+		 		   anchorBaseResidualRisk.setCol1(noOfColumns+6);
+				   anchorBaseResidualRisk.setRow1(3);
+				   anchorBaseResidualRisk.setCol2(noOfColumns+11);
+				   anchorBaseResidualRisk.setRow2(13); 
 				   //CHART IMAGE
-				   anchor1.setCol1(1); //Column B
-				   anchor1.setRow1(totalRows+3); //Row 3
-				   anchor1.setCol2(6); //Column C
-				   anchor1.setRow2(totalRows+12); //Row 4
-				
-				   //CellStyle lockedCellStyle = wb.createCellStyle();
-				  // lockedCellStyle.setLocked(true);
-				   
+				   anchorChartResidualRisk.setCol1(noOfColumns+7);
+				   anchorChartResidualRisk.setRow1(4); 
+				   anchorChartResidualRisk.setCol2(noOfColumns+11);
+				   anchorChartResidualRisk.setRow2(12); 				   
 		 		 //Creates a picture
-				 anchorBi.setAnchorType(AnchorType.DONT_MOVE_AND_RESIZE);//set anchor type
-				 anchor1.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);
-		 		 Picture pict = drawing1.createPicture(anchorBi, pictureBi);
-		 		 Picture pict2 = drawing1.createPicture(anchor1, pictureIdx);
-		 		  }
+				 anchorBaseResidualRisk.setAnchorType(AnchorType.DONT_MOVE_AND_RESIZE);//set anchor type
+				 anchorChartResidualRisk.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);
+		 		 Picture createBaseResidualRisk = drawingResidualRisk.createPicture(anchorBaseResidualRisk, pictureResidualRiskBase);
+		 		 Picture createChartResidualRisk = drawingResidualRisk.createPicture(anchorChartResidualRisk, pictureResidualRiskChart);
+		 		//  }
+		 		//////////////////////////
 			}
 			catch(Exception e) {
 				System.out.println("error while inserting graph in report");

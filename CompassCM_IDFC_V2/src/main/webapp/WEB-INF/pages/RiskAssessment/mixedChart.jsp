@@ -11,7 +11,7 @@
 	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
 	
-	
+	alert("OLD loaded")
 	/* Chart.defaults.scales.linear.max = 30; //set lebel max on y axis */
 
 	var chartDataPoints = []

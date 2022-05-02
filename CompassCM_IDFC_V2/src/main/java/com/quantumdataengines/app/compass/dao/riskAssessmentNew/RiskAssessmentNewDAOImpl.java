@@ -1378,8 +1378,11 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 	}
 	
 	@Override
-	public Map<String, Object> generateCMReportNew(String compassRefNo, String userCode, String userRole, String ipAddress){
+	public Map<String, Object> generateCMReportNew(String compassRefNo, String assessmentUnit, String userCode, String userRole, String ipAddress){
 		Map<String, Object> mainMap = new LinkedHashMap<String, Object>();
+		
+		System.out.println("assessmentUnit in NEW controller: "+assessmentUnit);
+		
     	Connection connection = null;
 		CallableStatement callableStatement = null;
         ResultSet tabNameResultSet = null;
@@ -1418,6 +1421,8 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 				String sheetName = itr.next();
 				ResultSet resultSet = resultSetMap.get(sheetName);
 				
+				System.out.println("sheetName: "+sheetName+" "+"resultSet: "+resultSet);
+				
 				ArrayList<ArrayList<String>> headerList = new ArrayList<ArrayList<String>>();
 				ArrayList<ArrayList<String>> resultList = new ArrayList<ArrayList<String>>();
 				
@@ -1439,7 +1444,23 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 	    	HashMap<String, ArrayList<ArrayList<String>>> innerMap = new LinkedHashMap<String, ArrayList<ArrayList<String>>>();
 	    	innerMap.put("listResultHeader", headerList);
 	    	innerMap.put("listResultData", resultList);
-	    	mainMap.put(sheetName, innerMap);
+	    	if(assessmentUnit.equals("Treasury"))
+	    	{
+	    		mainMap.put("Treasury_Report", innerMap);
+	    	}
+	    	if(assessmentUnit.equals("RetailLiabilities"))
+	    	{
+	    		mainMap.put("Retail_Liabilities_Report", innerMap);
+	    	}
+	    	if(assessmentUnit.equals("RetailAssets"))
+	    	{
+	    		mainMap.put("Retail_Assets_Report", innerMap);
+	    	}
+	    	if(assessmentUnit.equals("WholesaleBanking"))
+	    	{
+	    		mainMap.put("Wholesale_Banking_Report", innerMap);
+	    	}
+	    	//mainMap.put(sheetName, innerMap);
 		}
 		}catch(Exception e){
 			e.printStackTrace();
