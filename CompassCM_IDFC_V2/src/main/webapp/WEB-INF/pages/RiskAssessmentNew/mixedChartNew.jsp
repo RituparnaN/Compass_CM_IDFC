@@ -1,15 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ include file="../tags/tags.jsp"%>
+
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix@1.1.0/dist/chartjs-chart-matrix.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.0.0-rc.1/chartjs-plugin-datalabels.min.js"
-	integrity="sha512-+UYTD5L/bU1sgAfWA0ELK5RlQ811q8wZIocqI7+K0Lhh8yVdIoAMEs96wJAIbgFvzynPm36ZCXtkydxu1cs27w=="
-	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script>
-	
+
 	
 	/* Chart.defaults.scales.linear.max = 30; //set lebel max on y axis */
 

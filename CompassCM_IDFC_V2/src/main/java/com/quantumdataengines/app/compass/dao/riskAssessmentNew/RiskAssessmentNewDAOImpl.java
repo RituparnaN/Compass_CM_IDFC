@@ -1304,8 +1304,81 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 		COMPASSREFNO = "CM"+strDate+random.nextInt(10000);
 		return COMPASSREFNO;
 	}
+	
 	@Override
 	public Map<String, Object> generateCMReport(String compassRefNo, String userCode, String userRole, String ipAddress){
+		Map<String, Object> mainMap = new LinkedHashMap<String, Object>();
+    	Connection connection = null;
+		CallableStatement callableStatement = null;
+        ResultSet tabNameResultSet = null;
+		Map<String, ResultSet> resultSetMap = new LinkedHashMap<String, ResultSet>();
+		String[] arrTabName = null;
+		try{
+			connection = connectionUtil.getConnection();
+			callableStatement = connection.prepareCall("{CALL "+schemaName+"STP_GETCMREPORTDATA(?,?,?,?,?,?,?,?,?,?,?,?)}");
+			callableStatement.setString(1, compassRefNo);
+			callableStatement.setString(2, userCode);
+			callableStatement.setString(3, userRole);
+			callableStatement.setString(4, ipAddress);
+            callableStatement.registerOutParameter(5, oracle.jdbc.OracleTypes.CURSOR);
+            callableStatement.registerOutParameter(6, oracle.jdbc.OracleTypes.CURSOR);
+            callableStatement.registerOutParameter(7, oracle.jdbc.OracleTypes.CURSOR);
+            callableStatement.registerOutParameter(8, oracle.jdbc.OracleTypes.CURSOR);
+            callableStatement.registerOutParameter(9, oracle.jdbc.OracleTypes.CURSOR);
+            callableStatement.registerOutParameter(10, oracle.jdbc.OracleTypes.CURSOR);
+            callableStatement.registerOutParameter(11, oracle.jdbc.OracleTypes.CURSOR);
+            callableStatement.registerOutParameter(12, oracle.jdbc.OracleTypes.CURSOR);
+            
+            callableStatement.execute();
+	            
+            tabNameResultSet = (ResultSet)callableStatement.getObject(5);
+            if(tabNameResultSet.next()){
+            	arrTabName = CommonUtil.splitString(tabNameResultSet.getString(1), "^~^");
+            }
+            
+            for(int i = 0; i < arrTabName.length; i++){
+            	int resultSetInedx = i+6;
+            	resultSetMap.put(arrTabName[i], (ResultSet)callableStatement.getObject(resultSetInedx));
+            }
+            
+            Iterator<String> itr = resultSetMap.keySet().iterator();
+			while (itr.hasNext()) {
+				String sheetName = itr.next();
+				ResultSet resultSet = resultSetMap.get(sheetName);
+				
+				ArrayList<ArrayList<String>> headerList = new ArrayList<ArrayList<String>>();
+				ArrayList<ArrayList<String>> resultList = new ArrayList<ArrayList<String>>();
+				
+		    	ResultSetMetaData resultSetMetaData=resultSet.getMetaData();
+		    	ArrayList<String> eachHeader = new ArrayList<String>();
+		    	for(int i = 1; i <= resultSetMetaData.getColumnCount(); i++){
+		    		eachHeader.add(resultSetMetaData.getColumnName(i));
+		    	}
+		    	headerList.add(eachHeader);
+		    	
+		    	while(resultSet.next()){
+		    		ArrayList<String> eachRecord = new ArrayList<String>();
+		    		for(int i = 1; i <= resultSetMetaData.getColumnCount(); i++){
+		    			eachRecord.add(resultSet.getString(i));
+		    		}
+		    		resultList.add(eachRecord);
+		    }
+		    	
+	    	HashMap<String, ArrayList<ArrayList<String>>> innerMap = new LinkedHashMap<String, ArrayList<ArrayList<String>>>();
+	    	innerMap.put("listResultHeader", headerList);
+	    	innerMap.put("listResultData", resultList);
+	    	mainMap.put(sheetName, innerMap);
+		}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			connectionUtil.closeResources(connection, callableStatement, tabNameResultSet, null);
+		}
+		return mainMap;
+	}
+	
+	@Override
+	public Map<String, Object> generateCMReportNew(String compassRefNo, String userCode, String userRole, String ipAddress){
 		Map<String, Object> mainMap = new LinkedHashMap<String, Object>();
     	Connection connection = null;
 		CallableStatement callableStatement = null;
@@ -1702,6 +1775,9 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 		}finally{
 			connectionUtil.closeResources(connection, preparedStatement, resultSet, null);
 		}
+		
+		System.out.println("graphDataPoints: "+graphDataPoints);
+		
 		return graphDataPoints;	
 	}
 	

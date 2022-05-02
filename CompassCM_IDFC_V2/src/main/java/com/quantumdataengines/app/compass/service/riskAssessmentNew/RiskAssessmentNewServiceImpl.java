@@ -52,6 +52,12 @@ public class RiskAssessmentNewServiceImpl implements RiskAssessmentNewService{
 	}
 	
 	@Override
+	public Map<String, Object> generateCMReportNew(String compassRefNo, String userCode, String userRole,
+			String ipAddress) {
+		return riskAssessmentNewDAO.generateCMReportNew(compassRefNo, userCode, userRole, ipAddress);
+	}
+	
+	@Override
 	public JSONObject getMakerCheckerList(String qId,String compassRefId) {
 		return riskAssessmentNewDAO.getMakerCheckerList(qId,compassRefId);
 	} 
