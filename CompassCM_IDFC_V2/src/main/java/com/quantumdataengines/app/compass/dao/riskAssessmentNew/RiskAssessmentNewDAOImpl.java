@@ -1802,5 +1802,81 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 		return graphDataPoints;	
 	}
 	
+	@Override
+	public Map<String, Object> getGraphDataPointsNew(String cmRefNo){
+		Map<String, Object> graphDataPoints = new LinkedHashMap<String,Object>();
+		
+		Connection connection = connectionUtil.getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try{
+			String query = "SELECT CATEGORY, FINALRISKRATING, "
+					+ "CASE WHEN CATEGORY = 'customer' THEN FINALRISKRATING*0.30 "
+					+ "WHEN CATEGORY = 'geography' THEN FINALRISKRATING*0.25"
+					+ " WHEN CATEGORY = 'products and services' THEN FINALRISKRATING*0.25 "
+					+ "WHEN CATEGORY = 'transactions' THEN FINALRISKRATING*0.10 "
+					+ "WHEN CATEGORY = 'delivery channels' THEN FINALRISKRATING*0.10 "
+					+ "ELSE 0.0 END "
+					+ "AS WEIGHTED_SCORE FROM COMAML_CM.TB_RARISKRATINGS "
+					+ "WHERE CATEGORY = SUBCATEGORY "
+					+ "AND CATEGORY IN ('customer', 'geography', 'products and services', 'transactions', 'delivery channels')"
+					+ "AND CMREFNO = ?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, cmRefNo);
+			resultSet = preparedStatement.executeQuery();
+			ArrayList<Object> dataPoints = new ArrayList<Object>();
+			while(resultSet.next()) {
+				Map<String,String> data = new LinkedHashMap<String, String>();
+				data.put("CATEGORY",resultSet.getString("CATEGORY"));
+				data.put("FINALRISKRATING",resultSet.getString("FINALRISKRATING"));
+				data.put("WEIGHTED_SCORE",resultSet.getString("WEIGHTED_SCORE"));
+				dataPoints.add(data);;
+			}
+			graphDataPoints.put("InherentRisk", dataPoints);			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		try{
+			String query = "SELECT CATEGORY, FINALRISKRATING, "
+					+ "CASE WHEN CATEGORY = 'Training' THEN FINALRISKRATING*0.15 "
+					+ "WHEN CATEGORY = 'Reporting Requirements' THEN FINALRISKRATING*0.05 "
+					+ "WHEN CATEGORY = 'Internal Audit' THEN FINALRISKRATING*0.10 "
+					+ "WHEN CATEGORY = 'Foreign Correspondent Banking Relationships' THEN FINALRISKRATING*0.05 "
+					+ "WHEN CATEGORY = 'Name/Sanctions Screening' THEN FINALRISKRATING*0.10 "
+					+ "WHEN CATEGORY = 'Governance & Management Oversight' THEN FINALRISKRATING*0.10 "
+					+ "WHEN CATEGORY = 'Internal Quality Assurance and Compliance Testing' THEN FINALRISKRATING*0.10 "
+					+ "WHEN CATEGORY = 'Customer Due Diligence & Risk Management' THEN FINALRISKRATING*0.25 "
+					+ "WHEN CATEGORY = 'Transactions Monitoring' THEN FINALRISKRATING*0.10 "
+					+ "ELSE 0.0 END "
+					+ "AS WEIGHTED_SCORE FROM COMAML_CM.TB_RARISKRATINGS "
+					+ "WHERE CATEGORY = SUBCATEGORY "
+					+ "AND CATEGORY NOT IN ('customer', 'geography', 'products and services', 'transactions', 'delivery channels')"
+					+ "AND CMREFNO = ?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, cmRefNo);
+			resultSet = preparedStatement.executeQuery();
+			ArrayList<Object> dataPoints = new ArrayList<Object>();
+			while(resultSet.next()) {
+				Map<String,String> data = new LinkedHashMap<String, String>();
+				data.put("CATEGORY",resultSet.getString("CATEGORY"));
+				data.put("FINALRISKRATING",resultSet.getString("FINALRISKRATING"));
+				data.put("WEIGHTED_SCORE",resultSet.getString("WEIGHTED_SCORE"));
+				dataPoints.add(data);;
+			}
+			graphDataPoints.put("InternalControl", dataPoints);			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		finally{
+			connectionUtil.closeResources(connection, preparedStatement, resultSet, null);
+		}
+		
+		System.out.println("graphDataPoints: "+graphDataPoints);
+		
+		return graphDataPoints;	
+	}
+	
 	
 }

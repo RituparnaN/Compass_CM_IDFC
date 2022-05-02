@@ -76,5 +76,10 @@ public class RiskAssessmentNewServiceImpl implements RiskAssessmentNewService{
 		// TODO Auto-generated method stub
 		return riskAssessmentNewDAO.getGraphDataPoints(cmRefNo);
 	} 
+	@Override
+	public Object getGraphDataPointsNew(String cmRefNo) {
+		// TODO Auto-generated method stub
+		return riskAssessmentNewDAO.getGraphDataPointsNew(cmRefNo);
+	} 
 
 }

@@ -291,7 +291,7 @@ private static final Logger log = LoggerFactory.getLogger(CommonController.class
 	public String chart(HttpServletRequest request, HttpServletResponse response, 
 			Authentication authentication) throws Exception{
 		String cmRefNo = request.getParameter("CRMREFNO");
-		request.setAttribute("DATAPOINTS", riskAssessmentNewService.getGraphDataPoints(cmRefNo));
+		request.setAttribute("DATAPOINTS", riskAssessmentNewService.getGraphDataPointsNew(cmRefNo));
 		
 		return "RiskAssessmentNew/mixedChartNew";
 	}

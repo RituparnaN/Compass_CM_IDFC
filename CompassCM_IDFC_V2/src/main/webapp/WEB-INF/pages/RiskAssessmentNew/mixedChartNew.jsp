@@ -10,20 +10,34 @@
 	/* Chart.defaults.scales.linear.max = 30; //set lebel max on y axis */
 
 	var chartDataPoints = []
-	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.labels}">
-	console.log("${dataPointLabel}")
 	
-		chartDataPoints.push({x: '${DATAPOINTS.dataPoints[dataPointLabel]}', y: '${DATAPOINTS.dataPoints[dataPointLabel]}', r: 30})
+	var totalWeightedScoreIR = 0.0
+	<c:set var="totalIR" value="${0}"/>
+	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.InherentRisk}">
+	<c:forEach var = "score" items = "${dataPointLabel.WEIGHTED_SCORE}">
+	 <c:set var="totalIR" value="${totalIR + score}" />
 	</c:forEach>
+	</c:forEach>
+	totalWeightedScoreIR = "${totalIR}";
+	
+	var totalWeightedScoreIC = 0.0
+	<c:set var="totalIC" value="${0}"/>
+	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.InternalControl}">
+	<c:forEach var = "score" items = "${dataPointLabel.WEIGHTED_SCORE}">
+	 <c:set var="totalIC" value="${totalIC + score}" />
+	</c:forEach>
+	</c:forEach>
+	totalWeightedScoreIC = "${totalIC}";
+	
+	alert(totalWeightedScoreIR+" "+totalWeightedScoreIC)
 
 	
+	
+	
+	
+	
+	//CHART CREATION STARTED
 	const ctx=document.getElementById('myChartt').getContext('2d');
-	//DISABLE GRIDLINE GLOBALLY
-	//Chart.defaults.scale.gridLines.drawOnChartArea = false;
-	//myChart.options.scales['x'].ticks.display = false;
-	//myChart.options.scales['y'].ticks.display = false;
-
-
 	const data = {
 			  datasets: [{
 			    label: 'First Dataset',
