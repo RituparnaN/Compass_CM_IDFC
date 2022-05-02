@@ -1387,7 +1387,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 		String[] arrTabName = null;
 		try{
 			connection = connectionUtil.getConnection();
-			callableStatement = connection.prepareCall("{CALL "+schemaName+"STP_GETCMREPORTDATA(?,?,?,?,?,?,?,?,?,?,?,?)}");
+			callableStatement = connection.prepareCall("{CALL "+schemaName+"STP_GETCMREPORTDATANEW(?,?,?,?,?,?,?,?,?,?,?,?)}");
 			callableStatement.setString(1, compassRefNo);
 			callableStatement.setString(2, userCode);
 			callableStatement.setString(3, userRole);

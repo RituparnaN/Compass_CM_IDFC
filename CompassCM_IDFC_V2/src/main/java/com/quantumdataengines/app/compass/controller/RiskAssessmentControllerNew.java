@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.quantumdataengines.app.compass.controller.reports.MultiSheetExcelViewChart;
+import com.quantumdataengines.app.compass.controller.reports.MultiSheetExcelViewChartNew;
 import com.quantumdataengines.app.compass.model.riskAssessment.MakerCheckerDataModel;
 import com.quantumdataengines.app.compass.model.riskAssessmentNew.FormConfigurationModel;
 import com.quantumdataengines.app.compass.model.riskAssessmentNew.FormDataModel;
@@ -269,7 +270,7 @@ private static final Logger log = LoggerFactory.getLogger(CommonController.class
 		String userRole = request.getSession(false) != null ? (String) request.getSession(false).getAttribute("CURRENTROLE") : "";
 		String ipAddress = request.getRemoteAddr();
 		
-		Map<String, Object> mainMap = riskAssessmentNewService.generateCMReport(compassRefNo, userCode, userRole, ipAddress);
+		Map<String, Object> mainMap = riskAssessmentNewService.generateCMReportNew(compassRefNo, userCode, userRole, ipAddress);
 		Iterator<String> itr = mainMap.keySet().iterator();
 		List<String> tabOrder = new Vector<String>();
 		while(itr.hasNext()){
@@ -279,7 +280,7 @@ private static final Logger log = LoggerFactory.getLogger(CommonController.class
 		Date date = new Date();
 		mainMap.put("TABORDER", tabOrder);
 		mainMap.put("FILENAME", compassRefNo+"_"+userCode+"_"+sdf.format(date));
-		ModelAndView modelAndView = new ModelAndView(new MultiSheetExcelViewChart(), mainMap);
+		ModelAndView modelAndView = new ModelAndView(new MultiSheetExcelViewChartNew(), mainMap);
 		//System.out.println("MAINMAP: "+mainMap);
 		commonService.auditLog(authentication.getPrincipal().toString(), request, "REPORTS", "DOWNLOAD", "File Downloaded");
 		return modelAndView;	
