@@ -9,7 +9,7 @@
 	
 	/* Chart.defaults.scales.linear.max = 30; //set lebel max on y axis */
 
-	var chartDataPoints = []
+	var residualRiskDataPoints = []
 	
 	var totalWeightedScoreIR = 0.0
 	<c:set var="totalIR" value="${0}"/>
@@ -29,7 +29,9 @@
 	</c:forEach>
 	totalWeightedScoreIC = "${totalIC}";
 	
-	alert(totalWeightedScoreIR+" "+totalWeightedScoreIC)
+	//alert(totalWeightedScoreIR+" "+totalWeightedScoreIC)
+	residualRiskDataPoints.push({x: totalWeightedScoreIR, y: totalWeightedScoreIC, r: 15})
+	alert(residualRiskDataPoints);
 
 	
 	
@@ -40,8 +42,9 @@
 	const ctx=document.getElementById('myChartt').getContext('2d');
 	const data = {
 			  datasets: [{
-			    label: 'First Dataset',
-			    data: [{
+			    label: 'ResidualRisk-AssessmentWise',
+			    data: residualRiskDataPoints,
+			   /*  data: [{
 			      x: 20,
 			      y: 30,
 			      r: 15
@@ -49,7 +52,8 @@
 			      x: 40,
 			      y: 10,
 			      r: 15
-			    }],
+			    }], */
+			    pointStyle: 'crossRot',
 			    backgroundColor: 'rgb(0, 0, 0)'
 			  }]
 			};	
@@ -75,6 +79,8 @@ const config = {
 			  scales: {
 		            xAxes: [
 		            	{
+		                min: 0,
+		                max: 30, 
 		                ticks: { display: false},
 		                gridLines: { display: false,},
 		            	},		            	
@@ -82,6 +88,8 @@ const config = {
 		            
 		            yAxes: [
 		            	{
+		                min: 0,
+		                max: 30, 
 		                ticks: { display: false},
 		                gridLines: { display: false,}, 
 		            	},	
