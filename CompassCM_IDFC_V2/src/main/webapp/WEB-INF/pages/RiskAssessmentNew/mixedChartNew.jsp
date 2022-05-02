@@ -6,9 +6,8 @@
 
 <script>
 	
-	<!-- Chart.defaults.scales.linear.max = 30; //set lebel max on y axis -->
-
-	console.log("mixed chart new loaded!!")
+	
+	/* Chart.defaults.scales.linear.max = 30; //set lebel max on y axis */
 
 	var chartDataPoints = []
 	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.labels}">
@@ -19,120 +18,64 @@
 
 	
 	const ctx=document.getElementById('myChartt').getContext('2d');
-	
-	var gradientHor = ctx.createLinearGradient(250, 0, 1200, 0);
-	gradientHor.addColorStop(0, 'green');
-	gradientHor.addColorStop(0.50, '#ffcc00');
-	gradientHor.addColorStop(1, 'red');
-	
-	var gradient21 = ctx.createLinearGradient(0, 0, 0, 738);
-	gradient21.addColorStop(0, 'green');
-	gradient21.addColorStop(1, 'yellow');
-	
-	var gradient13 = ctx.createLinearGradient(0, 0, 1000, 500);
-	gradient13.addColorStop(0.2, '#ffcc00');
-	gradient13.addColorStop(1, '#e60000');
+	//DISABLE GRIDLINE GLOBALLY
+	//Chart.defaults.scale.gridLines.drawOnChartArea = false;
+	//myChart.options.scales['x'].ticks.display = false;
+	//myChart.options.scales['y'].ticks.display = false;
+
+
+	const data = {
+			  datasets: [{
+			    label: 'First Dataset',
+			    data: [{
+			      x: 20,
+			      y: 30,
+			      r: 15
+			    }, {
+			      x: 40,
+			      y: 10,
+			      r: 15
+			    }],
+			    backgroundColor: 'rgb(0, 0, 0)'
+			  }]
+			};	
 
 	
-	
-const data = {
-  labels: [
-    'Low',
-    'Medium',
-    'High',
 
-  ],
- datasets: [{
-    type: 'bar',
-	barPercentage: 1,
-	barThickness: 375,
-    label: 'Bar Dataset',
-    data: [30,30,30],
-    borderColor: 'rgb(255, 99, 132)',
-    backgroundColor: ['rgba(0,255,0,0.3)', 'rgba(255,255,0,0.3)','rgba(255,0,0,0.3)'],
-
-	
-  }, 
-  {
-        type: 'bubble',
-        label: 'Dataset 2',
-        backgroundColor: "black",
-        data: chartDataPoints,
-        pointStyle: (ctx) => (ctx.dataIndex === 2 ? 'triangle' : 'rectRot'),
-        borderColor: 'white',
-        borderWidth: 2
-      },
-]
-};
-	
-	
-
-	
 const config = {
-  type: 'scatter',
-  data: data,
-  options: {
-	legend: {display: false},
-	animation:false,
-	plugins: {
-    legend: {
-      display: false
-    },    
-	},
-	
-    scales: {
-      y: {
-        beginAtZero: true,
-		stacked: true,
-		ticks: {
-                    callback: function(val, index) {
-					// Hide the label of every 2nd dataset
-					/* return index ===1.0 ? 'HIGH' : '' || index === 3.0 ? 'MEDIUM' : '' || index === 5.0 ? 'LOW' : '' ; */
-                    	return index ===1.0 ? '' : '' || index === 3.0 ? '' : '' || index === 5.0 ? '' : '' ;
-					},
-					color: 'black',
-				},
-		
-		title: {
-					display: false,
-					text: 'Likelihood =>',
-					color: 'black',
-					font: {
-					family: "Lucida Console",
-					size: 40,
-					lineHeight: 1.2,
-					},
-					//padding: {top: 100, left: 0, right: 0, bottom: 0}
-				},
-		},
-		 x: {
-		beginAtZero: true,
-		stacked: true,
-		ticks: {
-                    callback: function(val, index) {
-					// Hide the label of every 2nd dataset
-					/* return index ===1 ? 'LOW' : '' || index === 3.0 ? 'MEDIUM' : '' || index === 5.0 ? 'HIGH' : '' ; */
-                    	return index ===1 ? '' : '' || index === 3.0 ? '' : '' || index === 5.0 ? '' : '' ;
-					},
-					color: 'black',
-				},
-		
-		title: {
-					display: false,
-					text: 'Impact =>',
-					color: 'black',
-					font: {
-					family: "Lucida Console",
-					size: 40,
-					lineHeight: 1.2,
-					},
-					padding: {top: 50, left: 0, right: 0, bottom: 0}
-				},
-		},
-    },
-	
-  }
-};
+		  type: 'bubble',
+		  data: data,
+		  options: {
+			  animation: { duration: 0},
+			  layout: {
+		            padding: {
+		                left: 15,
+		                bottom: 15,
+		                right: 15,
+		                top: 15
+		            }
+		        },
+		        legend: {
+		            display: false
+		          },
+			  scales: {
+		            xAxes: [
+		            	{
+		                ticks: { display: false},
+		                gridLines: { display: false,},
+		            	},		            	
+		            	],
+		            
+		            yAxes: [
+		            	{
+		                ticks: { display: false},
+		                gridLines: { display: false,}, 
+		            	},	
+		            ]
+		        }
+		  }
+		};
+
 	
 
 // render init block
@@ -155,7 +98,5 @@ document.getElementById("demo").value = image;
 			
 			<input type="text" id="demo" name="demo"/ >
 		</div>
-
-		<button type="submit">Submit</button>
 	</form>
 </div>

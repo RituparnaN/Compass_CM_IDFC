@@ -252,7 +252,6 @@ public class MultiSheetExcelViewChartNew extends AbstractExcelView {
 		 		 Picture createBaseResidualRisk = drawingResidualRisk.createPicture(anchorBaseResidualRisk, pictureResidualRiskBase);
 		 		 Picture createChartResidualRisk = drawingResidualRisk.createPicture(anchorChartResidualRisk, pictureResidualRiskChart);
 		 		//  }
-		 		//////////////////////////
 			}
 			catch(Exception e) {
 				System.out.println("error while inserting graph in report");

@@ -112,13 +112,15 @@
 						$("#chartDiv").html(res);
 						var data = $("#demo").val();
 						document.getElementById("chartDiv").style.display = "none";
-
+						
+						console.log()
 						$.ajax({
 								url : "${pageContext.request.contextPath}/common/saveChartImage",
 								type : "POST",
 								cache : false,
 								data: JSON.stringify({"data":data}),
 								success : function(res){
+									alert("DATA SAVED SUCCESSFULLY!!");
 									$.fileDownload("${pageContext.request.contextPath}/common/generateCMReportNew?compassRefNo="+compassRefNo+"&imageId="+res+"&assessmentUnit="+assessmentUnit , {
 									    httpMethod : "GET",
 									    successCallback: function (url) {	
