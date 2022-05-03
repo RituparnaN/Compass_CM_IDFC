@@ -1879,4 +1879,55 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 	}
 	
 	
+	@Override
+	public String saveImageUrlData(String imageUrl){
+		System.out.println("saveImageUrlData in NEW DAO CALLED!!");
+		System.out.println("imageURL data: "+imageUrl);
+		
+		String imageUrlData = imageUrl;
+		String[] parts = imageUrlData.split("@~@");
+		String a_RESIDUALRISK = parts[0]; 
+		String a_ASSESSMENTWISECAT = parts[1]; 
+		String a_TotalWeightedScoreIR = parts[2];
+		String a_TotalWeightedScoreIC = parts[3];
+		
+		String id = "";
+		Connection connection = connectionUtil.getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+					                + "0123456789"
+					                + "abcdefghijklmnopqrstuvxyz";
+					
+					// create StringBuffer size of AlphaNumericString
+					StringBuilder sb = new StringBuilder(16);
+					
+					for (int i = 0; i < 16; i++) {
+					
+					// generate a random number between
+					// 0 to AlphaNumericString variable length
+					int index = (int)(AlphaNumericString.length() * Math.random());
+					
+					// add Character one by one in end of sb
+					sb.append(AlphaNumericString.charAt(index));
+					}
+		id = sb.toString();
+
+		try{
+			String query = "INSERT INTO COMAML_CM.TB_IMAGEDATA VALUES( ?, ?, ?, ?, ?, SYSTIMESTAMP) ";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, id);
+			preparedStatement.setString(2, a_RESIDUALRISK);
+			preparedStatement.setString(3, a_ASSESSMENTWISECAT);
+			preparedStatement.setString(4, a_TotalWeightedScoreIR);
+			preparedStatement.setString(5, a_TotalWeightedScoreIC);
+			preparedStatement.executeUpdate();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			connectionUtil.closeResources(connection, preparedStatement, resultSet, null);
+		}
+		return id;	
+	}
+	
 }

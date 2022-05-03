@@ -13,6 +13,7 @@ import java.sql.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -28,6 +29,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.ClientAnchor.AnchorType;
 import org.apache.poi.util.IOUtils;
+import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 
 public class MultiSheetExcelViewChartNew extends AbstractExcelView {
@@ -43,12 +45,14 @@ public class MultiSheetExcelViewChartNew extends AbstractExcelView {
 			HttpServletResponse response) throws Exception {
 		 	String imgId=request.getParameter("imageId");
 	 		System.out.println("image Id: "+imgId);
-	 		String imageData = "";
+	 		String a_RESIDUALRISK = "";
+	 		String a_ASSESSMENTWISECAT = "";
+	 		double a_TOTALWEIGHTEDSCOREIR = 0.0;
+	 		double a_TOTALWEIGHTEDSCOREIC = 0.0;
 	 		String url = "jdbc:oracle:thin:@localhost:1521/XE";
 	        String user = "COMAML_CM";
 	        String pass = "ORACLE";
-	 
-	        
+	 	        
 	        Connection con = null;
 	        
 	        try {
@@ -58,10 +62,13 @@ public class MultiSheetExcelViewChartNew extends AbstractExcelView {
 	 
 	            con = DriverManager.getConnection(url, user, pass);
 	            Statement st = con.createStatement();
-	            String sql = "SELECT IMAGEDATA FROM TB_IMAGEDATA WHERE IMAGEID = '"+imgId+"'";
+	            String sql = "SELECT A_RESIDUALRISK, A_ASSESSMENTWISECAT, A_TOTALWEIGHTEDSCOREIR, A_TOTALWEIGHTEDSCOREIC FROM TB_IMAGEDATA WHERE IMAGEID = '"+imgId+"'";
 	            ResultSet m = st.executeQuery(sql);
 	            while(m.next()) {
-	            	imageData = m.getString("IMAGEDATA");
+	            	a_RESIDUALRISK = m.getString("A_RESIDUALRISK");
+	            	a_ASSESSMENTWISECAT = m.getString("A_ASSESSMENTWISECAT");
+	            	a_TOTALWEIGHTEDSCOREIR = m.getDouble("A_TOTALWEIGHTEDSCOREIR");
+	            	a_TOTALWEIGHTEDSCOREIC = m.getDouble("A_TOTALWEIGHTEDSCOREIC");
 	            }
 	            con.close();
 	        }
@@ -69,15 +76,23 @@ public class MultiSheetExcelViewChartNew extends AbstractExcelView {
 	            System.err.println(ex);
 	        }
 	        
-	        String base64Image = null;
-	        byte[] imageBytes = null;
+	        String base64ImageResidualRisk = null;
+	        String base64ImageAssessment = null;
+	        byte[] imageBytesResidualRisk = null;
+	        byte[] imageBytesAssessment = null;
 	        
 	        try {
 	        	
-	        	System.out.println(imageData);
+	        	System.out.println("A_RESIDUALRISK: "+a_RESIDUALRISK);
+	        	System.out.println("A_ASSESSMENTWISECAT: "+a_ASSESSMENTWISECAT);
+	        	System.out.println("A_TOTALWEIGHTEDSCOREIR: "+a_TOTALWEIGHTEDSCOREIR);
+	        	System.out.println("A_TOTALWEIGHTEDSCOREIC: "+a_TOTALWEIGHTEDSCOREIC);
 	        	
-	        	base64Image = imageData.split(",")[1];
-	        	imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64Image);
+	        	base64ImageResidualRisk = a_RESIDUALRISK.split(",")[1];
+	        	imageBytesResidualRisk = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64ImageResidualRisk);
+	        	
+	        	base64ImageAssessment = a_ASSESSMENTWISECAT.split(",")[1];
+	        	imageBytesAssessment = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64ImageAssessment);
 	        }
 	 	    catch(Exception e) {
 	 	    	System.out.println("no image data found for risk Assessment report generation");
@@ -110,6 +125,7 @@ public class MultiSheetExcelViewChartNew extends AbstractExcelView {
 			headerStyle.setFillForegroundColor(IndexedColors.RED.getIndex());
 			headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND); 
 			Font fontHeader = workbook.createFont();
+			fontHeader.setBold(true);
 			fontHeader.setColor(HSSFColor.HSSFColorPredefined.WHITE.getIndex());
 			headerStyle.setFont(fontHeader);
 			
@@ -117,6 +133,26 @@ public class MultiSheetExcelViewChartNew extends AbstractExcelView {
 			CellStyle titleStyle = workbook.createCellStyle();
 			titleStyle.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
 			titleStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND); 
+			
+			//TOTAL BACKGROUND STYLE
+			CellStyle totalBg = workbook.createCellStyle();
+			totalBg.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+			totalBg.setFillPattern(FillPatternType.SOLID_FOREGROUND); 
+			
+			//LOW BG STYLE
+			CellStyle lowBg = workbook.createCellStyle();
+			lowBg.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());
+			lowBg.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+			
+			//MEDIUM BG STYLE
+			CellStyle mediumBg = workbook.createCellStyle();
+			mediumBg.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());
+			mediumBg.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+			
+			//HIGH BG STYLE
+			CellStyle highBg = workbook.createCellStyle();
+			highBg.setFillForegroundColor(IndexedColors.CORAL.getIndex());
+			highBg.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
 			
 			@SuppressWarnings("unchecked")
@@ -208,10 +244,176 @@ public class MultiSheetExcelViewChartNew extends AbstractExcelView {
 				
 			}
 			
+			int noOfColumns = sheet.getRow(0).getLastCellNum();
+/*			
+			for (int i = 0; i <= sheet.getLastRowNum(); i++) {
+				  row = sheet.getRow(4);
+				    cell = row.getCell(6);
+				      System.out.println("DATA IN CELL: "+cell.getStringCellValue());
+				}
+			
+			for (int cn = 0; cn < lastColumn; cn++) {
+				  Cell c = row.getCell(cn, Row.RETURN_BLANK_AS_NULL);
+				  if (c == null) {
+				    // The spreadsheet is empty in this cell
+				  } else {
+				    // Do something useful with the cell's contents
+				  }
+				}*/
+			
+            row = sheet.getRow(4);
+            cell = row.getCell(5);
+            cell.setCellValue(a_TOTALWEIGHTEDSCOREIR);
+            
+            row = sheet.getRow(12);
+            cell = row.getCell(5);
+            cell.setCellValue(a_TOTALWEIGHTEDSCOREIC);
+            
+            
+            row = sheet.getRow(4);
+            cell = row.getCell(6);
+            cell.setCellValue(a_TOTALWEIGHTEDSCOREIR);
+           
+            row = sheet.getRow(12);
+            cell = row.getCell(6);
+            cell.setCellValue(a_TOTALWEIGHTEDSCOREIC);
+            
+            
+            if(a_TOTALWEIGHTEDSCOREIR <= 2){
+            	for (int i = 2; i <= 6 ; i++) {
+            			row = sheet.getRow(i);
+            			for(int j = 0; j < noOfColumns; j++){
+            				if(j == 6){
+            					cell = row.getCell(j);
+            					if(i == 4){
+                        			cell.setCellValue("LOW");
+            					}
+            					else{
+            						cell.setCellValue("");
+            					}
+                    			cell.setCellStyle(lowBg);
+            				}
+            				
+            			}           			
+            		}
+            	}
+            
+            if(a_TOTALWEIGHTEDSCOREIR > 2 && a_TOTALWEIGHTEDSCOREIR <= 5){
+            	for (int i = 2; i <= 6 ; i++) {
+            			row = sheet.getRow(i);
+            			for(int j = 0; j < noOfColumns; j++){
+            				if(j == 6){
+            					cell = row.getCell(j);
+            					if(i == 4){
+                        			cell.setCellValue("MEDIUM");
+            					}
+            					else{
+            						cell.setCellValue("");
+            					}
+                    			cell.setCellStyle(mediumBg);
+            				}
+            				
+            			}           			
+            		}
+            	}
+            
+            if(a_TOTALWEIGHTEDSCOREIR > 5){
+            	for (int i = 2; i <= 6 ; i++) {
+            			row = sheet.getRow(i);
+            			for(int j = 0; j < noOfColumns; j++){
+            				if(j == 6){
+            					cell = row.getCell(j);
+            					if(i == 4){
+                        			cell.setCellValue("HIGH");
+            					}
+            					else{
+            						cell.setCellValue("");
+            					}
+                    			cell.setCellStyle(highBg);
+            				}
+            				
+            			}           			
+            		}
+            	}
+            
+            
+            if(a_TOTALWEIGHTEDSCOREIC <= 2){
+            	for (int i = 8; i <= 16 ; i++) {
+        			row = sheet.getRow(i);
+        			for(int j = 0; j < noOfColumns; j++){
+        				if(j == 6){
+        					cell = row.getCell(j);
+        					if(i == 12){
+                    			cell.setCellValue("EFFECTIVE");
+        					}
+        					else{
+        						cell.setCellValue("");
+        					}
+                			cell.setCellStyle(lowBg);
+        				}
+        				
+        			}
+  			}
+            }
+            
+            if(a_TOTALWEIGHTEDSCOREIC > 2 && a_TOTALWEIGHTEDSCOREIC <= 5){
+            	for (int i = 8; i <= 16 ; i++) {
+        			row = sheet.getRow(i);
+        			for(int j = 0; j < noOfColumns; j++){
+        				if(j == 6){
+        					cell = row.getCell(j);
+        					if(i == 12){
+                    			cell.setCellValue("NEED IMPROVEMENT");
+        					}
+        					else{
+        						cell.setCellValue("");
+        					}
+                			cell.setCellStyle(mediumBg);
+        				}
+        				
+        			}
+  			}
+            }
+            
+            if(a_TOTALWEIGHTEDSCOREIC > 5){
+            	for (int i = 8; i <= 16 ; i++) {
+        			row = sheet.getRow(i);
+        			for(int j = 0; j < noOfColumns; j++){
+        				if(j == 6){
+        					cell = row.getCell(j);
+        					if(i == 12){
+                    			cell.setCellValue("NO CONTROL");
+        					}
+        					else{
+        						cell.setCellValue("");
+        					}
+                			cell.setCellStyle(highBg);
+        				}
+        				
+        			}
+  			}
+            }
+			
+			
+			for (int i = 2; i <= 6 ; i++) {
+				  row = sheet.getRow(i);
+	              cell = row.getCell(5);
+	              cell.setCellStyle(totalBg);
+			}
+			
+			for (int i = 8; i <= 16 ; i++) {
+				  row = sheet.getRow(i);
+	              cell = row.getCell(5);
+	              cell.setCellStyle(totalBg);
+			}
+
+
+
+			
 			//System.out.println("total rows: "+currentRow);
 			
 			int totalRows=currentRow;
-			int noOfColumns = sheet.getRow(0).getLastCellNum();
+
 			System.out.println("Total Column: "+noOfColumns);
 			
 			try {
@@ -227,30 +429,51 @@ public class MultiSheetExcelViewChartNew extends AbstractExcelView {
 		 		int pictureAssessmentBase = workbook.addPicture(bytesAssessment, Workbook.PICTURE_TYPE_PNG);
 		 		
 		 		//chart
-		 		int pictureResidualRiskChart = workbook.addPicture(imageBytes, Workbook.PICTURE_TYPE_PNG);
-		 		int pictureAssessmentChart = workbook.addPicture(imageBytes, Workbook.PICTURE_TYPE_PNG);
+		 		int pictureResidualRiskChart = workbook.addPicture(imageBytesResidualRisk, Workbook.PICTURE_TYPE_PNG);
+		 		int pictureAssessmentChart = workbook.addPicture(imageBytesAssessment, Workbook.PICTURE_TYPE_PNG);
 		 		 
 		 		CreationHelper helper = workbook.getCreationHelper();
 		 		
-		 		////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		 		Drawing drawingResidualRisk = sheet.createDrawingPatriarch();
 		 		ClientAnchor anchorBaseResidualRisk = helper.createClientAnchor();		 		
 		 		ClientAnchor anchorChartResidualRisk = helper.createClientAnchor();		 		
 		 		//base image 
 		 		   anchorBaseResidualRisk.setCol1(noOfColumns+6);
-				   anchorBaseResidualRisk.setRow1(3);
+				   anchorBaseResidualRisk.setRow1(1);
 				   anchorBaseResidualRisk.setCol2(noOfColumns+11);
-				   anchorBaseResidualRisk.setRow2(13); 
+				   anchorBaseResidualRisk.setRow2(11); 
 				   //CHART IMAGE
 				   anchorChartResidualRisk.setCol1(noOfColumns+7);
-				   anchorChartResidualRisk.setRow1(4); 
+				   anchorChartResidualRisk.setRow1(2); 
 				   anchorChartResidualRisk.setCol2(noOfColumns+11);
-				   anchorChartResidualRisk.setRow2(12); 				   
+				   anchorChartResidualRisk.setRow2(10); 				   
 		 		 //Creates a picture
 				 anchorBaseResidualRisk.setAnchorType(AnchorType.DONT_MOVE_AND_RESIZE);//set anchor type
 				 anchorChartResidualRisk.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);
+				 
+			 	Drawing drawingAssessmentWise = sheet.createDrawingPatriarch();
+			 	ClientAnchor anchorBaseAssessmentWise = helper.createClientAnchor();		 		
+			 	ClientAnchor anchorChartAssessmentWise = helper.createClientAnchor();		 		
+			 	//base image 
+			 		anchorBaseAssessmentWise.setCol1(noOfColumns+6);
+			 		anchorBaseAssessmentWise.setRow1(12);
+			 		anchorBaseAssessmentWise.setCol2(noOfColumns+12);
+			 		anchorBaseAssessmentWise.setRow2(22); 
+				//CHART IMAGE
+			 		anchorChartAssessmentWise.setCol1(noOfColumns+7);
+			 		anchorChartAssessmentWise.setRow1(13); 
+			 		anchorChartAssessmentWise.setCol2(noOfColumns+11);
+			 		anchorChartAssessmentWise.setRow2(21); 				   
+			 	//Creates a picture
+			 	anchorBaseAssessmentWise.setAnchorType(AnchorType.DONT_MOVE_AND_RESIZE);//set anchor type
+			 	anchorChartAssessmentWise.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);
+				 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		 		 Picture createBaseResidualRisk = drawingResidualRisk.createPicture(anchorBaseResidualRisk, pictureResidualRiskBase);
 		 		 Picture createChartResidualRisk = drawingResidualRisk.createPicture(anchorChartResidualRisk, pictureResidualRiskChart);
+		 		 Picture createBaseAssessmentWise = drawingResidualRisk.createPicture(anchorBaseAssessmentWise, pictureAssessmentBase);
+		 		 Picture createChartAssessmentWise = drawingResidualRisk.createPicture(anchorChartAssessmentWise, pictureAssessmentChart);
 		 		//  }
 			}
 			catch(Exception e) {

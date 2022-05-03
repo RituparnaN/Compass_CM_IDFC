@@ -2,15 +2,14 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ include file="../tags/tags.jsp"%>
 
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="text/javascript"	src="${pageContext.request.contextPath}/includes/scripts/chart.js"></script>
 
 <script>
 	
-	
 	/* Chart.defaults.scales.linear.max = 30; //set lebel max on y axis */
-
-	var residualRiskDataPoints = []
 	
+	//RESIDUAL RISK CHART CALCULATION
+	var residualRiskDataPoints = []	
 	var totalWeightedScoreIR = 0.0
 	<c:set var="totalIR" value="${0}"/>
 	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.InherentRisk}">
@@ -28,21 +27,16 @@
 	</c:forEach>
 	</c:forEach>
 	totalWeightedScoreIC = "${totalIC}";
-	
-	//alert(totalWeightedScoreIR+" "+totalWeightedScoreIC)
-	residualRiskDataPoints.push({x: totalWeightedScoreIR, y: totalWeightedScoreIC, r: 15})
-	alert(residualRiskDataPoints);
 
+	residualRiskDataPoints.push({x: totalWeightedScoreIR, y: totalWeightedScoreIC, r: 15});
 	
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	
-	
-	
-	//CHART CREATION STARTED
-	const ctx=document.getElementById('myChartt').getContext('2d');
-	const data = {
+	//RESIDUAL RISK CHART CREATION STARTED
+	const residualRiskCTX=document.getElementById('residualRiskCanvas').getContext('2d');
+	const residualRiskDATA = {
 			  datasets: [{
-			    label: 'ResidualRisk-AssessmentWise',
+			    label: 'RESIDUAL RISK',
 			    data: residualRiskDataPoints,
 			   /*  data: [{
 			      x: 20,
@@ -53,16 +47,13 @@
 			      y: 10,
 			      r: 15
 			    }], */
-			    pointStyle: 'crossRot',
 			    backgroundColor: 'rgb(0, 0, 0)'
 			  }]
-			};	
+			};		
 
-	
-
-const config = {
+	const residualRiskCONFIG = {
 		  type: 'bubble',
-		  data: data,
+		  data: residualRiskDATA,
 		  options: {
 			  animation: { duration: 0},
 			  layout: {
@@ -79,8 +70,6 @@ const config = {
 			  scales: {
 		            xAxes: [
 		            	{
-		                min: 0,
-		                max: 30, 
 		                ticks: { display: false},
 		                gridLines: { display: false,},
 		            	},		            	
@@ -88,37 +77,113 @@ const config = {
 		            
 		            yAxes: [
 		            	{
-		                min: 0,
-		                max: 30, 
 		                ticks: { display: false},
 		                gridLines: { display: false,}, 
 		            	},	
 		            ]
 		        }
 		  }
-		};
+		};		
 
+	const residualRiskChart = new Chart(residualRiskCTX,residualRiskCONFIG);
+	var residualRiskIMAGE = residualRiskChart.toBase64Image();
+	document.getElementById("residualRiskURL").value = residualRiskIMAGE;
+	residualRiskChart.destroy();
+	//RESIDUAL RISK CHART CREATION ENDED
+	
+	
+	//ASSESSMENT UNITWISE CHART (EACH IR CATEGORY) CREATION STARTED
+	const assessmentCatCTX=document.getElementById('assessmentCatCanvas').getContext('2d');
+	const assessmentCatDATA = {
+			  datasets: [{
+			    label: 'ASSESSMENT UNIT WISE',
+			    data: [{
+			      x: 10,
+			      y: 20,
+			      r: 15
+			    }, {
+			      x: 20,
+			      y: 10,
+			      r: 15
+			    }, {
+				   x: 5,
+				   y: 15,
+			       r: 15
+				}, {
+				   x: 15,
+			       y: 5,
+			       r: 15
+				 }, {
+				   x: 25,
+			       y: 25,
+		           r: 15
+					 },],
+				pointStyle: ['crossRot', 'rect', 'triangle', 'dash', 'circle'],
+			    backgroundColor: 'rgb(0, 0, 0)'
+			  }]
+			};		
+
+	const assessmentCatCONFIG = {
+		  type: 'bubble',
+		  data: assessmentCatDATA,
+		  options: {
+			  animation: { duration: 0},
+			  layout: {
+		            padding: {
+		                left: 15,
+		                bottom: 15,
+		                right: 15,
+		                top: 15
+		            }
+		        },
+		        legend: {
+		            display: false
+		          },
+			  scales: {
+		            xAxes: [
+		            	{
+		                ticks: { display: false},
+		                gridLines: { display: false,},
+		            	},		            	
+		            	],
+		            
+		            yAxes: [
+		            	{
+		                ticks: { display: false},
+		                gridLines: { display: false,}, 
+		            	},	
+		            ]
+		        }
+		  }
+		};		
+
+	const assessmentCatChart = new Chart(assessmentCatCTX,assessmentCatCONFIG);
+	var assessmentCatIMAGE = assessmentCatChart.toBase64Image();
+	var img = document.getElementById('assessmentCatCanvas').toDataURL("image/png");
+	console.log("assessmentCatChart:",img)
+	document.getElementById("assessmentCatURL").value = assessmentCatIMAGE;
+	assessmentCatChart.destroy();
+	//ASSESSMENT UNITWISE CHART (EACH IR CATEGORY) CREATION ENDED
+	
 	
 
-// render init block
-const myChart = new Chart(ctx,config);
+	
+	document.getElementById("totalWeightedScoreIR").value = totalWeightedScoreIR;
+	document.getElementById("totalWeightedScoreIC").value = totalWeightedScoreIC;
 
-var image = myChart.toBase64Image();
-var img = document.getElementById('myChartt').toDataURL("image/png");
-console.log("img:",img)
-document.getElementById("demo").value = image;
-
-
-
-//document.getElementById("savegraph").href = myChart.toBase64Image();
+		
 </script>
-<div>
-	
+
+<div>	
 	<form action="imagedata" method="post" id = "chartForm">
 		<div>
-			<canvas id="myChartt"></canvas>
+			<canvas id="residualRiskCanvas"></canvas>
+			<canvas id="assessmentCatCanvas"></canvas>				
+			<input type="text" id="residualRiskURL" name="residualRiskURL"/>
+			<input type="text" id="assessmentCatURL" name="assessmentCatURL"/>
 			
-			<input type="text" id="demo" name="demo"/ >
+			<input type="text" id="totalWeightedScoreIR" name="totalWeightedScoreIR"/>
+			<input type="text" id="totalWeightedScoreIC" name="totalWeightedScoreIC"/>
 		</div>
 	</form>
 </div>

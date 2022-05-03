@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../tags/tags.jsp"%>
-
+<script type="text/javascript"	src="${pageContext.request.contextPath}/includes/scripts/chart.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		var id = '${UNQID}';
@@ -108,14 +108,27 @@
 					type : "POST",
 					cache : false,
 					success : function(res){
-						document.getElementById("chartDiv").style.display = "block";
-						$("#chartDiv").html(res);
-						var data = $("#demo").val();
-						document.getElementById("chartDiv").style.display = "none";
+						document.getElementById("residualRiskChartDiv").style.display = "block";
+						document.getElementById("assessmentWiseCatChartDiv").style.display = "block";
+						$("#residualRiskChartDiv").html(res);
+						$("#assessmentWiseCatChartDiv").html(res);
 						
-						console.log()
+						
+						//MIXED CHART NEW DATA
+						var residualRiskData = $("#residualRiskURL").val();
+						var assessmentWiseCatData = $("#assessmentCatURL").val();
+						
+						var totalWeightedScoreIR = $("#totalWeightedScoreIR").val();
+						var totalWeightedScoreIC = $("#totalWeightedScoreIC").val();
+						//console.log("totalWeightedScoreIR: "+totalWeightedScoreIR+" "+"totalWeightedScoreIC: "+totalWeightedScoreIC)
+						
+						
+						var data = residualRiskData+"@~@"+assessmentWiseCatData+"@~@"+totalWeightedScoreIR+"@~@"+totalWeightedScoreIC;
+						document.getElementById("residualRiskChartDiv").style.display = "none";
+						document.getElementById("assessmentWiseCatChartDiv").style.display = "none";
+						
 						$.ajax({
-								url : "${pageContext.request.contextPath}/common/saveChartImage",
+								url : "${pageContext.request.contextPath}/common/saveChartImageNew",
 								type : "POST",
 								cache : false,
 								data: JSON.stringify({"data":data}),
@@ -236,5 +249,6 @@
 		</div>
 	</div>
 </div>
-<div id = "chartDiv" style="display: block">
-</div>
+
+<div id = "residualRiskChartDiv" style="display: block"></div>
+<div id = "assessmentWiseCatChartDiv" style="display: block"></div>

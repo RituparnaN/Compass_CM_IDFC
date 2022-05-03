@@ -17,7 +17,7 @@ This page is for all the static contents like StyleSheet and JavaScript files.
 <script type="text/javascript"	src="${pageContext.request.contextPath}/includes/scripts/metisMenu.min.js"></script>
 <script type="text/javascript"	src="${pageContext.request.contextPath}/includes/scripts/dataTables.bootstrap.js"></script>
 
-<script type="text/javascript"	src="${pageContext.request.contextPath}/includes/scripts/dataTables.bootstrap4.js"></script>
+<%-- <script type="text/javascript"	src="${pageContext.request.contextPath}/includes/scripts/dataTables.bootstrap4.js"></script --%>
 
 <script type="text/javascript"	src="${pageContext.request.contextPath}/includes/scripts/dataTables.tableTools.js"></script>
 <script type="text/javascript"	src="${pageContext.request.contextPath}/includes/scripts/flot/jquery.flot.js"></script>

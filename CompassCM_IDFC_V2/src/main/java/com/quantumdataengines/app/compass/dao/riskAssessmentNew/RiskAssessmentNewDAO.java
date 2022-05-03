@@ -26,4 +26,5 @@ public interface RiskAssessmentNewDAO {
 	public Map<Object, Object> getRASummaryData(int assessmentPeriod);
 	public Object getGraphDataPoints(String cmRefNo);
 	public Object getGraphDataPointsNew(String cmRefNo);
+	public String saveImageUrlData(String imageUrl);
 }
