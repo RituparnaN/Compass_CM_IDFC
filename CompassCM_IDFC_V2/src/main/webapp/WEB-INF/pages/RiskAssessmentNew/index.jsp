@@ -51,6 +51,72 @@
 			}
 		});
 		
+		$("#generateRiskAssessmentSummary").click(function(elm){
+			var assessmentPeriod = $("#assessmentPeriod").val();
+			if(assessmentPeriod != null && assessmentPeriod != ""){
+				 if(confirm("Are you sure you want to Generate Excel Report?")){
+					  $.ajax({
+							url : "${pageContext.request.contextPath}/common/mixedChartNew?CRMREFNO="+compassRefNo,
+							type : "POST",
+							cache : false,
+							success : function(res){
+								document.getElementById("residualRiskChartDiv").style.display = "block";
+								document.getElementById("assessmentWiseCatChartDiv").style.display = "block";
+								$("#residualRiskChartDiv").html(res);
+								$("#assessmentWiseCatChartDiv").html(res);
+								
+								
+								//MIXED CHART NEW DATA
+								var residualRiskData = $("#residualRiskURL").val();
+								var assessmentWiseCatData = $("#assessmentCatURL").val();
+								
+								var totalWeightedScoreIR = $("#totalWeightedScoreIR").val();
+								var totalWeightedScoreIC = $("#totalWeightedScoreIC").val();
+								//console.log("totalWeightedScoreIR: "+totalWeightedScoreIR+" "+"totalWeightedScoreIC: "+totalWeightedScoreIC)
+								
+								
+								var data = residualRiskData+"@~@"+assessmentWiseCatData+"@~@"+totalWeightedScoreIR+"@~@"+totalWeightedScoreIC;
+								document.getElementById("residualRiskChartDiv").style.display = "none";
+								document.getElementById("assessmentWiseCatChartDiv").style.display = "none";
+								
+								$.ajax({
+										url : "${pageContext.request.contextPath}/common/saveChartImageNew",
+										type : "POST",
+										cache : false,
+										data: JSON.stringify({"data":data}),
+										success : function(res){
+											alert("DATA SAVED SUCCESSFULLY!!");
+											$.fileDownload("${pageContext.request.contextPath}/common/generateCMReportNew?compassRefNo="+compassRefNo+"&imageId="+res+"&assessmentUnit="+assessmentUnit , {
+											    httpMethod : "GET",
+											    successCallback: function (url) {	
+													alert("done")
+											    	$(elm).html("Downloaded");
+													btn.prop('disabled', false);
+											    },
+											    failCallback: function (html, url) {
+											    	btn.prop('disabled', false);
+											    	alert('Failed to download file'+url+"\n"+html);
+											    }
+											});											
+										},
+										error : function(){
+											alert("Error while opening form");
+										}
+									}); 
+							},
+							error : function(){
+								alert("Error while opening form");
+							}
+						});  
+					 
+				 }	 	
+				
+			}else{
+				alert("Please provide assessment period to proceed. ex: 2022");
+				
+			}
+		});
+		
 		$("#searchRiskAssessment").click(function(){
 			var ASSESSMENTUNIT = $("#ASSESSMENTUNIT").val();
 			var COMPASSREFERENCENO = $("#COMPASSREFERENCENO"+id).val();
@@ -192,7 +258,8 @@
 			</div>
 			<div class="card-footer clearfix">
 				<div class="pull-${dirR}">
-					<button type="button" id="searchRiskAssessmentSummary" class="btn btn-success btn-sm">Get Summary</button>
+					<button type="button" id="generateRiskAssessmentSummary" class="btn btn-success btn-sm">Generate Summary</button>
+					<button type="button" id="searchRiskAssessmentSummary" class="btn btn-primary btn-sm">Get Summary</button>
 				</div>
 			</div>
 		</div>
