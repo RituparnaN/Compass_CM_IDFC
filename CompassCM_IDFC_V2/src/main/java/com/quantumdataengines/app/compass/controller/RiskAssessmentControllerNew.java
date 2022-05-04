@@ -287,6 +287,31 @@ private static final Logger log = LoggerFactory.getLogger(CommonController.class
 		return modelAndView;	
 	}
 	
+	@RequestMapping(value = "/generateCMReportSummary", method=RequestMethod.GET) 
+	public ModelAndView generateCMReportSummary(HttpServletRequest request, HttpServletResponse response, 
+			Authentication authentication) throws Exception {
+		String assessmentPeriod = request.getParameter("ASSESSMENTPERIOD");
+		System.out.println("In generateCMReportSummary controller assessmentPeriod: "+assessmentPeriod);
+		String userCode = authentication.getPrincipal().toString();
+		String userRole = request.getSession(false) != null ? (String) request.getSession(false).getAttribute("CURRENTROLE") : "";
+		String ipAddress = request.getRemoteAddr();
+		
+		Map<String, Object> mainMap = riskAssessmentNewService.generateCMReportSummary(assessmentPeriod, userCode, userRole, ipAddress);
+		Iterator<String> itr = mainMap.keySet().iterator();
+		List<String> tabOrder = new Vector<String>();
+		while(itr.hasNext()){
+			tabOrder.add(itr.next());
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyyHHmmss");
+		Date date = new Date();
+		mainMap.put("TABORDER", tabOrder);
+		mainMap.put("FILENAME", assessmentPeriod+"_"+userCode+"_"+sdf.format(date));
+		ModelAndView modelAndView = new ModelAndView(new MultiSheetExcelViewChartNew(), mainMap);
+		//System.out.println("MAINMAP: "+mainMap);
+		commonService.auditLog(authentication.getPrincipal().toString(), request, "REPORTS", "DOWNLOAD", "File Downloaded");
+		return modelAndView;	
+	}
+	
 	@RequestMapping(value="/mixedChartNew", method=RequestMethod.POST)
 	public String chart(HttpServletRequest request, HttpServletResponse response, 
 			Authentication authentication) throws Exception{
@@ -294,6 +319,16 @@ private static final Logger log = LoggerFactory.getLogger(CommonController.class
 		request.setAttribute("DATAPOINTS", riskAssessmentNewService.getGraphDataPointsNew(cmRefNo));
 		
 		return "RiskAssessmentNew/mixedChartNew";
+	}
+	
+	@RequestMapping(value="/mixedChartSummary", method=RequestMethod.POST)
+	public String chartSummary(HttpServletRequest request, HttpServletResponse response, 
+			Authentication authentication) throws Exception{
+		String assessmentPeriod = request.getParameter("ASSESSMENTPERIOD");
+		System.out.println("In mixedChartSummary controller assessmentPeriod is "+assessmentPeriod);
+		request.setAttribute("DATAPOINTS", riskAssessmentNewService.getGraphDataPointsSummary(assessmentPeriod));
+		
+		return "RiskAssessmentNew/mixedChartSummary";
 	}
 	
 	@RequestMapping(value={"/saveChartImageNew"}, method=RequestMethod.POST)

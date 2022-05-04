@@ -53,10 +53,12 @@
 		
 		$("#generateRiskAssessmentSummary").click(function(elm){
 			var assessmentPeriod = $("#assessmentPeriod").val();
+			//var compassRefNo= "CM020520221814";
+			console.log("assessmentPeriod: ",assessmentPeriod)
 			if(assessmentPeriod != null && assessmentPeriod != ""){
 				 if(confirm("Are you sure you want to Generate Excel Report?")){
 					  $.ajax({
-							url : "${pageContext.request.contextPath}/common/mixedChartNew?CRMREFNO="+compassRefNo,
+							url : "${pageContext.request.contextPath}/common/mixedChartSummary?ASSESSMENTPERIOD="+assessmentPeriod,
 							type : "POST",
 							cache : false,
 							success : function(res){
@@ -86,7 +88,7 @@
 										data: JSON.stringify({"data":data}),
 										success : function(res){
 											alert("DATA SAVED SUCCESSFULLY!!");
-											$.fileDownload("${pageContext.request.contextPath}/common/generateCMReportNew?compassRefNo="+compassRefNo+"&imageId="+res+"&assessmentUnit="+assessmentUnit , {
+											$.fileDownload("${pageContext.request.contextPath}/common/generateCMReportSummary?ASSESSMENTPERIOD="+assessmentPeriod+"&imageId="+res , {
 											    httpMethod : "GET",
 											    successCallback: function (url) {	
 													alert("done")
