@@ -26,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.quantumdataengines.app.compass.controller.reports.MultiSheetExcelViewChart;
 import com.quantumdataengines.app.compass.controller.reports.MultiSheetExcelViewChartNew;
+import com.quantumdataengines.app.compass.controller.reports.MultiSheetExcelViewChartSummary;
 import com.quantumdataengines.app.compass.model.riskAssessment.MakerCheckerDataModel;
 import com.quantumdataengines.app.compass.model.riskAssessmentNew.FormConfigurationModel;
 import com.quantumdataengines.app.compass.model.riskAssessmentNew.FormDataModel;
@@ -306,7 +307,7 @@ private static final Logger log = LoggerFactory.getLogger(CommonController.class
 		Date date = new Date();
 		mainMap.put("TABORDER", tabOrder);
 		mainMap.put("FILENAME", assessmentPeriod+"_"+userCode+"_"+sdf.format(date));
-		ModelAndView modelAndView = new ModelAndView(new MultiSheetExcelViewChartNew(), mainMap);
+		ModelAndView modelAndView = new ModelAndView(new MultiSheetExcelViewChartSummary(), mainMap);
 		//System.out.println("MAINMAP: "+mainMap);
 		commonService.auditLog(authentication.getPrincipal().toString(), request, "REPORTS", "DOWNLOAD", "File Downloaded");
 		return modelAndView;	
