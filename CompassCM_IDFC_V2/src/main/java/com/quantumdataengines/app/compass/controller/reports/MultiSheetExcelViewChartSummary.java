@@ -44,7 +44,7 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 	protected void buildExcelDocument(Map<String, Object> model, Workbook workbook, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		 	String imgId=request.getParameter("imageId");
-	 		System.out.println("image Id: "+imgId);
+	 		//System.out.println("image Id: "+imgId);
 	 		String a_RESIDUALRISK = "";
 	 		String a_ASSESSMENTWISECAT = "";
 	 		double a_TOTALWEIGHTEDSCOREIR = 0.0;
@@ -83,10 +83,10 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 	        
 	        try {
 	        	
-	        	System.out.println("A_RESIDUALRISK: "+a_RESIDUALRISK);
-	        	System.out.println("A_ASSESSMENTWISECAT: "+a_ASSESSMENTWISECAT);
-	        	System.out.println("A_TOTALWEIGHTEDSCOREIR: "+a_TOTALWEIGHTEDSCOREIR);
-	        	System.out.println("A_TOTALWEIGHTEDSCOREIC: "+a_TOTALWEIGHTEDSCOREIC);
+	        	//System.out.println("A_RESIDUALRISK: "+a_RESIDUALRISK);
+	        	//System.out.println("A_ASSESSMENTWISECAT: "+a_ASSESSMENTWISECAT);
+	        	//System.out.println("A_TOTALWEIGHTEDSCOREIR: "+a_TOTALWEIGHTEDSCOREIR);
+	        	//System.out.println("A_TOTALWEIGHTEDSCOREIC: "+a_TOTALWEIGHTEDSCOREIC);
 	        	
 	        	base64ImageResidualRisk = a_RESIDUALRISK.split(",")[1];
 	        	imageBytesResidualRisk = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64ImageResidualRisk);
@@ -95,7 +95,7 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 	        	imageBytesAssessment = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64ImageAssessment);
 	        }
 	 	    catch(Exception e) {
-	 	    	System.out.println("no image data found for risk Assessment report generation");
+	 	    	//System.out.println("no image data found for risk Assessment report generation");
 	 	    }
 	 	    
 		List<String> tabOrder = (List<String>) model.get("TABORDER");
@@ -119,6 +119,8 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 		for (String sheetName : tabNames) {
 			Sheet sheet = workbook.createSheet(sheetName);
 			sheet.getProtect();
+			
+		
 
 			//HEADER STYLE
 			CellStyle headerStyle = workbook.createCellStyle();
@@ -153,6 +155,8 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 			CellStyle highBg = workbook.createCellStyle();
 			highBg.setFillForegroundColor(IndexedColors.CORAL.getIndex());
 			highBg.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+			
+			//
 
 			
 			@SuppressWarnings("unchecked")
@@ -160,6 +164,337 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 					.get(sheetName);
 			ArrayList<ArrayList<String>> listResultHeader = mainMap.get("listResultHeader");
 			ArrayList<ArrayList<String>> listResultData = mainMap.get("listResultData");
+			
+			
+			if((sheet.getSheetName().equals("TREASURY") && listResultData.size() == 0) 
+					|| (sheet.getSheetName().equals("RETAIL LIABILITIES") && listResultData.size() == 0) 
+					|| (sheet.getSheetName().equals("RETAIL ASSETS") && listResultData.size() == 0) 
+					|| (sheet.getSheetName().equals("WHOLESALE BANKING") && listResultData.size() == 0)){
+				
+					System.out.println("Sheet name passes condition: "+sheet.getSheetName());		
+					System.out.println("listResultData size: "+listResultData.size());
+					
+					Row row;
+					Cell cell;
+					
+					row = sheet.createRow(0);
+					cell = row.createCell(0);
+					cell.setCellValue("SRNO");
+					cell.setCellStyle(headerStyle);
+					cell = row.createCell(1);
+					cell.setCellValue("CATEGORY");
+					cell.setCellStyle(headerStyle);
+					cell = row.createCell(2);
+					cell.setCellValue("WEIGHT");
+					cell.setCellStyle(headerStyle);
+					cell = row.createCell(3);
+					cell.setCellValue("SCORE");
+					cell.setCellStyle(headerStyle);
+					cell = row.createCell(4);
+					cell.setCellValue("RESULT");
+					cell.setCellStyle(headerStyle);
+					
+					row = sheet.createRow(1);
+					cell = row.createCell(0);
+					cell.setCellValue("");
+					cell.setCellStyle(titleStyle);
+					cell = row.createCell(1);
+					cell.setCellValue("Inherent Risk");
+					cell.setCellStyle(titleStyle);
+					cell = row.createCell(2);
+					cell.setCellValue("");
+					cell.setCellStyle(titleStyle);
+					cell = row.createCell(3);
+					cell.setCellValue("");
+					cell.setCellStyle(titleStyle);
+					cell = row.createCell(4);
+					cell.setCellValue("");
+					cell.setCellStyle(titleStyle);
+					
+					row = sheet.createRow(2);
+					cell = row.createCell(0);
+					cell.setCellValue("1");
+					cell = row.createCell(1);
+					cell.setCellValue("customer");
+					cell = row.createCell(2);
+					cell.setCellValue("30%");
+					cell = row.createCell(3);
+					cell.setCellValue("0.0");
+					cell = row.createCell(4);
+					cell.setCellValue("LOW");
+					cell.setCellStyle(lowBg);
+
+					row = sheet.createRow(3);
+					cell = row.createCell(0);
+					cell.setCellValue("2");
+					cell = row.createCell(1);
+					cell.setCellValue("geography");
+					cell = row.createCell(2);
+					cell.setCellValue("25%");
+					cell = row.createCell(3);
+					cell.setCellValue("0.0");
+					cell = row.createCell(4);
+					cell.setCellValue("LOW");
+					cell.setCellStyle(lowBg);
+					
+					row = sheet.createRow(4);
+					cell = row.createCell(0);
+					cell.setCellValue("3");
+					cell = row.createCell(1);
+					cell.setCellValue("products and services");
+					cell = row.createCell(2);
+					cell.setCellValue("25%");
+					cell = row.createCell(3);
+					cell.setCellValue("0.0");
+					cell = row.createCell(4);
+					cell.setCellValue("LOW");
+					cell.setCellStyle(lowBg);
+					
+					row = sheet.createRow(5);
+					cell = row.createCell(0);
+					cell.setCellValue("4");
+					cell = row.createCell(1);
+					cell.setCellValue("transactions");
+					cell = row.createCell(2);
+					cell.setCellValue("10%");
+					cell = row.createCell(3);
+					cell.setCellValue("0.0");
+					cell = row.createCell(4);
+					cell.setCellValue("LOW");
+					cell.setCellStyle(lowBg);
+					
+					row = sheet.createRow(6);
+					cell = row.createCell(0);
+					cell.setCellValue("5");
+					cell = row.createCell(1);
+					cell.setCellValue("delivery channels");
+					cell = row.createCell(2);
+					cell.setCellValue("10%");
+					cell = row.createCell(3);
+					cell.setCellValue("0.0");
+					cell = row.createCell(4);
+					cell.setCellValue("LOW");
+					cell.setCellStyle(lowBg);
+					
+					row = sheet.createRow(7);
+					cell = row.createCell(0);
+					cell.setCellValue("");
+					cell.setCellStyle(titleStyle);
+					cell = row.createCell(1);
+					cell.setCellValue("Internal Control");
+					cell.setCellStyle(titleStyle);
+					cell = row.createCell(2);
+					cell.setCellValue("");
+					cell.setCellStyle(titleStyle);
+					cell = row.createCell(3);
+					cell.setCellValue("");
+					cell.setCellStyle(titleStyle);
+					cell = row.createCell(4);
+					cell.setCellValue("");
+					cell.setCellStyle(titleStyle);
+					
+					row = sheet.createRow(8);
+					cell = row.createCell(0);
+					cell.setCellValue("6");
+					cell = row.createCell(1);
+					cell.setCellValue("Governance & Management Oversight");
+					cell = row.createCell(2);
+					cell.setCellValue("10%");
+					cell = row.createCell(3);
+					cell.setCellValue("0.0");
+					cell = row.createCell(4);
+					cell.setCellValue("EFFECTIVE");
+					cell.setCellStyle(lowBg);
+					
+					row = sheet.createRow(9);
+					cell = row.createCell(0);
+					cell.setCellValue("7");
+					cell = row.createCell(1);
+					cell.setCellValue("Customer Due Diligence & Risk Management");
+					cell = row.createCell(2);
+					cell.setCellValue("25%");
+					cell = row.createCell(3);
+					cell.setCellValue("0.0");
+					cell = row.createCell(4);
+					cell.setCellValue("EFFECTIVE");
+					cell.setCellStyle(lowBg);
+					
+					row = sheet.createRow(10);
+					cell = row.createCell(0);
+					cell.setCellValue("8");
+					cell = row.createCell(1);
+					cell.setCellValue("Transactions Monitoring");
+					cell = row.createCell(2);
+					cell.setCellValue("10%");
+					cell = row.createCell(3);
+					cell.setCellValue("0.0");
+					cell = row.createCell(4);
+					cell.setCellValue("EFFECTIVE");
+					cell.setCellStyle(lowBg);
+					
+					row = sheet.createRow(11);
+					cell = row.createCell(0);
+					cell.setCellValue("9");
+					cell = row.createCell(1);
+					cell.setCellValue("Internal Quality Assurance and Compliance Testing");
+					cell = row.createCell(2);
+					cell.setCellValue("10");
+					cell = row.createCell(3);
+					cell.setCellValue("0.0");
+					cell = row.createCell(4);
+					cell.setCellValue("EFFECTIVE");
+					cell.setCellStyle(lowBg);
+					
+					row = sheet.createRow(12);
+					cell = row.createCell(0);
+					cell.setCellValue("10");
+					cell = row.createCell(1);
+					cell.setCellValue("Name/Sanctions Screening");
+					cell = row.createCell(2);
+					cell.setCellValue("10%");
+					cell = row.createCell(3);
+					cell.setCellValue("0.0");
+					cell = row.createCell(4);
+					cell.setCellValue("EFFECTIVE");
+					cell.setCellStyle(lowBg);
+					
+					row = sheet.createRow(13);
+					cell = row.createCell(0);
+					cell.setCellValue("11");
+					cell = row.createCell(1);
+					cell.setCellValue("Training");
+					cell = row.createCell(2);
+					cell.setCellValue("15%");
+					cell = row.createCell(3);
+					cell.setCellValue("0.0");
+					cell = row.createCell(4);
+					cell.setCellValue("EFFECTIVE");
+					cell.setCellStyle(lowBg);
+					
+					row = sheet.createRow(14);
+					cell = row.createCell(0);
+					cell.setCellValue("12");
+					cell = row.createCell(1);
+					cell.setCellValue("Foreign Correspondent Banking Relationships");
+					cell = row.createCell(2);
+					cell.setCellValue("5%");
+					cell = row.createCell(3);
+					cell.setCellValue("0.0");
+					cell = row.createCell(4);
+					cell.setCellValue("EFFECTIVE");
+					cell.setCellStyle(lowBg);
+					
+					row = sheet.createRow(15);
+					cell = row.createCell(0);
+					cell.setCellValue("13");
+					cell = row.createCell(1);
+					cell.setCellValue("Internal Audit");
+					cell = row.createCell(2);
+					cell.setCellValue("10%");
+					cell = row.createCell(3);
+					cell.setCellValue("0.0");
+					cell = row.createCell(4);
+					cell.setCellValue("EFFECTIVE");
+					cell.setCellStyle(lowBg);
+					
+					row = sheet.createRow(16);
+					cell = row.createCell(0);
+					cell.setCellValue("14");
+					cell = row.createCell(1);
+					cell.setCellValue("Reporting Requirements");
+					cell = row.createCell(2);
+					cell.setCellValue("5%");
+					cell = row.createCell(3);
+					cell.setCellValue("0.0");
+					cell = row.createCell(4);
+					cell.setCellValue("EFEECTIVE");
+					cell.setCellStyle(lowBg);
+					
+					
+					
+					
+					int noOfColumns = sheet.getRow(0).getLastCellNum();
+					try {
+						
+						//if(sheet.getSheetName().equals("ASSESSSMENTWISE RISK RATING")){
+
+				 		InputStream baseimageResidualRisk = new FileInputStream("C:\\APPFOLDER\\resources\\CM_MatrixHeatChart\\AssessmentWise\\ResidualRisk.png");
+				 		byte[] bytesResidualRisk = IOUtils.toByteArray(baseimageResidualRisk);
+				 		int pictureResidualRiskBase = workbook.addPicture(bytesResidualRisk, Workbook.PICTURE_TYPE_PNG);
+				 		
+				 		InputStream baseimageAssessment = new FileInputStream("C:\\APPFOLDER\\resources\\CM_MatrixHeatChart\\AssessmentWise\\AssessmentWiseUnitLevelResidualRisk.png");
+				 		byte[] bytesAssessment = IOUtils.toByteArray(baseimageAssessment);
+				 		int pictureAssessmentBase = workbook.addPicture(bytesAssessment, Workbook.PICTURE_TYPE_PNG);
+				 		
+				 		//chart
+				 		int pictureResidualRiskChart = workbook.addPicture(imageBytesResidualRisk, Workbook.PICTURE_TYPE_PNG);
+				 		int pictureAssessmentChart = workbook.addPicture(imageBytesAssessment, Workbook.PICTURE_TYPE_PNG);
+				 		 
+				 		CreationHelper helper = workbook.getCreationHelper();
+				 		
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				 		Drawing drawingResidualRisk = sheet.createDrawingPatriarch();
+				 		ClientAnchor anchorBaseResidualRisk = helper.createClientAnchor();		 		
+				 		ClientAnchor anchorChartResidualRisk = helper.createClientAnchor();		 		
+				 		//base image 
+				 		   anchorBaseResidualRisk.setCol1(noOfColumns+6);
+						   anchorBaseResidualRisk.setRow1(1);
+						   anchorBaseResidualRisk.setCol2(noOfColumns+11);
+						   anchorBaseResidualRisk.setRow2(11); 
+						   //CHART IMAGE
+						   anchorChartResidualRisk.setCol1(noOfColumns+7);
+						   anchorChartResidualRisk.setRow1(2); 
+						   anchorChartResidualRisk.setCol2(noOfColumns+11);
+						   anchorChartResidualRisk.setRow2(10); 				   
+				 		 //Creates a picture
+						 anchorBaseResidualRisk.setAnchorType(AnchorType.DONT_MOVE_AND_RESIZE);//set anchor type
+						 anchorChartResidualRisk.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);
+						 
+					 	Drawing drawingAssessmentWise = sheet.createDrawingPatriarch();
+					 	ClientAnchor anchorBaseAssessmentWise = helper.createClientAnchor();		 		
+					 	ClientAnchor anchorChartAssessmentWise = helper.createClientAnchor();		 		
+					 	//base image 
+					 		anchorBaseAssessmentWise.setCol1(noOfColumns+6);
+					 		anchorBaseAssessmentWise.setRow1(12);
+					 		anchorBaseAssessmentWise.setCol2(noOfColumns+12);
+					 		anchorBaseAssessmentWise.setRow2(22); 
+						//CHART IMAGE
+					 		anchorChartAssessmentWise.setCol1(noOfColumns+7);
+					 		anchorChartAssessmentWise.setRow1(13); 
+					 		anchorChartAssessmentWise.setCol2(noOfColumns+11);
+					 		anchorChartAssessmentWise.setRow2(21); 				   
+					 	//Creates a picture
+					 	anchorBaseAssessmentWise.setAnchorType(AnchorType.DONT_MOVE_AND_RESIZE);//set anchor type
+					 	anchorChartAssessmentWise.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);
+						 
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				 		 Picture createBaseResidualRisk = drawingResidualRisk.createPicture(anchorBaseResidualRisk, pictureResidualRiskBase);
+				 		 Picture createChartResidualRisk = drawingResidualRisk.createPicture(anchorChartResidualRisk, pictureResidualRiskChart);
+				 		 //Picture createBaseAssessmentWise = drawingResidualRisk.createPicture(anchorBaseAssessmentWise, pictureAssessmentBase);
+				 		 //Picture createChartAssessmentWise = drawingResidualRisk.createPicture(anchorChartAssessmentWise, pictureAssessmentChart);
+				 		//  }
+					}
+					catch(Exception e) {
+						//System.out.println("error while inserting graph in report");
+						e.printStackTrace();
+					}
+								
+
+			}
+			
+		else{
+			
+			///////////////////////
+			if((sheet.getSheetName().equals("TREASURY") && listResultData.size() != 0) 
+					|| (sheet.getSheetName().equals("RETAIL LIABILITIES") && listResultData.size() != 0) 
+					|| (sheet.getSheetName().equals("RETAIL ASSETS") && listResultData.size() != 0) 
+					|| (sheet.getSheetName().equals("WHOLESALE BANKING") && listResultData.size() != 0)){
+
+			
+			System.out.println("Sheet name NOT passes condition: "+sheet.getSheetName());
+			
+			
+			System.out.println("listResultData size: "+listResultData.size());
 
 			String[] l_Headers = {};
 			for (ArrayList<String> listHeader : listResultHeader) {
@@ -242,179 +577,13 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 			}
 			
 			int noOfColumns = sheet.getRow(0).getLastCellNum();
-/*			
-			for (int i = 0; i <= sheet.getLastRowNum(); i++) {
-				  row = sheet.getRow(4);
-				    cell = row.getCell(6);
-				      System.out.println("DATA IN CELL: "+cell.getStringCellValue());
-				}
-			
-			for (int cn = 0; cn < lastColumn; cn++) {
-				  Cell c = row.getCell(cn, Row.RETURN_BLANK_AS_NULL);
-				  if (c == null) {
-				    // The spreadsheet is empty in this cell
-				  } else {
-				    // Do something useful with the cell's contents
-				  }
-				}*/
-			
 
-/*
-			
-            row = sheet.getRow(4);
-            cell = row.getCell(5);
-            cell.setCellValue(a_TOTALWEIGHTEDSCOREIR);
-            
-            row = sheet.getRow(12);
-            cell = row.getCell(5);
-            cell.setCellValue(a_TOTALWEIGHTEDSCOREIC);
-            
-            
-            row = sheet.getRow(4);
-            cell = row.getCell(6);
-            cell.setCellValue(a_TOTALWEIGHTEDSCOREIR);
-           
-            row = sheet.getRow(12);
-            cell = row.getCell(6);
-            cell.setCellValue(a_TOTALWEIGHTEDSCOREIC);
-            
-            
-            if(a_TOTALWEIGHTEDSCOREIR <= 2){
-            	for (int i = 2; i <= 6 ; i++) {
-            			row = sheet.getRow(i);
-            			for(int j = 0; j < noOfColumns; j++){
-            				if(j == 6){
-            					cell = row.getCell(j);
-            					if(i == 4){
-                        			cell.setCellValue("LOW");
-            					}
-            					else{
-            						cell.setCellValue("");
-            					}
-                    			cell.setCellStyle(lowBg);
-            				}
-            				
-            			}           			
-            		}
-            	}
-            
-            if(a_TOTALWEIGHTEDSCOREIR > 2 && a_TOTALWEIGHTEDSCOREIR <= 5){
-            	for (int i = 2; i <= 6 ; i++) {
-            			row = sheet.getRow(i);
-            			for(int j = 0; j < noOfColumns; j++){
-            				if(j == 6){
-            					cell = row.getCell(j);
-            					if(i == 4){
-                        			cell.setCellValue("MEDIUM");
-            					}
-            					else{
-            						cell.setCellValue("");
-            					}
-                    			cell.setCellStyle(mediumBg);
-            				}
-            				
-            			}           			
-            		}
-            	}
-            
-            if(a_TOTALWEIGHTEDSCOREIR > 5){
-            	for (int i = 2; i <= 6 ; i++) {
-            			row = sheet.getRow(i);
-            			for(int j = 0; j < noOfColumns; j++){
-            				if(j == 6){
-            					cell = row.getCell(j);
-            					if(i == 4){
-                        			cell.setCellValue("HIGH");
-            					}
-            					else{
-            						cell.setCellValue("");
-            					}
-                    			cell.setCellStyle(highBg);
-            				}
-            				
-            			}           			
-            		}
-            	}
-            
-            
-            if(a_TOTALWEIGHTEDSCOREIC <= 2){
-            	for (int i = 8; i <= 16 ; i++) {
-        			row = sheet.getRow(i);
-        			for(int j = 0; j < noOfColumns; j++){
-        				if(j == 6){
-        					cell = row.getCell(j);
-        					if(i == 12){
-                    			cell.setCellValue("EFFECTIVE");
-        					}
-        					else{
-        						cell.setCellValue("");
-        					}
-                			cell.setCellStyle(lowBg);
-        				}
-        				
-        			}
-  			}
-            }
-            
-            if(a_TOTALWEIGHTEDSCOREIC > 2 && a_TOTALWEIGHTEDSCOREIC <= 5){
-            	for (int i = 8; i <= 16 ; i++) {
-        			row = sheet.getRow(i);
-        			for(int j = 0; j < noOfColumns; j++){
-        				if(j == 6){
-        					cell = row.getCell(j);
-        					if(i == 12){
-                    			cell.setCellValue("NEED IMPROVEMENT");
-        					}
-        					else{
-        						cell.setCellValue("");
-        					}
-                			cell.setCellStyle(mediumBg);
-        				}
-        				
-        			}
-  			}
-            }
-            
-            if(a_TOTALWEIGHTEDSCOREIC > 5){
-            	for (int i = 8; i <= 16 ; i++) {
-        			row = sheet.getRow(i);
-        			for(int j = 0; j < noOfColumns; j++){
-        				if(j == 6){
-        					cell = row.getCell(j);
-        					if(i == 12){
-                    			cell.setCellValue("NO CONTROL");
-        					}
-        					else{
-        						cell.setCellValue("");
-        					}
-                			cell.setCellStyle(highBg);
-        				}
-        				
-        			}
-  			}
-            }
-			
-			
-			for (int i = 2; i <= 6 ; i++) {
-				  row = sheet.getRow(i);
-	              cell = row.getCell(5);
-	              cell.setCellStyle(totalBg);
-			}
-			
-			for (int i = 8; i <= 16 ; i++) {
-				  row = sheet.getRow(i);
-	              cell = row.getCell(5);
-	              cell.setCellStyle(totalBg);
-			}
-
-
-*/
 			
 			//System.out.println("total rows: "+currentRow);
 			
 			int totalRows=currentRow;
 
-			System.out.println("Total Column: "+noOfColumns);
+			//System.out.println("Total Column: "+noOfColumns);
 			
 			try {
 				
@@ -472,15 +641,289 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		 		 Picture createBaseResidualRisk = drawingResidualRisk.createPicture(anchorBaseResidualRisk, pictureResidualRiskBase);
 		 		 Picture createChartResidualRisk = drawingResidualRisk.createPicture(anchorChartResidualRisk, pictureResidualRiskChart);
-		 		 Picture createBaseAssessmentWise = drawingResidualRisk.createPicture(anchorBaseAssessmentWise, pictureAssessmentBase);
-		 		 Picture createChartAssessmentWise = drawingResidualRisk.createPicture(anchorChartAssessmentWise, pictureAssessmentChart);
+		 		 //Picture createBaseAssessmentWise = drawingResidualRisk.createPicture(anchorBaseAssessmentWise, pictureAssessmentBase);
+		 		 //Picture createChartAssessmentWise = drawingResidualRisk.createPicture(anchorChartAssessmentWise, pictureAssessmentChart);
 		 		//  }
 			}
 			catch(Exception e) {
-				System.out.println("error while inserting graph in report");
+				//System.out.println("error while inserting graph in report");
 				e.printStackTrace();
 			}
 	 		
+		  
+		
+			}/////
+			
+			
+			if(sheet.getSheetName().equals("RISK ASSESSMENT SUMMARY")){
+
+
+				
+				System.out.println("Sheet name NOT passes condition: "+sheet.getSheetName());
+				
+				
+				System.out.println("listResultData size: "+listResultData.size());
+
+				String[] l_Headers = {};
+				for (ArrayList<String> listHeader : listResultHeader) {
+					l_Headers = new String[listHeader.size()];
+					for (int i = 0; i < listHeader.size(); i++) {
+						l_Headers[i] = listHeader.get(i);
+					}
+				}
+
+				//sheet.setDefaultColumnWidth((int) l_Headers.length);
+
+				int currentRow = 1;
+				Row row;
+				Cell cell;
+				
+				
+				
+				row = sheet.createRow(1);
+				cell = row.createCell(0);
+				cell.setCellValue("");
+				cell.setCellStyle(titleStyle);
+				cell = row.createCell(1);
+				cell.setCellValue("Inherent Risk");
+				cell.setCellStyle(titleStyle);
+				cell = row.createCell(2);
+				cell.setCellValue("");
+				cell.setCellStyle(titleStyle);
+				cell = row.createCell(3);
+				cell.setCellValue("");
+				cell.setCellStyle(titleStyle);
+				cell = row.createCell(4);
+				cell.setCellValue("");
+				cell.setCellStyle(titleStyle);
+				cell = row.createCell(5);
+				cell.setCellValue("");
+				cell.setCellStyle(titleStyle);
+				cell = row.createCell(6);
+				cell.setCellValue("");
+				cell.setCellStyle(titleStyle);
+				cell = row.createCell(7);
+				cell.setCellValue("");
+				cell.setCellStyle(titleStyle);
+				cell = row.createCell(8);
+				cell.setCellValue("");
+				cell.setCellStyle(titleStyle);
+				cell = row.createCell(9);
+				cell.setCellValue("");
+				cell.setCellStyle(titleStyle);
+				cell = row.createCell(10);
+				cell.setCellValue("");
+				cell.setCellStyle(titleStyle);		
+				
+				
+				
+
+				for (int i = 0; i < l_Headers.length; i++) {
+					Cell header0 = getCell(sheet, 0, i);
+					setText(header0, l_Headers[i]);
+					header0.setCellStyle(headerStyle);
+				}
+				
+				
+
+				for (ArrayList<String> listResult : listResultData) {
+					currentRow++;
+					row = sheet.createRow(currentRow);
+					
+					int currentCol = 0;
+					for (String strResult : listResult) {
+						
+						
+						if(currentRow == 6){
+							currentRow++;
+							Row row1 = sheet.createRow(currentRow);
+							cell = row1.createCell(0);
+							cell.setCellValue("");
+							cell.setCellStyle(titleStyle);
+							cell = row1.createCell(1);
+							cell.setCellValue("Internal Control");
+							cell.setCellStyle(titleStyle);
+							cell = row1.createCell(2);
+							cell.setCellValue("");
+							cell.setCellStyle(titleStyle);
+							cell = row1.createCell(3);
+							cell.setCellValue("");
+							cell.setCellStyle(titleStyle);
+							cell = row1.createCell(4);
+							cell.setCellValue("");
+							cell.setCellStyle(titleStyle);
+							cell = row1.createCell(5);
+							cell.setCellValue("");
+							cell.setCellStyle(titleStyle);
+							cell = row1.createCell(6);
+							cell.setCellValue("");
+							cell.setCellStyle(titleStyle);
+							cell = row1.createCell(7);
+							cell.setCellValue("");
+							cell.setCellStyle(titleStyle);
+							cell = row1.createCell(8);
+							cell.setCellValue("");
+							cell.setCellStyle(titleStyle);
+							cell = row1.createCell(9);
+							cell.setCellValue("");
+							cell.setCellStyle(titleStyle);
+							cell = row1.createCell(10);
+							cell.setCellValue("");
+							cell.setCellStyle(titleStyle);
+							
+						}
+						
+						
+						
+						row.createCell(currentCol).setCellValue(strResult);
+						currentCol++;
+					}
+					
+				}
+				
+				int noOfColumns = sheet.getRow(0).getLastCellNum();
+
+				
+				//System.out.println("total rows: "+currentRow);
+				
+				int totalRows=currentRow;
+
+				//System.out.println("Total Column: "+noOfColumns);
+				
+				try {
+					
+					//if(sheet.getSheetName().equals("ASSESSSMENTWISE RISK RATING")){
+
+			 		InputStream baseimageResidualRisk = new FileInputStream("C:\\APPFOLDER\\resources\\CM_MatrixHeatChart\\AssessmentWise\\ResidualRisk.png");
+			 		byte[] bytesResidualRisk = IOUtils.toByteArray(baseimageResidualRisk);
+			 		int pictureResidualRiskBase = workbook.addPicture(bytesResidualRisk, Workbook.PICTURE_TYPE_PNG);
+			 		
+			 		InputStream baseimageAssessment = new FileInputStream("C:\\APPFOLDER\\resources\\CM_MatrixHeatChart\\AssessmentWise\\AssessmentWiseUnitLevelResidualRisk.png");
+			 		byte[] bytesAssessment = IOUtils.toByteArray(baseimageAssessment);
+			 		int pictureAssessmentBase = workbook.addPicture(bytesAssessment, Workbook.PICTURE_TYPE_PNG);
+			 		
+			 		//chart
+			 		int pictureResidualRiskChart = workbook.addPicture(imageBytesResidualRisk, Workbook.PICTURE_TYPE_PNG);
+			 		int pictureAssessmentChart = workbook.addPicture(imageBytesAssessment, Workbook.PICTURE_TYPE_PNG);
+			 		 
+			 		CreationHelper helper = workbook.getCreationHelper();
+			 		
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			 		Drawing drawingResidualRisk = sheet.createDrawingPatriarch();
+			 		ClientAnchor anchorBaseResidualRisk = helper.createClientAnchor();		 		
+			 		ClientAnchor anchorChartResidualRisk = helper.createClientAnchor();		 		
+			 		//base image 
+			 		   anchorBaseResidualRisk.setCol1(0);
+					   anchorBaseResidualRisk.setRow1(totalRows+1);
+					   anchorBaseResidualRisk.setCol2(5);
+					   anchorBaseResidualRisk.setRow2(totalRows+11); 
+					   //CHART IMAGE
+					   anchorChartResidualRisk.setCol1(1);
+					   anchorChartResidualRisk.setRow1(totalRows+2); 
+					   anchorChartResidualRisk.setCol2(5);
+					   anchorChartResidualRisk.setRow2(totalRows+10); 				   
+			 		 //Creates a picture
+					 anchorBaseResidualRisk.setAnchorType(AnchorType.DONT_MOVE_AND_RESIZE);//set anchor type
+					 anchorChartResidualRisk.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);
+					 
+					 
+					 ///////////////////////******************
+					 
+					 Drawing drawingResidualRisk1 = sheet.createDrawingPatriarch();
+				 		ClientAnchor anchorBaseResidualRisk1 = helper.createClientAnchor();		 		
+				 		ClientAnchor anchorChartResidualRisk1 = helper.createClientAnchor();		 		
+				 		//base image 
+				 		   anchorBaseResidualRisk1.setCol1(7);
+						   anchorBaseResidualRisk1.setRow1(totalRows+1);
+						   anchorBaseResidualRisk1.setCol2(12);
+						   anchorBaseResidualRisk1.setRow2(totalRows+11); 
+						   //CHART IMAGE
+						   anchorChartResidualRisk1.setCol1(8);
+						   anchorChartResidualRisk1.setRow1(totalRows+2); 
+						   anchorChartResidualRisk1.setCol2(12);
+						   anchorChartResidualRisk1.setRow2(totalRows+10); 				   
+				 		 //Creates a picture
+						 anchorBaseResidualRisk1.setAnchorType(AnchorType.DONT_MOVE_AND_RESIZE);//set anchor type
+						 anchorChartResidualRisk1.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);
+						 
+						 Drawing drawingResidualRisk2 = sheet.createDrawingPatriarch();
+					 		ClientAnchor anchorBaseResidualRisk2 = helper.createClientAnchor();		 		
+					 		ClientAnchor anchorChartResidualRisk2 = helper.createClientAnchor();		 		
+					 		//base image 
+					 		   anchorBaseResidualRisk2.setCol1(0);
+							   anchorBaseResidualRisk2.setRow1(totalRows+13);
+							   anchorBaseResidualRisk2.setCol2(5);
+							   anchorBaseResidualRisk2.setRow2(totalRows+23); 
+							   //CHART IMAGE
+							   anchorChartResidualRisk2.setCol1(1);
+							   anchorChartResidualRisk2.setRow1(totalRows+14); 
+							   anchorChartResidualRisk2.setCol2(5);
+							   anchorChartResidualRisk2.setRow2(totalRows+22); 				   
+					 		 //Creates a picture
+							 anchorBaseResidualRisk2.setAnchorType(AnchorType.DONT_MOVE_AND_RESIZE);//set anchor type
+							 anchorChartResidualRisk2.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);
+					 
+					
+							 
+					/////////////////////////////////////****************************		 
+							 
+					 
+				 	Drawing drawingAssessmentWise = sheet.createDrawingPatriarch();
+				 	ClientAnchor anchorBaseAssessmentWise = helper.createClientAnchor();		 		
+				 	ClientAnchor anchorChartAssessmentWise = helper.createClientAnchor();		 		
+				 	//base image 
+				 		anchorBaseAssessmentWise.setCol1(7);
+				 		anchorBaseAssessmentWise.setRow1(totalRows+13);
+				 		anchorBaseAssessmentWise.setCol2(13);
+				 		anchorBaseAssessmentWise.setRow2(totalRows+23); 
+					//CHART IMAGE
+				 		anchorChartAssessmentWise.setCol1(8);
+				 		anchorChartAssessmentWise.setRow1(totalRows+14); 
+				 		anchorChartAssessmentWise.setCol2(12);
+				 		anchorChartAssessmentWise.setRow2(totalRows+22); 				   
+				 	//Creates a picture
+				 	anchorBaseAssessmentWise.setAnchorType(AnchorType.DONT_MOVE_AND_RESIZE);//set anchor type
+				 	anchorChartAssessmentWise.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);
+					 
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			 		 Picture createBaseResidualRisk = drawingResidualRisk.createPicture(anchorBaseResidualRisk, pictureResidualRiskBase);
+			 		 Picture createChartResidualRisk = drawingResidualRisk.createPicture(anchorChartResidualRisk, pictureResidualRiskChart);
+			 		 
+			 		 
+			 		 
+			 		 
+			 		 
+			 		 Picture createBaseResidualRisk1 = drawingResidualRisk.createPicture(anchorBaseResidualRisk1, pictureResidualRiskBase);
+			 		 Picture createChartResidualRisk1 = drawingResidualRisk.createPicture(anchorChartResidualRisk1, pictureResidualRiskChart);
+			 		 Picture createBaseResidualRisk2 = drawingResidualRisk.createPicture(anchorBaseResidualRisk2, pictureResidualRiskBase);
+			 		 Picture createChartResidualRisk2 = drawingResidualRisk.createPicture(anchorChartResidualRisk2, pictureResidualRiskChart);
+			 		 
+			 		 
+			 		 
+			 		 
+			 		 
+			 		 
+			 		 Picture createBaseAssessmentWise = drawingResidualRisk.createPicture(anchorBaseAssessmentWise, pictureAssessmentBase);
+			 		 Picture createChartAssessmentWise = drawingResidualRisk.createPicture(anchorChartAssessmentWise, pictureAssessmentChart);
+			 		//  }
+				}
+				catch(Exception e) {
+					//System.out.println("error while inserting graph in report");
+					e.printStackTrace();
+				}
+		 		
+			  
+			
+				
+			}
+		
+		
+		
+		
+		//////////////////
+		
+		}
+		
 		}
 	}
 }
