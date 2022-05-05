@@ -33,6 +33,16 @@
 	</c:forEach>
 	</c:forEach>
 	totalWeightedScoreIC = "${totalIC}";
+	
+	if(totalWeightedScoreIR < 1 || totalWeightedScoreIC < 1){
+		totalWeightedScoreIR = totalWeightedScoreIR+0.5;
+		totalWeightedScoreIC = totalWeightedScoreIC+0.5;
+	}
+	
+	if(totalWeightedScoreIR > 14.5 || totalWeightedScoreIC > 14.5){
+		totalWeightedScoreIR = 14;
+		totalWeightedScoreIC = 14;
+	}
 
 	residualRiskDataPoints.push({x: totalWeightedScoreIR, y: totalWeightedScoreIC, r: 15});
 	
@@ -43,16 +53,16 @@
 	const residualRiskDATA = {
 			  datasets: [{
 			    label: 'RESIDUAL RISK',
-			    data: residualRiskDataPoints,
-			   /*  data: [{
+			   // data: residualRiskDataPoints,
+			     data: [{
 			      x: 20,
 			      y: 30,
 			      r: 15
 			    }, {
-			      x: 40,
-			      y: 10,
+			      x: 0.253,
+			      y: 2,
 			      r: 15
-			    }], */
+			    }], 
 			    backgroundColor: 'rgb(0, 0, 0)'
 			  }]
 			};		
@@ -61,6 +71,7 @@
 		  type: 'bubble',
 		  data: residualRiskDATA,
 		  options: {
+			  plugins: { legend: { display: false }, },
 			  animation: { duration: 0},
 			  layout: {
 		            padding: {
@@ -70,23 +81,22 @@
 		                top: 15
 		            }
 		        },
-		        legend: {
-		            display: false
-		          },
+
 			  scales: {
-		            xAxes: [
-		            	{
-		                ticks: { display: false},
-		                gridLines: { display: false,},
-		            	},		            	
-		            	],
+		            x: {
+		                min: 0,
+		                max: 15,
+		            	ticks: { display: false},
+		                grid: { display: false,},
+		            	},		            			            	
 		            
-		            yAxes: [
-		            	{
-		                ticks: { display: false},
-		                gridLines: { display: false,}, 
-		            	},	
-		            ]
+		            y: {
+		                min: 0,
+		                max: 15,
+		            	ticks: { display: false},
+		                grid: { display: false,}, 
+		                reverse: true,
+		            	},			            
 		        }
 		  }
 		};		
@@ -133,6 +143,7 @@
 		  type: 'bubble',
 		  data: assessmentCatDATA,
 		  options: {
+			  plugins: { legend: { display: false }, },
 			  animation: { duration: 0},
 			  layout: {
 		            padding: {
@@ -142,23 +153,17 @@
 		                top: 15
 		            }
 		        },
-		        legend: {
-		            display: false
-		          },
 			  scales: {
-		            xAxes: [
-		            	{
+		            x: {
 		                ticks: { display: false},
-		                gridLines: { display: false,},
+		                grid: { display: false,},
 		            	},		            	
-		            	],
+		            	
 		            
-		            yAxes: [
-		            	{
+		            y: {
 		                ticks: { display: false},
-		                gridLines: { display: false,}, 
-		            	},	
-		            ]
+		                grid: { display: false,}, 
+		            	},			            
 		        }
 		  }
 		};		
