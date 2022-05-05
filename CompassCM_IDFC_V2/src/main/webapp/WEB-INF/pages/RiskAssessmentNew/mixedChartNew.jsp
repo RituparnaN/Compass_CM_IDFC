@@ -17,7 +17,7 @@
 	 <c:set var="totalIR" value="${totalIR + score}" />
 	</c:forEach>
 	</c:forEach>
-	totalWeightedScoreIR = "${totalIR}";
+	totalWeightedScoreIR = ${totalIR};
 	
 	var totalWeightedScoreIC = 0.0
 	<c:set var="totalIC" value="${0}"/>
@@ -26,9 +26,94 @@
 	 <c:set var="totalIC" value="${totalIC + score}" />
 	</c:forEach>
 	</c:forEach>
-	totalWeightedScoreIC = "${totalIC}";
+	totalWeightedScoreIC = ${totalIC};
+	
+	var totalWeightedScoreIR_x = totalWeightedScoreIR;
+	var totalWeightedScoreIC_y = totalWeightedScoreIC;
+	
+		
+/* 	if(totalWeightedScoreIR < 1){
+		totalWeightedScoreIR = totalWeightedScoreIR+0.5;
+	} */
+	
+/* 	if(totalWeightedScoreIC < 1){
+		totalWeightedScoreIC = totalWeightedScoreIC+0.5;
+	} */
+	
+/* 	if(totalWeightedScoreIR_x > 14.5){
+		totalWeightedScoreIR_x = 14;
+	} */
+	
+	/* if(totalWeightedScoreIC > 14.5){
+		totalWeightedScoreIC = 14;
+	} */
+	
+	///
+	if(totalWeightedScoreIR_x <= 2){
+		if(totalWeightedScoreIR_x == 0){
+			totalWeightedScoreIR_x = 0;
+		}
+		if(totalWeightedScoreIR_x > 0 && totalWeightedScoreIR_x < 2){
+			totalWeightedScoreIR_x = (totalWeightedScoreIR_x * 2) + 0.5;
+		}
+		if(totalWeightedScoreIR_x == 2){
+			totalWeightedScoreIR_x = 5;
+		}
+	}
+	
+	else if(totalWeightedScoreIR_x > 2  && totalWeightedScoreIR_x <= 5){
+			totalWeightedScoreIR_x = (totalWeightedScoreIR_x * 2) + 0.5;
+	}
+	
+	else if(totalWeightedScoreIR_x > 5){
+		if(totalWeightedScoreIR_x > 5 && totalWeightedScoreIR_x < 14){
+			totalWeightedScoreIR_x = (totalWeightedScoreIR_x * 3) + 0.5;
+		}
+	}
+	
+	else if(totalWeightedScoreIR_x > 14.5){
+		totalWeightedScoreIR_x = 14;
+	}
+	
+	else{
+		console.log("N.A")
+	}
+	
+	
+	if(totalWeightedScoreIC_y <= 2){
+		if(totalWeightedScoreIC_y == 0){
+			totalWeightedScoreIC_y = 0;
+		}
+		if(totalWeightedScoreIC_y > 0 && totalWeightedScoreIC_y < 2){
+			totalWeightedScoreIC_y = (totalWeightedScoreIC_y * 2) + 0.5;
+		}
+		if(totalWeightedScoreIC_y == 2){
+			totalWeightedScoreIC_y = 5;
+		}
+	}
+	
+	else if(totalWeightedScoreIC_y > 2  && totalWeightedScoreIC_y <= 5){
+			totalWeightedScoreIC_y = (totalWeightedScoreIC_y * 2) + 0.5;
+	}
+	
+	else if(totalWeightedScoreIC_y > 5){
+		if(totalWeightedScoreIC_y > 5 && totalWeightedScoreIC_y < 14){
+			totalWeightedScoreIC_y = (totalWeightedScoreIC_y * 3) + 0.5;
+		}
+	}
+	
+	else if(totalWeightedScoreIC_y > 14.5){
+		totalWeightedScoreIC_y = 14;
+	}
+	
+	else{
+		console.log("N.A")
+	}
+	///
 
-	residualRiskDataPoints.push({x: totalWeightedScoreIR, y: totalWeightedScoreIC, r: 15});
+	alert(totalWeightedScoreIR_x+" "+totalWeightedScoreIC_y)
+	
+	residualRiskDataPoints.push({x: totalWeightedScoreIR_x, y: totalWeightedScoreIC_y, r: 15});
 	
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -38,51 +123,47 @@
 			  datasets: [{
 			    label: 'RESIDUAL RISK',
 			    data: residualRiskDataPoints,
-			   /*  data: [{
-			      x: 20,
-			      y: 30,
-			      r: 15
-			    }, {
-			      x: 40,
-			      y: 10,
-			      r: 15
-			    }], */
-			    backgroundColor: 'rgb(0, 0, 0)'
+			    pointStyle: 'crossRot',
+			    borderWidth: 6,
+			    backgroundColor: 'rgba(0, 0, 0, 1)',
+			    borderColor: 'rgba(0, 0, 0, 1)',
 			  }]
 			};		
 
 	const residualRiskCONFIG = {
-		  type: 'bubble',
-		  data: residualRiskDATA,
-		  options: {
-			  animation: { duration: 0},
-			  layout: {
-		            padding: {
-		                left: 15,
-		                bottom: 15,
-		                right: 15,
-		                top: 15
-		            }
-		        },
-		        legend: {
-		            display: false
-		          },
-			  scales: {
-		            xAxes: [
-		            	{
-		                ticks: { display: false},
-		                gridLines: { display: false,},
-		            	},		            	
-		            	],
-		            
-		            yAxes: [
-		            	{
-		                ticks: { display: false},
-		                gridLines: { display: false,}, 
-		            	},	
-		            ]
-		        }
-		  }
+			  type: 'bubble',
+			  data: residualRiskDATA,
+			  options: {
+				  plugins: { legend: { display: false }, },
+				  animation: { duration: 0},
+				  layout: {
+			            padding: {
+			                left: 15,
+			                bottom: 15,
+			                right: 15,
+			                top: 15
+			            }
+			        },
+
+				  scales: {
+			            x: {
+			            	display: false,
+			            	min: 0,
+			                max: 15,
+			            	ticks: { display: false},
+			                grid: { display: false,},
+			            	},		            			            	
+			            
+			            y: {
+			            	display: false,
+			            	min: 0,
+			                max: 15,
+			            	ticks: { display: false},
+			                grid: { display: false,}, 
+			                reverse: true,
+			            	},			            
+			        }
+			  }
 		};		
 
 	const residualRiskChart = new Chart(residualRiskCTX,residualRiskCONFIG);
@@ -140,19 +221,15 @@
 		            display: false
 		          },
 			  scales: {
-		            xAxes: [
-		            	{
+		            x: {
 		                ticks: { display: false},
 		                gridLines: { display: false,},
 		            	},		            	
-		            	],
 		            
-		            yAxes: [
-		            	{
+		            y:{
 		                ticks: { display: false},
 		                gridLines: { display: false,}, 
 		            	},	
-		            ]
 		        }
 		  }
 		};		

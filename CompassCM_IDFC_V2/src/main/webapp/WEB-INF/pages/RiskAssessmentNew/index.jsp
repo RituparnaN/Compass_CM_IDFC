@@ -61,14 +61,17 @@
 							url : "${pageContext.request.contextPath}/common/mixedChartSummary?ASSESSMENTPERIOD="+assessmentPeriod,
 							type : "POST",
 							cache : false,
-							success : function(res){
+							success : function(res){defalutValueChartDiv
+								document.getElementById("defalutValueChartDiv").style.display = "block";
 								document.getElementById("residualRiskChartDiv").style.display = "block";
 								document.getElementById("assessmentWiseCatChartDiv").style.display = "block";
+								$("#defalutValueChartDiv").html(res);
 								$("#residualRiskChartDiv").html(res);
 								$("#assessmentWiseCatChartDiv").html(res);
 								
 								
 								//MIXED CHART NEW DATA
+								var defalutValueData = $("#defalutValueURL").val();
 								var residualRiskData = $("#residualRiskURL").val();
 								var assessmentWiseCatData = $("#assessmentCatURL").val();
 								
@@ -77,7 +80,9 @@
 								//console.log("totalWeightedScoreIR: "+totalWeightedScoreIR+" "+"totalWeightedScoreIC: "+totalWeightedScoreIC)
 								
 								
-								var data = residualRiskData+"@~@"+assessmentWiseCatData+"@~@"+totalWeightedScoreIR+"@~@"+totalWeightedScoreIC;
+								var data = defalutValueData+"@~@"+residualRiskData+"@~@"+assessmentWiseCatData+"@~@"+totalWeightedScoreIR+"@~@"+totalWeightedScoreIC;
+								
+								document.getElementById("defalutValueChartDiv").style.display = "none";
 								document.getElementById("residualRiskChartDiv").style.display = "none";
 								document.getElementById("assessmentWiseCatChartDiv").style.display = "none";
 								
@@ -190,8 +195,11 @@
 						var totalWeightedScoreIC = $("#totalWeightedScoreIC").val();
 						//console.log("totalWeightedScoreIR: "+totalWeightedScoreIR+" "+"totalWeightedScoreIC: "+totalWeightedScoreIC)
 						
+						var defalutValueData = "NO DATA AVAILABLE";
 						
-						var data = residualRiskData+"@~@"+assessmentWiseCatData+"@~@"+totalWeightedScoreIR+"@~@"+totalWeightedScoreIC;
+						
+						var data = defalutValueData+"@~@"+residualRiskData+"@~@"+assessmentWiseCatData+"@~@"+totalWeightedScoreIR+"@~@"+totalWeightedScoreIC;
+						//var data = residualRiskData+"@~@"+assessmentWiseCatData+"@~@"+totalWeightedScoreIR+"@~@"+totalWeightedScoreIC;
 						document.getElementById("residualRiskChartDiv").style.display = "none";
 						document.getElementById("assessmentWiseCatChartDiv").style.display = "none";
 						
@@ -319,5 +327,6 @@
 	</div>
 </div>
 
+<div id = "defalutValueChartDiv" style="display: block"></div>
 <div id = "residualRiskChartDiv" style="display: block"></div>
 <div id = "assessmentWiseCatChartDiv" style="display: block"></div>

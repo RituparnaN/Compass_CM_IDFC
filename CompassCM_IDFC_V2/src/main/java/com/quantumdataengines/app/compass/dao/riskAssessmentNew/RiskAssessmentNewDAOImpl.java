@@ -2185,10 +2185,11 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 		
 		String imageUrlData = imageUrl;
 		String[] parts = imageUrlData.split("@~@");
-		String a_RESIDUALRISK = parts[0]; 
-		String a_ASSESSMENTWISECAT = parts[1]; 
-		String a_TotalWeightedScoreIR = parts[2];
-		String a_TotalWeightedScoreIC = parts[3];
+		String s_DEFAULTVALUECHART = parts[0];
+		String a_RESIDUALRISK = parts[1]; 
+		String a_ASSESSMENTWISECAT = parts[2]; 
+		String a_TotalWeightedScoreIR = parts[3];
+		String a_TotalWeightedScoreIC = parts[4];
 		
 		String id = "";
 		Connection connection = connectionUtil.getConnection();
@@ -2213,13 +2214,14 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 		id = sb.toString();
 
 		try{
-			String query = "INSERT INTO COMAML_CM.TB_IMAGEDATA VALUES( ?, ?, ?, ?, ?, SYSTIMESTAMP) ";
+			String query = "INSERT INTO COMAML_CM.TB_IMAGEDATA VALUES( ?, ?, ?, ?, ?, ?, SYSTIMESTAMP) ";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, id);
-			preparedStatement.setString(2, a_RESIDUALRISK);
-			preparedStatement.setString(3, a_ASSESSMENTWISECAT);
-			preparedStatement.setString(4, a_TotalWeightedScoreIR);
-			preparedStatement.setString(5, a_TotalWeightedScoreIC);
+			preparedStatement.setString(2, s_DEFAULTVALUECHART);
+			preparedStatement.setString(3, a_RESIDUALRISK);
+			preparedStatement.setString(4, a_ASSESSMENTWISECAT);
+			preparedStatement.setString(5, a_TotalWeightedScoreIR);
+			preparedStatement.setString(6, a_TotalWeightedScoreIC);
 			preparedStatement.executeUpdate();
 		}catch(Exception e){
 			e.printStackTrace();

@@ -45,6 +45,7 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 			HttpServletResponse response) throws Exception {
 		 	String imgId=request.getParameter("imageId");
 	 		//System.out.println("image Id: "+imgId);
+		 	String s_DEFAULTVALUECHART = "";
 	 		String a_RESIDUALRISK = "";
 	 		String a_ASSESSMENTWISECAT = "";
 	 		double a_TOTALWEIGHTEDSCOREIR = 0.0;
@@ -62,9 +63,10 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 	 
 	            con = DriverManager.getConnection(url, user, pass);
 	            Statement st = con.createStatement();
-	            String sql = "SELECT A_RESIDUALRISK, A_ASSESSMENTWISECAT, A_TOTALWEIGHTEDSCOREIR, A_TOTALWEIGHTEDSCOREIC FROM TB_IMAGEDATA WHERE IMAGEID = '"+imgId+"'";
+	            String sql = "SELECT S_DEFAULTVALUECHART, A_RESIDUALRISK, A_ASSESSMENTWISECAT, A_TOTALWEIGHTEDSCOREIR, A_TOTALWEIGHTEDSCOREIC FROM TB_IMAGEDATA WHERE IMAGEID = '"+imgId+"'";
 	            ResultSet m = st.executeQuery(sql);
 	            while(m.next()) {
+	            	s_DEFAULTVALUECHART = m.getString("S_DEFAULTVALUECHART");
 	            	a_RESIDUALRISK = m.getString("A_RESIDUALRISK");
 	            	a_ASSESSMENTWISECAT = m.getString("A_ASSESSMENTWISECAT");
 	            	a_TOTALWEIGHTEDSCOREIR = m.getDouble("A_TOTALWEIGHTEDSCOREIR");
@@ -76,8 +78,11 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 	            System.err.println(ex);
 	        }
 	        
+	        String base64ImageDefaultValueChart = null;
 	        String base64ImageResidualRisk = null;
 	        String base64ImageAssessment = null;
+	        
+	        byte[] imageBytesDefaultValueChart = null;
 	        byte[] imageBytesResidualRisk = null;
 	        byte[] imageBytesAssessment = null;
 	        
@@ -87,6 +92,9 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 	        	//System.out.println("A_ASSESSMENTWISECAT: "+a_ASSESSMENTWISECAT);
 	        	//System.out.println("A_TOTALWEIGHTEDSCOREIR: "+a_TOTALWEIGHTEDSCOREIR);
 	        	//System.out.println("A_TOTALWEIGHTEDSCOREIC: "+a_TOTALWEIGHTEDSCOREIC);
+	        	
+	        	base64ImageDefaultValueChart = s_DEFAULTVALUECHART.split(",")[1];
+	        	imageBytesDefaultValueChart = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64ImageDefaultValueChart);
 	        	
 	        	base64ImageResidualRisk = a_RESIDUALRISK.split(",")[1];
 	        	imageBytesResidualRisk = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64ImageResidualRisk);
@@ -145,6 +153,14 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 			CellStyle lowBg = workbook.createCellStyle();
 			lowBg.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());
 			lowBg.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+			
+			//LOW BG WITH BOLD FONT STYLE
+			CellStyle lowBoldBg = workbook.createCellStyle();
+			lowBoldBg.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());
+			lowBoldBg.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+			Font fontHeaderLow = workbook.createFont();
+			fontHeaderLow.setBold(true);
+			lowBoldBg.setFont(fontHeaderLow);
 			
 			//MEDIUM BG STYLE
 			CellStyle mediumBg = workbook.createCellStyle();
@@ -205,11 +221,11 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 					cell.setCellValue("");
 					cell.setCellStyle(titleStyle);
 					cell = row.createCell(3);
-					cell.setCellValue("");
+					cell.setCellValue("0.0");
 					cell.setCellStyle(titleStyle);
 					cell = row.createCell(4);
-					cell.setCellValue("");
-					cell.setCellStyle(titleStyle);
+					cell.setCellValue("LOW");
+					cell.setCellStyle(lowBoldBg);
 					
 					row = sheet.createRow(2);
 					cell = row.createCell(0);
@@ -287,11 +303,11 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 					cell.setCellValue("");
 					cell.setCellStyle(titleStyle);
 					cell = row.createCell(3);
-					cell.setCellValue("");
+					cell.setCellValue("0.0");
 					cell.setCellStyle(titleStyle);
 					cell = row.createCell(4);
-					cell.setCellValue("");
-					cell.setCellStyle(titleStyle);
+					cell.setCellValue("EFFECTIVE");
+					cell.setCellStyle(lowBoldBg);
 					
 					row = sheet.createRow(8);
 					cell = row.createCell(0);
@@ -415,67 +431,41 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 					
 					int noOfColumns = sheet.getRow(0).getLastCellNum();
 					try {
-						
-						//if(sheet.getSheetName().equals("ASSESSSMENTWISE RISK RATING")){
-
-				 		InputStream baseimageResidualRisk = new FileInputStream("C:\\APPFOLDER\\resources\\CM_MatrixHeatChart\\AssessmentWise\\ResidualRisk.png");
-				 		byte[] bytesResidualRisk = IOUtils.toByteArray(baseimageResidualRisk);
-				 		int pictureResidualRiskBase = workbook.addPicture(bytesResidualRisk, Workbook.PICTURE_TYPE_PNG);
-				 		
-				 		InputStream baseimageAssessment = new FileInputStream("C:\\APPFOLDER\\resources\\CM_MatrixHeatChart\\AssessmentWise\\AssessmentWiseUnitLevelResidualRisk.png");
-				 		byte[] bytesAssessment = IOUtils.toByteArray(baseimageAssessment);
-				 		int pictureAssessmentBase = workbook.addPicture(bytesAssessment, Workbook.PICTURE_TYPE_PNG);
+			
+				 		InputStream baseimageDefaulValue = new FileInputStream("C:\\APPFOLDER\\resources\\CM_MatrixHeatChart\\AssessmentWise\\ResidualRisk.png");
+				 		byte[] bytesDefaultValue = IOUtils.toByteArray(baseimageDefaulValue);
+				 		int pictureDefaultValue = workbook.addPicture(bytesDefaultValue, Workbook.PICTURE_TYPE_PNG);
 				 		
 				 		//chart
-				 		int pictureResidualRiskChart = workbook.addPicture(imageBytesResidualRisk, Workbook.PICTURE_TYPE_PNG);
-				 		int pictureAssessmentChart = workbook.addPicture(imageBytesAssessment, Workbook.PICTURE_TYPE_PNG);
+				 		int pictureDefaultValueChart = workbook.addPicture(imageBytesDefaultValueChart, Workbook.PICTURE_TYPE_PNG);
 				 		 
 				 		CreationHelper helper = workbook.getCreationHelper();
 				 		
-		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-				 		Drawing drawingResidualRisk = sheet.createDrawingPatriarch();
-				 		ClientAnchor anchorBaseResidualRisk = helper.createClientAnchor();		 		
-				 		ClientAnchor anchorChartResidualRisk = helper.createClientAnchor();		 		
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				 		Drawing drawingDefaultValue = sheet.createDrawingPatriarch();
+				 		ClientAnchor anchorBaseDefaultValue = helper.createClientAnchor();		 		
+				 		ClientAnchor anchorChartDefaultValue = helper.createClientAnchor();		 		
 				 		//base image 
-				 		   anchorBaseResidualRisk.setCol1(noOfColumns+6);
-						   anchorBaseResidualRisk.setRow1(1);
-						   anchorBaseResidualRisk.setCol2(noOfColumns+11);
-						   anchorBaseResidualRisk.setRow2(11); 
+				 			anchorBaseDefaultValue.setCol1(noOfColumns+6);
+				 			anchorBaseDefaultValue.setRow1(1);
+				 			anchorBaseDefaultValue.setCol2(noOfColumns+11);
+				 			anchorBaseDefaultValue.setRow2(11); 
 						   //CHART IMAGE
-						   anchorChartResidualRisk.setCol1(noOfColumns+7);
-						   anchorChartResidualRisk.setRow1(2); 
-						   anchorChartResidualRisk.setCol2(noOfColumns+11);
-						   anchorChartResidualRisk.setRow2(10); 				   
+				 			anchorChartDefaultValue.setCol1(noOfColumns+7);
+				 			anchorChartDefaultValue.setRow1(2); 
+				 			anchorChartDefaultValue.setCol2(noOfColumns+11);
+				 			anchorChartDefaultValue.setRow2(10); 				   
 				 		 //Creates a picture
-						 anchorBaseResidualRisk.setAnchorType(AnchorType.DONT_MOVE_AND_RESIZE);//set anchor type
-						 anchorChartResidualRisk.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);
+				 			anchorBaseDefaultValue.setAnchorType(AnchorType.DONT_MOVE_AND_RESIZE);//set anchor type
+				 			anchorChartDefaultValue.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);
 						 
-					 	Drawing drawingAssessmentWise = sheet.createDrawingPatriarch();
-					 	ClientAnchor anchorBaseAssessmentWise = helper.createClientAnchor();		 		
-					 	ClientAnchor anchorChartAssessmentWise = helper.createClientAnchor();		 		
-					 	//base image 
-					 		anchorBaseAssessmentWise.setCol1(noOfColumns+6);
-					 		anchorBaseAssessmentWise.setRow1(12);
-					 		anchorBaseAssessmentWise.setCol2(noOfColumns+12);
-					 		anchorBaseAssessmentWise.setRow2(22); 
-						//CHART IMAGE
-					 		anchorChartAssessmentWise.setCol1(noOfColumns+7);
-					 		anchorChartAssessmentWise.setRow1(13); 
-					 		anchorChartAssessmentWise.setCol2(noOfColumns+11);
-					 		anchorChartAssessmentWise.setRow2(21); 				   
-					 	//Creates a picture
-					 	anchorBaseAssessmentWise.setAnchorType(AnchorType.DONT_MOVE_AND_RESIZE);//set anchor type
-					 	anchorChartAssessmentWise.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);
 						 
-		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-				 		 Picture createBaseResidualRisk = drawingResidualRisk.createPicture(anchorBaseResidualRisk, pictureResidualRiskBase);
-				 		 Picture createChartResidualRisk = drawingResidualRisk.createPicture(anchorChartResidualRisk, pictureResidualRiskChart);
-				 		 //Picture createBaseAssessmentWise = drawingResidualRisk.createPicture(anchorBaseAssessmentWise, pictureAssessmentBase);
-				 		 //Picture createChartAssessmentWise = drawingResidualRisk.createPicture(anchorChartAssessmentWise, pictureAssessmentChart);
-				 		//  }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				 		 Picture createBaseDefaultValue = drawingDefaultValue.createPicture(anchorBaseDefaultValue, pictureDefaultValue);
+				 		 Picture createChartDefaultValue = drawingDefaultValue.createPicture(anchorChartDefaultValue, pictureDefaultValueChart);
+
 					}
 					catch(Exception e) {
-						//System.out.println("error while inserting graph in report");
 						e.printStackTrace();
 					}
 								

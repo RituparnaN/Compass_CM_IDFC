@@ -32,15 +32,22 @@
 	 <c:set var="totalIC" value="${totalIC + score}" />
 	</c:forEach>
 	</c:forEach>
+	
 	totalWeightedScoreIC = "${totalIC}";
 	
-	if(totalWeightedScoreIR < 1 || totalWeightedScoreIC < 1){
+	if(totalWeightedScoreIR < 1){
 		totalWeightedScoreIR = totalWeightedScoreIR+0.5;
+	}
+	
+	if(totalWeightedScoreIC < 1){
 		totalWeightedScoreIC = totalWeightedScoreIC+0.5;
 	}
 	
-	if(totalWeightedScoreIR > 14.5 || totalWeightedScoreIC > 14.5){
+	if(totalWeightedScoreIR > 14.5){
 		totalWeightedScoreIR = 14;
+	}
+	
+	if(totalWeightedScoreIC > 14.5){
 		totalWeightedScoreIC = 14;
 	}
 
@@ -48,13 +55,73 @@
 	
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
+	//DEFAULT VALUE CHART CREATION STARTED
+	const defalutValueCTX=document.getElementById('defalutValueCanvas').getContext('2d');
+	const defalutValueDATA = {
+			  datasets: [{
+			    label: 'DEFAULT VALUE RISK',
+			    data: [{
+			      x: 0.5,
+			      y: 0.5,
+			      r: 20
+			    },],
+			    pointStyle: 'crossRot',
+			    borderWidth: 6,
+			    backgroundColor: 'rgba(0, 0, 0, 1)',
+			    borderColor: 'rgba(0, 0, 0, 1)',
+			  }]
+			};		
+
+	const defalutValueCONFIG = {
+		  type: 'bubble',
+		  data: defalutValueDATA,
+		  options: {
+			  plugins: { legend: { display: false }, },
+			  animation: { duration: 0},
+			  layout: {
+		            padding: {
+		                left: 15,
+		                bottom: 15,
+		                right: 15,
+		                top: 15
+		            }
+		        },
+
+			  scales: {
+		            x: {
+		            	display: false,
+		            	min: 0,
+		                max: 15,
+		            	ticks: { display: false},
+		                grid: { display: false,},
+		            	},		            			            	
+		            
+		            y: {
+		            	display: false,
+		            	min: 0,
+		                max: 15,
+		            	ticks: { display: false},
+		                grid: { display: false,}, 
+		                reverse: true,
+		            	},			            
+		        }
+		  }
+		};		
+
+	const defalutValueChart = new Chart(defalutValueCTX, defalutValueCONFIG);
+	var defalutValueIMAGE = defalutValueChart.toBase64Image();
+	document.getElementById("defalutValueURL").value = defalutValueIMAGE;
+	defalutValueChart.destroy();
+	//DEFALUT VALUE CHART CREATION ENDED
+	
+	
 	//RESIDUAL RISK CHART CREATION STARTED
 	const residualRiskCTX=document.getElementById('residualRiskCanvas').getContext('2d');
 	const residualRiskDATA = {
 			  datasets: [{
 			    label: 'RESIDUAL RISK',
-			   // data: residualRiskDataPoints,
-			     data: [{
+			    data: residualRiskDataPoints,
+			     /* data: [{
 			      x: 20,
 			      y: 30,
 			      r: 15
@@ -62,7 +129,7 @@
 			      x: 0.253,
 			      y: 2,
 			      r: 15
-			    }], 
+			    }], */ 
 			    backgroundColor: 'rgb(0, 0, 0)'
 			  }]
 			};		
@@ -84,14 +151,16 @@
 
 			  scales: {
 		            x: {
-		                min: 0,
+		            	display: false,
+		            	min: 0,
 		                max: 15,
 		            	ticks: { display: false},
 		                grid: { display: false,},
 		            	},		            			            	
 		            
 		            y: {
-		                min: 0,
+		            	display: false,
+		            	min: 0,
 		                max: 15,
 		            	ticks: { display: false},
 		                grid: { display: false,}, 
@@ -178,7 +247,7 @@
 	
 	
 
-	
+	//SET VALUE ON INPUT TYPE
 	document.getElementById("totalWeightedScoreIR").value = totalWeightedScoreIR;
 	document.getElementById("totalWeightedScoreIC").value = totalWeightedScoreIC;
 
@@ -188,8 +257,10 @@
 <div>	
 	<form action="imagedata" method="post" id = "chartForm">
 		<div>
+			<canvas id="defalutValueCanvas"></canvas>
 			<canvas id="residualRiskCanvas"></canvas>
-			<canvas id="assessmentCatCanvas"></canvas>				
+			<canvas id="assessmentCatCanvas"></canvas>
+			<input type="text" id="defalutValueURL" name="defalutValueURL"/>				
 			<input type="text" id="residualRiskURL" name="residualRiskURL"/>
 			<input type="text" id="assessmentCatURL" name="assessmentCatURL"/>
 			
