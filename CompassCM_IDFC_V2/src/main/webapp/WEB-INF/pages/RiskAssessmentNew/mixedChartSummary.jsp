@@ -10,48 +10,105 @@
 	
 	
 	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS}">
-		console.log("DATAPOINTS: ","${dataPointLabel}")
+		//console.log("DATAPOINTS: ","${dataPointLabel}")
 	</c:forEach>
 	
 	
-	//RESIDUAL RISK CHART CALCULATION
+	//TRESURY CHART CALCULATION
 	var residualRiskDataPoints = []	
-	var totalWeightedScoreIR = 0.0
-	<c:set var="totalIR" value="${0}"/>
-	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.InherentRisk}">
-	<c:forEach var = "score" items = "${dataPointLabel.WEIGHTED_SCORE}">
-	 <c:set var="totalIR" value="${totalIR + score}" />
+	var totalTresuryIR = 0.0
+	<c:set var="totalIR_T" value="${0}"/>
+	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.TreasuryInherentRisk}">
+	<c:forEach var = "score" items = "${dataPointLabel.FINALRISKRATING}">
+	 <c:set var="totalIR_T" value="${totalIR_T + score}" />
+	 console.log("${totalIR_T}")
 	</c:forEach>
 	</c:forEach>
-	totalWeightedScoreIR = "${totalIR}";
-	
-	var totalWeightedScoreIC = 0.0
-	<c:set var="totalIC" value="${0}"/>
-	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.InternalControl}">
-	<c:forEach var = "score" items = "${dataPointLabel.WEIGHTED_SCORE}">
-	 <c:set var="totalIC" value="${totalIC + score}" />
-	</c:forEach>
-	</c:forEach>
-	
-	totalWeightedScoreIC = "${totalIC}";
-	
-	if(totalWeightedScoreIR < 1){
-		totalWeightedScoreIR = totalWeightedScoreIR+0.5;
-	}
-	
-	if(totalWeightedScoreIC < 1){
-		totalWeightedScoreIC = totalWeightedScoreIC+0.5;
-	}
-	
-	if(totalWeightedScoreIR > 14.5){
-		totalWeightedScoreIR = 14;
-	}
-	
-	if(totalWeightedScoreIC > 14.5){
-		totalWeightedScoreIC = 14;
-	}
+	totalTresuryIR = ${totalIR_T};
 
-	residualRiskDataPoints.push({x: totalWeightedScoreIR, y: totalWeightedScoreIC, r: 15});
+	
+	var totalTresuryIC = 0.0
+	<c:set var="totalIC_T" value="${0}"/>
+	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.TreasuryInternalControl}">
+	<c:forEach var = "score" items = "${dataPointLabel.FINALRISKRATING}">
+	 <c:set var="totalIC_T" value="${totalIC_T + score}" />
+	 console.log("${totalIC_T}")
+	</c:forEach>
+	</c:forEach>
+	totalTresuryIC = ${totalIC_T};
+
+	
+	
+	
+	//RL chart Calculation
+	var totalRetailLiabiltiesIR = 0.0
+	<c:set var="totalIR_RL" value="${0}"/>
+	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.RetailLiabilitiesInherentRisk}">
+	<c:forEach var = "score" items = "${dataPointLabel.FINALRISKRATING}">
+	 <c:set var="totalIR_RL" value="${totalIR_RL + score}" />
+	 console.log("${totalIR_RL}")
+	</c:forEach>
+	</c:forEach>
+	totalRetailLiabiltiesIR = ${totalIR_RL};
+
+	
+	var totalRetailLiabiltiesIC = 0.0
+	<c:set var="totalIC_RL" value="${0}"/>
+	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.RetailLiabilitiesInternalControl}">
+	<c:forEach var = "score" items = "${dataPointLabel.FINALRISKRATING}">
+	 <c:set var="totalIC_RL" value="${totalIC_RL + score}" />
+	 console.log("${totalIC_RL}")
+	</c:forEach>
+	</c:forEach>
+	totalRetailLiabiltiesIC = ${totalIC_RL};
+
+	
+	
+	// RA Chart calculation
+	var totalRetailAssetsIR = 0.0
+	<c:set var="totalIR_RA" value="${0}"/>
+	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.RetailAssetsInherentRisk}">
+	<c:forEach var = "score" items = "${dataPointLabel.FINALRISKRATING}">
+	 <c:set var="totalIR_RA" value="${totalIR_RA + score}" />
+	 console.log("${totalIR_RA}")
+	</c:forEach>
+	</c:forEach>
+	totalRetailAssetsIR = ${totalIR_RA};
+
+	
+	var totalRetailAssetsIC = 0.0
+	<c:set var="totalIC_RA" value="${0}"/>
+	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.RetailAssetsInternalControl}">
+	<c:forEach var = "score" items = "${dataPointLabel.FINALRISKRATING}">
+	 <c:set var="totalIC_RA" value="${totalIC_RA + score}" />
+	 console.log("${totalIC_RA}")
+	</c:forEach>
+	</c:forEach>
+	totalRetailAssetsIC = ${totalIC_RA};
+
+	
+	//WB chart calculation
+	var totalWholesaleIR = 0.0
+	<c:set var="totalIR_WB" value="${0}"/>
+	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.WholesaleBankingInherentRisk}">
+	<c:forEach var = "score" items = "${dataPointLabel.FINALRISKRATING}">
+	 <c:set var="totalIR_WB" value="${totalIR_WB + score}" />
+	 console.log("${totalIR_WB}")
+	</c:forEach>
+	</c:forEach>
+	totalWholesaleIR = ${totalIR_WB};
+
+	
+	var totalWholesaleIC = 0.0
+	<c:set var="totalIC_WB" value="${0}"/>
+	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.WholesaleBankingInternalControl}">
+	<c:forEach var = "score" items = "${dataPointLabel.FINALRISKRATING}">
+	 <c:set var="totalIC_WB" value="${totalIC_WB + score}" />
+	 console.log("${totalIC_WB}")
+	</c:forEach>
+	</c:forEach>
+	totalWholesaleIC = ${totalIC_WB};
+
 	
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -239,8 +296,17 @@
 	
 
 	//SET VALUE ON INPUT TYPE
-	document.getElementById("totalWeightedScoreIR").value = totalWeightedScoreIR;
-	document.getElementById("totalWeightedScoreIC").value = totalWeightedScoreIC;
+	document.getElementById("totalTresuryIR").value = totalTresuryIR;
+	document.getElementById("totalTresuryIC").value = totalTresuryIC;
+	
+	document.getElementById("totalRetailLiabiltiesIR").value = totalRetailLiabiltiesIR;
+	document.getElementById("totalRetailLiabiltiesIC").value = totalRetailLiabiltiesIC;
+	
+	document.getElementById("totalRetailAssetsIR").value = totalRetailAssetsIR;
+	document.getElementById("totalRetailAssetsIC").value = totalRetailAssetsIC;
+	
+	document.getElementById("totalWholesaleIR").value = totalWholesaleIR;
+	document.getElementById("totalWholesaleIC").value = totalWholesaleIC;
 
 		
 </script>
@@ -255,8 +321,17 @@
 			<input type="text" id="residualRiskURL" name="residualRiskURL"/>
 			<input type="text" id="assessmentCatURL" name="assessmentCatURL"/>
 			
-			<input type="text" id="totalWeightedScoreIR" name="totalWeightedScoreIR"/>
-			<input type="text" id="totalWeightedScoreIC" name="totalWeightedScoreIC"/>
+			<input type="text" id="totalTresuryIR" name="totalTresuryIR"/>
+			<input type="text" id="totalTresuryIC" name="totalTresuryIC"/>
+			
+			<input type="text" id="totalRetailLiabiltiesIR" name="totalRetailLiabiltiesIR"/>
+			<input type="text" id="totalRetailLiabiltiesIC" name="totalRetailLiabiltiesIC"/>
+			
+			<input type="text" id="totalRetailAssetsIR" name="totalRetailAssetsIR"/>
+			<input type="text" id="totalRetailAssetsIC" name="totalRetailAssetsIC"/>
+			
+			<input type="text" id="totalWholesaleIR" name="totalWholesaleIR"/>
+			<input type="text" id="totalWholesaleIC" name="totalWholesaleIC"/>
 		</div>
 	</form>
 </div>

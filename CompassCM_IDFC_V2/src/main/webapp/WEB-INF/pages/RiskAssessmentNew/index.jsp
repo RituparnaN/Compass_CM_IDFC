@@ -75,12 +75,26 @@
 								var residualRiskData = $("#residualRiskURL").val();
 								var assessmentWiseCatData = $("#assessmentCatURL").val();
 								
-								var totalWeightedScoreIR = $("#totalWeightedScoreIR").val();
-								var totalWeightedScoreIC = $("#totalWeightedScoreIC").val();
-								//console.log("totalWeightedScoreIR: "+totalWeightedScoreIR+" "+"totalWeightedScoreIC: "+totalWeightedScoreIC)
+								var bl_IR = $("#residualRiskURL").val();
+								var bl_IC = $("#assessmentCatURL").val();
+								
+								var totalTresuryIR = $("#totalTresuryIR").val();
+								var totalTresuryIC = $("#totalTresuryIC").val();
+								var totalRetailLiabiltiesIR = $("#totalRetailLiabiltiesIR").val();
+								var totalRetailLiabiltiesIC = $("#totalRetailLiabiltiesIC").val();
+								var totalRetailAssetsIR = $("#totalRetailAssetsIR").val();
+								var totalRetailAssetsIC = $("#totalRetailAssetsIC").val();
+								var totalWholesaleIR = $("#totalWholesaleIR").val();
+								var totalWholesaleIC = $("#totalWholesaleIC").val();
+								console.log("totalTresuryIR: "+totalTresuryIR+" "+"totalTresuryIC: "+totalTresuryIC+
+										"totalRetailLiabiltiesIR: "+totalRetailLiabiltiesIR+" "+"totalRetailLiabiltiesIC: "+totalRetailLiabiltiesIC+
+										"totalRetailAssetsIR: "+totalRetailAssetsIR+" "+"totalRetailAssetsIC: "+totalRetailAssetsIC+
+										"totalWholesaleIR: "+totalWholesaleIR+" "+"totalWholesaleIC: "+totalWholesaleIC)
 								
 								
-								var data = defalutValueData+"@~@"+residualRiskData+"@~@"+assessmentWiseCatData+"@~@"+totalWeightedScoreIR+"@~@"+totalWeightedScoreIC;
+								var data = defalutValueData+"@~@"+residualRiskData+"@~@"+assessmentWiseCatData+"@~@"+bl_IR+"@~@"+bl_IC
+											+totalTresuryIR+"@~@"+totalTresuryIC+"@~@"+totalRetailLiabiltiesIR+"@~@"+totalRetailLiabiltiesIC
+											+totalRetailAssetsIR+"@~@"+totalRetailAssetsIC+"@~@"+totalWholesaleIR+"@~@"+totalWholesaleIC;
 								
 								document.getElementById("defalutValueChartDiv").style.display = "none";
 								document.getElementById("residualRiskChartDiv").style.display = "none";

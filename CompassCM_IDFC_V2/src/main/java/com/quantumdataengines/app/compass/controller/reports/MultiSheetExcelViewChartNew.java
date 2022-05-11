@@ -44,7 +44,7 @@ public class MultiSheetExcelViewChartNew extends AbstractExcelView {
 	protected void buildExcelDocument(Map<String, Object> model, Workbook workbook, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		 	String imgId=request.getParameter("imageId");
-	 		System.out.println("image Id: "+imgId);
+	 		//System.out.println("image Id: "+imgId);
 	 		String a_RESIDUALRISK = "";
 	 		String a_ASSESSMENTWISECAT = "";
 	 		double a_TOTALWEIGHTEDSCOREIR = 0.0;
@@ -83,10 +83,10 @@ public class MultiSheetExcelViewChartNew extends AbstractExcelView {
 	        
 	        try {
 	        	
-	        	System.out.println("A_RESIDUALRISK: "+a_RESIDUALRISK);
-	        	System.out.println("A_ASSESSMENTWISECAT: "+a_ASSESSMENTWISECAT);
-	        	System.out.println("A_TOTALWEIGHTEDSCOREIR: "+a_TOTALWEIGHTEDSCOREIR);
-	        	System.out.println("A_TOTALWEIGHTEDSCOREIC: "+a_TOTALWEIGHTEDSCOREIC);
+	        	//System.out.println("A_RESIDUALRISK: "+a_RESIDUALRISK);
+	        	//System.out.println("A_ASSESSMENTWISECAT: "+a_ASSESSMENTWISECAT);
+	        	//System.out.println("A_TOTALWEIGHTEDSCOREIR: "+a_TOTALWEIGHTEDSCOREIR);
+	        	//System.out.println("A_TOTALWEIGHTEDSCOREIC: "+a_TOTALWEIGHTEDSCOREIC);
 	        	
 	        	base64ImageResidualRisk = a_RESIDUALRISK.split(",")[1];
 	        	imageBytesResidualRisk = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64ImageResidualRisk);
@@ -399,7 +399,7 @@ public class MultiSheetExcelViewChartNew extends AbstractExcelView {
 			
 			int totalRows=currentRow;
 
-			System.out.println("Total Column: "+noOfColumns);
+			//System.out.println("Total Column: "+noOfColumns);
 			
 			try {
 				
@@ -462,7 +462,7 @@ public class MultiSheetExcelViewChartNew extends AbstractExcelView {
 		 		//  }
 			}
 			catch(Exception e) {
-				System.out.println("error while inserting graph in report");
+				//System.out.println("error while inserting graph in report");
 				e.printStackTrace();
 			}
 	 		

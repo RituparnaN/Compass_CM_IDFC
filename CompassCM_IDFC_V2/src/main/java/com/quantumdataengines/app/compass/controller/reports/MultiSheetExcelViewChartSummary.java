@@ -27,6 +27,7 @@ import org.apache.poi.ss.usermodel.Picture;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.usermodel.ClientAnchor.AnchorType;
 import org.apache.poi.util.IOUtils;
 import org.apache.poi.xssf.usermodel.XSSFFont;
@@ -197,8 +198,8 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 					|| (sheet.getSheetName().equals("RETAIL ASSETS") && listResultData.size() == 0) 
 					|| (sheet.getSheetName().equals("WHOLESALE BANKING") && listResultData.size() == 0)){
 				
-					System.out.println("Sheet name passes condition: "+sheet.getSheetName());		
-					System.out.println("listResultData size: "+listResultData.size());
+					//System.out.println("Sheet name passes condition: "+sheet.getSheetName());		
+					//System.out.println("listResultData size: "+listResultData.size());
 					
 					Row row;
 					Cell cell;
@@ -491,10 +492,10 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 					|| (sheet.getSheetName().equals("WHOLESALE BANKING") && listResultData.size() != 0)){
 
 			
-			System.out.println("Sheet name NOT passes condition: "+sheet.getSheetName());
+			//System.out.println("Sheet name NOT passes condition: "+sheet.getSheetName());
 			
 			
-			System.out.println("listResultData size: "+listResultData.size());
+			//System.out.println("listResultData size: "+listResultData.size());
 
 			String[] l_Headers = {};
 			for (ArrayList<String> listHeader : listResultHeader) {
@@ -708,10 +709,10 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 
 
 				
-				System.out.println("Sheet name NOT passes condition: "+sheet.getSheetName());
+				//System.out.println("Sheet name NOT passes condition: "+sheet.getSheetName());
 				
 				
-				System.out.println("listResultData size: "+listResultData.size());
+				//System.out.println("listResultData size: "+listResultData.size());
 
 				String[] l_Headers = {};
 				for (ArrayList<String> listHeader : listResultHeader) {
@@ -723,13 +724,102 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 
 				//sheet.setDefaultColumnWidth((int) l_Headers.length);
 
-				int currentRow = 1;
+				int currentRow = 2;
 				Row row;
 				Cell cell;
 				
+					
+				row = sheet.createRow(0);
+				cell = row.createCell(0);
+				cell.setCellValue("SrNo");
+				cell.setCellStyle(headerStyle);
+				cell = row.createCell(1);
+				cell.setCellValue("Risk Factor / Risk Component");
+				cell.setCellStyle(headerStyle);
+				cell = row.createCell(2);
+				cell.setCellValue("Weight");
+				cell.setCellStyle(headerStyle);
+				
+				cell = row.createCell(3);
+				cell.setCellValue("Tresury");
+				cell.setCellStyle(headerStyle);
+				sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 4));
+				
+				cell = row.createCell(5);
+				cell.setCellValue("Retail Liabilities");
+				cell.setCellStyle(headerStyle);
+				sheet.addMergedRegion(new CellRangeAddress(0, 0, 5, 6));
+				
+				cell = row.createCell(7);
+				cell.setCellValue("Retail Assets");
+				cell.setCellStyle(headerStyle);
+				sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 8));
+				
+				cell = row.createCell(9);
+				cell.setCellValue("Wholesale");
+				cell.setCellStyle(headerStyle);
 				
 				
-				row = sheet.createRow(1);
+				cell = row.createCell(10);
+				cell.setCellValue("Banking");
+				cell.setCellStyle(headerStyle);
+				//sheet.addMergedRegion(new CellRangeAddress(0, 0, 9, 10));
+				
+				
+				
+
+				for (int i = 0; i < l_Headers.length; i++) {
+					Cell header0 = getCell(sheet, 1, i);
+					setText(header0, l_Headers[i]);
+					header0.setCellStyle(headerStyle);
+				}
+				
+				
+				int noOfColumns = sheet.getRow(0).getLastCellNum();
+				
+
+	            for (int i = 1; i == 1 ; i++) {
+	            			row = sheet.getRow(i);
+	            			for(int j = 0; j < noOfColumns; j++){
+	            				//if(j == 4 || j == 6 || j == 8 || j == 10){
+	            					cell = row.getCell(j);
+	            					//System.out.println("INSIDE HEADER!!");
+
+	            					if(cell.getStringCellValue().equals("SRNO")){
+	            						cell.setCellValue("");
+	            						cell.setCellStyle(headerStyle);
+	            					}
+	            					if(cell.getStringCellValue().equals("CATEGORY")){
+	            						cell.setCellValue("");
+	            						cell.setCellStyle(headerStyle);
+	            					}
+	            					if(cell.getStringCellValue().equals("WEIGHT")){
+	            						cell.setCellValue("");
+	            						cell.setCellStyle(headerStyle);
+	            					}	            					
+	            					if(cell.getStringCellValue().equals("T_SCORE") || cell.getStringCellValue().equals("RA_SCORE") || 
+	            							cell.getStringCellValue().equals("RL_SCORE") || cell.getStringCellValue().equals("WB_SCORE")){
+	            						cell.setCellValue("Score");
+	            						cell.setCellStyle(titleStyle);
+	            					}
+	            					if(cell.getStringCellValue().equals("T_RESULT") || cell.getStringCellValue().equals("RA_RESULT") || 
+	            							cell.getStringCellValue().equals("RL_RESULT") || cell.getStringCellValue().equals("WB_RESULT")){
+	            						cell.setCellValue("Result");
+	            						cell.setCellStyle(titleStyle);
+	            					}
+	            					
+	            					
+	            					
+
+	            				//}
+	            				
+	            			}           			
+	            		}
+				
+				
+				
+				
+				row = sheet.createRow(2);
 				cell = row.createCell(0);
 				cell.setCellValue("");
 				cell.setCellStyle(titleStyle);
@@ -741,37 +831,28 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 				cell.setCellStyle(titleStyle);
 				cell = row.createCell(3);
 				cell.setCellValue("");
-				cell.setCellStyle(titleStyle);
+				cell.setCellStyle(totalBg);
 				cell = row.createCell(4);
 				cell.setCellValue("");
-				cell.setCellStyle(titleStyle);
+				cell.setCellStyle(totalBg);
 				cell = row.createCell(5);
 				cell.setCellValue("");
-				cell.setCellStyle(titleStyle);
+				cell.setCellStyle(totalBg);
 				cell = row.createCell(6);
 				cell.setCellValue("");
-				cell.setCellStyle(titleStyle);
+				cell.setCellStyle(totalBg);
 				cell = row.createCell(7);
 				cell.setCellValue("");
-				cell.setCellStyle(titleStyle);
+				cell.setCellStyle(totalBg);
 				cell = row.createCell(8);
 				cell.setCellValue("");
-				cell.setCellStyle(titleStyle);
+				cell.setCellStyle(totalBg);
 				cell = row.createCell(9);
 				cell.setCellValue("");
-				cell.setCellStyle(titleStyle);
+				cell.setCellStyle(totalBg);
 				cell = row.createCell(10);
 				cell.setCellValue("");
-				cell.setCellStyle(titleStyle);		
-				
-				
-				
-
-				for (int i = 0; i < l_Headers.length; i++) {
-					Cell header0 = getCell(sheet, 0, i);
-					setText(header0, l_Headers[i]);
-					header0.setCellStyle(headerStyle);
-				}
+				cell.setCellStyle(totalBg);	
 				
 				
 
@@ -783,7 +864,7 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 					for (String strResult : listResult) {
 						
 						
-						if(currentRow == 6){
+						if(currentRow == 7){
 							currentRow++;
 							Row row1 = sheet.createRow(currentRow);
 							cell = row1.createCell(0);
@@ -797,28 +878,28 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 							cell.setCellStyle(titleStyle);
 							cell = row1.createCell(3);
 							cell.setCellValue("");
-							cell.setCellStyle(titleStyle);
+							cell.setCellStyle(totalBg);
 							cell = row1.createCell(4);
 							cell.setCellValue("");
-							cell.setCellStyle(titleStyle);
+							cell.setCellStyle(totalBg);
 							cell = row1.createCell(5);
 							cell.setCellValue("");
-							cell.setCellStyle(titleStyle);
+							cell.setCellStyle(totalBg);
 							cell = row1.createCell(6);
 							cell.setCellValue("");
-							cell.setCellStyle(titleStyle);
+							cell.setCellStyle(totalBg);
 							cell = row1.createCell(7);
 							cell.setCellValue("");
-							cell.setCellStyle(titleStyle);
+							cell.setCellStyle(totalBg);
 							cell = row1.createCell(8);
 							cell.setCellValue("");
-							cell.setCellStyle(titleStyle);
+							cell.setCellStyle(totalBg);
 							cell = row1.createCell(9);
 							cell.setCellValue("");
-							cell.setCellStyle(titleStyle);
+							cell.setCellStyle(totalBg);
 							cell = row1.createCell(10);
 							cell.setCellValue("");
-							cell.setCellStyle(titleStyle);
+							cell.setCellStyle(totalBg);
 							
 						}
 						
@@ -830,32 +911,30 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 					
 				}
 				
-				int noOfColumns = sheet.getRow(0).getLastCellNum();
 				
+	            for (int i = 3; i <= 7 ; i++) {
+        			row = sheet.getRow(i);
+        			for(int j = 0; j < noOfColumns; j++){
+        				if(j == 4 || j == 6 || j == 8 || j == 10){
+        					cell = row.getCell(j);
 
-	            for (int i = 2; i <= 6 ; i++) {
-	            			row = sheet.getRow(i);
-	            			for(int j = 0; j < noOfColumns; j++){
-	            				if(j == 4 || j == 6 || j == 8 || j == 10){
-	            					cell = row.getCell(j);
+        					if(cell.getStringCellValue().equals("LOW")){
+        						cell.setCellStyle(lowBg);
+        					}
+        					else if(cell.getStringCellValue().equals("MEDIUM")){
+        						cell.setCellStyle(mediumBg);
+        					}
+        					else{
+        						cell.setCellStyle(highBg);
+        					}
 
-	            					if(cell.getStringCellValue().equals("LOW")){
-	            						cell.setCellStyle(lowBg);
-	            					}
-	            					else if(cell.getStringCellValue().equals("MEDIUM")){
-	            						cell.setCellStyle(mediumBg);
-	            					}
-	            					else{
-	            						cell.setCellStyle(highBg);
-	            					}
-
-	            				}
-	            				
-	            			}           			
-	            		}
+        				}
+        				
+        			}           			
+        		}
 	            
 	            		
-	            for (int i = 8; i <= 16 ; i++) {
+	            for (int i = 9; i <= 17 ; i++) {
         			row = sheet.getRow(i);
         			for(int j = 0; j < noOfColumns; j++){
         				if(j == 4 || j == 6 || j == 8 || j == 10){
