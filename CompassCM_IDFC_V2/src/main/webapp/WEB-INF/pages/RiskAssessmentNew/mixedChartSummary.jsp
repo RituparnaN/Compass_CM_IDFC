@@ -190,7 +190,7 @@
 	var bankLevelResidualRisk = [];
 	bankLevelResidualRisk.push({x: total_of_IR, y: total_of_IC, r: 20});
 	
-	if(totalTresuryIR == 0)
+/* 	if(totalTresuryIR == 0)
 	{totalTresuryIR = 0.5}
 	else if(totalTresuryIR > 14.5)
 	{totalTresuryIR = 14}
@@ -232,7 +232,7 @@
 	
 	else{
 		console.log()
-	}
+	} */
 
 	residualRiskDataPoints.push({x: totalTresuryIR, y: totalTresuryIC, r: 20})
 	residualRiskDataPoints.push({x: totalRetailLiabiltiesIR, y: totalRetailLiabiltiesIC, r: 20})
