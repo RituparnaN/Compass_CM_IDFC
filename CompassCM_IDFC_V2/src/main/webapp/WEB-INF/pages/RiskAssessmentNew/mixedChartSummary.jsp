@@ -108,7 +108,136 @@
 	</c:forEach>
 	</c:forEach>
 	totalWholesaleIC = ${totalIC_WB};
+	
+	total_of_IR = (totalTresuryIR + totalRetailLiabiltiesIR + totalRetailAssetsIR + totalWholesaleIR)/4;
+	total_of_IC = (totalTresuryIC + totalRetailLiabiltiesIC + totalRetailAssetsIC + totalWholesaleIC)/4;
+	
+	
+	if(total_of_IR <= 2){
+		if(total_of_IR == 0){
+			total_of_IR = 0;
+		}
+		if(total_of_IR > 0 && total_of_IR < 2){
+			total_of_IR = (total_of_IR * 2) + 0.5;
+		}
+		if(total_of_IR == 2){
+			total_of_IR = 5;
+		}
+	}
+	
+	else if(total_of_IR > 2  && total_of_IR <= 5){
+			total_of_IR = (total_of_IR * 2) + 0.5;
+	}
+	
+	else if(total_of_IR > 5 && total_of_IR <= 14){
+		if(total_of_IR > 5 && total_of_IR < 8){
+			total_of_IR = (total_of_IR * 1.5) + 0.5;
+		}
+		if(total_of_IR > 8 && total_of_IR < 10){
+			total_of_IR = (total_of_IR * 1.2) + 0.5;
+		}
+		if(total_of_IR > 10 && total_of_IR < 14){
+			total_of_IR = 14;
+		}
+	}
+	
+	else if(total_of_IR > 14.5){
+		total_of_IR = 14;
+	}
+	
+	else{
+		console.log("N.A")
+	}
+	
+	
+	if(total_of_IC <= 2){
+		if(total_of_IC == 0){
+			total_of_IC = 0;
+		}
+		if(total_of_IC > 0 && total_of_IC < 2){
+			total_of_IC = (total_of_IC * 2) + 0.5;
+		}
+		if(total_of_IC == 2){
+			total_of_IC = 5;
+		}
+	}
+	
+	else if(total_of_IC > 2  && total_of_IC <= 5){
+			total_of_IC = (total_of_IC * 2) + 0.5;
+	}
+	
+	else if(total_of_IC > 5 && total_of_IR <= 14){
+		if(total_of_IC > 5 && total_of_IC < 8){
+			total_of_IC = (total_of_IC * 1.5) + 0.5;
+		}
+		if(total_of_IC > 8 && total_of_IC < 10){
+			total_of_IC = (total_of_IC * 1.2) + 0.5;
+		}
+		if(total_of_IC > 10 && total_of_IC < 14){
+			total_of_IC = 14;
+		}
+	}
+	
+	else if(total_of_IC > 14.5){
+		total_of_IC = 14;
+	}
+	
+	else{
+		console.log("N.A")
+	}
+	
+	
+	var bankLevelResidualRisk = [];
+	bankLevelResidualRisk.push({x: total_of_IR, y: total_of_IC, r: 20});
+	
+	if(totalTresuryIR == 0)
+	{totalTresuryIR = 0.5}
+	else if(totalTresuryIR > 14.5)
+	{totalTresuryIR = 14}
+	
+	if(totalRetailLiabiltiesIR == 0)
+	{totalRetailLiabiltiesIR = 0.5}
+	else if(totalRetailLiabiltiesIR > 14.5)
+	{totalRetailLiabiltiesIR = 14}
+	
+	if(totalRetailAssetsIR == 0)
+	{totalRetailAssetsIR = 0.5}
+	else if(totalRetailAssetsIR > 14.5)
+	{totalRetailAssetsIR = 14}
+	
+	if(totalWholesaleIR == 0)
+	{totalWholesaleIR = 0.5}
+	else if(totalWholesaleIR > 14.5)
+	{totalWholesaleIR = 14}
+	
+	if(totalTresuryIC == 0)
+	{totalTresuryIC = 0.5}
+	else if(totalTresuryIC > 14.5)
+	{totalTresuryIC = 14}
+	
+	if(totalRetailLiabiltiesIC == 0)
+	{totalRetailLiabiltiesIC = 0.5}
+	else if(totalRetailLiabiltiesIC > 14.5)
+	{totalRetailLiabiltiesIC = 14}
+	
+	if(totalRetailAssetsIC == 0)
+	{totalRetailAssetsIC = 0.5}
+	else if(totalRetailAssetsIC > 14.5)
+	{totalRetailAssetsIC = 14}
+	
+	if(totalWholesaleIC == 0)
+	{totalWholesaleIC = 0.5}
+	else if(totalWholesaleIC > 14.5)
+	{totalWholesaleIC = 14}
+	
+	else{
+		console.log()
+	}
 
+	residualRiskDataPoints.push({x: totalTresuryIR, y: totalTresuryIC, r: 20})
+	residualRiskDataPoints.push({x: totalRetailLiabiltiesIR, y: totalRetailLiabiltiesIC, r: 20})
+	residualRiskDataPoints.push({x: totalRetailAssetsIR, y: totalRetailAssetsIC, r: 20})
+	residualRiskDataPoints.push({x: totalWholesaleIR, y: totalWholesaleIC, r: 20})
 	
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -177,8 +306,16 @@
 	const residualRiskDATA = {
 			  datasets: [{
 			    label: 'RESIDUAL RISK',
-			    data: residualRiskDataPoints,
-			    backgroundColor: 'rgb(0, 0, 0)'
+			    data: bankLevelResidualRisk,
+			    /* data: [{
+				      x: 0.5,
+				      y: 0.5,
+				      r: 20
+				    },], */
+				    pointStyle: 'crossRot',
+				    borderWidth: 6,
+				    backgroundColor: 'rgba(0, 0, 0, 1)',
+				    borderColor: 'rgba(0, 0, 0, 1)',
 			  }]
 			};		
 
@@ -230,28 +367,29 @@
 	const assessmentCatDATA = {
 			  datasets: [{
 			    label: 'ASSESSMENT UNIT WISE',
-			    data: [{
+			    //data: residualRiskDataPoints,
+			     data: [{
 			      x: 10,
 			      y: 20,
-			      r: 15
+			      r: 20
 			    }, {
 			      x: 20,
 			      y: 10,
-			      r: 15
+			      r: 20
 			    }, {
 				   x: 5,
 				   y: 15,
-			       r: 15
+			       r: 20
 				}, {
 				   x: 15,
 			       y: 5,
-			       r: 15
+			       r: 20
 				 }, {
 				   x: 25,
 			       y: 25,
-		           r: 15
-					 },],
-				pointStyle: ['crossRot', 'rect', 'triangle', 'dash', 'circle'],
+		           r: 20
+					 },], 
+				pointStyle: ['crossRot', 'rect', 'triangle', 'circle'],
 			    backgroundColor: 'rgb(0, 0, 0)'
 			  }]
 			};		

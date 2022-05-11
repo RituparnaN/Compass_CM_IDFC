@@ -235,6 +235,14 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 			fontHeaderYl.setBold(true);
 			boldYellow.setFont(fontHeaderYl);
 			
+			//BOLD FONT STYLE
+			CellStyle boldText = workbook.createCellStyle();
+			boldText.setFillForegroundColor(IndexedColors.WHITE.getIndex());
+			boldText.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+			Font boldT = workbook.createFont();
+			boldT.setBold(true);
+			boldText.setFont(boldT);
+			
 			//
 
 			
@@ -906,6 +914,27 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 				cell.setCellValue(s_TotalWholesaleIR);
 				cell.setCellStyle(totalBg);	
 				
+				double totalIR = (s_TotalTresuryIR + s_TotalRetailLiabiltiesIR + s_TotalRetailAssetsIR + s_TotalWholesaleIR)/4;
+				double totalIC = (s_TotalTresuryIC + s_totalRetailLiabiltiesIC + s_TotalRetailAssetsIC + s_TotalWholesaleIC)/4;
+				
+				/*
+				row = sheet.getRow(18);
+				cell = row.createCell(1);
+				cell.setCellValue("Inherent Risk:- "+totalIR);
+				cell = row.createCell(4);
+				//sheet.addMergedRegion(new CellRangeAddress(totalRows+2, totalRows+2, 4, 5));
+				cell.setCellValue("Inherent Risk:- "+totalIR);
+				*/
+				
+				row = sheet.createRow(19);
+				cell = row.createCell(1);
+				cell.setCellValue("Inherent Risk: "+totalIR);
+				cell.setCellStyle(boldText);
+				cell = row.createCell(6);
+				cell.setCellValue("Internal Control: "+totalIC);
+				sheet.addMergedRegion(new CellRangeAddress(19, 19,  6, 8));
+				cell.setCellStyle(boldText);
+				
 				
 
 				for (ArrayList<String> listResult : listResultData) {
@@ -1374,20 +1403,19 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 								        			}           			
 								        		}
 				
-				
-				
-				
-
-				
-				//System.out.println("total rows: "+currentRow);
-				
 				int totalRows=currentRow;
-
-				//System.out.println("Total Column: "+noOfColumns);
+				
+				
 				
 				try {
 					
-					//if(sheet.getSheetName().equals("ASSESSSMENTWISE RISK RATING")){
+					InputStream baseBL_IR = new FileInputStream("C:\\APPFOLDER\\resources\\CM_MatrixHeatChart\\AssessmentWise\\BankLevel_IR.png");
+			 		byte[] bytesBL_IR = IOUtils.toByteArray(baseBL_IR);
+			 		int pictureBL_IR_Base = workbook.addPicture(bytesBL_IR, Workbook.PICTURE_TYPE_PNG);
+			 		
+			 		InputStream baseBL_IC = new FileInputStream("C:\\APPFOLDER\\resources\\CM_MatrixHeatChart\\AssessmentWise\\BankLevel_IC.png");
+			 		byte[] bytesBL_IC = IOUtils.toByteArray(baseBL_IC);
+			 		int pictureBL_IC_Base = workbook.addPicture(bytesBL_IC, Workbook.PICTURE_TYPE_PNG);
 
 			 		InputStream baseimageResidualRisk = new FileInputStream("C:\\APPFOLDER\\resources\\CM_MatrixHeatChart\\AssessmentWise\\S_BL_ResidualRisk.png");
 			 		byte[] bytesResidualRisk = IOUtils.toByteArray(baseimageResidualRisk);
@@ -1396,6 +1424,9 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 			 		InputStream baseimageAssessment = new FileInputStream("C:\\APPFOLDER\\resources\\CM_MatrixHeatChart\\AssessmentWise\\S_AssessmentWiseUnitLevelResidualRisk.png");
 			 		byte[] bytesAssessment = IOUtils.toByteArray(baseimageAssessment);
 			 		int pictureAssessmentBase = workbook.addPicture(bytesAssessment, Workbook.PICTURE_TYPE_PNG);
+			 		
+			 		
+			 		
 			 		
 			 		//chart
 			 		int pictureResidualRiskChart = workbook.addPicture(imageBytesResidualRisk, Workbook.PICTURE_TYPE_PNG);
@@ -1408,15 +1439,15 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 			 		ClientAnchor anchorBaseResidualRisk = helper.createClientAnchor();		 		
 			 		ClientAnchor anchorChartResidualRisk = helper.createClientAnchor();		 		
 			 		//base image 
-			 		   anchorBaseResidualRisk.setCol1(0);
-					   anchorBaseResidualRisk.setRow1(totalRows+1);
-					   anchorBaseResidualRisk.setCol2(5);
-					   anchorBaseResidualRisk.setRow2(totalRows+11); 
+			 		   anchorBaseResidualRisk.setCol1(1);
+					   anchorBaseResidualRisk.setRow1(totalRows+4);
+					   anchorBaseResidualRisk.setCol2(6);
+					   anchorBaseResidualRisk.setRow2(totalRows+14); 
 					   //CHART IMAGE
-					   anchorChartResidualRisk.setCol1(1);
-					   anchorChartResidualRisk.setRow1(totalRows+2); 
-					   anchorChartResidualRisk.setCol2(5);
-					   anchorChartResidualRisk.setRow2(totalRows+10); 				   
+					   anchorChartResidualRisk.setCol1(2);
+					   anchorChartResidualRisk.setRow1(totalRows+5); 
+					   anchorChartResidualRisk.setCol2(6);
+					   anchorChartResidualRisk.setRow2(totalRows+13); 				   
 			 		 //Creates a picture
 					 anchorBaseResidualRisk.setAnchorType(AnchorType.DONT_MOVE_AND_RESIZE);//set anchor type
 					 anchorChartResidualRisk.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);
@@ -1428,15 +1459,15 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 				 		ClientAnchor anchorBaseResidualRisk1 = helper.createClientAnchor();		 		
 				 		ClientAnchor anchorChartResidualRisk1 = helper.createClientAnchor();		 		
 				 		//base image 
-				 		   anchorBaseResidualRisk1.setCol1(7);
-						   anchorBaseResidualRisk1.setRow1(totalRows+1);
-						   anchorBaseResidualRisk1.setCol2(12);
-						   anchorBaseResidualRisk1.setRow2(totalRows+11); 
+				 		   anchorBaseResidualRisk1.setCol1(8);
+						   anchorBaseResidualRisk1.setRow1(totalRows+4);
+						   anchorBaseResidualRisk1.setCol2(13);
+						   anchorBaseResidualRisk1.setRow2(totalRows+14); 
 						   //CHART IMAGE
-						   anchorChartResidualRisk1.setCol1(8);
-						   anchorChartResidualRisk1.setRow1(totalRows+2); 
-						   anchorChartResidualRisk1.setCol2(12);
-						   anchorChartResidualRisk1.setRow2(totalRows+10); 				   
+						   anchorChartResidualRisk1.setCol1(9);
+						   anchorChartResidualRisk1.setRow1(totalRows+5); 
+						   anchorChartResidualRisk1.setCol2(13);
+						   anchorChartResidualRisk1.setRow2(totalRows+13); 				   
 				 		 //Creates a picture
 						 anchorBaseResidualRisk1.setAnchorType(AnchorType.DONT_MOVE_AND_RESIZE);//set anchor type
 						 anchorChartResidualRisk1.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);
@@ -1445,15 +1476,15 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 					 		ClientAnchor anchorBaseResidualRisk2 = helper.createClientAnchor();		 		
 					 		ClientAnchor anchorChartResidualRisk2 = helper.createClientAnchor();		 		
 					 		//base image 
-					 		   anchorBaseResidualRisk2.setCol1(0);
-							   anchorBaseResidualRisk2.setRow1(totalRows+13);
-							   anchorBaseResidualRisk2.setCol2(5);
-							   anchorBaseResidualRisk2.setRow2(totalRows+23); 
+					 		   anchorBaseResidualRisk2.setCol1(15);
+							   anchorBaseResidualRisk2.setRow1(4);
+							   anchorBaseResidualRisk2.setCol2(20);
+							   anchorBaseResidualRisk2.setRow2(14); 
 							   //CHART IMAGE
-							   anchorChartResidualRisk2.setCol1(1);
-							   anchorChartResidualRisk2.setRow1(totalRows+14); 
-							   anchorChartResidualRisk2.setCol2(5);
-							   anchorChartResidualRisk2.setRow2(totalRows+22); 				   
+							   anchorChartResidualRisk2.setCol1(16);
+							   anchorChartResidualRisk2.setRow1(5); 
+							   anchorChartResidualRisk2.setCol2(20);
+							   anchorChartResidualRisk2.setRow2(13); 				   
 					 		 //Creates a picture
 							 anchorBaseResidualRisk2.setAnchorType(AnchorType.DONT_MOVE_AND_RESIZE);//set anchor type
 							 anchorChartResidualRisk2.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);
@@ -1467,28 +1498,28 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 				 	ClientAnchor anchorBaseAssessmentWise = helper.createClientAnchor();		 		
 				 	ClientAnchor anchorChartAssessmentWise = helper.createClientAnchor();		 		
 				 	//base image 
-				 		anchorBaseAssessmentWise.setCol1(7);
-				 		anchorBaseAssessmentWise.setRow1(totalRows+13);
-				 		anchorBaseAssessmentWise.setCol2(13);
-				 		anchorBaseAssessmentWise.setRow2(totalRows+23); 
+				 		anchorBaseAssessmentWise.setCol1(15);
+				 		anchorBaseAssessmentWise.setRow1(totalRows+4);
+				 		anchorBaseAssessmentWise.setCol2(21);
+				 		anchorBaseAssessmentWise.setRow2(totalRows+14); 
 					//CHART IMAGE
-				 		anchorChartAssessmentWise.setCol1(8);
-				 		anchorChartAssessmentWise.setRow1(totalRows+14); 
-				 		anchorChartAssessmentWise.setCol2(12);
-				 		anchorChartAssessmentWise.setRow2(totalRows+22); 				   
+				 		anchorChartAssessmentWise.setCol1(16);
+				 		anchorChartAssessmentWise.setRow1(totalRows+5); 
+				 		anchorChartAssessmentWise.setCol2(20);
+				 		anchorChartAssessmentWise.setRow2(totalRows+13); 				   
 				 	//Creates a picture
 				 	anchorBaseAssessmentWise.setAnchorType(AnchorType.DONT_MOVE_AND_RESIZE);//set anchor type
 				 	anchorChartAssessmentWise.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);
 					 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			 		 Picture createBaseResidualRisk = drawingResidualRisk.createPicture(anchorBaseResidualRisk, pictureResidualRiskBase);
+			 		 Picture createBaseResidualRisk = drawingResidualRisk.createPicture(anchorBaseResidualRisk, pictureBL_IR_Base);
 			 		 Picture createChartResidualRisk = drawingResidualRisk.createPicture(anchorChartResidualRisk, pictureResidualRiskChart);
 			 		 
 			 		 
 			 		 
 			 		 
 			 		 
-			 		 Picture createBaseResidualRisk1 = drawingResidualRisk.createPicture(anchorBaseResidualRisk1, pictureResidualRiskBase);
+			 		 Picture createBaseResidualRisk1 = drawingResidualRisk.createPicture(anchorBaseResidualRisk1, pictureBL_IC_Base);
 			 		 Picture createChartResidualRisk1 = drawingResidualRisk.createPicture(anchorChartResidualRisk1, pictureResidualRiskChart);
 			 		 Picture createBaseResidualRisk2 = drawingResidualRisk.createPicture(anchorBaseResidualRisk2, pictureResidualRiskBase);
 			 		 Picture createChartResidualRisk2 = drawingResidualRisk.createPicture(anchorChartResidualRisk2, pictureResidualRiskChart);
