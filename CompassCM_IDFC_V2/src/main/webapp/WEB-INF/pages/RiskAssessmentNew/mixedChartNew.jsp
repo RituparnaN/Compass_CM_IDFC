@@ -109,7 +109,7 @@
 	else{
 		console.log("N.A")
 	}
-	///
+
 
 	//alert(totalWeightedScoreIR_x+" "+totalWeightedScoreIC_y)
 	
