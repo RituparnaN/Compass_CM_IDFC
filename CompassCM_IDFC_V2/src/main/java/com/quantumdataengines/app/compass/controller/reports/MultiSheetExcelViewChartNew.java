@@ -245,21 +245,6 @@ public class MultiSheetExcelViewChartNew extends AbstractExcelView {
 			}
 			
 			int noOfColumns = sheet.getRow(0).getLastCellNum();
-/*			
-			for (int i = 0; i <= sheet.getLastRowNum(); i++) {
-				  row = sheet.getRow(4);
-				    cell = row.getCell(6);
-				      System.out.println("DATA IN CELL: "+cell.getStringCellValue());
-				}
-			
-			for (int cn = 0; cn < lastColumn; cn++) {
-				  Cell c = row.getCell(cn, Row.RETURN_BLANK_AS_NULL);
-				  if (c == null) {
-				    // The spreadsheet is empty in this cell
-				  } else {
-				    // Do something useful with the cell's contents
-				  }
-				}*/
 			
             row = sheet.getRow(4);
             cell = row.getCell(5);

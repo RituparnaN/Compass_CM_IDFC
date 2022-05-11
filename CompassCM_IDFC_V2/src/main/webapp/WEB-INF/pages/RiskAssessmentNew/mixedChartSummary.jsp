@@ -121,15 +121,6 @@
 			  datasets: [{
 			    label: 'RESIDUAL RISK',
 			    data: residualRiskDataPoints,
-			     /* data: [{
-			      x: 20,
-			      y: 30,
-			      r: 15
-			    }, {
-			      x: 0.253,
-			      y: 2,
-			      r: 15
-			    }], */ 
 			    backgroundColor: 'rgb(0, 0, 0)'
 			  }]
 			};		

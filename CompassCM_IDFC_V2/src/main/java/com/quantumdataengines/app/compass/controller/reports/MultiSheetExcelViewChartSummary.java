@@ -144,6 +144,14 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 			titleStyle.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
 			titleStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND); 
 			
+			//COMPONENT TITLE TOTAL BG WITH BOLD FONT STYLE
+			CellStyle boldFontNoBg = workbook.createCellStyle();
+			boldFontNoBg.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
+			boldFontNoBg.setFillPattern(FillPatternType.SOLID_FOREGROUND); 
+			Font boldFont = workbook.createFont();
+			boldFont.setBold(true);
+			boldFontNoBg.setFont(boldFont);
+			
 			//TOTAL BACKGROUND STYLE
 			CellStyle totalBg = workbook.createCellStyle();
 			totalBg.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
@@ -171,6 +179,8 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 			CellStyle highBg = workbook.createCellStyle();
 			highBg.setFillForegroundColor(IndexedColors.CORAL.getIndex());
 			highBg.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+			
+
 			
 			//
 
@@ -222,7 +232,7 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 					cell.setCellStyle(titleStyle);
 					cell = row.createCell(3);
 					cell.setCellValue("0.0");
-					cell.setCellStyle(titleStyle);
+					cell.setCellStyle(boldFontNoBg);
 					cell = row.createCell(4);
 					cell.setCellValue("LOW");
 					cell.setCellStyle(lowBoldBg);
@@ -304,7 +314,7 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 					cell.setCellStyle(titleStyle);
 					cell = row.createCell(3);
 					cell.setCellValue("0.0");
-					cell.setCellStyle(titleStyle);
+					cell.setCellStyle(boldFontNoBg);
 					cell = row.createCell(4);
 					cell.setCellValue("EFFECTIVE");
 					cell.setCellStyle(lowBoldBg);
@@ -557,9 +567,7 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 						cell.setCellValue("");
 						cell.setCellStyle(titleStyle);
 					}
-					
-					
-					
+										
 					row.createCell(currentCol).setCellValue(strResult);
 					currentCol++;
 				}
@@ -569,7 +577,58 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 			int noOfColumns = sheet.getRow(0).getLastCellNum();
 
 			
-			//System.out.println("total rows: "+currentRow);
+			
+			
+            for (int i = 2; i <= 6 ; i++) {
+    			row = sheet.getRow(i);
+    			for(int j = 0; j < noOfColumns; j++){
+    				if(j == 4){
+    					cell = row.getCell(j);
+
+    					if(cell.getStringCellValue().equals("LOW")){
+    						cell.setCellStyle(lowBg);
+    					}
+    					else if(cell.getStringCellValue().equals("MEDIUM")){
+    						cell.setCellStyle(mediumBg);
+    					}
+    					else{
+    						cell.setCellStyle(highBg);
+    					}
+
+    				}
+    				
+    			}           			
+    		}
+    
+    		
+    for (int i = 8; i <= 16 ; i++) {
+		row = sheet.getRow(i);
+		for(int j = 0; j < noOfColumns; j++){
+			if(j == 4){
+				cell = row.getCell(j);
+
+				if(cell.getStringCellValue().equals("LOW")){
+					cell.setCellValue("EFFECTIVE");
+					cell.setCellStyle(lowBg);
+				}
+				else if(cell.getStringCellValue().equals("MEDIUM")){
+					cell.setCellValue("NEED IMPROVEMENT");
+					cell.setCellStyle(mediumBg);
+				}
+				else{
+					cell.setCellValue("NO CONTROL");
+					cell.setCellStyle(highBg);
+				}
+
+			}
+			
+		}           			
+	}
+			
+			
+			
+			
+			
 			
 			int totalRows=currentRow;
 
@@ -772,6 +831,66 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 				}
 				
 				int noOfColumns = sheet.getRow(0).getLastCellNum();
+				
+
+	            for (int i = 2; i <= 6 ; i++) {
+	            			row = sheet.getRow(i);
+	            			for(int j = 0; j < noOfColumns; j++){
+	            				if(j == 4 || j == 6 || j == 8 || j == 10){
+	            					cell = row.getCell(j);
+
+	            					if(cell.getStringCellValue().equals("LOW")){
+	            						cell.setCellStyle(lowBg);
+	            					}
+	            					else if(cell.getStringCellValue().equals("MEDIUM")){
+	            						cell.setCellStyle(mediumBg);
+	            					}
+	            					else{
+	            						cell.setCellStyle(highBg);
+	            					}
+
+	            				}
+	            				
+	            			}           			
+	            		}
+	            
+	            		
+	            for (int i = 8; i <= 16 ; i++) {
+        			row = sheet.getRow(i);
+        			for(int j = 0; j < noOfColumns; j++){
+        				if(j == 4 || j == 6 || j == 8 || j == 10){
+        					cell = row.getCell(j);
+
+        					if(cell.getStringCellValue().equals("LOW")){
+        						cell.setCellValue("EFFECTIVE");
+        						cell.setCellStyle(lowBg);
+        					}
+        					else if(cell.getStringCellValue().equals("MEDIUM")){
+        						cell.setCellValue("NEED IMPROVEMENT");
+        						cell.setCellStyle(mediumBg);
+        					}
+        					else{
+        						cell.setCellValue("NO CONTROL");
+        						cell.setCellStyle(highBg);
+        					}
+
+        				}
+        				
+        			}           			
+        		}
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 
 				
 				//System.out.println("total rows: "+currentRow);

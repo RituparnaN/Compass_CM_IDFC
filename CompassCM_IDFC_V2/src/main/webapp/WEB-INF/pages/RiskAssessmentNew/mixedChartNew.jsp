@@ -113,7 +113,7 @@
 
 	alert(totalWeightedScoreIR_x+" "+totalWeightedScoreIC_y)
 	
-	residualRiskDataPoints.push({x: totalWeightedScoreIR_x, y: totalWeightedScoreIC_y, r: 15});
+	residualRiskDataPoints.push({x: totalWeightedScoreIR_x, y: totalWeightedScoreIC_y, r: 20});
 	
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
