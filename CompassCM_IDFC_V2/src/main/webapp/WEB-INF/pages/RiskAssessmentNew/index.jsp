@@ -78,6 +78,9 @@
 								var bl_IR = $("#residualRiskURL").val();
 								var bl_IC = $("#assessmentCatURL").val();
 								
+								var A_TOTALWEIGHTEDSCOREIR = 0.0;
+								var A_TOTALWEIGHTEDSCOREIC = 0.0;
+								
 								var totalTresuryIR = $("#totalTresuryIR").val();
 								var totalTresuryIC = $("#totalTresuryIC").val();
 								var totalRetailLiabiltiesIR = $("#totalRetailLiabiltiesIR").val();
@@ -93,7 +96,8 @@
 								
 								
 								var data = defalutValueData+"@~@"+residualRiskData+"@~@"+assessmentWiseCatData+"@~@"+bl_IR+"@~@"+bl_IC
-											+totalTresuryIR+"@~@"+totalTresuryIC+"@~@"+totalRetailLiabiltiesIR+"@~@"+totalRetailLiabiltiesIC
+											+"@~@"+A_TOTALWEIGHTEDSCOREIR+"@~@"+A_TOTALWEIGHTEDSCOREIC+"@~@"
+											+totalTresuryIR+"@~@"+totalTresuryIC+"@~@"+totalRetailLiabiltiesIR+"@~@"+totalRetailLiabiltiesIC+"@~@"
 											+totalRetailAssetsIR+"@~@"+totalRetailAssetsIC+"@~@"+totalWholesaleIR+"@~@"+totalWholesaleIC;
 								
 								document.getElementById("defalutValueChartDiv").style.display = "none";
@@ -106,7 +110,7 @@
 										cache : false,
 										data: JSON.stringify({"data":data}),
 										success : function(res){
-											alert("DATA SAVED SUCCESSFULLY!!");
+											//alert("DATA SAVED SUCCESSFULLY!!");
 											$.fileDownload("${pageContext.request.contextPath}/common/generateCMReportSummary?ASSESSMENTPERIOD="+assessmentPeriod+"&imageId="+res , {
 											    httpMethod : "GET",
 											    successCallback: function (url) {	
@@ -207,12 +211,30 @@
 						
 						var totalWeightedScoreIR = $("#totalWeightedScoreIR").val();
 						var totalWeightedScoreIC = $("#totalWeightedScoreIC").val();
+						
+						var totalTresuryIR = 0.0;
+						var totalTresuryIC = 0.0;
+						var totalRetailLiabiltiesIR = 0.0;
+						var totalRetailLiabiltiesIC = 0.0;
+						var totalRetailAssetsIR = 0.0;
+						var totalRetailAssetsIC = 0.0;
+						var totalWholesaleIR = 0.0;
+						var totalWholesaleIC = 0.0;
 						//console.log("totalWeightedScoreIR: "+totalWeightedScoreIR+" "+"totalWeightedScoreIC: "+totalWeightedScoreIC)
 						
 						var defalutValueData = "NO DATA AVAILABLE";
+						var bl_IR = $("#residualRiskURL").val();
+						var bl_IC = $("#assessmentCatURL").val();
+						
+						//var data = defalutValueData+"@~@"+residualRiskData+"@~@"+assessmentWiseCatData+"@~@"+totalWeightedScoreIR+"@~@"+totalWeightedScoreIC;
 						
 						
-						var data = defalutValueData+"@~@"+residualRiskData+"@~@"+assessmentWiseCatData+"@~@"+totalWeightedScoreIR+"@~@"+totalWeightedScoreIC;
+						var data = defalutValueData+"@~@"+residualRiskData+"@~@"+assessmentWiseCatData+"@~@"+bl_IR+"@~@"+bl_IC
+						+"@~@"+totalWeightedScoreIR+"@~@"+totalWeightedScoreIC+"@~@"
+						+totalTresuryIR+"@~@"+totalTresuryIC+"@~@"+totalRetailLiabiltiesIR+"@~@"+totalRetailLiabiltiesIC+"@~@"
+						+totalRetailAssetsIR+"@~@"+totalRetailAssetsIC+"@~@"+totalWholesaleIR+"@~@"+totalWholesaleIC;
+						
+						
 						//var data = residualRiskData+"@~@"+assessmentWiseCatData+"@~@"+totalWeightedScoreIR+"@~@"+totalWeightedScoreIC;
 						document.getElementById("residualRiskChartDiv").style.display = "none";
 						document.getElementById("assessmentWiseCatChartDiv").style.display = "none";
@@ -223,7 +245,7 @@
 								cache : false,
 								data: JSON.stringify({"data":data}),
 								success : function(res){
-									alert("DATA SAVED SUCCESSFULLY!!");
+									//alert("DATA SAVED SUCCESSFULLY!!");
 									$.fileDownload("${pageContext.request.contextPath}/common/generateCMReportNew?compassRefNo="+compassRefNo+"&imageId="+res+"&assessmentUnit="+assessmentUnit , {
 									    httpMethod : "GET",
 									    successCallback: function (url) {	

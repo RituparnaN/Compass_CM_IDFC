@@ -111,7 +111,7 @@
 	}
 	///
 
-	alert(totalWeightedScoreIR_x+" "+totalWeightedScoreIC_y)
+	//alert(totalWeightedScoreIR_x+" "+totalWeightedScoreIC_y)
 	
 	residualRiskDataPoints.push({x: totalWeightedScoreIR_x, y: totalWeightedScoreIC_y, r: 20});
 	

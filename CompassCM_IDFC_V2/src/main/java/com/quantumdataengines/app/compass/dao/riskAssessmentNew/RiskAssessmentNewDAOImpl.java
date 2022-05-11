@@ -2185,11 +2185,21 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 		
 		String imageUrlData = imageUrl;
 		String[] parts = imageUrlData.split("@~@");
-		String s_DEFAULTVALUECHART = parts[0];
-		String a_RESIDUALRISK = parts[1]; 
-		String a_ASSESSMENTWISECAT = parts[2]; 
-		String a_TotalWeightedScoreIR = parts[3];
-		String a_TotalWeightedScoreIC = parts[4];
+		String defaultVALUECHART = parts[0];
+		String residualRISK = parts[1]; 
+		String assessmentWISECAT = parts[2];
+		String bl_IR = parts[3]; 
+		String bl_IC = parts[4];
+		String a_TOTALWEIGHTEDSCOREIR = parts[5];
+		String a_TOTALWEIGHTEDSCOREIC = parts[6];
+		String s_TotalTresuryIR = parts[7];
+		String s_TotalTresuryIC = parts[8];
+		String s_TotalRetailLiabiltiesIR = parts[9];
+		String s_totalRetailLiabiltiesIC = parts[10];
+		String s_TotalRetailAssetsIR = parts[11];
+		String s_TotalRetailAssetsIC = parts[12];
+		String s_TotalWholesaleIR = parts[13];
+		String s_TotalWholesaleIC = parts[14];
 		
 		String id = "";
 		Connection connection = connectionUtil.getConnection();
@@ -2214,14 +2224,25 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 		id = sb.toString();
 
 		try{
-			String query = "INSERT INTO COMAML_CM.TB_IMAGEDATA VALUES( ?, ?, ?, ?, ?, ?, SYSTIMESTAMP) ";
+			String query = "INSERT INTO COMAML_CM.TB_IMAGEDATA VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSTIMESTAMP) ";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, id);
-			preparedStatement.setString(2, s_DEFAULTVALUECHART);
-			preparedStatement.setString(3, a_RESIDUALRISK);
-			preparedStatement.setString(4, a_ASSESSMENTWISECAT);
-			preparedStatement.setString(5, a_TotalWeightedScoreIR);
-			preparedStatement.setString(6, a_TotalWeightedScoreIC);
+			preparedStatement.setString(2, defaultVALUECHART);
+			preparedStatement.setString(3, residualRISK);
+			preparedStatement.setString(4, assessmentWISECAT);
+			preparedStatement.setString(5, bl_IR);
+			preparedStatement.setString(6, bl_IC);
+			preparedStatement.setString(7, a_TOTALWEIGHTEDSCOREIR);
+			preparedStatement.setString(8, a_TOTALWEIGHTEDSCOREIC);
+			preparedStatement.setString(9, s_TotalTresuryIR);
+			preparedStatement.setString(10, s_TotalTresuryIC);
+			preparedStatement.setString(11, s_TotalRetailLiabiltiesIR);
+			preparedStatement.setString(12, s_totalRetailLiabiltiesIC);
+			preparedStatement.setString(13, s_TotalRetailAssetsIR);
+			preparedStatement.setString(14, s_TotalRetailAssetsIC);
+			preparedStatement.setString(15, s_TotalWholesaleIR);
+			preparedStatement.setString(16, s_TotalWholesaleIC);
+
 			preparedStatement.executeUpdate();
 		}catch(Exception e){
 			e.printStackTrace();

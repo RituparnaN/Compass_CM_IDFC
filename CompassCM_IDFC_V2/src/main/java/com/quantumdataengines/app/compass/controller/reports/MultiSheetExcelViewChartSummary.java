@@ -46,11 +46,21 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 			HttpServletResponse response) throws Exception {
 		 	String imgId=request.getParameter("imageId");
 	 		//System.out.println("image Id: "+imgId);
-		 	String s_DEFAULTVALUECHART = "";
-	 		String a_RESIDUALRISK = "";
-	 		String a_ASSESSMENTWISECAT = "";
+		 	String dEFAULTVALUECHART = "";
+	 		String rESIDUALRISK = "";
+	 		String aSSESSMENTWISECAT = "";
+	 		String bl_IR = "";
+	 		String bl_IC = "";
 	 		double a_TOTALWEIGHTEDSCOREIR = 0.0;
 	 		double a_TOTALWEIGHTEDSCOREIC = 0.0;
+	 		double s_TotalTresuryIR = 0.0;
+	 		double s_TotalTresuryIC = 0.0;
+	 		double s_TotalRetailLiabiltiesIR = 0.0;
+	 		double s_totalRetailLiabiltiesIC = 0.0;
+	 		double s_TotalRetailAssetsIR = 0.0;
+	 		double s_TotalRetailAssetsIC = 0.0;
+	 		double s_TotalWholesaleIR = 0.0;
+	 		double s_TotalWholesaleIC = 0.0;
 	 		String url = "jdbc:oracle:thin:@localhost:1521/XE";
 	        String user = "COMAML_CM";
 	        String pass = "ORACLE";
@@ -64,14 +74,26 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 	 
 	            con = DriverManager.getConnection(url, user, pass);
 	            Statement st = con.createStatement();
-	            String sql = "SELECT S_DEFAULTVALUECHART, A_RESIDUALRISK, A_ASSESSMENTWISECAT, A_TOTALWEIGHTEDSCOREIR, A_TOTALWEIGHTEDSCOREIC FROM TB_IMAGEDATA WHERE IMAGEID = '"+imgId+"'";
+	            String sql = "SELECT DEFAULTVALUECHART, RESIDUALRISK, ASSESSMENTWISECAT, BL_IR, BL_IC, "
+	            		+ "A_TOTALWEIGHTEDSCOREIR, A_TOTALWEIGHTEDSCOREIC, TOTALTRESURYIR, TOTALTRESURYIC, "
+	            		+ "TOTALRLIR, TOTALRLIC, TOTALRAIR, TOTALRAIC, TOTALWBIR, TOTALWBIC FROM TB_IMAGEDATA WHERE IMAGEID = '"+imgId+"'";
 	            ResultSet m = st.executeQuery(sql);
 	            while(m.next()) {
-	            	s_DEFAULTVALUECHART = m.getString("S_DEFAULTVALUECHART");
-	            	a_RESIDUALRISK = m.getString("A_RESIDUALRISK");
-	            	a_ASSESSMENTWISECAT = m.getString("A_ASSESSMENTWISECAT");
+	            	dEFAULTVALUECHART = m.getString("DEFAULTVALUECHART");
+	            	rESIDUALRISK = m.getString("RESIDUALRISK");
+	            	aSSESSMENTWISECAT = m.getString("ASSESSMENTWISECAT");
+	            	bl_IR = m.getString("BL_IR");
+	            	bl_IC = m.getString("BL_IC");
 	            	a_TOTALWEIGHTEDSCOREIR = m.getDouble("A_TOTALWEIGHTEDSCOREIR");
 	            	a_TOTALWEIGHTEDSCOREIC = m.getDouble("A_TOTALWEIGHTEDSCOREIC");
+	            	s_TotalTresuryIR = m.getDouble("TOTALTRESURYIR");
+	            	s_TotalTresuryIC = m.getDouble("TOTALTRESURYIC");
+	            	s_TotalRetailLiabiltiesIR = m.getDouble("TOTALRLIR");
+	            	s_totalRetailLiabiltiesIC = m.getDouble("TOTALRLIC");
+	            	s_TotalRetailAssetsIR = m.getDouble("TOTALRAIR");
+	            	s_TotalRetailAssetsIC = m.getDouble("TOTALRAIC");
+	            	s_TotalWholesaleIR = m.getDouble("TOTALWBIR");
+	            	s_TotalWholesaleIC = m.getDouble("TOTALWBIC");
 	            }
 	            con.close();
 	        }
@@ -94,13 +116,13 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 	        	//System.out.println("A_TOTALWEIGHTEDSCOREIR: "+a_TOTALWEIGHTEDSCOREIR);
 	        	//System.out.println("A_TOTALWEIGHTEDSCOREIC: "+a_TOTALWEIGHTEDSCOREIC);
 	        	
-	        	base64ImageDefaultValueChart = s_DEFAULTVALUECHART.split(",")[1];
+	        	base64ImageDefaultValueChart = dEFAULTVALUECHART.split(",")[1];
 	        	imageBytesDefaultValueChart = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64ImageDefaultValueChart);
 	        	
-	        	base64ImageResidualRisk = a_RESIDUALRISK.split(",")[1];
+	        	base64ImageResidualRisk = rESIDUALRISK.split(",")[1];
 	        	imageBytesResidualRisk = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64ImageResidualRisk);
 	        	
-	        	base64ImageAssessment = a_ASSESSMENTWISECAT.split(",")[1];
+	        	base64ImageAssessment = aSSESSMENTWISECAT.split(",")[1];
 	        	imageBytesAssessment = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64ImageAssessment);
 	        }
 	 	    catch(Exception e) {
@@ -176,12 +198,42 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 			mediumBg.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());
 			mediumBg.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 			
+			//medium BG WITH BOLD FONT STYLE
+			CellStyle mBoldBg = workbook.createCellStyle();
+			mBoldBg.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());
+			mBoldBg.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+			Font fontHeaderM = workbook.createFont();
+			fontHeaderM.setBold(true);
+			mBoldBg.setFont(fontHeaderM);
+			
 			//HIGH BG STYLE
 			CellStyle highBg = workbook.createCellStyle();
 			highBg.setFillForegroundColor(IndexedColors.CORAL.getIndex());
 			highBg.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 			
-
+			//High BG WITH BOLD FONT STYLE
+			CellStyle hBoldBg = workbook.createCellStyle();
+			hBoldBg.setFillForegroundColor(IndexedColors.CORAL.getIndex());
+			hBoldBg.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+			Font fontHeaderH = workbook.createFont();
+			fontHeaderH.setBold(true);
+			mBoldBg.setFont(fontHeaderH);
+			
+			//Bold Grey WITH BOLD FONT STYLE
+			CellStyle boldGrey = workbook.createCellStyle();
+			boldGrey.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+			boldGrey.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+			Font fontHeaderGr = workbook.createFont();
+			fontHeaderGr.setBold(true);
+			boldGrey.setFont(fontHeaderGr);
+			
+			//Bold Yellow WITH BOLD FONT STYLE
+			CellStyle boldYellow = workbook.createCellStyle();
+			boldYellow.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
+			boldYellow.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+			Font fontHeaderYl = workbook.createFont();
+			fontHeaderYl.setBold(true);
+			boldYellow.setFont(fontHeaderYl);
 			
 			//
 
@@ -232,11 +284,11 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 					cell.setCellValue("");
 					cell.setCellStyle(titleStyle);
 					cell = row.createCell(3);
-					cell.setCellValue("0.0");
-					cell.setCellStyle(boldFontNoBg);
+					cell.setCellValue("");
+					cell.setCellStyle(titleStyle);
 					cell = row.createCell(4);
-					cell.setCellValue("LOW");
-					cell.setCellStyle(lowBoldBg);
+					cell.setCellValue("");
+					cell.setCellStyle(titleStyle);
 					
 					row = sheet.createRow(2);
 					cell = row.createCell(0);
@@ -314,11 +366,11 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 					cell.setCellValue("");
 					cell.setCellStyle(titleStyle);
 					cell = row.createCell(3);
-					cell.setCellValue("0.0");
-					cell.setCellStyle(boldFontNoBg);
+					cell.setCellValue("");
+					cell.setCellStyle(titleStyle);
 					cell = row.createCell(4);
-					cell.setCellValue("EFFECTIVE");
-					cell.setCellStyle(lowBoldBg);
+					cell.setCellValue("");
+					cell.setCellStyle(titleStyle);
 					
 					row = sheet.createRow(8);
 					cell = row.createCell(0);
@@ -825,33 +877,33 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 				cell.setCellStyle(titleStyle);
 				cell = row.createCell(1);
 				cell.setCellValue("Inherent Risk");
-				cell.setCellStyle(titleStyle);
+				cell.setCellStyle(boldYellow);
 				cell = row.createCell(2);
 				cell.setCellValue("");
 				cell.setCellStyle(titleStyle);
 				cell = row.createCell(3);
-				cell.setCellValue("");
-				cell.setCellStyle(totalBg);
+				cell.setCellValue(s_TotalTresuryIR);
+				cell.setCellStyle(boldGrey);
 				cell = row.createCell(4);
-				cell.setCellValue("");
+				cell.setCellValue(s_TotalTresuryIR);
 				cell.setCellStyle(totalBg);
 				cell = row.createCell(5);
-				cell.setCellValue("");
-				cell.setCellStyle(totalBg);
+				cell.setCellValue(s_TotalRetailLiabiltiesIR);
+				cell.setCellStyle(boldGrey);
 				cell = row.createCell(6);
-				cell.setCellValue("");
+				cell.setCellValue(s_TotalRetailLiabiltiesIR);
 				cell.setCellStyle(totalBg);
 				cell = row.createCell(7);
-				cell.setCellValue("");
-				cell.setCellStyle(totalBg);
+				cell.setCellValue(s_TotalRetailAssetsIR);
+				cell.setCellStyle(boldGrey);
 				cell = row.createCell(8);
-				cell.setCellValue("");
+				cell.setCellValue(s_TotalRetailAssetsIR);
 				cell.setCellStyle(totalBg);
 				cell = row.createCell(9);
-				cell.setCellValue("");
-				cell.setCellStyle(totalBg);
+				cell.setCellValue(s_TotalWholesaleIR);
+				cell.setCellStyle(boldGrey);
 				cell = row.createCell(10);
-				cell.setCellValue("");
+				cell.setCellValue(s_TotalWholesaleIR);
 				cell.setCellStyle(totalBg);	
 				
 				
@@ -872,33 +924,33 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 							cell.setCellStyle(titleStyle);
 							cell = row1.createCell(1);
 							cell.setCellValue("Internal Control");
-							cell.setCellStyle(titleStyle);
+							cell.setCellStyle(boldYellow);
 							cell = row1.createCell(2);
 							cell.setCellValue("");
 							cell.setCellStyle(titleStyle);
 							cell = row1.createCell(3);
-							cell.setCellValue("");
-							cell.setCellStyle(totalBg);
+							cell.setCellValue(s_TotalTresuryIC);
+							cell.setCellStyle(boldGrey);
 							cell = row1.createCell(4);
-							cell.setCellValue("");
+							cell.setCellValue(s_TotalTresuryIC);
 							cell.setCellStyle(totalBg);
 							cell = row1.createCell(5);
-							cell.setCellValue("");
-							cell.setCellStyle(totalBg);
+							cell.setCellValue(s_totalRetailLiabiltiesIC);
+							cell.setCellStyle(boldGrey);
 							cell = row1.createCell(6);
-							cell.setCellValue("");
+							cell.setCellValue(s_totalRetailLiabiltiesIC);
 							cell.setCellStyle(totalBg);
 							cell = row1.createCell(7);
-							cell.setCellValue("");
-							cell.setCellStyle(totalBg);
+							cell.setCellValue(s_TotalRetailAssetsIC);
+							cell.setCellStyle(boldGrey);
 							cell = row1.createCell(8);
-							cell.setCellValue("");
+							cell.setCellValue(s_TotalRetailAssetsIC);
 							cell.setCellStyle(totalBg);
 							cell = row1.createCell(9);
-							cell.setCellValue("");
-							cell.setCellStyle(totalBg);
+							cell.setCellValue(s_TotalWholesaleIC);
+							cell.setCellStyle(boldGrey);
 							cell = row1.createCell(10);
-							cell.setCellValue("");
+							cell.setCellValue(s_TotalWholesaleIC);
 							cell.setCellStyle(totalBg);
 							
 						}
@@ -958,14 +1010,369 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
         			}           			
         		}
 				
+	    		if(s_TotalTresuryIR <= 2){
+	            for (int i = 2; i == 2 ; i++) {
+        			row = sheet.getRow(i);       			
+        			for(int j = 0; j < noOfColumns; j++){
+        				if(j == 4){
+        					cell = row.getCell(j);
+        					cell.setCellValue("LOW");
+        					cell.setCellStyle(lowBoldBg);
+        					}
+
+        				}
+        				
+        			}           			
+        		}
+	    		
+	    		if(s_TotalTresuryIR > 2 && s_TotalTresuryIR <= 5){
+		            for (int i = 2; i == 2 ; i++) {
+	        			row = sheet.getRow(i);       			
+	        			for(int j = 0; j < noOfColumns; j++){
+	        				if(j == 4){
+	        					cell = row.getCell(j);
+	        					cell.setCellValue("MEDIUM");
+	        					cell.setCellStyle(mBoldBg);
+	        					}
+
+	        				}
+	        				
+	        			}           			
+	        		}
+				
+	    		if(s_TotalTresuryIR > 5){
+		            for (int i = 2; i == 2 ; i++) {
+	        			row = sheet.getRow(i);       			
+	        			for(int j = 0; j < noOfColumns; j++){
+	        				if(j == 4){
+	        					cell = row.getCell(j);
+	        					cell.setCellValue("HIGH");
+	        					cell.setCellStyle(hBoldBg);
+	        					}
+
+	        				}
+	        				
+	        			}           			
+	        		}
+				
+				
+	    		if(s_TotalRetailLiabiltiesIR <= 2){
+		            for (int i = 2; i == 2 ; i++) {
+	        			row = sheet.getRow(i);       			
+	        			for(int j = 0; j < noOfColumns; j++){
+	        				if(j == 6){
+	        					cell = row.getCell(j);
+	        					cell.setCellValue("LOW");
+	        					cell.setCellStyle(lowBg);
+	        					}
+
+	        				}
+	        				
+	        			}           			
+	        		}
+		    		
+		    		if(s_TotalRetailLiabiltiesIR > 2 && s_TotalRetailLiabiltiesIR <= 5){
+			            for (int i = 2; i == 2 ; i++) {
+		        			row = sheet.getRow(i);       			
+		        			for(int j = 0; j < noOfColumns; j++){
+		        				if(j == 6){
+		        					cell = row.getCell(j);
+		        					cell.setCellValue("MEDIUM");
+		        					cell.setCellStyle(mBoldBg);
+		        					}
+
+		        				}
+		        				
+		        			}           			
+		        		}
+					
+		    		if(s_TotalRetailLiabiltiesIR > 5){
+			            for (int i = 2; i == 2 ; i++) {
+		        			row = sheet.getRow(i);       			
+		        			for(int j = 0; j < noOfColumns; j++){
+		        				if(j == 6){
+		        					cell = row.getCell(j);
+		        					cell.setCellValue("HIGH");
+		        					cell.setCellStyle(hBoldBg);
+		        					}
+
+		        				}
+		        				
+		        			}           			
+		        		}
+		    		
+		    		if(s_TotalRetailAssetsIR <= 2){
+			            for (int i = 2; i == 2 ; i++) {
+		        			row = sheet.getRow(i);       			
+		        			for(int j = 0; j < noOfColumns; j++){
+		        				if(j == 8){
+		        					cell = row.getCell(j);
+		        					cell.setCellValue("LOW");
+		        					cell.setCellStyle(lowBoldBg);
+		        					}
+
+		        				}
+		        				
+		        			}           			
+		        		}
+			    		
+			    		if(s_TotalRetailAssetsIR > 2 && s_TotalRetailAssetsIR <= 5){
+				            for (int i = 2; i == 2 ; i++) {
+			        			row = sheet.getRow(i);       			
+			        			for(int j = 0; j < noOfColumns; j++){
+			        				if(j == 8){
+			        					cell = row.getCell(j);
+			        					cell.setCellValue("MEDIUM");
+			        					cell.setCellStyle(mBoldBg);
+			        					}
+
+			        				}
+			        				
+			        			}           			
+			        		}
+						
+			    		if(s_TotalRetailAssetsIR > 5){
+				            for (int i = 2; i == 2 ; i++) {
+			        			row = sheet.getRow(i);       			
+			        			for(int j = 0; j < noOfColumns; j++){
+			        				if(j == 8){
+			        					cell = row.getCell(j);
+			        					cell.setCellValue("HIGH");
+			        					cell.setCellStyle(hBoldBg);
+			        					}
+
+			        				}
+			        				
+			        			}           			
+			        		}
+			    		
+			    		if(s_TotalWholesaleIR <= 2){
+				            for (int i = 2; i == 2 ; i++) {
+			        			row = sheet.getRow(i);       			
+			        			for(int j = 0; j < noOfColumns; j++){
+			        				if(j == 10){
+			        					cell = row.getCell(j);
+			        					cell.setCellValue("LOW");
+			        					cell.setCellStyle(lowBoldBg);
+			        					}
+
+			        				}
+			        				
+			        			}           			
+			        		}
+				    		
+				    		if(s_TotalWholesaleIR > 2 && s_TotalWholesaleIR <= 5){
+					            for (int i = 2; i == 2 ; i++) {
+				        			row = sheet.getRow(i);       			
+				        			for(int j = 0; j < noOfColumns; j++){
+				        				if(j == 10){
+				        					cell = row.getCell(j);
+				        					cell.setCellValue("MEDIUM");
+				        					cell.setCellStyle(mBoldBg);
+				        					}
+
+				        				}
+				        				
+				        			}           			
+				        		}
+							
+				    		if(s_TotalWholesaleIR > 5){
+					            for (int i = 2; i == 2 ; i++) {
+				        			row = sheet.getRow(i);       			
+				        			for(int j = 0; j < noOfColumns; j++){
+				        				if(j == 10){
+				        					cell = row.getCell(j);
+				        					cell.setCellValue("HIGH");
+				        					cell.setCellStyle(hBoldBg);
+				        					}
+
+				        				}
+				        				
+				        			}           			
+				        		}
 				
 				
 				
-				
-				
-				
-				
-				
+				    		if(s_TotalTresuryIC <= 2){
+					            for (int i = 8; i == 8 ; i++) {
+				        			row = sheet.getRow(i);       			
+				        			for(int j = 0; j < noOfColumns; j++){
+				        				if(j == 4){
+				        					cell = row.getCell(j);
+				        					cell.setCellValue("EFFECTIVE");
+				        					cell.setCellStyle(lowBoldBg);
+				        					}
+
+				        				}
+				        				
+				        			}           			
+				        		}
+					    		
+					    		if(s_TotalTresuryIC > 2 && s_TotalTresuryIC <= 5){
+						            for (int i = 8; i == 8 ; i++) {
+					        			row = sheet.getRow(i);       			
+					        			for(int j = 0; j < noOfColumns; j++){
+					        				if(j == 4){
+					        					cell = row.getCell(j);
+					        					cell.setCellValue("NEED IMPROVEMENT");
+					        					cell.setCellStyle(mBoldBg);
+					        					}
+
+					        				}
+					        				
+					        			}           			
+					        		}
+								
+					    		if(s_TotalTresuryIC > 5){
+						            for (int i = 8; i == 8 ; i++) {
+					        			row = sheet.getRow(i);       			
+					        			for(int j = 0; j < noOfColumns; j++){
+					        				if(j == 4){
+					        					cell = row.getCell(j);
+					        					cell.setCellValue("NO CONTROL");
+					        					cell.setCellStyle(hBoldBg);
+					        					}
+
+					        				}
+					        				
+					        			}           			
+					        		}
+								
+								
+					    		if(s_totalRetailLiabiltiesIC <= 2){
+						            for (int i = 8; i == 8 ; i++) {
+					        			row = sheet.getRow(i);       			
+					        			for(int j = 0; j < noOfColumns; j++){
+					        				if(j == 6){
+					        					cell = row.getCell(j);
+					        					cell.setCellValue("EFFECTIVE");
+					        					cell.setCellStyle(lowBoldBg);
+					        					}
+
+					        				}
+					        				
+					        			}           			
+					        		}
+						    		
+						    		if(s_totalRetailLiabiltiesIC > 2 && s_totalRetailLiabiltiesIC <= 5){
+							            for (int i = 8; i == 8 ; i++) {
+						        			row = sheet.getRow(i);       			
+						        			for(int j = 0; j < noOfColumns; j++){
+						        				if(j == 6){
+						        					cell = row.getCell(j);
+						        					cell.setCellValue("NEED IMPROVEMENT");
+						        					cell.setCellStyle(mBoldBg);
+						        					}
+
+						        				}
+						        				
+						        			}           			
+						        		}
+									
+						    		if(s_totalRetailLiabiltiesIC > 5){
+							            for (int i = 8; i == 8 ; i++) {
+						        			row = sheet.getRow(i);       			
+						        			for(int j = 0; j < noOfColumns; j++){
+						        				if(j == 6){
+						        					cell = row.getCell(j);
+						        					cell.setCellValue("NO CONTROL");
+						        					cell.setCellStyle(hBoldBg);
+						        					}
+
+						        				}
+						        				
+						        			}           			
+						        		}
+						    		
+						    		if(s_TotalRetailAssetsIC <= 2){
+							            for (int i = 8; i == 8 ; i++) {
+						        			row = sheet.getRow(i);       			
+						        			for(int j = 0; j < noOfColumns; j++){
+						        				if(j == 8){
+						        					cell = row.getCell(j);
+						        					cell.setCellValue("EFFECTIVE");
+						        					cell.setCellStyle(lowBoldBg);
+						        					}
+
+						        				}
+						        				
+						        			}           			
+						        		}
+							    		
+							    		if(s_TotalRetailAssetsIC > 2 && s_TotalRetailAssetsIC <= 5){
+								            for (int i = 8; i == 8 ; i++) {
+							        			row = sheet.getRow(i);       			
+							        			for(int j = 0; j < noOfColumns; j++){
+							        				if(j == 8){
+							        					cell = row.getCell(j);
+							        					cell.setCellValue("NEED IMPROVEMENT");
+							        					cell.setCellStyle(mBoldBg);
+							        					}
+
+							        				}
+							        				
+							        			}           			
+							        		}
+										
+							    		if(s_TotalRetailAssetsIC > 5){
+								            for (int i = 8; i == 8 ; i++) {
+							        			row = sheet.getRow(i);       			
+							        			for(int j = 0; j < noOfColumns; j++){
+							        				if(j == 8){
+							        					cell = row.getCell(j);
+							        					cell.setCellValue("NO CONTROL");
+							        					cell.setCellStyle(hBoldBg);
+							        					}
+
+							        				}
+							        				
+							        			}           			
+							        		}
+							    		
+							    		if(s_TotalWholesaleIC <= 2){
+								            for (int i = 8; i == 8 ; i++) {
+							        			row = sheet.getRow(i);       			
+							        			for(int j = 0; j < noOfColumns; j++){
+							        				if(j == 10){
+							        					cell = row.getCell(j);
+							        					cell.setCellValue("EFFECTIVE");
+							        					cell.setCellStyle(lowBoldBg);
+							        					}
+
+							        				}
+							        				
+							        			}           			
+							        		}
+								    		
+								    		if(s_TotalWholesaleIC > 2 && s_TotalWholesaleIC <= 5){
+									            for (int i = 8; i == 8 ; i++) {
+								        			row = sheet.getRow(i);       			
+								        			for(int j = 0; j < noOfColumns; j++){
+								        				if(j == 10){
+								        					cell = row.getCell(j);
+								        					cell.setCellValue("NEED IMPROVEMENT");
+								        					cell.setCellStyle(mBoldBg);
+								        					}
+
+								        				}
+								        				
+								        			}           			
+								        		}
+											
+								    		if(s_TotalWholesaleIC > 5){
+									            for (int i = 8; i == 8 ; i++) {
+								        			row = sheet.getRow(i);       			
+								        			for(int j = 0; j < noOfColumns; j++){
+								        				if(j == 10){
+								        					cell = row.getCell(j);
+								        					cell.setCellValue("NO CONTROL");
+								        					cell.setCellStyle(hBoldBg);
+								        					}
+
+								        				}
+								        				
+								        			}           			
+								        		}
 				
 				
 				
@@ -982,11 +1389,11 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 					
 					//if(sheet.getSheetName().equals("ASSESSSMENTWISE RISK RATING")){
 
-			 		InputStream baseimageResidualRisk = new FileInputStream("C:\\APPFOLDER\\resources\\CM_MatrixHeatChart\\AssessmentWise\\ResidualRisk.png");
+			 		InputStream baseimageResidualRisk = new FileInputStream("C:\\APPFOLDER\\resources\\CM_MatrixHeatChart\\AssessmentWise\\S_BL_ResidualRisk.png");
 			 		byte[] bytesResidualRisk = IOUtils.toByteArray(baseimageResidualRisk);
 			 		int pictureResidualRiskBase = workbook.addPicture(bytesResidualRisk, Workbook.PICTURE_TYPE_PNG);
 			 		
-			 		InputStream baseimageAssessment = new FileInputStream("C:\\APPFOLDER\\resources\\CM_MatrixHeatChart\\AssessmentWise\\AssessmentWiseUnitLevelResidualRisk.png");
+			 		InputStream baseimageAssessment = new FileInputStream("C:\\APPFOLDER\\resources\\CM_MatrixHeatChart\\AssessmentWise\\S_AssessmentWiseUnitLevelResidualRisk.png");
 			 		byte[] bytesAssessment = IOUtils.toByteArray(baseimageAssessment);
 			 		int pictureAssessmentBase = workbook.addPicture(bytesAssessment, Workbook.PICTURE_TYPE_PNG);
 			 		

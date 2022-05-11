@@ -62,11 +62,11 @@ public class MultiSheetExcelViewChartNew extends AbstractExcelView {
 	 
 	            con = DriverManager.getConnection(url, user, pass);
 	            Statement st = con.createStatement();
-	            String sql = "SELECT A_RESIDUALRISK, A_ASSESSMENTWISECAT, A_TOTALWEIGHTEDSCOREIR, A_TOTALWEIGHTEDSCOREIC FROM TB_IMAGEDATA WHERE IMAGEID = '"+imgId+"'";
+	            String sql = "SELECT RESIDUALRISK, ASSESSMENTWISECAT, A_TOTALWEIGHTEDSCOREIR, A_TOTALWEIGHTEDSCOREIC FROM TB_IMAGEDATA WHERE IMAGEID = '"+imgId+"'";
 	            ResultSet m = st.executeQuery(sql);
 	            while(m.next()) {
-	            	a_RESIDUALRISK = m.getString("A_RESIDUALRISK");
-	            	a_ASSESSMENTWISECAT = m.getString("A_ASSESSMENTWISECAT");
+	            	a_RESIDUALRISK = m.getString("RESIDUALRISK");
+	            	a_ASSESSMENTWISECAT = m.getString("ASSESSMENTWISECAT");
 	            	a_TOTALWEIGHTEDSCOREIR = m.getDouble("A_TOTALWEIGHTEDSCOREIR");
 	            	a_TOTALWEIGHTEDSCOREIC = m.getDouble("A_TOTALWEIGHTEDSCOREIC");
 	            }
