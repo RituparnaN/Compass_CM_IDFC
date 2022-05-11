@@ -427,7 +427,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 					JSONArray questionsListJson = new JSONArray();
 					
 					query = "SELECT QUESTIONID, QUESTION, INPUTTYPE, INPUTOPTIONSLIST, "
-							+ "		ISSUPERPARENT, HASPARENT, PARENTQSIDS, HASRISKIMPACT, INPUTOPTIONSLISTFORNUMERIC "
+							+ "		ISSUPERPARENT, HASPARENT, PARENTQSIDS, HASRISKIMPACT, INPUTOPTIONSLISTFORNUMERIC,CREATEDBY,CREATEDON,COMMENTS "
 							+ "  FROM COMAML_CM.TB_RISKASSESSQUESTIONSCONFIG "
 							+ " WHERE ASSESSMENTUNIT = ? "
 							+ "   AND CATEGORY = ? "
@@ -451,6 +451,9 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 						questionDetails.put("PARENTQSIDS", resultSet.getString("PARENTQSIDS"));
 						questionDetails.put("HASRISKIMPACT", resultSet.getString("HASRISKIMPACT"));
 						questionDetails.put("INPUTOPTIONSLISTFORNUMERIC", resultSet.getString("INPUTOPTIONSLISTFORNUMERIC"));
+						questionDetails.put("CREATEDBY", resultSet.getString("CREATEDBY"));
+						questionDetails.put("CREATEDON", resultSet.getString("CREATEDON"));
+						questionDetails.put("COMMENTS", resultSet.getString("COMMENTS") == null?"":resultSet.getString("COMMENTS"));
 						questionDetails.put("DISABLED", "Y");
 						
 						
@@ -465,6 +468,9 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 						questionDetailsJson.put("PARENTQSIDS", resultSet.getString("PARENTQSIDS"));
 						questionDetailsJson.put("HASRISKIMPACT", resultSet.getString("HASRISKIMPACT"));
 						questionDetailsJson.put("INPUTOPTIONSLISTFORNUMERIC", resultSet.getString("INPUTOPTIONSLISTFORNUMERIC"));
+						questionDetailsJson.put("CREATEDBY", resultSet.getString("CREATEDBY"));
+						questionDetailsJson.put("CREATEDON", resultSet.getString("CREATEDON"));
+						questionDetailsJson.put("COMMENTS", resultSet.getString("COMMENTS") == null?"":resultSet.getString("COMMENTS"));
 						questionDetailsJson.put("DISABLED", "Y");
 						
 						query = "SELECT RFISTATUS FROM "+schemaName+"TB_CMQUES_CASEWORKFLOWDETAILS "+
@@ -542,7 +548,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 						ArrayList<Object> subQuestionsArrayList = new ArrayList<Object>();
 						JSONArray subQuestionArrayJson = new JSONArray();
 						query = "SELECT QUESTIONID, QUESTION, INPUTTYPE, INPUTOPTIONSLIST, "
-								+ "		ISSUPERPARENT, HASPARENT, PARENTQSIDS, HASRISKIMPACT,INPUTOPTIONSLISTFORNUMERIC "
+								+ "		ISSUPERPARENT, HASPARENT, PARENTQSIDS, HASRISKIMPACT,INPUTOPTIONSLISTFORNUMERIC,CREATEDBY,CREATEDON,COMMENTS "
 								+ "  FROM COMAML_CM.TB_RISKASSESSQUESTIONSCONFIG "
 								+ " WHERE ASSESSMENTUNIT = ? "
 								+ "   AND CATEGORY = ? "
@@ -564,6 +570,9 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 							subQuestionObject.put("PARENTQSIDS", resultSetSub.getString("PARENTQSIDS"));
 							subQuestionObject.put("HASRISKIMPACT", resultSetSub.getString("HASRISKIMPACT"));
 							subQuestionObject.put("INPUTOPTIONSLISTFORNUMERIC", resultSetSub.getString("INPUTOPTIONSLISTFORNUMERIC"));
+							subQuestionObject.put("CREATEDBY", resultSet.getString("CREATEDBY"));
+							subQuestionObject.put("CREATEDON", resultSet.getString("CREATEDON"));
+							subQuestionObject.put("COMMENTS", resultSet.getString("COMMENTS") == null?"":resultSet.getString("COMMENTS"));
 							subQuestionObject.put("DISABLED", "Y");
 							
 							Map<String,Object> subQuestionObjectMap = new LinkedHashMap<String, Object>();
@@ -576,6 +585,9 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 							subQuestionObjectMap.put("PARENTQSIDS", resultSetSub.getString("PARENTQSIDS"));
 							subQuestionObjectMap.put("HASRISKIMPACT", resultSetSub.getString("HASRISKIMPACT"));
 							subQuestionObjectMap.put("INPUTOPTIONSLISTFORNUMERIC", resultSetSub.getString("INPUTOPTIONSLISTFORNUMERIC"));
+							subQuestionObjectMap.put("CREATEDBY", resultSet.getString("CREATEDBY"));
+							subQuestionObjectMap.put("CREATEDON", resultSet.getString("CREATEDON"));
+							subQuestionObjectMap.put("COMMENTS", resultSet.getString("COMMENTS") == null?"":resultSet.getString("COMMENTS"));
 							subQuestionObjectMap.put("DISABLED", "Y");
 							
 							query = "SELECT RFISTATUS FROM "+schemaName+"TB_CMQUES_CASEWORKFLOWDETAILS "+
@@ -731,7 +743,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 					ArrayList<Object> QuestionList = new ArrayList<Object>();
 					JSONArray questionListjson = new JSONArray();
 					query = "SELECT QUESTIONID, QUESTION, INPUTTYPE, INPUTOPTIONSLIST, "
-							+ "		ISSUPERPARENT, HASPARENT, PARENTQSIDS, HASRISKIMPACT, INPUTOPTIONSLISTFORNUMERIC "
+							+ "		ISSUPERPARENT, HASPARENT, PARENTQSIDS, HASRISKIMPACT, INPUTOPTIONSLISTFORNUMERIC,CREATEDBY,CREATEDON,COMMENTS "
 							+ "  FROM COMAML_CM.TB_RISKASSESSQUESTIONSCONFIG "
 							+ " WHERE ASSESSMENTUNIT = ? "
 							+ "   AND CATEGORY = ? "
@@ -755,6 +767,9 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 						questionObj.put("PARENTQSIDS", resultSet.getString("PARENTQSIDS"));
 						questionObj.put("HASRISKIMPACT", resultSet.getString("HASRISKIMPACT"));
 						questionObj.put("INPUTOPTIONSLISTFORNUMERIC", resultSet.getString("INPUTOPTIONSLISTFORNUMERIC"));
+						questionObj.put("CREATEDBY", resultSet.getString("CREATEDBY"));
+						questionObj.put("CREATEDON", resultSet.getString("CREATEDON"));
+						questionObj.put("COMMENTS", resultSet.getString("COMMENTS") == null?"":resultSet.getString("COMMENTS"));
 						questionObj.put("DISABLED", "Y");
 						
 						JSONObject questionDetailsJson = new JSONObject();
@@ -767,6 +782,9 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 						questionDetailsJson.put("PARENTQSIDS", resultSet.getString("PARENTQSIDS"));
 						questionDetailsJson.put("HASRISKIMPACT", resultSet.getString("HASRISKIMPACT"));
 						questionDetailsJson.put("INPUTOPTIONSLISTFORNUMERIC", resultSet.getString("INPUTOPTIONSLISTFORNUMERIC"));
+						questionDetailsJson.put("CREATEDBY", resultSet.getString("CREATEDBY"));
+						questionDetailsJson.put("CREATEDON", resultSet.getString("CREATEDON"));
+						questionDetailsJson.put("COMMENTS", resultSet.getString("COMMENTS") == null?"":resultSet.getString("COMMENTS"));
 						questionDetailsJson.put("DISABLED", "Y");
 						
 						query = "SELECT RFISTATUS FROM "+schemaName+"TB_CMQUES_CASEWORKFLOWDETAILS "+
@@ -843,7 +861,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 						ArrayList<Object> subQuestionsArrayList = new ArrayList<Object>();
 						JSONArray subQuestionArrayJson = new JSONArray();
 						query = "SELECT QUESTIONID, QUESTION, INPUTTYPE, INPUTOPTIONSLIST, "
-								+ "		ISSUPERPARENT, HASPARENT, PARENTQSIDS, HASRISKIMPACT,INPUTOPTIONSLISTFORNUMERIC "
+								+ "		ISSUPERPARENT, HASPARENT, PARENTQSIDS, HASRISKIMPACT,INPUTOPTIONSLISTFORNUMERIC,CREATEDBY,CREATEDON,COMMENTS "
 								+ "  FROM COMAML_CM.TB_RISKASSESSQUESTIONSCONFIG "
 								+ " WHERE ASSESSMENTUNIT = ? "
 								+ "   AND CATEGORY = ? "
@@ -867,6 +885,9 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 							subQuestionObject.put("PARENTQSIDS", resultSetSub.getString("PARENTQSIDS"));
 							subQuestionObject.put("HASRISKIMPACT", resultSetSub.getString("HASRISKIMPACT"));
 							subQuestionObject.put("INPUTOPTIONSLISTFORNUMERIC", resultSetSub.getString("INPUTOPTIONSLISTFORNUMERIC"));
+							subQuestionObject.put("CREATEDBY", resultSet.getString("CREATEDBY"));
+							subQuestionObject.put("CREATEDON", resultSet.getString("CREATEDON"));
+							subQuestionObject.put("COMMENTS", resultSet.getString("COMMENTS") == null?"":resultSet.getString("COMMENTS"));
 							subQuestionObject.put("DISABLED", "Y");
 							
 							Map<String,Object> subQuestionObjectMap = new LinkedHashMap<String, Object>();
@@ -879,6 +900,9 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 							subQuestionObjectMap.put("PARENTQSIDS", resultSetSub.getString("PARENTQSIDS"));
 							subQuestionObjectMap.put("HASRISKIMPACT", resultSetSub.getString("HASRISKIMPACT"));
 							subQuestionObjectMap.put("INPUTOPTIONSLISTFORNUMERIC", resultSetSub.getString("INPUTOPTIONSLISTFORNUMERIC"));
+							subQuestionObjectMap.put("CREATEDBY", resultSet.getString("CREATEDBY"));
+							subQuestionObjectMap.put("CREATEDON", resultSet.getString("CREATEDON"));
+							subQuestionObjectMap.put("COMMENTS", resultSet.getString("COMMENTS") == null?"":resultSet.getString("COMMENTS"));
 							subQuestionObjectMap.put("DISABLED", "Y");
 							
 							query = "SELECT RFISTATUS FROM "+schemaName+"TB_CMQUES_CASEWORKFLOWDETAILS "+
@@ -1019,8 +1043,8 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 				for(Map<String, Object> question: formConfigurationModel.questionsList) {
 					
 					query = "INSERT INTO COMAML_CM.TB_RISKASSESSQUESTIONSCONFIG(QUESTIONID, QUESTION, INPUTTYPE, INPUTOPTIONSLIST, "
-							+ "		ISSUPERPARENT, HASPARENT, PARENTQSIDS, HASRISKIMPACT, ASSESSMENTUNIT,CATEGORY, SUBCATEGORY, UPDATETIMESTAMP, ISENABLED, INPUTOPTIONSLISTFORNUMERIC) "
-							+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,SYSTIMESTAMP,'Y',?)";
+							+ "		ISSUPERPARENT, HASPARENT, PARENTQSIDS, HASRISKIMPACT, ASSESSMENTUNIT,CATEGORY, SUBCATEGORY, UPDATETIMESTAMP, ISENABLED, INPUTOPTIONSLISTFORNUMERIC,CREATEDBY,CREATEDON,COMMENTS) "
+							+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,SYSTIMESTAMP,'Y',?,?,?,?)";
 					preparedStatement = connection.prepareStatement(query);
 					preparedStatement.setString(1, (String) question.get("QUESTIONID"));
 					preparedStatement.setString(2, (String) question.get("QUESTION"));
@@ -1034,6 +1058,9 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 					preparedStatement.setString(10, (String) question.get("category"));
 					preparedStatement.setString(11, (String) question.get("subCategory"));
 					preparedStatement.setString(12, (String) question.get("INPUTOPTIONSLISTFORNUMERIC"));
+					preparedStatement.setString(13, (String) question.get("CREATEDBY"));
+					preparedStatement.setString(14, (String) question.get("CREATEDON"));
+					preparedStatement.setString(15, (String) question.get("COMMENTS"));
 					preparedStatement.executeUpdate();
 				}
 			}
@@ -1043,8 +1070,8 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 					
 					query = "INSERT INTO COMAML_CM.TB_RISKASSESSQUESTIONSCONFIG(QUESTIONID, QUESTION, INPUTTYPE, INPUTOPTIONSLIST, "
 							+ "		ISSUPERPARENT, HASPARENT, PARENTQSIDS, HASRISKIMPACT, ASSESSMENTUNIT,CATEGORY, SUBCATEGORY, UPDATETIMESTAMP,"
-							+ "		ISENABLED, INPUTOPTIONSLISTFORNUMERIC,SUBSUBCATEG) "
-							+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,SYSTIMESTAMP,'Y',?,?)";
+							+ "		ISENABLED, INPUTOPTIONSLISTFORNUMERIC,SUBSUBCATEG,CREATEDBY,CREATEDON,COMMENTS) "
+							+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,SYSTIMESTAMP,'Y',?,?,?,?)";
 					preparedStatement = connection.prepareStatement(query);
 					preparedStatement.setString(1, (String) question.get("QUESTIONID"));
 					preparedStatement.setString(2, (String) question.get("QUESTION"));
@@ -1059,6 +1086,9 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 					preparedStatement.setString(11, ((String) question.get("subCategory")).replace("&amp;","&"));
 					preparedStatement.setString(12, (String) question.get("INPUTOPTIONSLISTFORNUMERIC"));
 					preparedStatement.setString(13, ((String) question.get("subSubCategory")).replace("&amp;","&"));
+					preparedStatement.setString(14, (String) question.get("CREATEDBY"));
+					preparedStatement.setString(15, (String) question.get("CREATEDON"));
+					preparedStatement.setString(16, (String) question.get("COMMENTS"));
 					preparedStatement.executeUpdate();
 				}
 			}

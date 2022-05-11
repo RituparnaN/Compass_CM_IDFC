@@ -14,6 +14,9 @@ This page is for all the static contents like StyleSheet and JavaScript files.
 <script type="text/javascript"	src="${pageContext.request.contextPath}/includes/scripts/bootstrap.min.js"></script>
  
 <script type="text/javascript"	src="${pageContext.request.contextPath}/includes/scripts/jquery.dataTables.min.js"></script>
+
+
+
 <script type="text/javascript"	src="${pageContext.request.contextPath}/includes/scripts/metisMenu.min.js"></script>
 <script type="text/javascript"	src="${pageContext.request.contextPath}/includes/scripts/dataTables.bootstrap.js"></script>
 
@@ -82,6 +85,8 @@ This page is for all the static contents like StyleSheet and JavaScript files.
 <script type="text/javascript" src="${pageContext.request.contextPath}/includes/scripts/DashboardGraph/dom-to-image.js"></script>
 <script type="text/javascript" src = "${pageContext.request.contextPath}/includes/scripts/JuliusVoice/julius.js"></script>
 <script src="${pageContext.request.contextPath}/includes/scripts/slider/jQAllRangeSliders-withRuler-min.js"></script>
+<script type="text/javascript"	src="${pageContext.request.contextPath}/includes/scripts/textifySummary.js"></script>
+
 
 <script type="text/javascript">
 $(function () {

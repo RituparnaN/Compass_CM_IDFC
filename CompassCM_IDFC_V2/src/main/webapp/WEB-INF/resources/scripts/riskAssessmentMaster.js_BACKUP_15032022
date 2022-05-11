@@ -46,7 +46,6 @@ var riskAssessmentMaster = riskAssessmentMaster || (function () {
 		},
 		handleInputChange: function (elm,unqId,toEditCategory,toEditSubCategory,qId){
 			
-			
 			var questionsFormDetails = JSON.parse($("#quesionDetailsFormJson").html())
 			var categories = JSON.parse($("#categoriesSubCategories").html())
 			Object.keys(categories).forEach(category=>{
@@ -268,10 +267,7 @@ var riskAssessmentMaster = riskAssessmentMaster || (function () {
 																"PARENTQSIDS":"",
 																"SUBQUESTIONLIST": [],
 																"DISABLED":"N",
-																"INPUTOPTIONSLISTFORNUMERIC":"0^null^1||null^null^2||null^INF^3",
-																"COMMENTS":"",
-																"CREATEDBY":$("#userCode").html().trim(),
-																"CREATEDON":$("#todayDate").html()}
+																"INPUTOPTIONSLISTFORNUMERIC":"0^null^1||null^null^2||null^INF^3"}
 									questionsFormDetails[category][subCategory].push(newQuestionObject);
 								}
 								else{
@@ -287,10 +283,7 @@ var riskAssessmentMaster = riskAssessmentMaster || (function () {
 																"PARENTQSIDS":"",
 																"SUBQUESTIONLIST": [],
 																"DISABLED":"N",
-																"INPUTOPTIONSLISTFORNUMERIC":"0^null^1||null^null^2||null^INF^3",
-																"COMMENTS":"",
-																"CREATEDBY":$("#userCode").html().trim(),
-																"CREATEDON":$("#todayDate").html()}]
+																"INPUTOPTIONSLISTFORNUMERIC":"0^null^1||null^null^2||null^INF^3"}]
 									questionsFormDetails[category][subCategory].forEach(question=>{
 										newQuestionObject.push(Object.assign({},question));
 									})
@@ -310,10 +303,7 @@ var riskAssessmentMaster = riskAssessmentMaster || (function () {
 															"PARENTQSIDS":"",
 															"SUBQUESTIONLIST": [],
 															"DISABLED":"N",
-															"INPUTOPTIONSLISTFORNUMERIC":"0^null^1||null^null^2||null^INF^3",
-															"COMMENTS":"",
-															"CREATEDBY":$("#userCode").html().trim(),
-															"CREATEDON":$("#todayDate").html()}
+															"INPUTOPTIONSLISTFORNUMERIC":"0^null^1||null^null^2||null^INF^3"}
 								questionsFormDetails[category][subCategory].push(newQuestionObject);
 							}
 							
@@ -364,10 +354,7 @@ var riskAssessmentMaster = riskAssessmentMaster || (function () {
 																	"HASPARENT":"Y",
 																	"PARENTQSIDS":elm.name+",",
 																	"DISABLED":"N",
-																	"INPUTOPTIONSLISTFORNUMERIC":"0^null^1||null^null^2||null^INF^3",
-																	"COMMENTS":"",
-																	"CREATEDBY":$("#userCode").html().trim(),
-																	"CREATEDON":$("#todayDate").html()
+																	"INPUTOPTIONSLISTFORNUMERIC":"0^null^1||null^null^2||null^INF^3"
 																	 })
 								}
 							})
@@ -606,21 +593,6 @@ var riskAssessmentMaster = riskAssessmentMaster || (function () {
 																			}
 											subQuestionsBody +=	`	  </select>
 																	</td>
-																</tr>
-																<tr>
-																	<td width = "15%">Created By</td>
-																	<td width = "30%"><input type="text" class="form-control input-sm" name = "CREATEDBY" value = "`+question['CREATEDBY']+`" readonly/></td>
-																	<td width = "10%"></td>
-																	<td width = "15%">Created On</td>
-																	<td width = "30%"><input type = "text" class="form-control input-sm" name = "CREATEDON" value = "`+question['CREATEDON']+`" readonly></td>
-																</tr>
-																<tr>
-																	<td width = "15%">Comments</td>
-																	<td colspan = 4 >
-																		<textarea class="form-control input-sm" name = "COMMENTS" style = "margin-bottom:5px"S" onchange = "riskAssessmentMaster.handleSubInputChange(this,'`+unqId+`','`+category+`','`+subCategory+`','`+question['QUESTIONID']+`')")>`+question['COMMENTS']+` </textarea>
-																		<button class = "pull-right btn btn-warning" onclick = "textifySummary.getSummary(this)">Summarize</button>
-																	</td>
-																
 																</tr>
 															</table>
 
@@ -891,10 +863,7 @@ var riskAssessmentMaster = riskAssessmentMaster || (function () {
 																"PARENTQSIDS":"",
 																"SUBQUESTIONLIST": [],
 																"DISABLED":"N",
-																"INPUTOPTIONSLISTFORNUMERIC":"0^null^1||null^null^2||null^INF^3",
-																"COMMENTS":"",
-																"CREATEDBY":$("#userCode").html().trim(),
-																"CREATEDON":$("#todayDate").html()}
+																"INPUTOPTIONSLISTFORNUMERIC":"0^null^1||null^null^2||null^INF^3"}
 									questionsFormDetails[category][subCategory].push(newQuestionObject);
 								}
 								else{
@@ -910,11 +879,7 @@ var riskAssessmentMaster = riskAssessmentMaster || (function () {
 																"PARENTQSIDS":"",
 																"SUBQUESTIONLIST": [],
 																"DISABLED":"N",
-																"INPUTOPTIONSLISTFORNUMERIC":"0^null^1||null^null^2||null^INF^3",
-																"COMMENTS":"",
-																"CREATEDBY":$("#userCode").html().trim(),
-																"CREATEDON":$("#todayDate").html()
-																	}]
+																"INPUTOPTIONSLISTFORNUMERIC":"0^null^1||null^null^2||null^INF^3"}]
 									questionsFormDetails[category][subCategory].forEach(question=>{
 										newQuestionObject.push(Object.assign({},question));
 									})
@@ -995,10 +960,7 @@ var riskAssessmentMaster = riskAssessmentMaster || (function () {
 																	"HASPARENT":"Y",
 																	"PARENTQSIDS":elm.name+",",
 																	"DISABLED":"N",
-																	"INPUTOPTIONSLISTFORNUMERIC":"0^null^1||null^null^2||null^INF^3",
-																	"COMMENTS":"",
-																	"CREATEDBY":$("#userCode").html().trim(),
-																	"CREATEDON":$("#todayDate").html()
+																	"INPUTOPTIONSLISTFORNUMERIC":"0^null^1||null^null^2||null^INF^3"
 																	 })
 								}
 							})
@@ -1093,21 +1055,7 @@ var riskAssessmentMaster = riskAssessmentMaster || (function () {
 																		<textarea type='text' name="QUESTION" onchange = "riskAssessmentMaster.handleCRSubInputChange(this,'`+unqId+`','`+category+`','`+subCategory+`','`+question['QUESTIONID']+`')") id = "`+question['QUESTIONID']+`||question`+`" class='form-control input-sm'>`+question['QUESTION']+`</textarea>
 																	</td>
 																</tr>
-																<tr>
-																	<td width = "15%">Created By</td>
-																	<td width = "30%"><input type="text" class="form-control input-sm" name = "CREATEDBY" value = "`+question['CREATEDBY']+`" readonly/></td>
-																	<td width = "10%"></td>
-																	<td width = "15%">Created On</td>
-																	<td width = "30%"><input type = "text" class="form-control input-sm" name = "CREATEDON" value = "`+question['CREATEDON']+`" readonly></td>
-																</tr>
-																<tr>
-																	<td width = "15%">Comments</td>
-																	<td colspan = 4 >
-																		<textarea class="form-control input-sm" name = "COMMENTS" style = "margin-bottom:5px"S" onchange = "riskAssessmentMaster.handleCRSubInputChange(this,'`+unqId+`','`+category+`','`+subCategory+`','`+question['QUESTIONID']+`')")>`+question['COMMENTS']+` </textarea>
-																		<button class = "pull-right btn btn-warning" onclick = "textifySummary.getSummary(this)">Summarize</button>	
-																	</td>
-																	
-																</tr>
+																
 															</table>
 
 														</div>
@@ -1187,46 +1135,6 @@ var riskAssessmentMaster = riskAssessmentMaster || (function () {
 			document.getElementById(toEditCategory+toEditSubCategory+"subCategLink").click()*/
 			$(".selectpicker").selectpicker();
 			//document.getElementById(elm.id).scrollIntoView();
-		},
-		getSummany:function (ele){
-			$(ele).siblings().each(function() {
-				 msg = $(this).val()
-				 $("#compassCaseWorkFlowGenericModal").modal("show");
-				 $("#compassCaseWorkFlowGenericModal-title").html("Comment Summary");
-				 $("#compassCaseWorkFlowGenericModal-body").html("<br/><center><img alt='Loading...' src='${pageContext.request.contextPath}/includes/images/qde-loadder.gif'></center><br/>");
-				 $.ajax({
-				 	url : 'http://127.0.0.1:5555/predict',
-			 		cache : true,
-			 		type : 'POST',
-			 		data : "message="+msg,
-				 	success: function(res) {
-						var summaryHtml = `<div class="card card-primary" style="width:95%;margin:auto;margin-top:1%;margin-bottom:1%" >
-												<div class="card-header clearfix" 
-													id="slidingSummaryPanel"" data-toggle="collapse"
-													 style = "background-color:#95f1a7">
-													<h6 class="card-title pull-left">Generated Summary</h6>
-													
-												</div>
-												<div id="summarySection" class="summarySection" >
-													
-															<table class="table table-striped">
-																<tr style = "width:100%">
-																	<td width="100%">
-																		<textarea class = "form-control input-sm" readonly>`+res+`</textarea>
-																	</td>
-																</tr>
-															</table>
-													</div>
-												</div>`
-						
-				 		$("#compassCaseWorkFlowGenericModal-body").html(summaryHtml);
-				 	},
-				 	error: function(a,b,c) {
-						alert(a+b+c);
-				 	}
-				 });
-				 
-				});
 		},
 		
 		generateQuestionsForm: function (unqId,prevCategoryLink = null, prevSubCategoryLink = null, isControlsReview = false) {
@@ -1572,23 +1480,7 @@ var riskAssessmentMaster = riskAssessmentMaster || (function () {
 												body += this.createSubQuestionList(question['SUBQUESTIONLIST'], question['QUESTIONID'], unqId, formattedCategory, formattedSubCategory)
 											}
 											
-											body +=			`
-															<tr>
-																<td width = "15%">Created By</td>
-																<td width = "30%"><input type="text" class="form-control input-sm" name = "CREATEDBY" value = "`+question['CREATEDBY']+`" readonly/></td>
-																<td width = "10%"></td>
-																<td width = "15%">Created On</td>
-																<td width = "30%"><input type = "text" class="form-control input-sm" name = "CREATEDON" value = "`+question['CREATEDON']+`" readonly></td>
-															</tr>
-															<tr>
-																<td width = "15%">Comments</td>
-																<td colspan = 4 >
-																	<textarea class="form-control input-sm" name = "COMMENTS" style = "margin-bottom:5px"S" style = "margin-bottom:5px" onchange = "riskAssessmentMaster.handleInputChange(this,'`+unqId+`','`+formattedCategory+`','`+formattedSubCategory+`','`+question['QUESTIONID']+`')")>`+question['COMMENTS']+` </textarea>
-																	<button class = "pull-right btn btn-warning" onclick = "textifySummary.getSummary(this)">Summarize</button>
-																</td>
-																
-															</tr>
-															</table>
+											body +=			`</table>
 														</div>
 														<button type="button" id="removeQuestion`+question['QUESTIONID']+`" class="pull-right btn btn-danger btn-sm" onclick="riskAssessmentMaster.removeQuestion(this,'`+unqId+`','`+formattedCategory+`','`+formattedSubCategory+`','`+question['QUESTIONID']+`')") style = "margin-right:20px;margin-bottom:5px;">Remove</button>
 														<button type="button" name = "`+question['QUESTIONID']+`" id="addSubQuestion`+question['QUESTIONID']+`" class="pull-right btn btn-warning btn-sm" onclick="riskAssessmentMaster.addSubQuestion(this,'`+unqId+`','`+formattedCategory+`','`+formattedSubCategory+`','`+question['QUESTIONID']+`')") style = "margin-right:20px;margin-bottom:5px;">Add Sub Question</button>
@@ -1844,24 +1736,7 @@ var riskAssessmentMaster = riskAssessmentMaster || (function () {
 												body += this.createCRSubQuestionList(question['SUBQUESTIONLIST'], question['QUESTIONID'], unqId, formattedCategory, formattedSubCategory)
 											}
 											
-											body +=			`
-															<tr>
-																<td width = "15%">Created By</td>
-																<td width = "30%"><input type="text" class="form-control input-sm" name = "CREATEDBY" value = "`+question['CREATEDBY']+`" readonly/></td>
-																<td width = "10%"></td>
-																<td width = "15%">Created On</td>
-																<td width = "30%"><input type = "text" class="form-control input-sm" name = "CREATEDON" value = "`+question['CREATEDON']+`" readonly></td>
-															</tr>
-															<tr>
-																<td width = "15%">Comments</td>
-																<td colspan = 4 >
-																	<textarea class="form-control input-sm" name = "COMMENTS" style = "margin-bottom:5px"S" onchange = "riskAssessmentMaster.handleCRInputChange(this,'`+unqId+`','`+formattedCategory+`','`+formattedSubCategory+`','`+question['QUESTIONID']+`')")>`+question['COMMENTS']+` </textarea>
-																	<button class = "pull-right btn btn-warning" onclick = "textifySummary.getSummary(this)">Summarize</button>
-																</td>
-																
-															</tr>
-															
-															</table>
+											body +=			`</table>
 														</div>
 														<button type="button" id="removeQuestion`+question['QUESTIONID']+`" class="pull-right btn btn-danger btn-sm" onclick="riskAssessmentMaster.removeCRQuestion(this,'`+unqId+`','`+formattedCategory+`','`+formattedSubCategory+`','`+question['QUESTIONID']+`')") style = "margin-right:20px;margin-bottom:5px;">Remove</button>
 														<button type="button" name = "`+question['QUESTIONID']+`" id="addSubQuestion`+question['QUESTIONID']+`" class="pull-right btn btn-warning btn-sm" onclick="riskAssessmentMaster.addCRSubQuestion(this,'`+unqId+`','`+formattedCategory+`','`+formattedSubCategory+`','`+question['QUESTIONID']+`')") style = "margin-right:20px;margin-bottom:5px;">Add Sub Question</button>

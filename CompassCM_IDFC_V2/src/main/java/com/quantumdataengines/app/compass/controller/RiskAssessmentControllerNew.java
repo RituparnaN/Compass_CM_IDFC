@@ -95,6 +95,7 @@ private static final Logger log = LoggerFactory.getLogger(CommonController.class
 			Authentication authentication)throws Exception{
 		
 		String assessmentUnit = request.getParameter("ASSESSMENTUNIT");
+		String questionId = request.getParameter("QUESTIONID");
 		System.out.println(assessmentUnit);
 		
 		String userCode = authentication.getPrincipal().toString();
@@ -102,6 +103,7 @@ private static final Logger log = LoggerFactory.getLogger(CommonController.class
 		request.setAttribute("QUESTIONSFORMDETAILS", riskAssessmentNewService.getQuestionsFormDetails(assessmentUnit,""));
 		request.setAttribute("ASSESSMENTUNIT", assessmentUnit);
 		request.setAttribute("UNQID", otherCommonService.getElementId());
+		request.setAttribute("QUESTIONID", questionId);
 		request.setAttribute("CURRENTROLE", request.getSession(false).getAttribute("CURRENTROLE") == null ? "N.A.":request.getSession(false).getAttribute("CURRENTROLE").toString());
 		
 		commonService.auditLog(authentication.getPrincipal().toString(), request, "QuestionnaireMasterNew", "OPEN", "Module Accessed");

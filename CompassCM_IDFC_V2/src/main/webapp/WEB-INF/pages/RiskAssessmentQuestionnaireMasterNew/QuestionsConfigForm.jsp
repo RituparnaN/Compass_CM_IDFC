@@ -49,6 +49,16 @@ for (i = 0; i < acc.length; i++) {
 	$(document).ready(function() {
 		var id = '${UNQID}';
 		var assessmentUnit = '${ASSESSMENTUNIT}'
+
+		var today = new Date();
+		var dd = String(today.getDate()).padStart(2, '0');
+		var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+		var yyyy = today.getFullYear();
+
+		today = mm + '/' + dd + '/' + yyyy;
+		
+		$("#todayDate").html(today)
+		
 		compassTopFrame.init(id, 'reportBenchMarkDtlsTable1'+id, 'dd/mm/yy');
 
 		// creating js array from jstl object for categories and sub categories
@@ -344,6 +354,15 @@ for (i = 0; i < acc.length; i++) {
 	</div>
 	<div id = "unqId">
 		${UNQID}
+	</div>
+	<div id = "userCode">
+		${USERCODE }
+	</div>
+	<div id = "todayDate">
+		
+	</div>
+	<div id = "individualQsId">
+		${QUESTIONID }
 	</div>
 </div>
 </div>

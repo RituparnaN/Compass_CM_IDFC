@@ -8,12 +8,13 @@
 
 		$("#configQuestions"+id).click(function(){
 			var ASSESSMENTUNIT = $("#ASSESSMENTUNIT"+id).val();
+			var QUESTIONID = $("#QUESTIONID"+id).val();
 			if((ASSESSMENTUNIT != null && ASSESSMENTUNIT != "")){
 				$.ajax({
 					url : "${pageContext.request.contextPath}/common/questionConfigurationForm",
 					type : "POST",
 					cache : false,
-					data : "ASSESSMENTUNIT="+ASSESSMENTUNIT,
+					data : "ASSESSMENTUNIT="+ASSESSMENTUNIT+"&QUESTIONID="+QUESTIONID,
 					success : function(res){
 						
 						$("#questionsConfigFormSection"+id).html(res);
@@ -42,9 +43,9 @@
 					 <div class="card-search-card" >
 						<table class="table table-striped formSearchTable cddForm${UNQID}" style="margin-bottom: 0px;border-collapse:collapse;">
 							<tbody>
-								<tr>
-									<td style="width: 20%">Business Unit</td>
-									<td style="width: 25%">
+								<tr width = "95%" style = "margin:auto">
+									<td style="width: 15%">Business Unit</td>
+									<td style="width: 30%">
 										<select class="form-control input-sm" id="ASSESSMENTUNIT${UNQID}" name="ASSESSMENTUNIT">
 											<option value="">Select Assessment Unit</option>
 											<c:forEach var="assessmentUnit" items="${ASSESSMENTUNITS}">
@@ -57,8 +58,14 @@
 										</select>
 									</td>
 									<td style="width: 10%">&nbsp;</td>
-									<td width="20%"></td>
-									<td width="25%"></td>
+									<td width="15%">
+									</td>
+									<td width="30%">
+									</td>
+									<%-- <td width="15%">Question Id</td>
+									<td width="30%">
+										<input class="form-control input-sm" id = "QUESTIONID${UNQID }" name = "QUESTIONID" />
+									</td> --%>
 								</tr>
 							</tbody>
 						</table>
@@ -68,7 +75,6 @@
 			<div class="card-footer clearfix">
 				<div class="pull-${dirR}">
 					<button type="button" id="configQuestions${UNQID}" class="btn btn-success btn-sm">Configure Questions</button>
-					
 				</div>
 			</div>
 		</div>
