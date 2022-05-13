@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.quantumdataengines.app.compass.controller.reports.MultiSheetExcelViewChart;
+import com.quantumdataengines.app.compass.controller.reports.MultiSheetExcelViewChartNew;
+import com.quantumdataengines.app.compass.controller.reports.MultiSheetExcelViewChartSummary;
 import com.quantumdataengines.app.compass.model.riskAssessment.MakerCheckerDataModel;
 import com.quantumdataengines.app.compass.model.riskAssessmentNew.FormConfigurationModel;
 import com.quantumdataengines.app.compass.model.riskAssessmentNew.FormDataModel;
@@ -263,5 +265,93 @@ private static final Logger log = LoggerFactory.getLogger(CommonController.class
 		return modelAndView;	
 	}
 	
+	@RequestMapping(value = "/generateCMReportNew", method=RequestMethod.GET) 
+	public ModelAndView generateCMReportNew(HttpServletRequest request, HttpServletResponse response, 
+			Authentication authentication) throws Exception {
+		String compassRefNo = request.getParameter("compassRefNo");
+		String assessmentUnit = request.getParameter("assessmentUnit");
+		String userCode = authentication.getPrincipal().toString();
+		String userRole = request.getSession(false) != null ? (String) request.getSession(false).getAttribute("CURRENTROLE") : "";
+		String ipAddress = request.getRemoteAddr();
+		
+		Map<String, Object> mainMap = riskAssessmentNewService.generateCMReportNew(compassRefNo, assessmentUnit, userCode, userRole, ipAddress);
+		Iterator<String> itr = mainMap.keySet().iterator();
+		List<String> tabOrder = new Vector<String>();
+		while(itr.hasNext()){
+			tabOrder.add(itr.next());
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyyHHmmss");
+		Date date = new Date();
+		mainMap.put("TABORDER", tabOrder);
+		mainMap.put("FILENAME", compassRefNo+"_"+userCode+"_"+sdf.format(date));
+		ModelAndView modelAndView = new ModelAndView(new MultiSheetExcelViewChartNew(), mainMap);
+		//System.out.println("MAINMAP: "+mainMap);
+		commonService.auditLog(authentication.getPrincipal().toString(), request, "REPORTS", "DOWNLOAD", "File Downloaded");
+		return modelAndView;	
+	}
+	
+	@RequestMapping(value = "/generateCMReportSummary", method=RequestMethod.GET) 
+	public ModelAndView generateCMReportSummary(HttpServletRequest request, HttpServletResponse response, 
+			Authentication authentication) throws Exception {
+		String assessmentPeriod = request.getParameter("ASSESSMENTPERIOD");
+		System.out.println("In generateCMReportSummary controller assessmentPeriod: "+assessmentPeriod);
+		String userCode = authentication.getPrincipal().toString();
+		String userRole = request.getSession(false) != null ? (String) request.getSession(false).getAttribute("CURRENTROLE") : "";
+		String ipAddress = request.getRemoteAddr();
+		
+		Map<String, Object> mainMap = riskAssessmentNewService.generateCMReportSummary(assessmentPeriod, userCode, userRole, ipAddress);
+		Iterator<String> itr = mainMap.keySet().iterator();
+		List<String> tabOrder = new Vector<String>();
+		while(itr.hasNext()){
+			tabOrder.add(itr.next());
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyyHHmmss");
+		Date date = new Date();
+		mainMap.put("TABORDER", tabOrder);
+		mainMap.put("FILENAME", assessmentPeriod+"_"+userCode+"_"+sdf.format(date));
+		ModelAndView modelAndView = new ModelAndView(new MultiSheetExcelViewChartSummary(), mainMap);
+		//System.out.println("MAINMAP: "+mainMap);
+		commonService.auditLog(authentication.getPrincipal().toString(), request, "REPORTS", "DOWNLOAD", "File Downloaded");
+		return modelAndView;	
+	}
+	
+	@RequestMapping(value="/mixedChartNew", method=RequestMethod.POST)
+	public String chart(HttpServletRequest request, HttpServletResponse response, 
+			Authentication authentication) throws Exception{
+		String cmRefNo = request.getParameter("CRMREFNO");
+		request.setAttribute("DATAPOINTS", riskAssessmentNewService.getGraphDataPointsNew(cmRefNo));
+		
+		return "RiskAssessmentNew/mixedChartNew";
+	}
+	
+	@RequestMapping(value="/mixedChartSummary", method=RequestMethod.POST)
+	public String chartSummary(HttpServletRequest request, HttpServletResponse response, 
+			Authentication authentication) throws Exception{
+		String assessmentPeriod = request.getParameter("ASSESSMENTPERIOD");
+		System.out.println("In mixedChartSummary controller assessmentPeriod is "+assessmentPeriod);
+		request.setAttribute("DATAPOINTS", riskAssessmentNewService.getGraphDataPointsSummary(assessmentPeriod));
+		
+		return "RiskAssessmentNew/mixedChartSummary";
+	}
+	
+	@RequestMapping(value={"/saveChartImageNew"}, method=RequestMethod.POST)
+	public ResponseEntity<String> saveChartImage(HttpServletRequest request, HttpServletResponse response, 
+			Authentication authentication) throws Exception{
+		String CURRENTROLE = (String) request.getSession(false).getAttribute("CURRENTROLE");
+//		String data = request.getParameter("makerCheckerData");
+		StringBuilder buffer = new StringBuilder();
+	    BufferedReader reader = request.getReader();
+	    String line;
+	    while ((line = reader.readLine()) != null) {
+	        buffer.append(line);
+	        buffer.append(System.lineSeparator());
+	    }
+	    String data = buffer.toString();
+	    System.out.println("data:"+data);
+	    JSONObject jObj = new JSONObject(data);
+	    String ImageUrl = jObj.getString("data");
+	    String imageId = riskAssessmentNewService.saveImageUrlData(ImageUrl);
+		return ResponseEntity.ok(imageId);
+	}
 	
 }

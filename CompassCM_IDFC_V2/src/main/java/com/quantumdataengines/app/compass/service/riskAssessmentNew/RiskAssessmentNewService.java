@@ -18,9 +18,13 @@ public interface RiskAssessmentNewService {
 	public List<Map<String, String>> searchRiskAssessmentData(String ASSESSMENTUNIT, String COMPASSREFERENCENO);
 	public String generateCompassRefNo();
 	public Map<String, Object> generateCMReport(String compassRefNo, String userCode, String userRole, String ipAddress);
-	
+	public Map<String, Object> generateCMReportNew(String compassRefNo, String assessmentUnit, String userCode, String userRole, String ipAddress);
+	public Map<String, Object> generateCMReportSummary(String assessmentPeriod, String userCode, String userRole, String ipAddress);
 	public JSONObject getMakerCheckerList(String qId,String compassRefId);
 	public Map<String, Object> saveRaiseToRFI(MakerCheckerDataModel makerCheckerData);
 	public Map<Object,Object> getRASummaryData(int assessmentPeriod);
 	public Object getGraphDataPoints(String cmRefNo);
+	public Object getGraphDataPointsNew(String cmRefNo);
+	public Object getGraphDataPointsSummary(String assessmentPeriod);
+	public String saveImageUrlData(String imageUrl);
 }

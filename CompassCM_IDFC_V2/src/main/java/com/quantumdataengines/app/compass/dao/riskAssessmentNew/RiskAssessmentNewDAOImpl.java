@@ -1405,6 +1405,172 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 		}
 		return mainMap;
 	}
+	
+	@Override
+	public Map<String, Object> generateCMReportNew(String compassRefNo, String assessmentUnit, String userCode, String userRole, String ipAddress){
+		Map<String, Object> mainMap = new LinkedHashMap<String, Object>();
+		
+		System.out.println("assessmentUnit in NEW controller: "+assessmentUnit);
+		
+    	Connection connection = null;
+		CallableStatement callableStatement = null;
+        ResultSet tabNameResultSet = null;
+		Map<String, ResultSet> resultSetMap = new LinkedHashMap<String, ResultSet>();
+		String[] arrTabName = null;
+		try{
+			connection = connectionUtil.getConnection();
+			callableStatement = connection.prepareCall("{CALL "+schemaName+"STP_GETCMREPORTDATANEW(?,?,?,?,?,?,?,?,?,?,?,?)}");
+			callableStatement.setString(1, compassRefNo);
+			callableStatement.setString(2, userCode);
+			callableStatement.setString(3, userRole);
+			callableStatement.setString(4, ipAddress);
+            callableStatement.registerOutParameter(5, oracle.jdbc.OracleTypes.CURSOR);
+            callableStatement.registerOutParameter(6, oracle.jdbc.OracleTypes.CURSOR);
+            callableStatement.registerOutParameter(7, oracle.jdbc.OracleTypes.CURSOR);
+            callableStatement.registerOutParameter(8, oracle.jdbc.OracleTypes.CURSOR);
+            callableStatement.registerOutParameter(9, oracle.jdbc.OracleTypes.CURSOR);
+            callableStatement.registerOutParameter(10, oracle.jdbc.OracleTypes.CURSOR);
+            callableStatement.registerOutParameter(11, oracle.jdbc.OracleTypes.CURSOR);
+            callableStatement.registerOutParameter(12, oracle.jdbc.OracleTypes.CURSOR);
+            
+            callableStatement.execute();
+	            
+            tabNameResultSet = (ResultSet)callableStatement.getObject(5);
+            if(tabNameResultSet.next()){
+            	arrTabName = CommonUtil.splitString(tabNameResultSet.getString(1), "^~^");
+            }
+            
+            for(int i = 0; i < arrTabName.length; i++){
+            	int resultSetInedx = i+6;
+            	resultSetMap.put(arrTabName[i], (ResultSet)callableStatement.getObject(resultSetInedx));
+            }
+            
+            Iterator<String> itr = resultSetMap.keySet().iterator();
+			while (itr.hasNext()) {
+				String sheetName = itr.next();
+				ResultSet resultSet = resultSetMap.get(sheetName);
+				
+				System.out.println("sheetName: "+sheetName+" "+"resultSet: "+resultSet);
+				
+				ArrayList<ArrayList<String>> headerList = new ArrayList<ArrayList<String>>();
+				ArrayList<ArrayList<String>> resultList = new ArrayList<ArrayList<String>>();
+				
+		    	ResultSetMetaData resultSetMetaData=resultSet.getMetaData();
+		    	ArrayList<String> eachHeader = new ArrayList<String>();
+		    	for(int i = 1; i <= resultSetMetaData.getColumnCount(); i++){
+		    		eachHeader.add(resultSetMetaData.getColumnName(i));
+		    	}
+		    	headerList.add(eachHeader);
+		    	
+		    	while(resultSet.next()){
+		    		ArrayList<String> eachRecord = new ArrayList<String>();
+		    		for(int i = 1; i <= resultSetMetaData.getColumnCount(); i++){
+		    			eachRecord.add(resultSet.getString(i));
+		    		}
+		    		resultList.add(eachRecord);
+		    }
+		    	
+	    	HashMap<String, ArrayList<ArrayList<String>>> innerMap = new LinkedHashMap<String, ArrayList<ArrayList<String>>>();
+	    	innerMap.put("listResultHeader", headerList);
+	    	innerMap.put("listResultData", resultList);
+	    	if(assessmentUnit.equals("Treasury"))
+	    	{
+	    		mainMap.put("Treasury_Report", innerMap);
+	    	}
+	    	if(assessmentUnit.equals("RetailLiabilities"))
+	    	{
+	    		mainMap.put("Retail_Liabilities_Report", innerMap);
+	    	}
+	    	if(assessmentUnit.equals("RetailAssets"))
+	    	{
+	    		mainMap.put("Retail_Assets_Report", innerMap);
+	    	}
+	    	if(assessmentUnit.equals("WholesaleBanking"))
+	    	{
+	    		mainMap.put("Wholesale_Banking_Report", innerMap);
+	    	}
+	    	//mainMap.put(sheetName, innerMap);
+		}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			connectionUtil.closeResources(connection, callableStatement, tabNameResultSet, null);
+		}
+		return mainMap;
+	}
+	
+	@Override
+	public Map<String, Object> generateCMReportSummary(String assessmentPeriod, String userCode, String userRole, String ipAddress){
+		System.out.println("In generateCMReportSummary dao assessmentPeriod: "+assessmentPeriod);
+		Map<String, Object> mainMap = new LinkedHashMap<String, Object>();
+    	Connection connection = null;
+		CallableStatement callableStatement = null;
+        ResultSet tabNameResultSet = null;
+		Map<String, ResultSet> resultSetMap = new LinkedHashMap<String, ResultSet>();
+		String[] arrTabName = null;
+		try{
+			connection = connectionUtil.getConnection();
+			callableStatement = connection.prepareCall("{CALL "+schemaName+"STP_GETCMREPORTDATASUMMARY(?,?,?,?,?,?,?,?,?,?,?,?)}");
+			callableStatement.setString(1, assessmentPeriod);
+			callableStatement.setString(2, userCode);
+			callableStatement.setString(3, userRole);
+			callableStatement.setString(4, ipAddress);
+            callableStatement.registerOutParameter(5, oracle.jdbc.OracleTypes.CURSOR);
+            callableStatement.registerOutParameter(6, oracle.jdbc.OracleTypes.CURSOR);
+            callableStatement.registerOutParameter(7, oracle.jdbc.OracleTypes.CURSOR);
+            callableStatement.registerOutParameter(8, oracle.jdbc.OracleTypes.CURSOR);
+            callableStatement.registerOutParameter(9, oracle.jdbc.OracleTypes.CURSOR);
+            callableStatement.registerOutParameter(10, oracle.jdbc.OracleTypes.CURSOR);
+            callableStatement.registerOutParameter(11, oracle.jdbc.OracleTypes.CURSOR);
+            callableStatement.registerOutParameter(12, oracle.jdbc.OracleTypes.CURSOR);
+            
+            callableStatement.execute();
+	            
+            tabNameResultSet = (ResultSet)callableStatement.getObject(5);
+            if(tabNameResultSet.next()){
+            	arrTabName = CommonUtil.splitString(tabNameResultSet.getString(1), "^~^");
+            }
+            
+            for(int i = 0; i < arrTabName.length; i++){
+            	int resultSetInedx = i+6;
+            	resultSetMap.put(arrTabName[i], (ResultSet)callableStatement.getObject(resultSetInedx));
+            }
+            
+            Iterator<String> itr = resultSetMap.keySet().iterator();
+			while (itr.hasNext()) {
+				String sheetName = itr.next();
+				ResultSet resultSet = resultSetMap.get(sheetName);
+				
+				ArrayList<ArrayList<String>> headerList = new ArrayList<ArrayList<String>>();
+				ArrayList<ArrayList<String>> resultList = new ArrayList<ArrayList<String>>();
+				
+		    	ResultSetMetaData resultSetMetaData=resultSet.getMetaData();
+		    	ArrayList<String> eachHeader = new ArrayList<String>();
+		    	for(int i = 1; i <= resultSetMetaData.getColumnCount(); i++){
+		    		eachHeader.add(resultSetMetaData.getColumnName(i));
+		    	}
+		    	headerList.add(eachHeader);
+		    	
+		    	while(resultSet.next()){
+		    		ArrayList<String> eachRecord = new ArrayList<String>();
+		    		for(int i = 1; i <= resultSetMetaData.getColumnCount(); i++){
+		    			eachRecord.add(resultSet.getString(i));
+		    		}
+		    		resultList.add(eachRecord);
+		    }
+		    	
+	    	HashMap<String, ArrayList<ArrayList<String>>> innerMap = new LinkedHashMap<String, ArrayList<ArrayList<String>>>();
+	    	innerMap.put("listResultHeader", headerList);
+	    	innerMap.put("listResultData", resultList);
+	    	mainMap.put(sheetName, innerMap);
+		}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			connectionUtil.closeResources(connection, callableStatement, tabNameResultSet, null);
+		}
+		return mainMap;
+	}
 
 	@SuppressWarnings("resource")
 	public Map<String, Object> saveRaiseToRFI(MakerCheckerDataModel makerCheckerData){
@@ -1732,8 +1898,387 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 		}finally{
 			connectionUtil.closeResources(connection, preparedStatement, resultSet, null);
 		}
+		
+		System.out.println("graphDataPoints: "+graphDataPoints);
+		
 		return graphDataPoints;	
 	}
 	
+	@Override
+	public Map<String, Object> getGraphDataPointsNew(String cmRefNo){
+		Map<String, Object> graphDataPoints = new LinkedHashMap<String,Object>();
+		
+		Connection connection = connectionUtil.getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try{
+			String query = "SELECT CATEGORY, FINALRISKRATING, "
+					+ "CASE WHEN CATEGORY = 'customer' THEN FINALRISKRATING*0.30 "
+					+ "WHEN CATEGORY = 'geography' THEN FINALRISKRATING*0.25"
+					+ " WHEN CATEGORY = 'products and services' THEN FINALRISKRATING*0.25 "
+					+ "WHEN CATEGORY = 'transactions' THEN FINALRISKRATING*0.10 "
+					+ "WHEN CATEGORY = 'delivery channels' THEN FINALRISKRATING*0.10 "
+					+ "ELSE 0.0 END "
+					+ "AS WEIGHTED_SCORE FROM COMAML_CM.TB_RARISKRATINGS "
+					+ "WHERE CATEGORY = SUBCATEGORY "
+					+ "AND CATEGORY IN ('customer', 'geography', 'products and services', 'transactions', 'delivery channels')"
+					+ "AND CMREFNO = ?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, cmRefNo);
+			resultSet = preparedStatement.executeQuery();
+			ArrayList<Object> dataPoints = new ArrayList<Object>();
+			while(resultSet.next()) {
+				Map<String,String> data = new LinkedHashMap<String, String>();
+				data.put("CATEGORY",resultSet.getString("CATEGORY"));
+				data.put("FINALRISKRATING",resultSet.getString("FINALRISKRATING"));
+				data.put("WEIGHTED_SCORE",resultSet.getString("WEIGHTED_SCORE"));
+				dataPoints.add(data);;
+			}
+			graphDataPoints.put("InherentRisk", dataPoints);			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		try{
+			String query = "SELECT CATEGORY, FINALRISKRATING, "
+					+ "CASE WHEN CATEGORY = 'Training' THEN FINALRISKRATING*0.15 "
+					+ "WHEN CATEGORY = 'Reporting Requirements' THEN FINALRISKRATING*0.05 "
+					+ "WHEN CATEGORY = 'Internal Audit' THEN FINALRISKRATING*0.10 "
+					+ "WHEN CATEGORY = 'Foreign Correspondent Banking Relationships' THEN FINALRISKRATING*0.05 "
+					+ "WHEN CATEGORY = 'Name/Sanctions Screening' THEN FINALRISKRATING*0.10 "
+					+ "WHEN CATEGORY = 'Governance & Management Oversight' THEN FINALRISKRATING*0.10 "
+					+ "WHEN CATEGORY = 'Internal Quality Assurance and Compliance Testing' THEN FINALRISKRATING*0.10 "
+					+ "WHEN CATEGORY = 'Customer Due Diligence & Risk Management' THEN FINALRISKRATING*0.25 "
+					+ "WHEN CATEGORY = 'Transactions Monitoring' THEN FINALRISKRATING*0.10 "
+					+ "ELSE 0.0 END "
+					+ "AS WEIGHTED_SCORE FROM COMAML_CM.TB_RARISKRATINGS "
+					+ "WHERE CATEGORY = SUBCATEGORY "
+					+ "AND CATEGORY NOT IN ('customer', 'geography', 'products and services', 'transactions', 'delivery channels')"
+					+ "AND CMREFNO = ?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, cmRefNo);
+			resultSet = preparedStatement.executeQuery();
+			ArrayList<Object> dataPoints = new ArrayList<Object>();
+			while(resultSet.next()) {
+				Map<String,String> data = new LinkedHashMap<String, String>();
+				data.put("CATEGORY",resultSet.getString("CATEGORY"));
+				data.put("FINALRISKRATING",resultSet.getString("FINALRISKRATING"));
+				data.put("WEIGHTED_SCORE",resultSet.getString("WEIGHTED_SCORE"));
+				dataPoints.add(data);;
+			}
+			graphDataPoints.put("InternalControl", dataPoints);			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		finally{
+			connectionUtil.closeResources(connection, preparedStatement, resultSet, null);
+		}
+		
+		System.out.println("graphDataPoints: "+graphDataPoints);
+		
+		return graphDataPoints;	
+	}
+	
+	
+	@Override
+	public Map<String, Object> getGraphDataPointsSummary(String assessmentPeriod){
+		Map<String, Object> graphDataPoints = new LinkedHashMap<String,Object>();
+		
+		System.out.println("In mixedChartSummary dao assessmentPeriod is "+assessmentPeriod);
+		
+		Connection connection = connectionUtil.getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		//Treasury
+		try{
+			String query = "SELECT A.CATEGORY AS CATEGORY, A.FINALRISKRATING AS SCORE "
+					+ "FROM COMAML_CM.TB_RARISKRATINGS A  "
+					+ "LEFT OUTER JOIN "
+					+ "TB_RAFORMGENERALDETAILS B "
+					+ "ON A.CMREFNO = B.CMREFNO  "
+					+ "WHERE A.CATEGORY = A.SUBCATEGORY "
+					+ "AND A.ASSESSMENTUNIT = 'Treasury'"
+					+ "AND A.CATEGORY IN ('customer', 'geography', 'products and services', 'transactions', 'delivery channels')"
+					+ "AND B.ASSESSMENTPERIOD = ?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, assessmentPeriod);
+			resultSet = preparedStatement.executeQuery();
+			ArrayList<Object> dataPoints = new ArrayList<Object>();
+			while(resultSet.next()) {
+				Map<String,String> data = new LinkedHashMap<String, String>();
+				data.put("CATEGORY",resultSet.getString("CATEGORY"));
+				data.put("FINALRISKRATING",resultSet.getString("SCORE"));
+				dataPoints.add(data);;
+			}
+			graphDataPoints.put("TreasuryInherentRisk", dataPoints);			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		try{
+			String query = "SELECT A.CATEGORY AS CATEGORY, A.FINALRISKRATING AS SCORE "
+					+ "FROM COMAML_CM.TB_RARISKRATINGS A  "
+					+ "LEFT OUTER JOIN "
+					+ "TB_RAFORMGENERALDETAILS B "
+					+ "ON A.CMREFNO = B.CMREFNO  "
+					+ "WHERE A.CATEGORY = A.SUBCATEGORY "
+					+ "AND A.ASSESSMENTUNIT = 'Treasury'"
+					+ "AND A.CATEGORY NOT IN ('customer', 'geography', 'products and services', 'transactions', 'delivery channels')"
+					+ "AND B.ASSESSMENTPERIOD = ?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, assessmentPeriod);
+			resultSet = preparedStatement.executeQuery();
+			ArrayList<Object> dataPoints = new ArrayList<Object>();
+			while(resultSet.next()) {
+				Map<String,String> data = new LinkedHashMap<String, String>();
+				data.put("CATEGORY",resultSet.getString("CATEGORY"));
+				data.put("FINALRISKRATING",resultSet.getString("SCORE"));
+				dataPoints.add(data);;
+			}
+			graphDataPoints.put("TreasuryInternalControl", dataPoints);			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		//RetailLiabilities
+		try{
+			String query = "SELECT A.CATEGORY AS CATEGORY, A.FINALRISKRATING AS SCORE "
+					+ "FROM COMAML_CM.TB_RARISKRATINGS A  "
+					+ "LEFT OUTER JOIN "
+					+ "TB_RAFORMGENERALDETAILS B "
+					+ "ON A.CMREFNO = B.CMREFNO  "
+					+ "WHERE A.CATEGORY = A.SUBCATEGORY "
+					+ "AND A.ASSESSMENTUNIT = 'RetailLiabilities'"
+					+ "AND A.CATEGORY IN ('customer', 'geography', 'products and services', 'transactions', 'delivery channels')"
+					+ "AND B.ASSESSMENTPERIOD = ?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, assessmentPeriod);
+			resultSet = preparedStatement.executeQuery();
+			ArrayList<Object> dataPoints = new ArrayList<Object>();
+			while(resultSet.next()) {
+				Map<String,String> data = new LinkedHashMap<String, String>();
+				data.put("CATEGORY",resultSet.getString("CATEGORY"));
+				data.put("FINALRISKRATING",resultSet.getString("SCORE"));
+				dataPoints.add(data);;
+			}
+			graphDataPoints.put("RetailLiabilitiesInherentRisk", dataPoints);			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		try{
+			String query = "SELECT A.CATEGORY AS CATEGORY, A.FINALRISKRATING AS SCORE "
+					+ "FROM COMAML_CM.TB_RARISKRATINGS A  "
+					+ "LEFT OUTER JOIN "
+					+ "TB_RAFORMGENERALDETAILS B "
+					+ "ON A.CMREFNO = B.CMREFNO  "
+					+ "WHERE A.CATEGORY = A.SUBCATEGORY "
+					+ "AND A.ASSESSMENTUNIT = 'RetailLiabilities'"
+					+ "AND A.CATEGORY NOT IN ('customer', 'geography', 'products and services', 'transactions', 'delivery channels')"
+					+ "AND B.ASSESSMENTPERIOD = ?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, assessmentPeriod);
+			resultSet = preparedStatement.executeQuery();
+			ArrayList<Object> dataPoints = new ArrayList<Object>();
+			while(resultSet.next()) {
+				Map<String,String> data = new LinkedHashMap<String, String>();
+				data.put("CATEGORY",resultSet.getString("CATEGORY"));
+				data.put("FINALRISKRATING",resultSet.getString("SCORE"));
+				dataPoints.add(data);;
+			}
+			graphDataPoints.put("RetailLiabilitiesInternalControl", dataPoints);			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		//RetailAssets
+		try{
+			String query = "SELECT A.CATEGORY AS CATEGORY, A.FINALRISKRATING AS SCORE "
+					+ "FROM COMAML_CM.TB_RARISKRATINGS A  "
+					+ "LEFT OUTER JOIN "
+					+ "TB_RAFORMGENERALDETAILS B "
+					+ "ON A.CMREFNO = B.CMREFNO  "
+					+ "WHERE A.CATEGORY = A.SUBCATEGORY "
+					+ "AND A.ASSESSMENTUNIT = 'RetailAssets'"
+					+ "AND A.CATEGORY IN ('customer', 'geography', 'products and services', 'transactions', 'delivery channels')"
+					+ "AND B.ASSESSMENTPERIOD = ?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, assessmentPeriod);
+			resultSet = preparedStatement.executeQuery();
+			ArrayList<Object> dataPoints = new ArrayList<Object>();
+			while(resultSet.next()) {
+				Map<String,String> data = new LinkedHashMap<String, String>();
+				data.put("CATEGORY",resultSet.getString("CATEGORY"));
+				data.put("FINALRISKRATING",resultSet.getString("SCORE"));
+				dataPoints.add(data);;
+			}
+			graphDataPoints.put("RetailAssetsInherentRisk", dataPoints);			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		try{
+			String query = "SELECT A.CATEGORY AS CATEGORY, A.FINALRISKRATING AS SCORE "
+					+ "FROM COMAML_CM.TB_RARISKRATINGS A  "
+					+ "LEFT OUTER JOIN "
+					+ "TB_RAFORMGENERALDETAILS B "
+					+ "ON A.CMREFNO = B.CMREFNO  "
+					+ "WHERE A.CATEGORY = A.SUBCATEGORY "
+					+ "AND A.ASSESSMENTUNIT = 'RetailAssets'"
+					+ "AND A.CATEGORY NOT IN ('customer', 'geography', 'products and services', 'transactions', 'delivery channels')"
+					+ "AND B.ASSESSMENTPERIOD = ?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, assessmentPeriod);
+			resultSet = preparedStatement.executeQuery();
+			ArrayList<Object> dataPoints = new ArrayList<Object>();
+			while(resultSet.next()) {
+				Map<String,String> data = new LinkedHashMap<String, String>();
+				data.put("CATEGORY",resultSet.getString("CATEGORY"));
+				data.put("FINALRISKRATING",resultSet.getString("SCORE"));
+				dataPoints.add(data);;
+			}
+			graphDataPoints.put("RetailAssetsInternalControl", dataPoints);			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		//WholesaleBanking
+		try{
+			String query = "SELECT A.CATEGORY AS CATEGORY, A.FINALRISKRATING AS SCORE "
+					+ "FROM COMAML_CM.TB_RARISKRATINGS A  "
+					+ "LEFT OUTER JOIN "
+					+ "TB_RAFORMGENERALDETAILS B "
+					+ "ON A.CMREFNO = B.CMREFNO  "
+					+ "WHERE A.CATEGORY = A.SUBCATEGORY "
+					+ "AND A.ASSESSMENTUNIT = 'WholesaleBanking'"
+					+ "AND A.CATEGORY IN ('customer', 'geography', 'products and services', 'transactions', 'delivery channels')"
+					+ "AND B.ASSESSMENTPERIOD = ?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, assessmentPeriod);
+			resultSet = preparedStatement.executeQuery();
+			ArrayList<Object> dataPoints = new ArrayList<Object>();
+			while(resultSet.next()) {
+				Map<String,String> data = new LinkedHashMap<String, String>();
+				data.put("CATEGORY",resultSet.getString("CATEGORY"));
+				data.put("FINALRISKRATING",resultSet.getString("SCORE"));
+				dataPoints.add(data);;
+			}
+			graphDataPoints.put("WholesaleBankingInherentRisk", dataPoints);			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		try{
+			String query = "SELECT A.CATEGORY AS CATEGORY, A.FINALRISKRATING AS SCORE "
+					+ "FROM COMAML_CM.TB_RARISKRATINGS A  "
+					+ "LEFT OUTER JOIN "
+					+ "TB_RAFORMGENERALDETAILS B "
+					+ "ON A.CMREFNO = B.CMREFNO  "
+					+ "WHERE A.CATEGORY = A.SUBCATEGORY "
+					+ "AND A.ASSESSMENTUNIT = 'WholesaleBanking'"
+					+ "AND A.CATEGORY NOT IN ('customer', 'geography', 'products and services', 'transactions', 'delivery channels')"
+					+ "AND B.ASSESSMENTPERIOD = ?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, assessmentPeriod);
+			resultSet = preparedStatement.executeQuery();
+			ArrayList<Object> dataPoints = new ArrayList<Object>();
+			while(resultSet.next()) {
+				Map<String,String> data = new LinkedHashMap<String, String>();
+				data.put("CATEGORY",resultSet.getString("CATEGORY"));
+				data.put("FINALRISKRATING",resultSet.getString("SCORE"));
+				dataPoints.add(data);;
+			}
+			graphDataPoints.put("WholesaleBankingInternalControl", dataPoints);			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		finally{
+			connectionUtil.closeResources(connection, preparedStatement, resultSet, null);
+		}
+		
+		System.out.println("graphDataPoints: "+graphDataPoints);
+		
+		return graphDataPoints;	
+	}
+	
+	
+	@Override
+	public String saveImageUrlData(String imageUrl){
+		System.out.println("saveImageUrlData in NEW DAO CALLED!!");
+		System.out.println("imageURL data: "+imageUrl);
+		
+		String imageUrlData = imageUrl;
+		String[] parts = imageUrlData.split("@~@");
+		String defaultVALUECHART = parts[0];
+		String residualRISK = parts[1]; 
+		String assessmentWISECAT = parts[2];
+		String bl_IR = parts[3]; 
+		String bl_IC = parts[4];
+		String a_TOTALWEIGHTEDSCOREIR = parts[5];
+		String a_TOTALWEIGHTEDSCOREIC = parts[6];
+		String s_TotalTresuryIR = parts[7];
+		String s_TotalTresuryIC = parts[8];
+		String s_TotalRetailLiabiltiesIR = parts[9];
+		String s_totalRetailLiabiltiesIC = parts[10];
+		String s_TotalRetailAssetsIR = parts[11];
+		String s_TotalRetailAssetsIC = parts[12];
+		String s_TotalWholesaleIR = parts[13];
+		String s_TotalWholesaleIC = parts[14];
+		
+		String id = "";
+		Connection connection = connectionUtil.getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+					                + "0123456789"
+					                + "abcdefghijklmnopqrstuvxyz";
+					
+					// create StringBuffer size of AlphaNumericString
+					StringBuilder sb = new StringBuilder(16);
+					
+					for (int i = 0; i < 16; i++) {
+					
+					// generate a random number between
+					// 0 to AlphaNumericString variable length
+					int index = (int)(AlphaNumericString.length() * Math.random());
+					
+					// add Character one by one in end of sb
+					sb.append(AlphaNumericString.charAt(index));
+					}
+		id = sb.toString();
+
+		try{
+			String query = "INSERT INTO COMAML_CM.TB_IMAGEDATA VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSTIMESTAMP) ";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, id);
+			preparedStatement.setString(2, defaultVALUECHART);
+			preparedStatement.setString(3, residualRISK);
+			preparedStatement.setString(4, assessmentWISECAT);
+			preparedStatement.setString(5, bl_IR);
+			preparedStatement.setString(6, bl_IC);
+			preparedStatement.setString(7, a_TOTALWEIGHTEDSCOREIR);
+			preparedStatement.setString(8, a_TOTALWEIGHTEDSCOREIC);
+			preparedStatement.setString(9, s_TotalTresuryIR);
+			preparedStatement.setString(10, s_TotalTresuryIC);
+			preparedStatement.setString(11, s_TotalRetailLiabiltiesIR);
+			preparedStatement.setString(12, s_totalRetailLiabiltiesIC);
+			preparedStatement.setString(13, s_TotalRetailAssetsIR);
+			preparedStatement.setString(14, s_TotalRetailAssetsIC);
+			preparedStatement.setString(15, s_TotalWholesaleIR);
+			preparedStatement.setString(16, s_TotalWholesaleIC);
+
+			preparedStatement.executeUpdate();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			connectionUtil.closeResources(connection, preparedStatement, resultSet, null);
+		}
+		return id;	
+	}
 	
 }

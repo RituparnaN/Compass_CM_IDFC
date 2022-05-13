@@ -1,0 +1,149 @@
+create or replace PROCEDURE "STP_GETCMREPORTDATANEW"
+(
+  i_vcCompassRefNo  IN VARCHAR2,            i_vcUserCode     IN VARCHAR2,
+  i_vcUserRole      IN VARCHAR2,            ipAddress        IN VARCHAR2,
+  io_cuResultSet0   IN OUT SYS_REFCURSOR,   io_cuResultSet1  IN OUT SYS_REFCURSOR,
+  io_cuResultSet2   IN OUT SYS_REFCURSOR,   io_cuResultSet3  IN OUT SYS_REFCURSOR,
+  io_cuResultSet4   IN OUT SYS_REFCURSOR,   io_cuResultSet5  IN OUT SYS_REFCURSOR,
+  io_cuResultSet6   IN OUT SYS_REFCURSOR,   io_cuResultSet7  IN OUT SYS_REFCURSOR
+)
+AS
+
+vcSQL   VARCHAR2(32000);
+vcSQL0  VARCHAR2(32000);
+vcSQL1  VARCHAR2(32000);
+vcSQL2  VARCHAR2(32000);
+vcSQL3  VARCHAR2(32000);
+vcSQL4  VARCHAR2(32000);
+vcSQL5  VARCHAR2(32000);
+vcSQL6  VARCHAR2(32000);
+vcSQL7  VARCHAR2(32000);
+
+BEGIN
+
+vcSQL0 := 'SELECT ''ASSESSSMENTWISE RISK RATING'' AS TABSNAME FROM DUAL ';
+
+vcSQL1 :=
+         'SELECT ROW_NUMBER() OVER (ORDER BY
+			CASE 
+			WHEN CATEGORY = ''customer'' THEN 1
+			WHEN CATEGORY = ''geography'' THEN 2
+			WHEN CATEGORY = ''products and services'' THEN 3
+			WHEN CATEGORY = ''transactions'' THEN 4
+			WHEN CATEGORY = ''delivery channels'' THEN 5
+			WHEN CATEGORY = ''Governance 1 Oversight'' THEN 6
+			WHEN CATEGORY = ''Customer Due Diligence 1 Management'' THEN 7   
+			WHEN CATEGORY = ''Transactions Monitoring'' THEN 8
+			WHEN CATEGORY = ''Internal Quality Assurance and Compliance Testing'' THEN 9
+			WHEN CATEGORY = ''Name/Sanctions Screening'' THEN 10
+			WHEN CATEGORY = ''Training'' THEN 11
+			WHEN CATEGORY = ''Foreign Correspondent Banking Relationships'' THEN 12
+			WHEN CATEGORY = ''Internal Audit'' THEN 13
+			WHEN CATEGORY = ''Reporting Requirements'' THEN 14
+			ELSE 15 END) AS SRNO, 
+			CATEGORY AS RISK_COMPONENT, 
+			FINALRISKRATING AS SCORE,
+			(CASE WHEN CATEGORY = ''customer'' THEN ''30%''
+			WHEN CATEGORY = ''geography'' THEN ''25%''
+			WHEN CATEGORY = ''products and services'' THEN ''25%''
+			WHEN CATEGORY = ''transactions'' THEN ''10%''
+			WHEN CATEGORY = ''delivery channels'' THEN ''10%''
+			WHEN CATEGORY = ''Governance 1 Oversight'' THEN ''10%''
+			WHEN CATEGORY = ''Customer Due Diligence 1 Management'' THEN ''25%''   
+			WHEN CATEGORY = ''Transactions Monitoring'' THEN ''10%''
+			WHEN CATEGORY = ''Internal Quality Assurance and Compliance Testing'' THEN ''10%''
+			WHEN CATEGORY = ''Name/Sanctions Screening'' THEN ''10%''
+			WHEN CATEGORY = ''Training'' THEN ''15%''
+			WHEN CATEGORY = ''Foreign Correspondent Banking Relationships'' THEN ''5%''
+			WHEN CATEGORY = ''Internal Audit'' THEN ''10%''
+			WHEN CATEGORY = ''Reporting Requirements'' THEN ''5%''
+			ELSE ''N.A.'' END) AS WEIGHT,
+			(CASE WHEN CATEGORY = ''customer'' THEN FINALRISKRATING*0.30
+			WHEN CATEGORY = ''geography'' THEN FINALRISKRATING*0.25
+			WHEN CATEGORY = ''products and services'' THEN FINALRISKRATING*0.25
+			WHEN CATEGORY = ''transactions'' THEN FINALRISKRATING*0.10
+			WHEN CATEGORY = ''delivery channels'' THEN FINALRISKRATING*0.10
+			WHEN CATEGORY = ''Governance 1 Oversight'' THEN FINALRISKRATING*0.10
+			WHEN CATEGORY = ''Customer Due Diligence 1 Management'' THEN FINALRISKRATING*0.25   
+			WHEN CATEGORY = ''Transactions Monitoring'' THEN FINALRISKRATING*0.10
+			WHEN CATEGORY = ''Internal Quality Assurance and Compliance Testing'' THEN FINALRISKRATING*0.10
+			WHEN CATEGORY = ''Name/Sanctions Screening'' THEN FINALRISKRATING*0.10
+			WHEN CATEGORY = ''Training'' THEN FINALRISKRATING*0.15
+			WHEN CATEGORY = ''Foreign Correspondent Banking Relationships'' THEN FINALRISKRATING*0.05
+			WHEN CATEGORY = ''Internal Audit'' THEN FINALRISKRATING*0.10
+			WHEN CATEGORY = ''Reporting Requirements'' THEN FINALRISKRATING*0.05
+			ELSE 0.0 END) AS WEIGHTED_SCORE,
+			NULL AS TOTAL,
+			NULL AS RESULT
+		FROM TB_RARISKRATINGS
+		WHERE category = subcategory
+		AND CMREFNO='''||i_vcCompassRefNo||''' ';
+
+vcSQL2 :=
+         'SELECT CREFNUM, VERSION_SEQNO, QUESTIONID, NVL(QUESTIONVALUE, '' '') QUESTIONVALUE, NVL(REMARKS, '' '') REMARKS,
+          NVL(IMPACTRISKRATING, '' '') IMPACTRISKRATING, NVL(LIKELIHOODRISKRATING, '' '') LIKELIHOODRISKRATING
+          FROM TB_CMGEOGQUESTIONDETAILS
+          WHERE CREFNUM ='''||i_vcCompassRefNo||''' ';
+
+vcSQL3 :=
+         'SELECT CREFNUM, VERSION_SEQNO, QUESTIONID, NVL(QUESTIONVALUE, '' '') QUESTIONVALUE, NVL(REMARKS, '' '') REMARKS,
+          NVL(IMPACTRISKRATING, '' '') IMPACTRISKRATING, NVL(LIKELIHOODRISKRATING, '' '') LIKELIHOODRISKRATING
+          FROM TB_CMPRODUCTQUESTIONDETAILS
+          WHERE CREFNUM ='''||i_vcCompassRefNo||''' ';
+
+vcSQL4 :=
+         'SELECT CREFNUM, VERSION_SEQNO, QUESTIONID, NVL(QUESTIONVALUE, '' '') QUESTIONVALUE, NVL(REMARKS, '' '') REMARKS,
+          NVL(IMPACTRISKRATING, '' '') IMPACTRISKRATING, NVL(LIKELIHOODRISKRATING, '' '') LIKELIHOODRISKRATING
+          FROM TB_CMTRANSQUESTIONDETAILS
+          WHERE CREFNUM ='''||i_vcCompassRefNo||''' ';
+
+vcSQL5 :=
+         'SELECT CREFNUM, VERSION_SEQNO, QUESTIONID, NVL(QUESTIONVALUE, '' '') QUESTIONVALUE, NVL(REMARKS, '' '') REMARKS,
+          NVL(IMPACTRISKRATING, '' '') IMPACTRISKRATING, NVL(LIKELIHOODRISKRATING, '' '') LIKELIHOODRISKRATING
+          FROM TB_CMDELIVERYCHANNELDETAILS
+          WHERE CREFNUM ='''||i_vcCompassRefNo||''' ';
+
+vcSQL6 :=
+         'SELECT CREFNUM, VERSION_SEQNO, QUESTIONID, NVL(QUESTIONVALUE, '' '') QUESTIONVALUE, NVL(REMARKS, '' '') REMARKS,
+          NVL(ASSESSMENTCTRLSCORE, '' '') IMPACTRISKRATING, '' '' LIKELIHOODRISKRATING
+          FROM TB_CMCONTROLPARAMETERDETAILS
+          WHERE CREFNUM ='''||i_vcCompassRefNo||''' ';
+
+vcSQL7 :=
+         'SELECT ''Customer'' AS ASSESSMENT_UNIT, CUSTOMERSYSTEMGENRISK AS System_Generated_Risk_Rating, CUSTOMERPROVISRISK AS 	Provisional_Risk_Rating,
+          CUSTOMERFINALRISK AS Final_Risk_Rating FROM TB_CMGENRLFINALRISKDETAILS WHERE CREFNUM='''||i_vcCompassRefNo||'''
+          UNION ALL
+          SELECT ''Geography'' AS ASSESSMENT_UNIT, GEOGSYSTEMGENRISK AS System_Generated_Risk_Rating, GEOGPROVISRISK AS Provisional_Risk_Rating,
+          GEOGFINALRISK AS Final_Risk_Rating FROM TB_CMGENRLFINALRISKDETAILS WHERE CREFNUM='''||i_vcCompassRefNo||'''
+          UNION ALL
+          SELECT ''Products and Services'' AS ASSESSMENT_UNIT, PRODUCTSSYSTEMGENRISK AS System_Generated_Risk_Rating, PRODUCTSPROVISRISK AS Provisional_Risk_Rating,
+          PRODUCTSFINALRISK AS Final_Risk_Rating FROM TB_CMGENRLFINALRISKDETAILS WHERE CREFNUM='''||i_vcCompassRefNo||'''
+          UNION ALL
+          SELECT ''Transactions'' AS ASSESSMENT_UNIT, TRANSACTIONSSYSTEMGENRISK AS System_Generated_Risk_Rating, TRANSACTIONSPROVISRISK AS 	Provisional_Risk_Rating,
+          TRANSACTIONSFINALRISK AS Final_Risk_Rating FROM TB_CMGENRLFINALRISKDETAILS WHERE CREFNUM='''||i_vcCompassRefNo||'''
+          UNION ALL
+          SELECT ''Delivery Channels'' AS ASSESSMENT_UNIT, DELIVERYSYSTEMGENRISK AS System_Generated_Risk_Rating, DELIVERYPROVISRISK AS Provisional_Risk_Rating,
+          DELIVERYFINALRISK AS Final_Risk_Rating FROM TB_CMGENRLFINALRISKDETAILS WHERE CREFNUM='''||i_vcCompassRefNo||'''
+          UNION ALL
+          SELECT ''Control Parameters'' AS ASSESSMENT_UNIT, CONTROLSYSTEMGENRISK AS System_Generated_Risk_Rating, CONTROLPROVISRISK AS 	Provisional_Risk_Rating,
+          CONTROLFINALRISK AS Final_Risk_Rating FROM TB_CMGENRLFINALRISKDETAILS WHERE CREFNUM='''||i_vcCompassRefNo||'''
+          UNION ALL
+          SELECT ''Residual Risk Rating'' AS ASSESSMENT_UNIT, RESIDUALSYSTEMGENRISK AS System_Generated_Risk_Rating, RESIDUALPROVRISK AS Provisional_Risk_Rating,
+          RESIDUALFINALRISK AS Final_Risk_Rating FROM TB_CMGENRLFINALRISKDETAILS WHERE CREFNUM='''||i_vcCompassRefNo||'''
+          UNION ALL
+          SELECT ''Total Inherent Assessment Units Risk Rating'' AS ASSESSMENT_UNIT, TOTINHSYSGENRISK AS System_Generated_Risk_Rating, TOTINHPROVISRISK AS Provisional_Risk_Rating,
+          TOTINHFINALRISK AS Final_Risk_Rating FROM TB_CMGENRLFINALRISKDETAILS WHERE CREFNUM='''||i_vcCompassRefNo||'''
+          UNION ALL
+          SELECT ''Total Control Parameters Risk Rating'' AS ASSESSMENT_UNIT, TOTCONTPARSYSGENRISK AS System_Generated_Risk_Rating, TOTCONTPARPROVISRISK AS Provisional_Risk_Rating,
+          TOTCONTPARFINALRISK AS Final_Risk_Rating FROM TB_CMGENRLFINALRISKDETAILS WHERE CREFNUM='''||i_vcCompassRefNo||''' ';
+
+   Open io_cuResultSet0 FOR vcSQL0 ;
+	 Open io_cuResultSet1 FOR vcSQL1 ;
+	 Open io_cuResultSet2 FOR vcSQL2 ;
+	 Open io_cuResultSet3 FOR vcSQL3 ;
+	 Open io_cuResultSet4 FOR vcSQL4 ;
+	 Open io_cuResultSet5 FOR vcSQL5 ;
+	 Open io_cuResultSet6 FOR vcSQL6 ;
+   Open io_cuResultSet7 FOR vcSQL7 ;
+
+END STP_GETCMREPORTDATANEW;
