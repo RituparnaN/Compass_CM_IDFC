@@ -960,7 +960,7 @@
 																									<td width = "10%">
 																										${question.QUESTIONID } 
 																										<div class="btn-group pull-right clearfix">
-																											<span class="pull-right" onclick="handleSlidingPanels(this,'${UNQID}','${f:replace(question['QUESTIONID'],'.','SQ')}slidingQuestionDetails${UNQID}')"><i class="collapsable${f:replace(question['QUESTIONID'],'.','SQ')}slidingQuestionDetails${UNQID} fa fa-chevron-up"></i></span>
+																											<span class="pull-right" onclick="handleSlidingPanels(this,'${UNQID}','${f:replace(question['QUESTIONID'],'.','SQ')}slidingQuestionDetails${UNQID}')"><i class="collapsable${f:replace(question['QUESTIONID'],'.','SQ')}slidingQuestionDetails${UNQID} fa fa-chevron-up" style = "font-size:15px;"></i></span>
 																										</div>
 																									</td>
 																									<td width = "45%">
@@ -1014,11 +1014,11 @@
 																											<%-- <td width = "5%">
 																												<input id = "${question.QUESTIONID }result" class="form-control input-sm" disabled> 
 																											</td> --%>
-																											<td width = "5%">
-																												<button class="btn btn-primary" name = "${question['QUESTIONID']}||rtrfibutton||${COMPASSREFERENCENO}" onclick="document.getElementById('bulk').value = '';rfiCaseWorkFlowActionsNew.handleRaiseForRFIPage(this)" data-toggle="tooltip" title="Raise to RFI"  id="raiseToRFIIndividual${question['QUESTIONID']}">rToRfi</button> 
+																											<td width = "5%" align="center">
+																												<button class="btn btn-primary" name = "${question['QUESTIONID']}||rtrfibutton||${COMPASSREFERENCENO}" onclick="document.getElementById('bulk').value = '';rfiCaseWorkFlowActionsNew.handleRaiseForRFIPage(this)" data-toggle="tooltip" title="Raise to RFI"  id="raiseToRFIIndividual${question['QUESTIONID']}"><i class="fa fa-paper-plane-o" style = "font-size:15px;"></i></button> 
 																											</td>
-																											<td width = "5%">
-																												<button class="btn btn-warning" name = "${question['QUESTIONID'] }||vcbutton||${COMPASSREFERENCENO}" class="btn btn-primary btn-sm" data-toggle="tooltip" title="View Comments" id="viewComments${question['QUESTIONID']}" onclick="rfiCaseWorkFlowActionsNew.handleViewComments(this)">VC</button>
+																											<td width = "5%" align="center">
+																												<button class="btn btn-warning" name = "${question['QUESTIONID'] }||vcbutton||${COMPASSREFERENCENO}" class="btn btn-primary btn-sm" data-toggle="tooltip" title="View Comments" id="viewComments${question['QUESTIONID']}" onclick="rfiCaseWorkFlowActionsNew.handleViewComments(this)"><i class="fa fa-comments-o" style = "font-size:15px;"></i></button>
 																											</td>
 																										</c:when>
 																										<c:otherwise>
@@ -1028,11 +1028,11 @@
 																											</td>
 																											<td width = "7%"> 
 																											</td>
-																											<td width = "5%">
-																												<button class="btn btn-primary" name = "${question['QUESTIONID']}||rtrfibutton||${COMPASSREFERENCENO}" onclick="document.getElementById('bulk').value = '';rfiCaseWorkFlowActionsNew.handleRaiseForRFIPage(this)" data-toggle="tooltip" title="Raise to RFI"  id="raiseToRFIIndividual${question['QUESTIONID']}">rToRfi</button> 
+																											<td width = "5%" align="center">
+																												<button class="btn btn-primary" name = "${question['QUESTIONID']}||rtrfibutton||${COMPASSREFERENCENO}" onclick="document.getElementById('bulk').value = '';rfiCaseWorkFlowActionsNew.handleRaiseForRFIPage(this)" data-toggle="tooltip" title="Raise to RFI"  id="raiseToRFIIndividual${question['QUESTIONID']}"><i class="fa fa-paper-plane-o" style = "font-size:15px;"></i></button> 
 																											</td>
-																											<td width = "5%">
-																												<button class="btn btn-warning" name = "${question['QUESTIONID'] }||vcbutton||${COMPASSREFERENCENO}" class="btn btn-primary btn-sm" data-toggle="tooltip" title="View Comments" id="viewComments${question['QUESTIONID']}" onclick="rfiCaseWorkFlowActionsNew.handleViewComments(this)">VC</button>
+																											<td width = "5%" align="center">
+																												<button class="btn btn-warning" name = "${question['QUESTIONID'] }||vcbutton||${COMPASSREFERENCENO}" class="btn btn-primary btn-sm" data-toggle="tooltip" title="View Comments" id="viewComments${question['QUESTIONID']}" onclick="rfiCaseWorkFlowActionsNew.handleViewComments(this)"><i class="fa fa-comments-o" style = "font-size:15px;"></i></button>
 																											</td>
 																										</c:otherwise>
 																									</c:choose>
@@ -1126,11 +1126,11 @@
 																																					
 																																				</select>
 																																			</td>
-																																			<td width = "5%">
-																																				<button class="btn btn-primary" name = "${subQuestion['QUESTIONID']}||rtrfibutton||${COMPASSREFERENCENO}" onclick="document.getElementById('bulk').value = '';rfiCaseWorkFlowActionsNew.handleRaiseForRFIPage(this)" data-toggle="tooltip" title="Raise to RFI"  id="raiseToRFIIndividual${subQuestion['QUESTIONID']}">rToRfi</button> 
+																																			<td width = "5%" align="center">
+																																				<button class="btn btn-primary" name = "${subQuestion['QUESTIONID']}||rtrfibutton||${COMPASSREFERENCENO}" onclick="document.getElementById('bulk').value = '';rfiCaseWorkFlowActionsNew.handleRaiseForRFIPage(this)" data-toggle="tooltip" title="Raise to RFI"  id="raiseToRFIIndividual${subQuestion['QUESTIONID']}"><i class="fa fa-paper-plane-o" style = "font-size:15px;"></i></button> 
 																																			</td>
-																																			<td width = "5%">
-																																				<button class="btn btn-warning" name = "${subQuestion['QUESTIONID'] }||vcbutton||${COMPASSREFERENCENO}" class="btn btn-primary btn-sm" data-toggle="tooltip" title="View Comments" id="viewComments${subQuestion['QUESTIONID']}" onclick="rfiCaseWorkFlowActionsNew.handleViewComments(this)">VC</button>
+																																			<td width = "5%" align="center">
+																																				<button class="btn btn-warning" name = "${subQuestion['QUESTIONID'] }||vcbutton||${COMPASSREFERENCENO}" class="btn btn-primary btn-sm" data-toggle="tooltip" title="View Comments" id="viewComments${subQuestion['QUESTIONID']}" onclick="rfiCaseWorkFlowActionsNew.handleViewComments(this)"><i class="fa fa-comments-o" style = "font-size:15px;"></i></button>
 																																			</td>
 																																			</c:when>
 																																		<c:otherwise>
@@ -1140,11 +1140,11 @@
 																																			</td>
 																																			<td width = "7%"> 
 																																			</td>
-																																			<td width = "5%">
-																																				<button class="btn btn-primary" name = "${subQuestion['QUESTIONID']}||rtrfibutton||${COMPASSREFERENCENO}" onclick="document.getElementById('bulk').value = '';rfiCaseWorkFlowActionsNew.handleRaiseForRFIPage(this)" data-toggle="tooltip" title="Raise to RFI"  id="raiseToRFIIndividual${subQuestion['QUESTIONID']}">rToRfi</button> 
+																																			<td width = "5%" align="center">
+																																				<button class="btn btn-primary" name = "${subQuestion['QUESTIONID']}||rtrfibutton||${COMPASSREFERENCENO}" onclick="document.getElementById('bulk').value = '';rfiCaseWorkFlowActionsNew.handleRaiseForRFIPage(this)" data-toggle="tooltip" title="Raise to RFI"  id="raiseToRFIIndividual${subQuestion['QUESTIONID']}"><i class="fa fa-paper-plane-o" style = "font-size:15px;"></i></button> 
 																																			</td>
-																																			<td width = "5%">
-																																				<button class="btn btn-warning" name = "${subQuestion['QUESTIONID'] }||vcbutton||${COMPASSREFERENCENO}" class="btn btn-primary btn-sm" data-toggle="tooltip" title="View Comments" id="viewComments${subQuestion['QUESTIONID']}" onclick="rfiCaseWorkFlowActionsNew.handleViewComments(this)">VC</button>
+																																			<td width = "5%" align="center">
+																																				<button class="btn btn-warning" name = "${subQuestion['QUESTIONID'] }||vcbutton||${COMPASSREFERENCENO}" class="btn btn-primary btn-sm" data-toggle="tooltip" title="View Comments" id="viewComments${subQuestion['QUESTIONID']}" onclick="rfiCaseWorkFlowActionsNew.handleViewComments(this)"><i class="fa fa-comments-o" style = "font-size:15px;"></i></button>
 																																			</td>
 																																		</c:otherwise>
 																																	</c:choose>				
@@ -1213,11 +1213,11 @@
 																													
 																									</select>
 																								</td>
-																								<td width = "5%">
-																									<button class="btn btn-primary" name = "${question['QUESTIONID']}||rtrfibutton||${COMPASSREFERENCENO}" onclick="document.getElementById('bulk').value = '';rfiCaseWorkFlowActionsNew.handleRaiseForRFIPage(this)" data-toggle="tooltip" title="Raise to RFI"  id="raiseToRFIIndividual${question['QUESTIONID']}">rToRfi</button> 
+																								<td width = "5%" align="center">
+																									<button class="btn btn-primary" name = "${question['QUESTIONID']}||rtrfibutton||${COMPASSREFERENCENO}" onclick="document.getElementById('bulk').value = '';rfiCaseWorkFlowActionsNew.handleRaiseForRFIPage(this)" data-toggle="tooltip" title="Raise to RFI"  id="raiseToRFIIndividual${question['QUESTIONID']}"><i class="fa fa-paper-plane-o" style = "font-size:15px;"></i></button> 
 																								</td>
-																								<td width = "5%">
-																									<button class="btn btn-warning" name = "${question['QUESTIONID'] }||vcbutton||${COMPASSREFERENCENO}" class="btn btn-primary btn-sm" data-toggle="tooltip" title="View Comments" id="viewComments${question['QUESTIONID']}" onclick="rfiCaseWorkFlowActionsNew.handleViewComments(this)">VC</button>
+																								<td width = "5%" align="center">
+																									<button class="btn btn-warning" name = "${question['QUESTIONID'] }||vcbutton||${COMPASSREFERENCENO}" class="btn btn-primary btn-sm" data-toggle="tooltip" title="View Comments" id="viewComments${question['QUESTIONID']}" onclick="rfiCaseWorkFlowActionsNew.handleViewComments(this)"><i class="fa fa-comments-o" style = "font-size:15px;"></i></button>
 																								</td>
 																							</c:when>
 																							<c:otherwise>
@@ -1230,11 +1230,11 @@
 																								<td width = "7%">
 																									
 																								</td>
-																								<td width = "5%">
-																									<button class="btn btn-primary" name = "${question['QUESTIONID']}||rtrfibutton||${COMPASSREFERENCENO}" onclick="document.getElementById('bulk').value = '';rfiCaseWorkFlowActionsNew.handleRaiseForRFIPage(this)" data-toggle="tooltip" title="Raise to RFI"  id="raiseToRFIIndividual${question['QUESTIONID']}">rToRfi</button> 
+																								<td width = "5%" align="center">
+																									<button class="btn btn-primary" name = "${question['QUESTIONID']}||rtrfibutton||${COMPASSREFERENCENO}" onclick="document.getElementById('bulk').value = '';rfiCaseWorkFlowActionsNew.handleRaiseForRFIPage(this)" data-toggle="tooltip" title="Raise to RFI"  id="raiseToRFIIndividual${question['QUESTIONID']}"><i class="fa fa-paper-plane-o" style = "font-size:15px;"></i></button> 
 																								</td>
-																								<td width = "5%">
-																									<button class="btn btn-warning" name = "${question['QUESTIONID'] }||vcbutton||${COMPASSREFERENCENO}" class="btn btn-primary btn-sm" data-toggle="tooltip" title="View Comments" id="viewComments${question['QUESTIONID']}" onclick="rfiCaseWorkFlowActionsNew.handleViewComments(this)">VC</button>
+																								<td width = "5%" align="center">
+																									<button class="btn btn-warning" name = "${question['QUESTIONID'] }||vcbutton||${COMPASSREFERENCENO}" class="btn btn-primary btn-sm" data-toggle="tooltip" title="View Comments" id="viewComments${question['QUESTIONID']}" onclick="rfiCaseWorkFlowActionsNew.handleViewComments(this)"><i class="fa fa-comments-o" style = "font-size:15px;"></i></button>
 																								</td>
 																							</c:otherwise>
 																						</c:choose>
@@ -1426,7 +1426,7 @@
 																															<td width = "10%">
 																																${question.QUESTIONID } 
 																																<div class="btn-group pull-right clearfix">
-																																	<span class="pull-right" onclick="handleSlidingPanels(this,'${UNQID}','${f:replace(question['QUESTIONID'],'.','SQ')}slidingQuestionDetails${UNQID}')"><i class="collapsable${f:replace(question['QUESTIONID'],'.','SQ')}slidingQuestionDetails${UNQID} fa fa-chevron-up"></i></span>
+																																	<span class="pull-right" onclick="handleSlidingPanels(this,'${UNQID}','${f:replace(question['QUESTIONID'],'.','SQ')}slidingQuestionDetails${UNQID}')"><i class="collapsable${f:replace(question['QUESTIONID'],'.','SQ')}slidingQuestionDetails${UNQID} fa fa-chevron-up" style = "font-size:15px;"></i></span>
 																																</div>
 																															</td>
 																															<td width = "30%">
@@ -1511,7 +1511,7 @@
 																																							<td width = "10%">
 																																								${subQuestion.QUESTIONID } 
 																																								<%-- <div class="btn-group pull-right clearfix">
-																																									<span class="pull-right" onclick="handleSlidingPanels(this,'${UNQID}','${f:replace(question['QUESTIONID'],'.','SQ')}slidingQuestionDetails${UNQID}')"><i class="collapsable${f:replace(question['QUESTIONID'],'.','SQ')}slidingQuestionDetails${UNQID} fa fa-chevron-up"></i></span>
+																																									<span class="pull-right" onclick="handleSlidingPanels(this,'${UNQID}','${f:replace(question['QUESTIONID'],'.','SQ')}slidingQuestionDetails${UNQID}')"><i class="collapsable${f:replace(question['QUESTIONID'],'.','SQ')}slidingQuestionDetails${UNQID} fa fa-chevron-up" style = "font-size:15px;"></i></span>
 																																								</div> --%>
 																																							</td>
 																																							<td width = "30%">
@@ -1573,7 +1573,7 @@
 																												<td width = "10%">
 																													${question.QUESTIONID } 
 																													<%-- <div class="btn-group pull-right clearfix">
-																														<span class="pull-right" onclick="handleSlidingPanels(this,'${UNQID}','${f:replace(question['QUESTIONID'],'.','SQ')}slidingQuestionDetails${UNQID}')"><i class="collapsable${f:replace(question['QUESTIONID'],'.','SQ')}slidingQuestionDetails${UNQID} fa fa-chevron-up"></i></span>
+																														<span class="pull-right" onclick="handleSlidingPanels(this,'${UNQID}','${f:replace(question['QUESTIONID'],'.','SQ')}slidingQuestionDetails${UNQID}')"><i class="collapsable${f:replace(question['QUESTIONID'],'.','SQ')}slidingQuestionDetails${UNQID} fa fa-chevron-up" style = "font-size:15px;"></i></span>
 																													</div> --%>
 																												</td>
 																												<td width = "30%">
