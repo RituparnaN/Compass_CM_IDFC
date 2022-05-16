@@ -459,6 +459,7 @@ var riskAssessmentMaster = riskAssessmentMaster || (function () {
 		
 		createParentQsOptionList: function(parentsList,qId,unqId,category,subCategory){
 			var qIds = [];
+			var qDesc = {};
 			var categories = JSON.parse($("#categoriesSubCategories").html())
 			var questionsFormDetails = JSON.parse($("#quesionDetailsFormJson").html())
 			Object.keys(categories).forEach(category=>{
@@ -466,9 +467,11 @@ var riskAssessmentMaster = riskAssessmentMaster || (function () {
 					questionsFormDetails[category][subCategory].forEach(question=>{
 						
 						qIds.push(question['QUESTIONID'])
+						qDesc[question['QUESTIONID']] = question['QUESTION']
 						try{
 							question['SUBQUESTIONLIST'].forEach(q=>{
 								qIds.push(q['QUESTIONID'])
+								qDesc[q['QUESTIONID']] = q['QUESTION']
 							})
 						}catch(e){}
 					})
@@ -484,12 +487,13 @@ var riskAssessmentMaster = riskAssessmentMaster || (function () {
 									<td width="15%">Parent Questions List</td>
 									<td width="30%">
 										<select class="form-control input-sm selectpicker" name = 'PARENTQSIDS' id="PARENTQSIDS`+qId+`" multiple="multiple" onchange = "riskAssessmentMaster.handleMultipleSelectInputChange(this,'`+unqId+`','`+category+`','`+subCategory+`','`+qId+`')")>`
+			
 			qIds.forEach(qId=>{
 				
 				if(parentQsIds.includes(qId)){
-					selectBody += `<option value = '`+qId+`' selected>`+qId+`</option>`
+					selectBody += `<option value = '`+qId+`' selected>`+qId +'-'+qDesc[qId]+`</option>`
 				}else{
-					selectBody += `<option value = '`+qId+`'>`+qId+`</option>`
+					selectBody += `<option value = '`+qId+`'>`+qId +'-'+qDesc[qId]+`</option>`
 					
 				}
 			})
@@ -618,7 +622,9 @@ var riskAssessmentMaster = riskAssessmentMaster || (function () {
 																	<td width = "15%">Comments</td>
 																	<td colspan = 4 >
 																		<textarea class="form-control input-sm" name = "COMMENTS" style = "margin-bottom:5px"S" onchange = "riskAssessmentMaster.handleSubInputChange(this,'`+unqId+`','`+category+`','`+subCategory+`','`+question['QUESTIONID']+`')")>`+question['COMMENTS']+` </textarea>
-																		<button class = "pull-right btn btn-warning" onclick = "textifySummary.getSummary(this)">Summarize</button>
+																		`+
+																		/*`<button class = "pull-right btn btn-warning" onclick = "textifySummary.getSummary(this)">Summarize</button>`*/
+																		`
 																	</td>
 																
 																</tr>
@@ -1104,8 +1110,10 @@ var riskAssessmentMaster = riskAssessmentMaster || (function () {
 																	<td width = "15%">Comments</td>
 																	<td colspan = 4 >
 																		<textarea class="form-control input-sm" name = "COMMENTS" style = "margin-bottom:5px"S" onchange = "riskAssessmentMaster.handleCRSubInputChange(this,'`+unqId+`','`+category+`','`+subCategory+`','`+question['QUESTIONID']+`')")>`+question['COMMENTS']+` </textarea>
-																		<button class = "pull-right btn btn-warning" onclick = "textifySummary.getSummary(this)">Summarize</button>	
-																	</td>
+																		`
+																		/*`<button class = "pull-right btn btn-warning" onclick = "textifySummary.getSummary(this)">Summarize</button>	
+																	`*/
+																	+`</td>
 																	
 																</tr>
 															</table>
@@ -1584,8 +1592,10 @@ var riskAssessmentMaster = riskAssessmentMaster || (function () {
 																<td width = "15%">Comments</td>
 																<td colspan = 4 >
 																	<textarea class="form-control input-sm" name = "COMMENTS" style = "margin-bottom:5px"S" style = "margin-bottom:5px" onchange = "riskAssessmentMaster.handleInputChange(this,'`+unqId+`','`+formattedCategory+`','`+formattedSubCategory+`','`+question['QUESTIONID']+`')")>`+question['COMMENTS']+` </textarea>
-																	<button class = "pull-right btn btn-warning" onclick = "textifySummary.getSummary(this)">Summarize</button>
-																</td>
+																	`+
+																	/*`<button class = "pull-right btn btn-warning" onclick = "textifySummary.getSummary(this)">Summarize</button>
+																`*/
+																`</td>
 																
 															</tr>
 															</table>
@@ -1856,8 +1866,10 @@ var riskAssessmentMaster = riskAssessmentMaster || (function () {
 																<td width = "15%">Comments</td>
 																<td colspan = 4 >
 																	<textarea class="form-control input-sm" name = "COMMENTS" style = "margin-bottom:5px"S" onchange = "riskAssessmentMaster.handleCRInputChange(this,'`+unqId+`','`+formattedCategory+`','`+formattedSubCategory+`','`+question['QUESTIONID']+`')")>`+question['COMMENTS']+` </textarea>
-																	<button class = "pull-right btn btn-warning" onclick = "textifySummary.getSummary(this)">Summarize</button>
-																</td>
+																	`+
+																	/*`<button class = "pull-right btn btn-warning" onclick = "textifySummary.getSummary(this)">Summarize</button>
+																`*/
+																`</td>
 																
 															</tr>
 															

@@ -845,7 +845,7 @@
 																 <input type="text"
 																class="form-control input-sm"
 																name="userAcctReviewedDate" disabled
-																value="${CASEMETADETAILS.ESCALATIONOPTION}" />
+																value="${RESPONSE.OPTIONS}" />
 															</c:otherwise>
 														</c:choose>
 													</td>
@@ -1308,153 +1308,162 @@
 												</div>
 											</div>
 										</c:if>
-										<c:forEach var="fieldDetails" items="${tabDetail}"
-											varStatus="varStatus">
-											
-											<div class="card card-primary commentsMainDiv${UNQID}"
-												style="margin: 10px 5px 5px 5px;">
-												<div
-													class="card-header panelSlidingViewComments${UNQID} clearfix"
-													id="${varStatus.index}slidingViewCommentsPanel${UNQID}"
-													data-toggle="collapse"
-													data-target="#${tabIndex}commentsDiv${varStatus.index}">
-													<%-- <h6 class="card-title pull-${dirL}">Comments ${varStatus.index+1}</h6> --%>
-													<h6 class="card-title pull-${dirL}">
-														<c:forEach var="columnDetails1" items="${fieldDetails}">
-															<c:set var="columnName1" value="${columnDetails1.key}"></c:set>
-															<c:set var="columnValue1" value="${columnDetails1.value}"></c:set>
-															<c:if
-																test="${f:contains(columnName1, 'app.common.CASESTATUS')}">${columnValue1} || </c:if>
-														</c:forEach>
-														<c:forEach var="columnDetails2" items="${fieldDetails}">
-															<c:set var="columnName2" value="${columnDetails2.key}"></c:set>
-															<c:set var="columnValue2" value="${columnDetails2.value}"></c:set>
-															<c:if
-																test="${f:contains(columnName2, 'app.common.USERCODE')}">${columnValue2} || </c:if>
-														</c:forEach>
-														<c:forEach var="columnDetails3" items="${fieldDetails}">
-															<c:set var="columnName3" value="${columnDetails3.key}"></c:set>
-															<c:set var="columnValue3" value="${columnDetails3.value}"></c:set>
-															<c:if
-																test="${f:contains(columnName3, 'app.common.UPDATETIMESTAMP')}">${columnValue3}</c:if>
-														</c:forEach>
-													</h6>
-													<div class="btn-group pull-${dirR} clearfix">
-														<span class="pull-right"><i
-															class="collapsable fa fa-chevron-down"></i></span>
-													</div>
-												</div>
-												<div id="${tabIndex}commentsDiv${varStatus.index}">
-													<table class="table table-striped">
-														<tbody>
-															<c:set var="LABELSCOUNT"
-																value="${f:length(fieldDetails)}" />
-															<c:set var="LABELSITRCOUNT" value="0" scope="page" />
-															<c:forEach var="ALLLABELSMAP" items="${fieldDetails}">
-
-																<c:choose>
-																	<c:when test="${LABELSITRCOUNT % 2 == 0}">
-																		<tr>
-																			<td width="20%"><spring:message
-																					code="${ALLLABELSMAP.key}" /></td>
-																			<c:choose>
-																				<c:when
-																					test="${f:contains(ALLLABELSMAP.key,'COMMENTS')}">
-																					<td width="25%"><textarea
-																							class="form-control input-sm" readonly="readonly">${ALLLABELSMAP.value}</textarea>
-																					</td>
-																				</c:when>
-																				<c:otherwise>
+										<c:choose>
+											<c:when test="${f:length(tabDetail) > 0 }">
+												<c:forEach var="fieldDetails" items="${tabDetail}"
+													varStatus="varStatus">
+													
+													<div class="card card-primary commentsMainDiv${UNQID}"
+														style="margin: 10px 5px 5px 5px;">
+														<div
+															class="card-header panelSlidingViewComments${UNQID} clearfix"
+															id="${varStatus.index}slidingViewCommentsPanel${UNQID}"
+															data-toggle="collapse"
+															data-target="#${tabIndex}commentsDiv${varStatus.index}">
+															<%-- <h6 class="card-title pull-${dirL}">Comments ${varStatus.index+1}</h6> --%>
+															<h6 class="card-title pull-${dirL}">
+																<c:forEach var="columnDetails1" items="${fieldDetails}">
+																	<c:set var="columnName1" value="${columnDetails1.key}"></c:set>
+																	<c:set var="columnValue1" value="${columnDetails1.value}"></c:set>
+																	<c:if
+																		test="${f:contains(columnName1, 'app.common.CASESTATUS')}">${columnValue1} || </c:if>
+																</c:forEach>
+																<c:forEach var="columnDetails2" items="${fieldDetails}">
+																	<c:set var="columnName2" value="${columnDetails2.key}"></c:set>
+																	<c:set var="columnValue2" value="${columnDetails2.value}"></c:set>
+																	<c:if
+																		test="${f:contains(columnName2, 'app.common.USERCODE')}">${columnValue2} || </c:if>
+																</c:forEach>
+																<c:forEach var="columnDetails3" items="${fieldDetails}">
+																	<c:set var="columnName3" value="${columnDetails3.key}"></c:set>
+																	<c:set var="columnValue3" value="${columnDetails3.value}"></c:set>
+																	<c:if
+																		test="${f:contains(columnName3, 'app.common.UPDATETIMESTAMP')}">${columnValue3}</c:if>
+																</c:forEach>
+															</h6>
+															<div class="btn-group pull-${dirR} clearfix">
+																<span class="pull-right"><i
+																	class="collapsable fa fa-chevron-down"></i></span>
+															</div>
+														</div>
+														<div id="${tabIndex}commentsDiv${varStatus.index}">
+															<table class="table table-striped">
+																<tbody>
+																	<c:set var="LABELSCOUNT"
+																		value="${f:length(fieldDetails)}" />
+																	<c:set var="LABELSITRCOUNT" value="0" scope="page" />
+																	<c:forEach var="ALLLABELSMAP" items="${fieldDetails}">
+		
+																		<c:choose>
+																			<c:when test="${LABELSITRCOUNT % 2 == 0}">
+																				<tr>
+																					<td width="20%"><spring:message
+																							code="${ALLLABELSMAP.key}" /></td>
 																					<c:choose>
 																						<c:when
-																							test="${f:contains(ALLLABELSMAP.key,'ESCALATEDTO')}">
-																							<td width="25%"><input type="text"
-																								class="form-control input-sm viewCommentsTextarea"
-																								value="${f:replace(ALLLABELSMAP.value,',','')}"
-																								readonly="readonly" /></td>
+																							test="${f:contains(ALLLABELSMAP.key,'COMMENTS')}">
+																							<td width="25%"><textarea
+																									class="form-control input-sm" readonly="readonly">${ALLLABELSMAP.value}</textarea>
+																							</td>
 																						</c:when>
 																						<c:otherwise>
-																							<td width="25%">
-																								<c:choose>
-																									<c:when test = "${f:contains(ALLLABELSMAP.value,'^') }">
-																									 	<input type="text"
-																											class="form-control input-sm"
-																											name="userAcctReviewedDate" disabled
-																											value="${(f:split(ALLLABELSMAP.value,'^'))[0]}" />
-																									</c:when>
-																									<c:otherwise>
-																										 <input type="text"
-																										class="form-control input-sm"
-																										name="userAcctReviewedDate" disabled
-																										value="${ALLLABELSMAP.value}" />
-																									</c:otherwise>
-																								</c:choose>
-																								
-																							</td>
-																						</c:otherwise>
-																					</c:choose>
-
-																				</c:otherwise>
-																			</c:choose>
-																			<td width="10%">&nbsp;</td>
-																	</c:when>
-																	<c:otherwise>
-																		<td width="20%"><spring:message
-																				code="${ALLLABELSMAP.key}" /></td>
-																		<c:choose>
-																			<c:when
-																				test="${f:contains(ALLLABELSMAP.key,'COMMENTS')}">
-																				<td width="25%"><textarea
-																						class="form-control input-sm viewCommentsTextarea"
-																						readonly="readonly">${ALLLABELSMAP.value}</textarea>
-																				</td>
-																			</c:when>
-																			<c:otherwise>
-																				<c:choose>
-																					<c:when
-																						test="${f:contains(ALLLABELSMAP.key,'ESCALATEDTO')}">
-																						<td width="25%"><input type="text"
-																							class="form-control input-sm viewCommentsTextarea"
-																							value="${f:replace(ALLLABELSMAP.value,',','')}"
-																							readonly="readonly" /></td>
-																					</c:when>
-																					<c:otherwise>
-																						<td width="25%">
 																							<c:choose>
-																								<c:when test = "${f:contains(ALLLABELSMAP.value,'^') }">
-																								 	<input type="text"
-																										class="form-control input-sm"
-																										name="userAcctReviewedDate" disabled
-																										value="${(f:split(ALLLABELSMAP.value,'^'))[0]}" />
+																								<c:when
+																									test="${f:contains(ALLLABELSMAP.key,'ESCALATEDTO')}">
+																									<td width="25%"><input type="text"
+																										class="form-control input-sm viewCommentsTextarea"
+																										value="${f:replace(ALLLABELSMAP.value,',','')}"
+																										readonly="readonly" /></td>
 																								</c:when>
 																								<c:otherwise>
-																									 <input type="text"
-																									class="form-control input-sm"
-																									name="userAcctReviewedDate" disabled
-																									value="${ALLLABELSMAP.value}" />
+																									<td width="25%">
+																										<c:choose>
+																											<c:when test = "${f:contains(ALLLABELSMAP.value,'^') }">
+																											 	<input type="text"
+																													class="form-control input-sm"
+																													name="userAcctReviewedDate" disabled
+																													value="${(f:split(ALLLABELSMAP.value,'^'))[0]}" />
+																											</c:when>
+																											<c:otherwise>
+																												 <input type="text"
+																												class="form-control input-sm"
+																												name="userAcctReviewedDate" disabled
+																												value="${ALLLABELSMAP.value}" />
+																											</c:otherwise>
+																										</c:choose>
+																										
+																									</td>
 																								</c:otherwise>
 																							</c:choose>
+		
+																						</c:otherwise>
+																					</c:choose>
+																					<td width="10%">&nbsp;</td>
+																			</c:when>
+																			<c:otherwise>
+																				<td width="20%"><spring:message
+																						code="${ALLLABELSMAP.key}" /></td>
+																				<c:choose>
+																					<c:when
+																						test="${f:contains(ALLLABELSMAP.key,'COMMENTS')}">
+																						<td width="25%"><textarea
+																								class="form-control input-sm viewCommentsTextarea"
+																								readonly="readonly">${ALLLABELSMAP.value}</textarea>
 																						</td>
+																					</c:when>
+																					<c:otherwise>
+																						<c:choose>
+																							<c:when
+																								test="${f:contains(ALLLABELSMAP.key,'ESCALATEDTO')}">
+																								<td width="25%"><input type="text"
+																									class="form-control input-sm viewCommentsTextarea"
+																									value="${f:replace(ALLLABELSMAP.value,',','')}"
+																									readonly="readonly" /></td>
+																							</c:when>
+																							<c:otherwise>
+																								<td width="25%">
+																									<c:choose>
+																										<c:when test = "${f:contains(ALLLABELSMAP.value,'^') }">
+																										 	<input type="text"
+																												class="form-control input-sm"
+																												name="userAcctReviewedDate" disabled
+																												value="${(f:split(ALLLABELSMAP.value,'^'))[0]}" />
+																										</c:when>
+																										<c:otherwise>
+																											 <input type="text"
+																											class="form-control input-sm"
+																											name="userAcctReviewedDate" disabled
+																											value="${ALLLABELSMAP.value}" />
+																										</c:otherwise>
+																									</c:choose>
+																								</td>
+																							</c:otherwise>
+																						</c:choose>
 																					</c:otherwise>
 																				</c:choose>
+																				</tr>
 																			</c:otherwise>
 																		</c:choose>
+																		<c:set var="LABELSITRCOUNT"
+																			value="${LABELSITRCOUNT + 1}" scope="page" />
+																	</c:forEach>
+																	<c:if test="${LABELSITRCOUNT % 2 != 0}">
+																		<td width="20%">&nbsp;</td>
+																		<td width="25%">&nbsp;</td>
 																		</tr>
-																	</c:otherwise>
-																</c:choose>
-																<c:set var="LABELSITRCOUNT"
-																	value="${LABELSITRCOUNT + 1}" scope="page" />
-															</c:forEach>
-															<c:if test="${LABELSITRCOUNT % 2 != 0}">
-																<td width="20%">&nbsp;</td>
-																<td width="25%">&nbsp;</td>
-																</tr>
-															</c:if>
-														</tbody>
-													</table>
-												</div>
-											</div>
-										</c:forEach>
+																	</c:if>
+																</tbody>
+															</table>
+														</div>
+													</div>
+												</c:forEach>
+											</c:when>
+											<c:otherwise>
+												<br />
+												<center>No ${tab } Responses/comments Found</center>
+												<br />
+											</c:otherwise>
+										</c:choose>
 
 									</c:otherwise>
 								</c:choose>

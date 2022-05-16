@@ -1043,7 +1043,8 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 				for(Map<String, Object> question: formConfigurationModel.questionsList) {
 					
 					query = "INSERT INTO COMAML_CM.TB_RISKASSESSQUESTIONSCONFIG(QUESTIONID, QUESTION, INPUTTYPE, INPUTOPTIONSLIST, "
-							+ "		ISSUPERPARENT, HASPARENT, PARENTQSIDS, HASRISKIMPACT, ASSESSMENTUNIT,CATEGORY, SUBCATEGORY, UPDATETIMESTAMP, ISENABLED, INPUTOPTIONSLISTFORNUMERIC,CREATEDBY,CREATEDON,COMMENTS) "
+							+ "		ISSUPERPARENT, HASPARENT, PARENTQSIDS, HASRISKIMPACT, ASSESSMENTUNIT,CATEGORY, SUBCATEGORY, UPDATETIMESTAMP,"
+							+ "		ISENABLED, INPUTOPTIONSLISTFORNUMERIC,CREATEDBY,CREATEDON,COMMENTS) "
 							+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,SYSTIMESTAMP,'Y',?,?,?,?)";
 					preparedStatement = connection.prepareStatement(query);
 					preparedStatement.setString(1, (String) question.get("QUESTIONID"));
@@ -1071,7 +1072,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 					query = "INSERT INTO COMAML_CM.TB_RISKASSESSQUESTIONSCONFIG(QUESTIONID, QUESTION, INPUTTYPE, INPUTOPTIONSLIST, "
 							+ "		ISSUPERPARENT, HASPARENT, PARENTQSIDS, HASRISKIMPACT, ASSESSMENTUNIT,CATEGORY, SUBCATEGORY, UPDATETIMESTAMP,"
 							+ "		ISENABLED, INPUTOPTIONSLISTFORNUMERIC,SUBSUBCATEG,CREATEDBY,CREATEDON,COMMENTS) "
-							+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,SYSTIMESTAMP,'Y',?,?,?,?)";
+							+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,SYSTIMESTAMP,'Y',?,?,?,?,?)";
 					preparedStatement = connection.prepareStatement(query);
 					preparedStatement.setString(1, (String) question.get("QUESTIONID"));
 					preparedStatement.setString(2, (String) question.get("QUESTION"));
