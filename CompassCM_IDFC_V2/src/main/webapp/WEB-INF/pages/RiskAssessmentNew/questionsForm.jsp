@@ -646,14 +646,14 @@
 				<form action="javascript:void(0)" method="POST" id="riskAssessmentForm">
 				<input type="hidden" value="${ASSESSMENTUNIT}" name="ASSESSMENTUNIT"></input>
 				<input type="hidden" value="${COMPASSREFERENCENO}" name="COMPASSREFNO"></input>
-					<ul class="nav nav-pills modalNav" role="tablist">
+					<ul class="nav nav-pills modalNav" role="tablist" style = "margin:2px 0px 2px 0px;">
 						<li role="presentation" class="active" id="generalTabNew">
 							<a class="subTab nav-link active" href="#generalNew" aria-controls="tab" role="tab" data-toggle="tab">General</a>
 						</li>
 						<c:forEach var = "category" items = "${QUESTIONSFORMDETAILS.categoryList}">
 						
 							<li role="presentation" id=<c:out value="${f:replace(category,' ','')}TabNew"/>>
-								<a class="subTab nav-link" href=<c:out value="#${f:replace(category,' ','')}New"/> aria-controls="tab" role="tab" data-toggle="tab">${category }</a>
+								<a class="subTab nav-link" href=<c:out value="#${f:replace(category,' ','')}New"/> aria-controls="tab" role="tab" data-toggle="tab" style="text-transform: capitalize">${category }</a>
 							</li>
 						</c:forEach>
 						<!-- <li role="presentation" id="geographyTab">
@@ -906,11 +906,11 @@
 							<div role="tabpanel" class="tab-pane  fade in" id=<c:out value="${f:replace(category,' ','')}New"/> >
 								<div class="row">
 									<div class="col-sm-12">
-										<div class="card card-primary">
-											<div id=<c:out value="${f:replace(category,' ','')}DetailsNew"/>>
+										<div class="">
+											<%-- <div id=<c:out value="${f:replace(category,' ','')}DetailsNew"/>> --%>
 												<c:forEach var ="subCategory" items = "${QUESTIONSFORMDETAILS.categoresAndSubCategories[category] }">
 													<c:set var = "formattedSubCategory" value = "${f:replace(f:replace(f:replace(f:replace(subCategory,')',''),'(',''),'/',''),' ','')}"/>
-													<div class="card card-primary panel_RiskAssessmentForm" style="margin-top: 10px;">
+													<div class="card card-primary panel_RiskAssessmentForm" style="">
 														<div class="card-header panelSlidingRiskAssessmentForm${UNQID} clearfix">
 															<h6 class="card-title pull-${dirL}">${subCategory}</h6>
 														</div>
@@ -921,14 +921,14 @@
 																<table class="table " id = "${formattedCategory }||${formattedSubCategory }||table" style="style="margin-bottom: 0px;border-collapse:collapse;">
 																	<tbody>
 																			 <tr style="background-color:#ddd">
-																				<th></th>
-																				<th>Question Id</th>
-																				<th>Question</th>
-																				<th>Question Input</th>
-																				<th>Result (%)</th>
-																				<th>Impact Criteria</th>
-																				<th>Likely hood</th>
-																				<th colspan=2 style="text-align:center">Action</th>
+																				<th width = "1%"></th>
+																				<th width = "10%">Question Id</th>
+																				<th width = "45%">Question</th>
+																				<th width = "10%">Question Input</th>
+																				<th width = "5%">Result (%)</th>
+																				<th width = "7%">Impact Criteria</th>
+																				<th width = "7%">Likelihood</th>
+																				<th colspan=2 width="10%" style="text-align:center">Action</th>
 																			</tr> 
 																		<%-- ${QUESTIONSFORMDETAILS.categoryWiseQuesitons[category][subCategory] } --%>
 																		<c:forEach var = "question" items = "${QUESTIONSFORMDETAILS.categoryWiseQuesitons[category][subCategory]}">
@@ -1052,7 +1052,7 @@
 																																	<th>Question Input</th>
 																																	<th>Result (%)</th>
 																																	<th>Impact Criteria</th>
-																																	<th>Likely hood</th>
+																																	<th>Likelihood</th>
 																																	<th colspan=2 style="text-align:center">Action</th>
 																																</tr> 
 																															<c:forEach var = "subQuestion" items = "${question['SUBQUESTIONLIST']}">
@@ -1261,7 +1261,7 @@
 														</div>
 													</div>
 												</c:forEach>
-											</div>
+											<!-- </div> -->
 											
 										</div>
 										<div class="card-search-card">
@@ -1346,13 +1346,13 @@
 						<div role="tabpanel" class="tab-pane fade in" id="controlsReviewNew" >
 							<div class="row">
 								<div class="col-sm-12">
-									<div class="card card-primary">
+									<div class="">
 										<div id=<c:out value="controlsReviewDetailsNew"/>>
 												<c:forEach var = "category" items = "${QUESTIONSFORMDETAILS.controlsReviewCategSubCateg.subCategories }">
 												<c:set var = "formattedCategory" value = "${f:replace(f:replace(f:replace(f:replace(f:replace(f:replace(category,'&',''),'&amp;',''),')',''),'(',''),'/',''),' ','')}"/>
-													<div class="card card-primary panel_RiskAssessmentForm" style="margin-top: 10px;">
+													<div class="card card-primary panel_RiskAssessmentForm" >
 														<div class="card-header panelSlidingRiskAssessmentForm${UNQID} clearfix">
-															<h6 class="card-title" style = "text-align:center">${category}</h6>
+															<h6 class="card-title" style = "font-weight:bold">${category}</h6>
 														</div>
 														<div class="panelSearchForm">
 															<div class="card-search-card" style="padding-bottom:10px">
@@ -1372,9 +1372,9 @@
 																									<td width = "10%" style="font-weight:bold;">Question Id</td>
 																									<td width = "30%" style="font-weight:bold;">Question</td>
 																									<td width = "12%" style="font-weight:bold;">Question Input</td>
-																									<td width = "12%" style="text-align:center;font-weight:bold;">Design rating</td>
-																									<td width = "12%" style="text-align:center;font-weight:bold;">Operating Rating</td>
-																									<td width = "12%" style="text-align:center;font-weight:bold;">Observation</td>
+																									<td width = "12%" style="font-weight:bold;">Design Rating</td>
+																									<td width = "12%" style="font-weight:bold;">Operating Rating</td>
+																									<td width = "12%" style="font-weight:bold;">Observation</td>
 																									<td  style="text-align:center;font-weight:bold;" colspan = '2'>Documents Referred / Sample Testing</td>
 																								</tr>  
 																								<!-- <tr>
@@ -1713,9 +1713,9 @@
 						<div role="tabpanel" class="tab-pane fade in" id="riskRatingNew" >
 							<div class="row">
 								<div class="col-sm-12">
-									<div class="card card-primary">
+									<div class="">
 										<div id="riskRatingDetailsNew">
-											<div class="card card-primary panel_RiskCalculationForm" style="margin-top: 10px; margin-bottom: 0;">	
+											<div class="card card-primary panel_RiskCalculationForm" style=" margin-bottom: 0;">	
 												<div class="card-search-card" >
 													<table class="table table-striped formSearchTable riskMatrixForm${UNQID}" style="margin-bottom: 0px;border-collapse:collapse;">
 														<%-- <c:set var="residualFinalRiskVal" value="${f:split(RISKTABDATA['RESIDUALFINALRISK'], ' - ')}"></c:set> --%>
@@ -1891,7 +1891,7 @@
 						<div role="tabpanel" class="tab-pane fade in" id="statusApprovalsNew" >
 							<div class="row">
 								<div class="col-sm-12">
-									<div class="card card-primary">
+									<div class="">
 										<table class="table table-striped" id="statusTable${UNQID}" style="margin-bottom: 0px;">
 											<tr>
 												<td>Form Status</td>
