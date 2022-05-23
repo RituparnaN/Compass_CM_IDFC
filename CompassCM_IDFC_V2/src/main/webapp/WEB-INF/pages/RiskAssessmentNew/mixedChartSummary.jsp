@@ -36,7 +36,11 @@
 	</c:forEach>
 	</c:forEach>
 	totalTresuryIC = ${totalIC_T};
+	
+	
+	
 
+	
 	
 	
 	
@@ -64,6 +68,8 @@
 
 	
 	
+	
+	
 	// RA Chart calculation
 	var totalRetailAssetsIR = 0.0
 	<c:set var="totalIR_RA" value="${0}"/>
@@ -85,6 +91,9 @@
 	</c:forEach>
 	</c:forEach>
 	totalRetailAssetsIC = ${totalIC_RA};
+	
+	
+
 
 	
 	//WB chart calculation
@@ -108,6 +117,10 @@
 	</c:forEach>
 	</c:forEach>
 	totalWholesaleIC = ${totalIC_WB};
+	
+	
+
+	
 	
 	total_of_IR = (totalTresuryIR + totalRetailLiabiltiesIR + totalRetailAssetsIR + totalWholesaleIR)/4;
 	total_of_IC = (totalTresuryIC + totalRetailLiabiltiesIC + totalRetailAssetsIC + totalWholesaleIC)/4;
@@ -187,52 +200,333 @@
 	}
 	
 	
+	
+	///////////////////////testing
+		var totalTresuryIR_x = 0.0;
+	
+	if(totalTresuryIR <= 2){
+		if(totalTresuryIR == 0){
+			totalTresuryIR_x = 0.5;
+		}
+		if(totalTresuryIR > 0 && totalTresuryIR < 2){
+			totalTresuryIR_x = (totalTresuryIR * 2) + 0.5;
+		}
+		if(totalTresuryIR == 2){
+			totalTresuryIR_x = 5;
+		}
+	}
+	
+	else if(totalTresuryIR > 2  && totalTresuryIR <= 5){
+			totalTresuryIR_x = (totalTresuryIR * 2) + 0.5;
+	}
+	
+	else if(totalTresuryIR > 5 && totalTresuryIR <= 14){
+		if(totalTresuryIR > 5 && totalTresuryIR < 8){
+			totalTresuryIR_x = (totalTresuryIR * 1.5) + 0.5;
+		}
+		if(totalTresuryIR > 8 && totalTresuryIR < 10){
+			totalTresuryIR_x = (totalTresuryIR * 1.2) + 0.5;
+		}
+		if(totalTresuryIR > 10 && totalTresuryIR < 14){
+			totalTresuryIR_x = 14;
+		}
+	}
+	
+	else if(totalTresuryIR > 14.5){
+		totalTresuryIR_x = 14;
+	}
+	
+	else{
+		console.log("N.A")
+	}
+	
+	var totalTresuryIC_y = 0.0;
+	
+	if(totalTresuryIC <= 2){
+		if(totalTresuryIC == 0){
+			totalTresuryIC_y = 0.5;
+		}
+		if(totalTresuryIC > 0 && totalTresuryIC < 2){
+			totalTresuryIC_y = (totalTresuryIC * 2) + 0.5;
+		}
+		if(totalTresuryIC == 2){
+			totalTresuryIC_y = 5;
+		}
+	}
+	
+	else if(totalTresuryIC > 2  && totalTresuryIC <= 5){
+			totalTresuryIC_y = (totalTresuryIC * 2) + 0.5;
+	}
+	
+	else if(totalTresuryIC > 5 && totalTresuryIC <= 14){
+		if(totalTresuryIC > 5 && totalTresuryIC < 8){
+			totalTresuryIC_y = (totalTresuryIC * 1.5) + 0.5;
+		}
+		if(totalTresuryIC > 8 && totalTresuryIC < 10){
+			totalTresuryIC_y = (totalTresuryIC * 1.2) + 0.5;
+		}
+		if(totalTresuryIC > 10 && totalTresuryIC < 14){
+			totalTresuryIC_y = 14;
+		}
+	}
+	
+	else if(totalTresuryIC > 14.5){
+		totalTresuryIC_y = 14;
+	}
+	
+	else{
+		console.log("N.A")
+	}
+	
+	
+	
+	var totalRetailLiabiltiesIR_x = 0.0;
+	
+	if(totalRetailLiabiltiesIR <= 2){
+		if(totalRetailLiabiltiesIR == 0){
+			totalRetailLiabiltiesIR_x = 0.5;
+		}
+		if(totalRetailLiabiltiesIR > 0 && totalRetailLiabiltiesIR < 2){
+			totalRetailLiabiltiesIR_x = (totalRetailLiabiltiesIR * 2) + 0.5;
+		}
+		if(totalRetailLiabiltiesIR == 2){
+			totalRetailLiabiltiesIR_x = 5;
+		}
+	}
+	
+	else if(totalRetailLiabiltiesIR > 2  && totalRetailLiabiltiesIR <= 5){
+			totalRetailLiabiltiesIR_x = (totalRetailLiabiltiesIR * 2) + 0.5;
+	}
+	
+	else if(totalRetailLiabiltiesIR > 5 && totalRetailLiabiltiesIR <= 14){
+		if(totalRetailLiabiltiesIR > 5 && totalRetailLiabiltiesIR < 8){
+			totalRetailLiabiltiesIR_x = (totalRetailLiabiltiesIR * 1.5) + 0.5;
+		}
+		if(totalRetailLiabiltiesIR > 8 && totalRetailLiabiltiesIR < 10){
+			totalRetailLiabiltiesIR_x = (totalRetailLiabiltiesIR * 1.2) + 0.5;
+		}
+		if(totalRetailLiabiltiesIR > 10 && totalRetailLiabiltiesIR < 14){
+			totalRetailLiabiltiesIR_x = 14;
+		}
+	}
+	
+	else if(totalRetailLiabiltiesIR > 14.5){
+		totalRetailLiabiltiesIR_x = 14;
+	}
+	
+	else{
+		console.log("N.A")
+	}
+	
+	
+	var totalRetailLiabiltiesIC_y = 0.0;
+	
+	if(totalRetailLiabiltiesIC <= 2){
+		if(totalRetailLiabiltiesIC == 0){
+			totalRetailLiabiltiesIC_y = 0.5;
+		}
+		if(totalRetailLiabiltiesIC > 0 && totalRetailLiabiltiesIC < 2){
+			totalRetailLiabiltiesIC_y = (totalRetailLiabiltiesIC * 2) + 0.5;
+		}
+		if(totalRetailLiabiltiesIC == 2){
+			totalRetailLiabiltiesIC_y = 5;
+		}
+	}
+	
+	else if(totalRetailLiabiltiesIC > 2  && totalRetailLiabiltiesIC <= 5){
+			totalRetailLiabiltiesIC_y = (totalRetailLiabiltiesIC * 2) + 0.5;
+	}
+	
+	else if(totalRetailLiabiltiesIC > 5 && totalRetailLiabiltiesIC <= 14){
+		if(totalRetailLiabiltiesIC > 5 && totalRetailLiabiltiesIC < 8){
+			totalRetailLiabiltiesIC_y = (totalRetailLiabiltiesIC * 1.5) + 0.5;
+		}
+		if(totalRetailLiabiltiesIC > 8 && totalRetailLiabiltiesIC < 10){
+			totalRetailLiabiltiesIC_y = (totalRetailLiabiltiesIC * 1.2) + 0.5;
+		}
+		if(totalRetailLiabiltiesIC > 10 && totalRetailLiabiltiesIC < 14){
+			totalRetailLiabiltiesIC_y = 14;
+		}
+	}
+	
+	else if(totalRetailLiabiltiesIC > 14.5){
+		totalRetailLiabiltiesIC_y = 14;
+	}
+	
+	else{
+		console.log("N.A")
+	}
+	
+	
+	
+	
+	var totalRetailAssetsIR_x = 0.0;
+	
+	if(totalRetailAssetsIR <= 2){
+		if(totalRetailAssetsIR == 0){
+			totalRetailAssetsIR_x = 0.5;
+		}
+		if(totalRetailAssetsIR > 0 && totalRetailAssetsIR < 2){
+			totalRetailAssetsIR_x = (totalRetailAssetsIR * 2) + 0.5;
+		}
+		if(totalRetailAssetsIR == 2){
+			totalRetailAssetsIR_x = 5;
+		}
+	}
+	
+	else if(totalRetailAssetsIR > 2  && totalRetailAssetsIR <= 5){
+			totalRetailAssetsIR_x = (totalRetailAssetsIR * 2) + 0.5;
+	}
+	
+	else if(totalRetailAssetsIR > 5 && totalRetailAssetsIR <= 14){
+		if(totalRetailAssetsIR > 5 && totalRetailAssetsIR < 8){
+			totalRetailAssetsIR_x = (totalRetailAssetsIR * 1.5) + 0.5;
+		}
+		if(totalRetailAssetsIR > 8 && totalRetailAssetsIR < 10){
+			totalRetailAssetsIR_x = (totalRetailAssetsIR * 1.2) + 0.5;
+		}
+		if(totalRetailAssetsIR > 10 && totalRetailAssetsIR < 14){
+			totalRetailAssetsIR_x = 14;
+		}
+	}
+	
+	else if(totalRetailAssetsIR > 14.5){
+		totalRetailAssetsIR_x = 14;
+	}
+	
+	else{
+		console.log("N.A")
+	}
+	
+	
+	var totalRetailAssetsIC_y = 0.0;
+	
+	if(totalRetailAssetsIC <= 2){
+		if(totalRetailAssetsIC == 0){
+			totalRetailAssetsIC_y = 0.5;
+		}
+		if(totalRetailAssetsIC > 0 && totalRetailAssetsIC < 2){
+			totalRetailAssetsIC_y = (totalRetailAssetsIC * 2) + 0.5;
+		}
+		if(totalRetailAssetsIC == 2){
+			totalRetailAssetsIC_y = 5;
+		}
+	}
+	
+	else if(totalRetailAssetsIC > 2  && totalRetailAssetsIC <= 5){
+			totalRetailAssetsIC_y = (totalRetailAssetsIC * 2) + 0.5;
+	}
+	
+	else if(totalRetailAssetsIC > 5 && totalRetailAssetsIC <= 14){
+		if(totalRetailAssetsIC > 5 && totalRetailAssetsIC < 8){
+			totalRetailAssetsIC_y = (totalRetailAssetsIC * 1.5) + 0.5;
+		}
+		if(totalRetailAssetsIC > 8 && totalRetailAssetsIC < 10){
+			totalRetailAssetsIC_y = (totalRetailAssetsIC * 1.2) + 0.5;
+		}
+		if(totalRetailAssetsIC > 10 && totalRetailAssetsIC < 14){
+			totalRetailAssetsIC_y = 14;
+		}
+	}
+	
+	else if(totalRetailAssetsIC > 14.5){
+		totalRetailAssetsIC_y = 14;
+	}
+	
+	else{
+		console.log("N.A")
+	}
+	
+	
+	
+	var totalWholesaleIR_x = 0.0;
+	
+	if(totalWholesaleIR <= 2){
+		if(totalWholesaleIR == 0){
+			totalWholesaleIR_x = 0.5;
+		}
+		if(totalWholesaleIR > 0 && totalWholesaleIR < 2){
+			totalWholesaleIR_x = (totalWholesaleIR * 2) + 0.5;
+		}
+		if(totalWholesaleIR == 2){
+			totalWholesaleIR_x = 5;
+		}
+	}
+	
+	else if(totalWholesaleIR > 2  && totalWholesaleIR <= 5){
+			totalWholesaleIR_x = (totalWholesaleIR * 2) + 0.5;
+	}
+	
+	else if(totalWholesaleIR > 5 && totalWholesaleIR <= 14){
+		if(totalWholesaleIR > 5 && totalWholesaleIR < 8){
+			totalWholesaleIR_x = (totalWholesaleIR * 1.5) + 0.5;
+		}
+		if(totalWholesaleIR > 8 && totalWholesaleIR < 10){
+			totalWholesaleIR_x = (totalWholesaleIR * 1.2) + 0.5;
+		}
+		if(totalWholesaleIR > 10 && totalWholesaleIR < 14){
+			totalWholesaleIR_x = 14;
+		}
+	}
+	
+	else if(totalWholesaleIR > 14.5){
+		totalWholesaleIR_x = 14;
+	}
+	
+	else{
+		console.log("N.A")
+	}
+	
+	
+	var totalWholesaleIC_y = 0.0;
+	
+	if(totalWholesaleIC <= 2){
+		if(totalWholesaleIC == 0){
+			totalWholesaleIC_y = 0.5;
+		}
+		if(totalWholesaleIC > 0 && totalWholesaleIC < 2){
+			totalWholesaleIC_y = (totalWholesaleIC * 2) + 0.5;
+		}
+		if(totalWholesaleIC == 2){
+			totalWholesaleIC_y = 5;
+		}
+	}
+	
+	else if(totalWholesaleIC > 2  && totalWholesaleIC <= 5){
+			totalWholesaleIC_y = (totalWholesaleIC * 2) + 0.5;
+	}
+	
+	else if(totalWholesaleIC > 5 && totalWholesaleIC <= 14){
+		if(totalWholesaleIC > 5 && totalWholesaleIC < 8){
+			totalWholesaleIC_y = (totalWholesaleIC * 1.5) + 0.5;
+		}
+		if(totalWholesaleIC > 8 && totalWholesaleIC < 10){
+			totalWholesaleIC_y = (totalWholesaleIC * 1.2) + 0.5;
+		}
+		if(totalWholesaleIC > 10 && totalWholesaleIC < 14){
+			totalWholesaleIC_y = 14;
+		}
+	}
+	
+	else if(totalWholesaleIC > 14.5){
+		totalWholesaleIC_y = 14;
+	}
+	
+	else{
+		console.log("N.A")
+	}
+	
+	
+	
+	alert(totalTresuryIR_x+" "+totalTresuryIC_y+" "+totalRetailLiabiltiesIR_x+" "+totalRetailLiabiltiesIC_y+" "+
+			totalRetailAssetsIR_x+" "+totalRetailAssetsIC_y+" "+totalWholesaleIR_x+" "+totalWholesaleIC_y)
+	///////////////////////////////
+	
+	
 	var bankLevelResidualRisk = [];
 	bankLevelResidualRisk.push({x: total_of_IR, y: total_of_IC, r: 20});
 	
-/* 	if(totalTresuryIR == 0)
-	{totalTresuryIR = 0.5}
-	else if(totalTresuryIR > 14.5)
-	{totalTresuryIR = 14}
-	
-	if(totalRetailLiabiltiesIR == 0)
-	{totalRetailLiabiltiesIR = 0.5}
-	else if(totalRetailLiabiltiesIR > 14.5)
-	{totalRetailLiabiltiesIR = 14}
-	
-	if(totalRetailAssetsIR == 0)
-	{totalRetailAssetsIR = 0.5}
-	else if(totalRetailAssetsIR > 14.5)
-	{totalRetailAssetsIR = 14}
-	
-	if(totalWholesaleIR == 0)
-	{totalWholesaleIR = 0.5}
-	else if(totalWholesaleIR > 14.5)
-	{totalWholesaleIR = 14}
-	
-	if(totalTresuryIC == 0)
-	{totalTresuryIC = 0.5}
-	else if(totalTresuryIC > 14.5)
-	{totalTresuryIC = 14}
-	
-	if(totalRetailLiabiltiesIC == 0)
-	{totalRetailLiabiltiesIC = 0.5}
-	else if(totalRetailLiabiltiesIC > 14.5)
-	{totalRetailLiabiltiesIC = 14}
-	
-	if(totalRetailAssetsIC == 0)
-	{totalRetailAssetsIC = 0.5}
-	else if(totalRetailAssetsIC > 14.5)
-	{totalRetailAssetsIC = 14}
-	
-	if(totalWholesaleIC == 0)
-	{totalWholesaleIC = 0.5}
-	else if(totalWholesaleIC > 14.5)
-	{totalWholesaleIC = 14}
-	
-	else{
-		console.log()
-	} */
+
 
 	residualRiskDataPoints.push({x: totalTresuryIR, y: totalTresuryIC, r: 20})
 	residualRiskDataPoints.push({x: totalRetailLiabiltiesIR, y: totalRetailLiabiltiesIC, r: 20})
@@ -366,30 +660,27 @@
 	const assessmentCatCTX=document.getElementById('assessmentCatCanvas').getContext('2d');
 	const assessmentCatDATA = {
 			  datasets: [{
-			    label: 'ASSESSMENT UNIT WISE',
+			    label: 'ASSESSMENT UNIT LEVEL RESIDUAL RISK',
 			    //data: residualRiskDataPoints,
 			     data: [{
-			      x: 10,
-			      y: 20,
+			      x: totalTresuryIR_x,
+			      y: totalTresuryIC_y,
 			      r: 20
 			    }, {
-			      x: 20,
-			      y: 10,
+			      x: totalRetailLiabiltiesIR_x,
+			      y: totalRetailLiabiltiesIC_y,
 			      r: 20
 			    }, {
-				   x: 5,
-				   y: 15,
+				   x: totalRetailAssetsIR_x,
+				   y: totalRetailAssetsIC_y,
 			       r: 20
 				}, {
-				   x: 15,
-			       y: 5,
+				   x: totalWholesaleIR_x,
+			       y: totalWholesaleIC_y,
 			       r: 20
-				 }, {
-				   x: 25,
-			       y: 25,
-		           r: 20
-					 },], 
+				 },], 
 				pointStyle: ['crossRot', 'rect', 'triangle', 'circle'],
+				//borderWidth: 6,
 			    backgroundColor: 'rgb(0, 0, 0)'
 			  }]
 			};		
@@ -408,16 +699,23 @@
 		                top: 15
 		            }
 		        },
+
 			  scales: {
 		            x: {
-		                ticks: { display: false},
+		            	display: false,
+		            	min: 0,
+		                max: 15,
+		            	ticks: { display: false},
 		                grid: { display: false,},
-		            	},		            	
-		            	
+		            	},		            			            	
 		            
 		            y: {
-		                ticks: { display: false},
+		            	display: false,
+		            	min: 0,
+		                max: 15,
+		            	ticks: { display: false},
 		                grid: { display: false,}, 
+		                reverse: true,
 		            	},			            
 		        }
 		  }
