@@ -61,7 +61,7 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 	 		double s_TotalRetailAssetsIC = 0.0;
 	 		double s_TotalWholesaleIR = 0.0;
 	 		double s_TotalWholesaleIC = 0.0;
-	 		String url = "jdbc:oracle:thin:@localhost:1521/orcl";
+	 		String url = "jdbc:oracle:thin:@localhost:1521/xe";
 	        String user = "COMAML_CM";
 	        String pass = "ORACLE";
 	 	        

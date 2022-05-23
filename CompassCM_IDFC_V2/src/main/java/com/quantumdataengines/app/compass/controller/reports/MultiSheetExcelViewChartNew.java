@@ -49,7 +49,7 @@ public class MultiSheetExcelViewChartNew extends AbstractExcelView {
 	 		String a_ASSESSMENTWISECAT = "";
 	 		double a_TOTALWEIGHTEDSCOREIR = 0.0;
 	 		double a_TOTALWEIGHTEDSCOREIC = 0.0;
-	 		String url = "jdbc:oracle:thin:@localhost:1521/orcl";
+	 		String url = "jdbc:oracle:thin:@localhost:1521/xe";
 	        String user = "COMAML_CM";
 	        String pass = "ORACLE";
 	 	        
