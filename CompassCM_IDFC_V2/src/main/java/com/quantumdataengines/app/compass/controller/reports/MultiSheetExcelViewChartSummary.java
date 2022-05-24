@@ -76,7 +76,7 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 	            Statement st = con.createStatement();
 	            String sql = "SELECT DEFAULTVALUECHART, RESIDUALRISK, ASSESSMENTWISECAT, BL_IR, BL_IC, "
 	            		+ "A_TOTALWEIGHTEDSCOREIR, A_TOTALWEIGHTEDSCOREIC, TOTALTRESURYIR, TOTALTRESURYIC, "
-	            		+ "TOTALRLIR, TOTALRLIC, TOTALRAIR, TOTALRAIC, TOTALWBIR, TOTALWBIC FROM TB_IMAGEDATA WHERE IMAGEID = '"+imgId+"'";
+	            		+ "TOTALRLIR, TOTALRLIC, TOTALRAIR, TOTALRAIC, TOTALWBIR, TOTALWBIC FROM TB_IMAGEDATASUMMARY WHERE IMAGEID = '"+imgId+"'";
 	            ResultSet m = st.executeQuery(sql);
 	            while(m.next()) {
 	            	dEFAULTVALUECHART = m.getString("DEFAULTVALUECHART");
@@ -202,9 +202,9 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 			CellStyle mBoldBg = workbook.createCellStyle();
 			mBoldBg.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());
 			mBoldBg.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-			Font fontHeaderM = workbook.createFont();
-			fontHeaderM.setBold(true);
-			mBoldBg.setFont(fontHeaderM);
+			Font fontHeaderMed = workbook.createFont();
+			fontHeaderMed.setBold(true);
+			mBoldBg.setFont(fontHeaderMed);
 			
 			//HIGH BG STYLE
 			CellStyle highBg = workbook.createCellStyle();
@@ -215,9 +215,9 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 			CellStyle hBoldBg = workbook.createCellStyle();
 			hBoldBg.setFillForegroundColor(IndexedColors.CORAL.getIndex());
 			hBoldBg.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-			Font fontHeaderH = workbook.createFont();
-			fontHeaderH.setBold(true);
-			mBoldBg.setFont(fontHeaderH);
+			Font fontHeaderHigh = workbook.createFont();
+			fontHeaderHigh.setBold(true);
+			hBoldBg.setFont(fontHeaderHigh);
 			
 			//Bold Grey WITH BOLD FONT STYLE
 			CellStyle boldGrey = workbook.createCellStyle();
@@ -292,11 +292,11 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 					cell.setCellValue("");
 					cell.setCellStyle(titleStyle);
 					cell = row.createCell(3);
-					cell.setCellValue("");
-					cell.setCellStyle(titleStyle);
+					cell.setCellValue("0");
+					cell.setCellStyle(boldGrey);
 					cell = row.createCell(4);
-					cell.setCellValue("");
-					cell.setCellStyle(titleStyle);
+					cell.setCellValue("LOW");
+					cell.setCellStyle(lowBoldBg);
 					
 					row = sheet.createRow(2);
 					cell = row.createCell(0);
@@ -306,7 +306,7 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 					cell = row.createCell(2);
 					cell.setCellValue("30%");
 					cell = row.createCell(3);
-					cell.setCellValue("0.0");
+					cell.setCellValue("0");
 					cell = row.createCell(4);
 					cell.setCellValue("LOW");
 					cell.setCellStyle(lowBg);
@@ -319,7 +319,7 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 					cell = row.createCell(2);
 					cell.setCellValue("25%");
 					cell = row.createCell(3);
-					cell.setCellValue("0.0");
+					cell.setCellValue("0");
 					cell = row.createCell(4);
 					cell.setCellValue("LOW");
 					cell.setCellStyle(lowBg);
@@ -332,7 +332,7 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 					cell = row.createCell(2);
 					cell.setCellValue("25%");
 					cell = row.createCell(3);
-					cell.setCellValue("0.0");
+					cell.setCellValue("0");
 					cell = row.createCell(4);
 					cell.setCellValue("LOW");
 					cell.setCellStyle(lowBg);
@@ -345,7 +345,7 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 					cell = row.createCell(2);
 					cell.setCellValue("10%");
 					cell = row.createCell(3);
-					cell.setCellValue("0.0");
+					cell.setCellValue("0");
 					cell = row.createCell(4);
 					cell.setCellValue("LOW");
 					cell.setCellStyle(lowBg);
@@ -358,7 +358,7 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 					cell = row.createCell(2);
 					cell.setCellValue("10%");
 					cell = row.createCell(3);
-					cell.setCellValue("0.0");
+					cell.setCellValue("0");
 					cell = row.createCell(4);
 					cell.setCellValue("LOW");
 					cell.setCellStyle(lowBg);
@@ -374,11 +374,11 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 					cell.setCellValue("");
 					cell.setCellStyle(titleStyle);
 					cell = row.createCell(3);
-					cell.setCellValue("");
-					cell.setCellStyle(titleStyle);
+					cell.setCellValue("0");
+					cell.setCellStyle(boldGrey);
 					cell = row.createCell(4);
-					cell.setCellValue("");
-					cell.setCellStyle(titleStyle);
+					cell.setCellValue("EFFECTIVE");
+					cell.setCellStyle(lowBoldBg);
 					
 					row = sheet.createRow(8);
 					cell = row.createCell(0);
@@ -388,7 +388,7 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 					cell = row.createCell(2);
 					cell.setCellValue("10%");
 					cell = row.createCell(3);
-					cell.setCellValue("0.0");
+					cell.setCellValue("0");
 					cell = row.createCell(4);
 					cell.setCellValue("EFFECTIVE");
 					cell.setCellStyle(lowBg);
@@ -401,7 +401,7 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 					cell = row.createCell(2);
 					cell.setCellValue("25%");
 					cell = row.createCell(3);
-					cell.setCellValue("0.0");
+					cell.setCellValue("0");
 					cell = row.createCell(4);
 					cell.setCellValue("EFFECTIVE");
 					cell.setCellStyle(lowBg);
@@ -414,7 +414,7 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 					cell = row.createCell(2);
 					cell.setCellValue("10%");
 					cell = row.createCell(3);
-					cell.setCellValue("0.0");
+					cell.setCellValue("0");
 					cell = row.createCell(4);
 					cell.setCellValue("EFFECTIVE");
 					cell.setCellStyle(lowBg);
@@ -427,7 +427,7 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 					cell = row.createCell(2);
 					cell.setCellValue("10");
 					cell = row.createCell(3);
-					cell.setCellValue("0.0");
+					cell.setCellValue("0");
 					cell = row.createCell(4);
 					cell.setCellValue("EFFECTIVE");
 					cell.setCellStyle(lowBg);
@@ -440,7 +440,7 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 					cell = row.createCell(2);
 					cell.setCellValue("10%");
 					cell = row.createCell(3);
-					cell.setCellValue("0.0");
+					cell.setCellValue("0");
 					cell = row.createCell(4);
 					cell.setCellValue("EFFECTIVE");
 					cell.setCellStyle(lowBg);
@@ -453,7 +453,7 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 					cell = row.createCell(2);
 					cell.setCellValue("15%");
 					cell = row.createCell(3);
-					cell.setCellValue("0.0");
+					cell.setCellValue("0");
 					cell = row.createCell(4);
 					cell.setCellValue("EFFECTIVE");
 					cell.setCellStyle(lowBg);
@@ -466,7 +466,7 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 					cell = row.createCell(2);
 					cell.setCellValue("5%");
 					cell = row.createCell(3);
-					cell.setCellValue("0.0");
+					cell.setCellValue("0");
 					cell = row.createCell(4);
 					cell.setCellValue("EFFECTIVE");
 					cell.setCellStyle(lowBg);
@@ -479,7 +479,7 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 					cell = row.createCell(2);
 					cell.setCellValue("10%");
 					cell = row.createCell(3);
-					cell.setCellValue("0.0");
+					cell.setCellValue("0");
 					cell = row.createCell(4);
 					cell.setCellValue("EFFECTIVE");
 					cell.setCellStyle(lowBg);
@@ -492,7 +492,7 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 					cell = row.createCell(2);
 					cell.setCellValue("5%");
 					cell = row.createCell(3);
-					cell.setCellValue("0.0");
+					cell.setCellValue("0");
 					cell = row.createCell(4);
 					cell.setCellValue("EFEECTIVE");
 					cell.setCellStyle(lowBg);
@@ -583,12 +583,44 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 			cell = row.createCell(2);
 			cell.setCellValue("");
 			cell.setCellStyle(titleStyle);
+			
+			//sheet.getSheetName().equals("RETAIL LIABILITIES") sheet.getSheetName().equals("RETAIL ASSETS") sheet.getSheetName().equals("WHOLESALE BANKING")
+			
+			if(sheet.getSheetName().equals("TREASURY")){  
 			cell = row.createCell(3);
-			cell.setCellValue("");
-			cell.setCellStyle(titleStyle);
+			cell.setCellValue(s_TotalTresuryIR);
+			cell.setCellStyle(boldGrey);			
 			cell = row.createCell(4);
-			cell.setCellValue("");
-			cell.setCellStyle(titleStyle);			
+			cell.setCellValue(s_TotalTresuryIR);
+			cell.setCellStyle(titleStyle);	
+			}
+			
+			if(sheet.getSheetName().equals("RETAIL LIABILITIES")){  
+			cell = row.createCell(3);
+			cell.setCellValue(s_TotalRetailLiabiltiesIR);
+			cell.setCellStyle(boldGrey);			
+			cell = row.createCell(4);
+			cell.setCellValue(s_TotalRetailLiabiltiesIR);
+			cell.setCellStyle(titleStyle);	
+			}
+			
+			if(sheet.getSheetName().equals("RETAIL ASSETS")){  
+			cell = row.createCell(3);
+			cell.setCellValue(s_TotalRetailAssetsIR);
+			cell.setCellStyle(boldGrey);			
+			cell = row.createCell(4);
+			cell.setCellValue(s_TotalRetailAssetsIR);
+			cell.setCellStyle(titleStyle);	
+			}
+			
+			if(sheet.getSheetName().equals("WHOLESALE BANKING")){  
+			cell = row.createCell(3);
+			cell.setCellValue(s_TotalWholesaleIR);
+			cell.setCellStyle(boldGrey);			
+			cell = row.createCell(4);
+			cell.setCellValue(s_TotalWholesaleIR);
+			cell.setCellStyle(titleStyle);	
+			}
 			
 			
 			
@@ -621,12 +653,43 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 						cell = row1.createCell(2);
 						cell.setCellValue("");
 						cell.setCellStyle(titleStyle);
+						
+						if(sheet.getSheetName().equals("TREASURY")){  
 						cell = row1.createCell(3);
-						cell.setCellValue("");
-						cell.setCellStyle(titleStyle);
+						cell.setCellValue(s_TotalTresuryIC);
+						cell.setCellStyle(boldGrey);			
 						cell = row1.createCell(4);
-						cell.setCellValue("");
-						cell.setCellStyle(titleStyle);
+						cell.setCellValue(s_TotalTresuryIC);
+						cell.setCellStyle(titleStyle);	
+						}
+							
+						if(sheet.getSheetName().equals("RETAIL LIABILITIES")){  
+						cell = row1.createCell(3);
+						cell.setCellValue(s_totalRetailLiabiltiesIC);
+						cell.setCellStyle(boldGrey);			
+						cell = row1.createCell(4);
+						cell.setCellValue(s_totalRetailLiabiltiesIC);
+						cell.setCellStyle(titleStyle);	
+						}
+							
+						if(sheet.getSheetName().equals("RETAIL ASSETS")){  
+						cell = row1.createCell(3);
+						cell.setCellValue(s_TotalRetailAssetsIC);
+						cell.setCellStyle(boldGrey);			
+						cell = row1.createCell(4);
+						cell.setCellValue(s_TotalRetailAssetsIC);
+						cell.setCellStyle(titleStyle);	
+						}
+							
+						if(sheet.getSheetName().equals("WHOLESALE BANKING")){  
+						cell = row1.createCell(3);
+						cell.setCellValue(s_TotalWholesaleIC);
+						cell.setCellStyle(boldGrey);			
+						cell = row1.createCell(4);
+						cell.setCellValue(s_TotalWholesaleIC);
+						cell.setCellStyle(titleStyle);	
+						}
+						
 					}
 										
 					row.createCell(currentCol).setCellValue(strResult);
@@ -637,6 +700,58 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 			
 			int noOfColumns = sheet.getRow(0).getLastCellNum();
 
+			
+            for (int i = 1; i == 1 ; i++) {
+					row = sheet.getRow(i);
+    				System.out.println("inside first row");
+    			for(int j = 0; j < noOfColumns; j++){
+    				if(j == 4){
+    					cell = row.getCell(j);
+   					
+    					// ***** TO CONVERT CELL INTO DOUBLE FIRST CONVERT INTO STRING THEN CONVERT INTO DOUBLE *****
+    					double cellData = Double.parseDouble(cell.toString());
+
+    					if(cellData <= 2){
+    						cell.setCellValue("LOW");
+    						cell.setCellStyle(lowBoldBg);
+    					}
+    					else if(cellData > 2 && cellData <= 5){
+    						cell.setCellValue("MEDIUM");
+    						cell.setCellStyle(mBoldBg);
+    					}
+    					else{
+    						cell.setCellValue("HIGH");
+    						cell.setCellStyle(hBoldBg);
+    					}
+    				}       				
+    			}           			
+    		}
+            
+            for (int i = 7; i == 7 ; i++) {
+					row = sheet.getRow(i);
+    				System.out.println("inside first row");
+    			for(int j = 0; j < noOfColumns; j++){
+    				if(j == 4){
+    					cell = row.getCell(j);
+   					
+    					// ***** TO CONVERT CELL INTO DOUBLE FIRST CONVERT INTO STRING THEN CONVERT INTO DOUBLE *****
+    					double cellData = Double.parseDouble(cell.toString());
+
+    					if(cellData <= 2){
+    						cell.setCellValue("EFFECTIVE");
+    						cell.setCellStyle(lowBoldBg);
+    					}
+    					else if(cellData > 2 && cellData <= 5){
+    						cell.setCellValue("NEED IMPROVEMENT");
+    						cell.setCellStyle(mBoldBg);
+    					}
+    					else{
+    						cell.setCellValue("NO CONTROL");
+    						cell.setCellStyle(hBoldBg);
+    					}
+    				}       				
+    			}           			
+    		}
 			
 			
 			
@@ -926,14 +1041,7 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 				cell.setCellValue("Inherent Risk:- "+totalIR);
 				*/
 				
-				row = sheet.createRow(19);
-				cell = row.createCell(1);
-				cell.setCellValue("Inherent Risk: "+totalIR);
-				cell.setCellStyle(boldText);
-				cell = row.createCell(6);
-				cell.setCellValue("Internal Control: "+totalIC);
-				sheet.addMergedRegion(new CellRangeAddress(19, 19,  6, 8));
-				cell.setCellStyle(boldText);
+
 				
 				
 
@@ -992,6 +1100,128 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 					
 				}
 				
+				
+				int totalRows=currentRow;
+				System.out.println("totalRows: "+totalRows);
+				
+				row = sheet.createRow(totalRows+2);
+				cell = row.createCell(1);
+				cell.setCellValue("Inherent Risk: "+totalIR);
+				cell.setCellStyle(boldText);
+				cell = row.createCell(6);
+				cell.setCellValue("Internal Control: "+totalIC);
+				sheet.addMergedRegion(new CellRangeAddress(19, 19,  6, 8));
+				cell.setCellStyle(boldText);
+				
+				
+	            for (int i = 2; i == 2 ; i++) {
+						row = sheet.getRow(2);
+        				System.out.println("inside second row");
+        			for(int j = 0; j < noOfColumns; j++){
+        				if(j == 4 || j == 6 || j == 8 || j == 10){
+        					cell = row.getCell(j);
+       					
+        					// ***** TO CONVERT CELL INTO DOUBLE FIRST CONVERT INTO STRING THEN CONVERT INTO DOUBLE *****
+        					double cellData = Double.parseDouble(cell.toString());
+
+        					if(cellData <= 2){
+        						cell.setCellValue("LOW");
+        						cell.setCellStyle(lowBoldBg);
+        					}
+        					else if(cellData > 2 && cellData <= 5){
+        						cell.setCellValue("MEDIUM");
+        						cell.setCellStyle(mBoldBg);
+        					}
+        					else{
+        						cell.setCellValue("HIGH");
+        						cell.setCellStyle(hBoldBg);
+        					}
+        				}       				
+        			}           			
+        		}
+				
+	            for (int i = 3; i <= 7 ; i++) {
+        			row = sheet.getRow(i);
+        			for(int j = 0; j < noOfColumns; j++){
+        				if(j == 4 || j == 6 || j == 8 || j == 10){
+        					cell = row.getCell(j);
+       					
+        					// ***** TO CONVERT CELL INTO DOUBLE FIRST CONVERT INTO STRING THEN CONVERT INTO DOUBLE *****
+        					double cellData = Double.parseDouble(cell.toString());
+
+        					if(cellData <= 2){
+        						cell.setCellValue("LOW");
+        						cell.setCellStyle(lowBg);
+        					}
+        					else if(cellData > 2 && cellData <= 5){
+        						cell.setCellValue("MEDIUM");
+        						cell.setCellStyle(mediumBg);
+        					}
+        					else{
+        						cell.setCellValue("HIGH");
+        						cell.setCellStyle(highBg);
+        					}
+        				}       				
+        			}           			
+        		}
+	            
+	            for (int i = 8; i == 8 ; i++) {
+						row = sheet.getRow(i);
+        				System.out.println("inside second row");
+        			for(int j = 0; j < noOfColumns; j++){
+        				if(j == 4 || j == 6 || j == 8 || j == 10){
+        					cell = row.getCell(j);
+       					
+        					// ***** TO CONVERT CELL INTO DOUBLE FIRST CONVERT INTO STRING THEN CONVERT INTO DOUBLE *****
+        					double cellData = Double.parseDouble(cell.toString());
+
+        					if(cellData <= 2){
+        						cell.setCellValue("EFFECTIVE");
+        						cell.setCellStyle(lowBoldBg);
+        					}
+        					else if(cellData > 2 && cellData <= 5){
+        						cell.setCellValue("NEED IMPROVEMENT");
+        						cell.setCellStyle(mBoldBg);
+        					}
+        					else{
+        						cell.setCellValue("NO CONTROL");
+        						cell.setCellStyle(hBoldBg);
+        					}
+        				}       				
+        			}           			
+        		}
+	            
+	            
+	            for (int i = 9; i <= totalRows ; i++) {
+        			row = sheet.getRow(i);
+        			for(int j = 0; j < noOfColumns; j++){
+        				if(j == 4 || j == 6 || j == 8 || j == 10){
+        					cell = row.getCell(j);
+       					
+        					// ***** TO CONVERT CELL INTO DOUBLE FIRST CONVERT INTO STRING THEN CONVERT INTO DOUBLE *****
+        					double cellData = Double.parseDouble(cell.toString());
+
+        					if(cellData <= 2){
+        						cell.setCellValue("EFFECTIVE");
+        						cell.setCellStyle(lowBg);
+        					}
+        					else if(cellData > 2 && cellData <= 5){
+        						cell.setCellValue("NEED IMPROVEMENTS");
+        						cell.setCellStyle(mediumBg);
+        					}
+        					else{
+        						cell.setCellValue("NO CONTROL");
+        						cell.setCellStyle(highBg);
+        					}
+
+        				}
+        				
+        			}           			
+        		}
+				
+				
+				
+				/*
 				
 	            for (int i = 3; i <= 7 ; i++) {
         			row = sheet.getRow(i);
@@ -1402,8 +1632,8 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 								        				
 								        			}           			
 								        		}
-				
-				int totalRows=currentRow;
+				*/
+
 				
 				
 				

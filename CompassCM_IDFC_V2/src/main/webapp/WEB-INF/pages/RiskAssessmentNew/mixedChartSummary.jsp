@@ -126,14 +126,17 @@
 	total_of_IC = (totalTresuryIC + totalRetailLiabiltiesIC + totalRetailAssetsIC + totalWholesaleIC)/4;
 	
 	
+	//alert("BEFORE: "+total_of_IR+" "+total_of_IC)
+	
+	
 	if(total_of_IR <= 2){
 		if(total_of_IR == 0){
 			total_of_IR = 0;
 		}
-		if(total_of_IR > 0 && total_of_IR < 2){
+		else if(total_of_IR > 0 && total_of_IR < 2){
 			total_of_IR = (total_of_IR * 2) + 0.5;
 		}
-		if(total_of_IR == 2){
+		else if(total_of_IR == 2){
 			total_of_IR = 5;
 		}
 	}
@@ -146,10 +149,10 @@
 		if(total_of_IR > 5 && total_of_IR < 8){
 			total_of_IR = (total_of_IR * 1.5) + 0.5;
 		}
-		if(total_of_IR > 8 && total_of_IR < 10){
+		else if(total_of_IR > 8 && total_of_IR < 10){
 			total_of_IR = (total_of_IR * 1.2) + 0.5;
 		}
-		if(total_of_IR > 10 && total_of_IR < 14){
+		else if(total_of_IR > 10 && total_of_IR < 14){
 			total_of_IR = 14;
 		}
 	}
@@ -167,10 +170,10 @@
 		if(total_of_IC == 0){
 			total_of_IC = 0;
 		}
-		if(total_of_IC > 0 && total_of_IC < 2){
+		else if(total_of_IC > 0 && total_of_IC < 2){
 			total_of_IC = (total_of_IC * 2) + 0.5;
 		}
-		if(total_of_IC == 2){
+		else if(total_of_IC == 2){
 			total_of_IC = 5;
 		}
 	}
@@ -183,10 +186,10 @@
 		if(total_of_IC > 5 && total_of_IC < 8){
 			total_of_IC = (total_of_IC * 1.5) + 0.5;
 		}
-		if(total_of_IC > 8 && total_of_IC < 10){
+		else if(total_of_IC > 8 && total_of_IC < 10){
 			total_of_IC = (total_of_IC * 1.2) + 0.5;
 		}
-		if(total_of_IC > 10 && total_of_IC < 14){
+		else if(total_of_IC > 10 && total_of_IC < 14){
 			total_of_IC = 14;
 		}
 	}
@@ -202,16 +205,16 @@
 	
 	
 	///////////////////////testing
-		var totalTresuryIR_x = 0.0;
+	var totalTresuryIR_x = 0.0;
 	
 	if(totalTresuryIR <= 2){
 		if(totalTresuryIR == 0){
 			totalTresuryIR_x = 0.5;
 		}
-		if(totalTresuryIR > 0 && totalTresuryIR < 2){
+		else if(totalTresuryIR > 0 && totalTresuryIR < 2){
 			totalTresuryIR_x = (totalTresuryIR * 2) + 0.5;
 		}
-		if(totalTresuryIR == 2){
+		else if(totalTresuryIR == 2){
 			totalTresuryIR_x = 5;
 		}
 	}
@@ -224,10 +227,10 @@
 		if(totalTresuryIR > 5 && totalTresuryIR < 8){
 			totalTresuryIR_x = (totalTresuryIR * 1.5) + 0.5;
 		}
-		if(totalTresuryIR > 8 && totalTresuryIR < 10){
+		else if(totalTresuryIR > 8 && totalTresuryIR < 10){
 			totalTresuryIR_x = (totalTresuryIR * 1.2) + 0.5;
 		}
-		if(totalTresuryIR > 10 && totalTresuryIR < 14){
+		else if(totalTresuryIR > 10 && totalTresuryIR < 14){
 			totalTresuryIR_x = 14;
 		}
 	}
@@ -246,10 +249,10 @@
 		if(totalTresuryIC == 0){
 			totalTresuryIC_y = 0.5;
 		}
-		if(totalTresuryIC > 0 && totalTresuryIC < 2){
+		else if(totalTresuryIC > 0 && totalTresuryIC < 2){
 			totalTresuryIC_y = (totalTresuryIC * 2) + 0.5;
 		}
-		if(totalTresuryIC == 2){
+		else if(totalTresuryIC == 2){
 			totalTresuryIC_y = 5;
 		}
 	}
@@ -262,10 +265,10 @@
 		if(totalTresuryIC > 5 && totalTresuryIC < 8){
 			totalTresuryIC_y = (totalTresuryIC * 1.5) + 0.5;
 		}
-		if(totalTresuryIC > 8 && totalTresuryIC < 10){
+		else if(totalTresuryIC > 8 && totalTresuryIC < 10){
 			totalTresuryIC_y = (totalTresuryIC * 1.2) + 0.5;
 		}
-		if(totalTresuryIC > 10 && totalTresuryIC < 14){
+		else if(totalTresuryIC > 10 && totalTresuryIC < 14){
 			totalTresuryIC_y = 14;
 		}
 	}
@@ -278,7 +281,7 @@
 		console.log("N.A")
 	}
 	
-	
+	/////////////////////
 	
 	var totalRetailLiabiltiesIR_x = 0.0;
 	
@@ -286,10 +289,10 @@
 		if(totalRetailLiabiltiesIR == 0){
 			totalRetailLiabiltiesIR_x = 0.5;
 		}
-		if(totalRetailLiabiltiesIR > 0 && totalRetailLiabiltiesIR < 2){
+		else if(totalRetailLiabiltiesIR > 0 && totalRetailLiabiltiesIR < 2){
 			totalRetailLiabiltiesIR_x = (totalRetailLiabiltiesIR * 2) + 0.5;
 		}
-		if(totalRetailLiabiltiesIR == 2){
+		else if(totalRetailLiabiltiesIR == 2){
 			totalRetailLiabiltiesIR_x = 5;
 		}
 	}
@@ -302,10 +305,10 @@
 		if(totalRetailLiabiltiesIR > 5 && totalRetailLiabiltiesIR < 8){
 			totalRetailLiabiltiesIR_x = (totalRetailLiabiltiesIR * 1.5) + 0.5;
 		}
-		if(totalRetailLiabiltiesIR > 8 && totalRetailLiabiltiesIR < 10){
+		else if(totalRetailLiabiltiesIR > 8 && totalRetailLiabiltiesIR < 10){
 			totalRetailLiabiltiesIR_x = (totalRetailLiabiltiesIR * 1.2) + 0.5;
 		}
-		if(totalRetailLiabiltiesIR > 10 && totalRetailLiabiltiesIR < 14){
+		else if(totalRetailLiabiltiesIR > 10 && totalRetailLiabiltiesIR < 14){
 			totalRetailLiabiltiesIR_x = 14;
 		}
 	}
@@ -325,10 +328,10 @@
 		if(totalRetailLiabiltiesIC == 0){
 			totalRetailLiabiltiesIC_y = 0.5;
 		}
-		if(totalRetailLiabiltiesIC > 0 && totalRetailLiabiltiesIC < 2){
+		else if(totalRetailLiabiltiesIC > 0 && totalRetailLiabiltiesIC < 2){
 			totalRetailLiabiltiesIC_y = (totalRetailLiabiltiesIC * 2) + 0.5;
 		}
-		if(totalRetailLiabiltiesIC == 2){
+		else if(totalRetailLiabiltiesIC == 2){
 			totalRetailLiabiltiesIC_y = 5;
 		}
 	}
@@ -341,10 +344,10 @@
 		if(totalRetailLiabiltiesIC > 5 && totalRetailLiabiltiesIC < 8){
 			totalRetailLiabiltiesIC_y = (totalRetailLiabiltiesIC * 1.5) + 0.5;
 		}
-		if(totalRetailLiabiltiesIC > 8 && totalRetailLiabiltiesIC < 10){
+		else if(totalRetailLiabiltiesIC > 8 && totalRetailLiabiltiesIC < 10){
 			totalRetailLiabiltiesIC_y = (totalRetailLiabiltiesIC * 1.2) + 0.5;
 		}
-		if(totalRetailLiabiltiesIC > 10 && totalRetailLiabiltiesIC < 14){
+		else if(totalRetailLiabiltiesIC > 10 && totalRetailLiabiltiesIC < 14){
 			totalRetailLiabiltiesIC_y = 14;
 		}
 	}
@@ -366,10 +369,10 @@
 		if(totalRetailAssetsIR == 0){
 			totalRetailAssetsIR_x = 0.5;
 		}
-		if(totalRetailAssetsIR > 0 && totalRetailAssetsIR < 2){
+		else if(totalRetailAssetsIR > 0 && totalRetailAssetsIR < 2){
 			totalRetailAssetsIR_x = (totalRetailAssetsIR * 2) + 0.5;
 		}
-		if(totalRetailAssetsIR == 2){
+		else if(totalRetailAssetsIR == 2){
 			totalRetailAssetsIR_x = 5;
 		}
 	}
@@ -382,10 +385,10 @@
 		if(totalRetailAssetsIR > 5 && totalRetailAssetsIR < 8){
 			totalRetailAssetsIR_x = (totalRetailAssetsIR * 1.5) + 0.5;
 		}
-		if(totalRetailAssetsIR > 8 && totalRetailAssetsIR < 10){
+		else if(totalRetailAssetsIR > 8 && totalRetailAssetsIR < 10){
 			totalRetailAssetsIR_x = (totalRetailAssetsIR * 1.2) + 0.5;
 		}
-		if(totalRetailAssetsIR > 10 && totalRetailAssetsIR < 14){
+		else if(totalRetailAssetsIR > 10 && totalRetailAssetsIR < 14){
 			totalRetailAssetsIR_x = 14;
 		}
 	}
@@ -405,10 +408,10 @@
 		if(totalRetailAssetsIC == 0){
 			totalRetailAssetsIC_y = 0.5;
 		}
-		if(totalRetailAssetsIC > 0 && totalRetailAssetsIC < 2){
+		else if(totalRetailAssetsIC > 0 && totalRetailAssetsIC < 2){
 			totalRetailAssetsIC_y = (totalRetailAssetsIC * 2) + 0.5;
 		}
-		if(totalRetailAssetsIC == 2){
+		else if(totalRetailAssetsIC == 2){
 			totalRetailAssetsIC_y = 5;
 		}
 	}
@@ -421,10 +424,10 @@
 		if(totalRetailAssetsIC > 5 && totalRetailAssetsIC < 8){
 			totalRetailAssetsIC_y = (totalRetailAssetsIC * 1.5) + 0.5;
 		}
-		if(totalRetailAssetsIC > 8 && totalRetailAssetsIC < 10){
+		else if(totalRetailAssetsIC > 8 && totalRetailAssetsIC < 10){
 			totalRetailAssetsIC_y = (totalRetailAssetsIC * 1.2) + 0.5;
 		}
-		if(totalRetailAssetsIC > 10 && totalRetailAssetsIC < 14){
+		else if(totalRetailAssetsIC > 10 && totalRetailAssetsIC < 14){
 			totalRetailAssetsIC_y = 14;
 		}
 	}
@@ -445,10 +448,10 @@
 		if(totalWholesaleIR == 0){
 			totalWholesaleIR_x = 0.5;
 		}
-		if(totalWholesaleIR > 0 && totalWholesaleIR < 2){
+		else if(totalWholesaleIR > 0 && totalWholesaleIR < 2){
 			totalWholesaleIR_x = (totalWholesaleIR * 2) + 0.5;
 		}
-		if(totalWholesaleIR == 2){
+		else if(totalWholesaleIR == 2){
 			totalWholesaleIR_x = 5;
 		}
 	}
@@ -461,10 +464,10 @@
 		if(totalWholesaleIR > 5 && totalWholesaleIR < 8){
 			totalWholesaleIR_x = (totalWholesaleIR * 1.5) + 0.5;
 		}
-		if(totalWholesaleIR > 8 && totalWholesaleIR < 10){
+		else if(totalWholesaleIR > 8 && totalWholesaleIR < 10){
 			totalWholesaleIR_x = (totalWholesaleIR * 1.2) + 0.5;
 		}
-		if(totalWholesaleIR > 10 && totalWholesaleIR < 14){
+		else if(totalWholesaleIR > 10 && totalWholesaleIR < 14){
 			totalWholesaleIR_x = 14;
 		}
 	}
@@ -484,10 +487,10 @@
 		if(totalWholesaleIC == 0){
 			totalWholesaleIC_y = 0.5;
 		}
-		if(totalWholesaleIC > 0 && totalWholesaleIC < 2){
+		else if(totalWholesaleIC > 0 && totalWholesaleIC < 2){
 			totalWholesaleIC_y = (totalWholesaleIC * 2) + 0.5;
 		}
-		if(totalWholesaleIC == 2){
+		else if(totalWholesaleIC == 2){
 			totalWholesaleIC_y = 5;
 		}
 	}
@@ -500,10 +503,10 @@
 		if(totalWholesaleIC > 5 && totalWholesaleIC < 8){
 			totalWholesaleIC_y = (totalWholesaleIC * 1.5) + 0.5;
 		}
-		if(totalWholesaleIC > 8 && totalWholesaleIC < 10){
+		else if(totalWholesaleIC > 8 && totalWholesaleIC < 10){
 			totalWholesaleIC_y = (totalWholesaleIC * 1.2) + 0.5;
 		}
-		if(totalWholesaleIC > 10 && totalWholesaleIC < 14){
+		else if(totalWholesaleIC > 10 && totalWholesaleIC < 14){
 			totalWholesaleIC_y = 14;
 		}
 	}
@@ -517,9 +520,10 @@
 	}
 	
 	
+	//alert("AFTER: "+total_of_IR+" "+total_of_IC)
 	
-	alert(totalTresuryIR_x+" "+totalTresuryIC_y+" "+totalRetailLiabiltiesIR_x+" "+totalRetailLiabiltiesIC_y+" "+
-			totalRetailAssetsIR_x+" "+totalRetailAssetsIC_y+" "+totalWholesaleIR_x+" "+totalWholesaleIC_y)
+	//alert(totalTresuryIR_x+" "+totalTresuryIC_y+" "+totalRetailLiabiltiesIR_x+" "+totalRetailLiabiltiesIC_y+" "+
+	//		totalRetailAssetsIR_x+" "+totalRetailAssetsIC_y+" "+totalWholesaleIR_x+" "+totalWholesaleIC_y)
 	///////////////////////////////
 	
 	
@@ -595,17 +599,265 @@
 	//DEFALUT VALUE CHART CREATION ENDED
 	
 	
+	//TREASURY RESIDUAL RISK CHART CREATION STARTED
+	const tResidualRiskCTX=document.getElementById('tResidualRiskCanvas').getContext('2d');
+	const tResidualRiskDATA = {
+			  datasets: [{
+			    label: 'TREASURY RESIDUAL RISK',
+			    //data: bankLevelResidualRisk,
+			    data: [{
+				      x: totalTresuryIR_x,
+				      y: totalTresuryIC_y,
+				      r: 20
+				    },],
+				    pointStyle: 'crossRot',
+				    borderWidth: 6,
+				    backgroundColor: 'rgba(0, 0, 0, 1)',
+				    borderColor: 'rgba(0, 0, 0, 1)',
+			  }]
+			};		
+
+	const tResidualRiskCONFIG = {
+		  type: 'bubble',
+		  data: tResidualRiskDATA,
+		  options: {
+			  plugins: { legend: { display: false }, },
+			  animation: { duration: 0},
+			  layout: {
+		            padding: {
+		                left: 15,
+		                bottom: 15,
+		                right: 15,
+		                top: 15
+		            }
+		        },
+
+			  scales: {
+		            x: {
+		            	display: false,
+		            	min: 0,
+		                max: 15,
+		            	ticks: { display: false},
+		                grid: { display: false,},
+		            	},		            			            	
+		            
+		            y: {
+		            	display: false,
+		            	min: 0,
+		                max: 15,
+		            	ticks: { display: false},
+		                grid: { display: false,}, 
+		                reverse: true,
+		            	},			            
+		        }
+		  }
+		};		
+
+	const tResidualRiskChart = new Chart(tResidualRiskCTX, tResidualRiskCONFIG);
+	var tResidualRiskIMAGE = tResidualRiskChart.toBase64Image();
+	document.getElementById("tResidualRiskURL").value = tResidualRiskIMAGE;
+	console.log(tResidualRiskIMAGE);
+	tResidualRiskChart.destroy();
+	//TREASURY RESIDUAL RISK CHART CREATION ENDED
+	
+	
+	//RL RESIDUAL RISK CHART CREATION STARTED
+	const rlResidualRiskCTX=document.getElementById('rlResidualRiskCanvas').getContext('2d');
+	const rlResidualRiskDATA = {
+			  datasets: [{
+			    label: 'RL RESIDUAL RISK',
+			    //data: bankLevelResidualRisk,
+			    data: [{
+				      x: totalRetailLiabiltiesIR_x,
+				      y: totalRetailLiabiltiesIC_y,
+				      r: 20
+				    },],
+				    pointStyle: 'crossRot',
+				    borderWidth: 6,
+				    backgroundColor: 'rgba(0, 0, 0, 1)',
+				    borderColor: 'rgba(0, 0, 0, 1)',
+			  }]
+			};		
+
+	const rlResidualRiskCONFIG = {
+		  type: 'bubble',
+		  data: rlResidualRiskDATA,
+		  options: {
+			  plugins: { legend: { display: false }, },
+			  animation: { duration: 0},
+			  layout: {
+		            padding: {
+		                left: 15,
+		                bottom: 15,
+		                right: 15,
+		                top: 15
+		            }
+		        },
+
+			  scales: {
+		            x: {
+		            	display: false,
+		            	min: 0,
+		                max: 15,
+		            	ticks: { display: false},
+		                grid: { display: false,},
+		            	},		            			            	
+		            
+		            y: {
+		            	display: false,
+		            	min: 0,
+		                max: 15,
+		            	ticks: { display: false},
+		                grid: { display: false,}, 
+		                reverse: true,
+		            	},			            
+		        }
+		  }
+		};		
+
+	const rlResidualRiskChart = new Chart(rlResidualRiskCTX, rlResidualRiskCONFIG);
+	var rlResidualRiskIMAGE = rlResidualRiskChart.toBase64Image();
+	document.getElementById("rlResidualRiskURL").value = rlResidualRiskIMAGE;
+	console.log(rlResidualRiskIMAGE);
+	rlResidualRiskChart.destroy();
+	//RL RESIDUAL RISK CHART CREATION ENDED
+	
+	
+	//RA RESIDUAL RISK CHART CREATION STARTED
+	const raResidualRiskCTX=document.getElementById('raResidualRiskCanvas').getContext('2d');
+	const raResidualRiskDATA = {
+			  datasets: [{
+			    label: 'RA RESIDUAL RISK',
+			    //data: bankLevelResidualRisk,
+			    data: [{
+				      x: totalRetailAssetsIR_x,
+				      y: totalRetailAssetsIC_y,
+				      r: 20
+				    },],
+				    pointStyle: 'crossRot',
+				    borderWidth: 6,
+				    backgroundColor: 'rgba(0, 0, 0, 1)',
+				    borderColor: 'rgba(0, 0, 0, 1)',
+			  }]
+			};		
+
+	const raResidualRiskCONFIG = {
+		  type: 'bubble',
+		  data: raResidualRiskDATA,
+		  options: {
+			  plugins: { legend: { display: false }, },
+			  animation: { duration: 0},
+			  layout: {
+		            padding: {
+		                left: 15,
+		                bottom: 15,
+		                right: 15,
+		                top: 15
+		            }
+		        },
+
+			  scales: {
+		            x: {
+		            	display: false,
+		            	min: 0,
+		                max: 15,
+		            	ticks: { display: false},
+		                grid: { display: false,},
+		            	},		            			            	
+		            
+		            y: {
+		            	display: false,
+		            	min: 0,
+		                max: 15,
+		            	ticks: { display: false},
+		                grid: { display: false,}, 
+		                reverse: true,
+		            	},			            
+		        }
+		  }
+		};		
+
+	const raResidualRiskChart = new Chart(raResidualRiskCTX, raResidualRiskCONFIG);
+	var raResidualRiskIMAGE = raResidualRiskChart.toBase64Image();
+	document.getElementById("raResidualRiskURL").value = raResidualRiskIMAGE;
+	console.log(raResidualRiskIMAGE);
+	raResidualRiskChart.destroy();
+	//RA RESIDUAL RISK CHART CREATION ENDED
+	
+	
+	//WB RESIDUAL RISK CHART CREATION STARTED
+	const wbResidualRiskCTX=document.getElementById('wbResidualRiskCanvas').getContext('2d');
+	const wbResidualRiskDATA = {
+			  datasets: [{
+			    label: 'WB RESIDUAL RISK',
+			    //data: bankLevelResidualRisk,
+			    data: [{
+				      x: totalWholesaleIR_x,
+				      y: totalWholesaleIC_y,
+				      r: 20
+				    },],
+				    pointStyle: 'crossRot',
+				    borderWidth: 6,
+				    backgroundColor: 'rgba(0, 0, 0, 1)',
+				    borderColor: 'rgba(0, 0, 0, 1)',
+			  }]
+			};		
+
+	const wbResidualRiskCONFIG = {
+		  type: 'bubble',
+		  data: wbResidualRiskDATA,
+		  options: {
+			  plugins: { legend: { display: false }, },
+			  animation: { duration: 0},
+			  layout: {
+		            padding: {
+		                left: 15,
+		                bottom: 15,
+		                right: 15,
+		                top: 15
+		            }
+		        },
+
+			  scales: {
+		            x: {
+		            	display: false,
+		            	min: 0,
+		                max: 15,
+		            	ticks: { display: false},
+		                grid: { display: false,},
+		            	},		            			            	
+		            
+		            y: {
+		            	display: false,
+		            	min: 0,
+		                max: 15,
+		            	ticks: { display: false},
+		                grid: { display: false,}, 
+		                reverse: true,
+		            	},			            
+		        }
+		  }
+		};		
+
+	const wbResidualRiskChart = new Chart(wbResidualRiskCTX, wbResidualRiskCONFIG);
+	var wbResidualRiskIMAGE = wbResidualRiskChart.toBase64Image();
+	document.getElementById("wbResidualRiskURL").value = wbResidualRiskIMAGE;
+	console.log(wbResidualRiskIMAGE);
+	wbResidualRiskChart.destroy();
+	//WB RESIDUAL RISK CHART CREATION ENDED
+	
+	
 	//RESIDUAL RISK CHART CREATION STARTED
 	const residualRiskCTX=document.getElementById('residualRiskCanvas').getContext('2d');
 	const residualRiskDATA = {
 			  datasets: [{
 			    label: 'RESIDUAL RISK',
-			    data: bankLevelResidualRisk,
-			    /* data: [{
-				      x: 0.5,
-				      y: 0.5,
+			    //data: bankLevelResidualRisk,
+			    data: [{
+				      x: total_of_IR,
+				      y: total_of_IC,
 				      r: 20
-				    },], */
+				    },],
 				    pointStyle: 'crossRot',
 				    borderWidth: 6,
 				    backgroundColor: 'rgba(0, 0, 0, 1)',
@@ -752,9 +1004,17 @@
 		<div>
 			<canvas id="defalutValueCanvas"></canvas>
 			<canvas id="residualRiskCanvas"></canvas>
-			<canvas id="assessmentCatCanvas"></canvas>
+			<canvas id="tResidualRiskCanvas"></canvas>
+			<canvas id="rlResidualRiskCanvas"></canvas>
+			<canvas id="raResidualRiskCanvas"></canvas>
+			<canvas id="wbResidualRiskCanvas"></canvas>
+			<canvas id="assessmentCatCanvas"></canvas>			
 			<input type="text" id="defalutValueURL" name="defalutValueURL"/>				
 			<input type="text" id="residualRiskURL" name="residualRiskURL"/>
+			<input type="text" id="tResidualRiskURL" name="tResidualRiskURL"/>
+			<input type="text" id="rlResidualRiskURL" name="rlResidualRiskURL"/>
+			<input type="text" id="raResidualRiskURL" name="raResidualRiskURL"/>
+			<input type="text" id="wbResidualRiskURL" name="wbResidualRiskURL"/>
 			<input type="text" id="assessmentCatURL" name="assessmentCatURL"/>
 			
 			<input type="text" id="totalTresuryIR" name="totalTresuryIR"/>

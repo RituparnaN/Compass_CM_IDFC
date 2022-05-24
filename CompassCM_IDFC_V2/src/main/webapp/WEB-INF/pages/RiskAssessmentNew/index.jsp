@@ -64,15 +64,27 @@
 							success : function(res){defalutValueChartDiv
 								document.getElementById("defalutValueChartDiv").style.display = "block";
 								document.getElementById("residualRiskChartDiv").style.display = "block";
+								document.getElementById("tResidualRiskChartDiv").style.display = "block";
+								document.getElementById("rlResidualRiskChartDiv").style.display = "block";
+								document.getElementById("raResidualRiskChartDiv").style.display = "block";
+								document.getElementById("wbResidualRiskChartDiv").style.display = "block";
 								document.getElementById("assessmentWiseCatChartDiv").style.display = "block";
 								$("#defalutValueChartDiv").html(res);
 								$("#residualRiskChartDiv").html(res);
+								$("#tResidualRiskChartDiv").html(res);
+								$("#rlResidualRiskChartDiv").html(res);
+								$("#raResidualRiskChartDiv").html(res);
+								$("#wbResidualRiskChartDiv").html(res);
 								$("#assessmentWiseCatChartDiv").html(res);
 								
 								
 								//MIXED CHART NEW DATA
 								var defalutValueData = $("#defalutValueURL").val();
 								var residualRiskData = $("#residualRiskURL").val();
+								var t_ResidualRiskData = $("#tResidualRiskURL").val();
+								var rl_ResidualRiskData = $("#rlResidualRiskURL").val();
+								var ra_ResidualRiskData = $("#raResidualRiskURL").val();
+								var wb_ResidualRiskData = $("#wbResidualRiskURL").val();
 								var assessmentWiseCatData = $("#assessmentCatURL").val();
 								
 								var bl_IR = $("#residualRiskURL").val();
@@ -89,13 +101,14 @@
 								var totalRetailAssetsIC = $("#totalRetailAssetsIC").val();
 								var totalWholesaleIR = $("#totalWholesaleIR").val();
 								var totalWholesaleIC = $("#totalWholesaleIC").val();
-								console.log("totalTresuryIR: "+totalTresuryIR+" "+"totalTresuryIC: "+totalTresuryIC+
+								/* console.log("totalTresuryIR: "+totalTresuryIR+" "+"totalTresuryIC: "+totalTresuryIC+
 										"totalRetailLiabiltiesIR: "+totalRetailLiabiltiesIR+" "+"totalRetailLiabiltiesIC: "+totalRetailLiabiltiesIC+
 										"totalRetailAssetsIR: "+totalRetailAssetsIR+" "+"totalRetailAssetsIC: "+totalRetailAssetsIC+
-										"totalWholesaleIR: "+totalWholesaleIR+" "+"totalWholesaleIC: "+totalWholesaleIC)
+										"totalWholesaleIR: "+totalWholesaleIR+" "+"totalWholesaleIC: "+totalWholesaleIC) */
 								
 								
-								var data = defalutValueData+"@~@"+residualRiskData+"@~@"+assessmentWiseCatData+"@~@"+bl_IR+"@~@"+bl_IC
+								var data = defalutValueData+"@~@"+residualRiskData+"@~@"+t_ResidualRiskData+"@~@"+rl_ResidualRiskData
+											+"@~@"+ra_ResidualRiskData+"@~@"+wb_ResidualRiskData+"@~@"+assessmentWiseCatData+"@~@"+bl_IR+"@~@"+bl_IC
 											+"@~@"+A_TOTALWEIGHTEDSCOREIR+"@~@"+A_TOTALWEIGHTEDSCOREIC+"@~@"
 											+totalTresuryIR+"@~@"+totalTresuryIC+"@~@"+totalRetailLiabiltiesIR+"@~@"+totalRetailLiabiltiesIC+"@~@"
 											+totalRetailAssetsIR+"@~@"+totalRetailAssetsIC+"@~@"+totalWholesaleIR+"@~@"+totalWholesaleIC;
@@ -365,4 +378,8 @@
 
 <div id = "defalutValueChartDiv" style="display: block"></div>
 <div id = "residualRiskChartDiv" style="display: block"></div>
+<div id = "tResidualRiskChartDiv" style="display: block"></div>
+<div id = "rlResidualRiskChartDiv" style="display: block"></div>
+<div id = "raResidualRiskChartDiv" style="display: block"></div>
+<div id = "wbResidualRiskChartDiv" style="display: block"></div>
 <div id = "assessmentWiseCatChartDiv" style="display: block"></div>
