@@ -122,7 +122,7 @@
 								document.getElementById("wbResidualRiskChartDiv").style.display = "none";
 								
 								$.ajax({
-										url : "${pageContext.request.contextPath}/common/saveChartImageSummary",
+										url : "${pageContext.request.contextPath}/common/saveChartImageNew",
 										type : "POST",
 										cache : false,
 										data: JSON.stringify({"data":data}),
