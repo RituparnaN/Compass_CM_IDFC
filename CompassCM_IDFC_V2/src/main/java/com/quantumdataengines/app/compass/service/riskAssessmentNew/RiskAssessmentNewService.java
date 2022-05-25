@@ -26,5 +26,6 @@ public interface RiskAssessmentNewService {
 	public Object getGraphDataPoints(String cmRefNo);
 	public Object getGraphDataPointsNew(String cmRefNo);
 	public Object getGraphDataPointsSummary(String assessmentPeriod);
-	public String saveImageUrlData(String imageUrl);
+	public String saveImageUrlDataSummary(String imageUrl);
+	public String saveImageUrlDataNew(String imageUrl);
 }

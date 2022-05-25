@@ -2209,7 +2209,89 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 	
 	
 	@Override
-	public String saveImageUrlData(String imageUrl){
+	public String saveImageUrlDataSummary(String imageUrl){
+		System.out.println("saveImageUrlData in NEW DAO CALLED!!");
+		System.out.println("imageURL data: "+imageUrl);
+		
+		String imageUrlData = imageUrl;
+		String[] parts = imageUrlData.split("@~@");
+		String defaultVALUECHART = parts[0];
+		String t_ResidualRISK = parts[1];
+		String rl_ResidualRISK = parts[2];
+		String ra_ResidualRISK = parts[3];
+		String wb_ResidualRISK = parts[4];
+		String residualRISK = parts[5]; 
+		String assessmentWISECAT = parts[6];
+		String bl_IR = parts[7]; 
+		String bl_IC = parts[8];
+		String a_TOTALWEIGHTEDSCOREIR = parts[9];
+		String a_TOTALWEIGHTEDSCOREIC = parts[10];
+		String s_TotalTresuryIR = parts[11];
+		String s_TotalTresuryIC = parts[12];
+		String s_TotalRetailLiabiltiesIR = parts[13];
+		String s_totalRetailLiabiltiesIC = parts[14];
+		String s_TotalRetailAssetsIR = parts[15];
+		String s_TotalRetailAssetsIC = parts[16];
+		String s_TotalWholesaleIR = parts[17];
+		String s_TotalWholesaleIC = parts[18];
+		
+		String id = "";
+		Connection connection = connectionUtil.getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+					                + "0123456789"
+					                + "abcdefghijklmnopqrstuvxyz";
+					
+					// create StringBuffer size of AlphaNumericString
+					StringBuilder sb = new StringBuilder(16);
+					
+					for (int i = 0; i < 16; i++) {
+					
+					// generate a random number between
+					// 0 to AlphaNumericString variable length
+					int index = (int)(AlphaNumericString.length() * Math.random());
+					
+					// add Character one by one in end of sb
+					sb.append(AlphaNumericString.charAt(index));
+					}
+		id = sb.toString();
+
+		try{
+			String query = "INSERT INTO COMAML_CM.TB_IMAGEDATASUMMARY VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSTIMESTAMP) ";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, id);
+			preparedStatement.setString(2, defaultVALUECHART);
+			preparedStatement.setString(3, t_ResidualRISK);
+			preparedStatement.setString(4, rl_ResidualRISK);
+			preparedStatement.setString(5, ra_ResidualRISK);
+			preparedStatement.setString(6, wb_ResidualRISK);
+			preparedStatement.setString(7, residualRISK);
+			preparedStatement.setString(8, assessmentWISECAT);
+			preparedStatement.setString(9, bl_IR);
+			preparedStatement.setString(10, bl_IC);
+			preparedStatement.setString(11, a_TOTALWEIGHTEDSCOREIR);
+			preparedStatement.setString(12, a_TOTALWEIGHTEDSCOREIC);
+			preparedStatement.setString(13, s_TotalTresuryIR);
+			preparedStatement.setString(14, s_TotalTresuryIC);
+			preparedStatement.setString(15, s_TotalRetailLiabiltiesIR);
+			preparedStatement.setString(16, s_totalRetailLiabiltiesIC);
+			preparedStatement.setString(17, s_TotalRetailAssetsIR);
+			preparedStatement.setString(18, s_TotalRetailAssetsIC);
+			preparedStatement.setString(19, s_TotalWholesaleIR);
+			preparedStatement.setString(20, s_TotalWholesaleIC);
+
+			preparedStatement.executeUpdate();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			connectionUtil.closeResources(connection, preparedStatement, resultSet, null);
+		}
+		return id;	
+	}
+	
+	@Override
+	public String saveImageUrlDataNew(String imageUrl){
 		System.out.println("saveImageUrlData in NEW DAO CALLED!!");
 		System.out.println("imageURL data: "+imageUrl);
 		

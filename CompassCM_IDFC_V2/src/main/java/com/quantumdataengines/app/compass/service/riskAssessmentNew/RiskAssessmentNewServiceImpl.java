@@ -97,9 +97,17 @@ public class RiskAssessmentNewServiceImpl implements RiskAssessmentNewService{
 	}
 	
 	@Override
-	public String saveImageUrlData(String imageUrl) {
+	public String saveImageUrlDataSummary(String imageUrl) {
 		// TODO Auto-generated method stub
-		return riskAssessmentNewDAO.saveImageUrlData(imageUrl);
+		return riskAssessmentNewDAO.saveImageUrlDataSummary(imageUrl);
 	}
+	
+	@Override
+	public String saveImageUrlDataNew(String imageUrl) {
+		// TODO Auto-generated method stub
+		return riskAssessmentNewDAO.saveImageUrlDataNew(imageUrl);
+	}
+	
+	
 
 }

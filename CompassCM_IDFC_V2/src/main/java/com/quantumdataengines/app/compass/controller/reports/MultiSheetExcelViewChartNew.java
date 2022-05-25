@@ -52,6 +52,8 @@ public class MultiSheetExcelViewChartNew extends AbstractExcelView {
 	 		String url = "jdbc:oracle:thin:@localhost:1521/xe";
 	        String user = "COMAML_CM";
 	        String pass = "ORACLE";
+	        
+	        System.out.println("Excel NEW opened");
 	 	        
 	        Connection con = null;
 	        
@@ -62,7 +64,7 @@ public class MultiSheetExcelViewChartNew extends AbstractExcelView {
 	 
 	            con = DriverManager.getConnection(url, user, pass);
 	            Statement st = con.createStatement();
-	            String sql = "SELECT RESIDUALRISK, ASSESSMENTWISECAT, A_TOTALWEIGHTEDSCOREIR, A_TOTALWEIGHTEDSCOREIC FROM TB_IMAGEDATA WHERE IMAGEID = '"+imgId+"'";
+	            String sql = "SELECT RESIDUALRISK, ASSESSMENTWISECAT, A_TOTALWEIGHTEDSCOREIR, A_TOTALWEIGHTEDSCOREIC FROM TB_IMAGEDATASUMMARY WHERE IMAGEID = '"+imgId+"'";
 	            ResultSet m = st.executeQuery(sql);
 	            while(m.next()) {
 	            	a_RESIDUALRISK = m.getString("RESIDUALRISK");

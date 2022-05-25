@@ -118,7 +118,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	//RESIDUAL RISK CHART CREATION STARTED
-	const residualRiskCTX=document.getElementById('residualRiskCanvas').getContext('2d');
+	const residualRiskCTX=document.getElementById('residualRiskNewCanvas').getContext('2d');
 	const residualRiskDATA = {
 			  datasets: [{
 			    label: 'RESIDUAL RISK',
@@ -168,7 +168,7 @@
 
 	const residualRiskChart = new Chart(residualRiskCTX,residualRiskCONFIG);
 	var residualRiskIMAGE = residualRiskChart.toBase64Image();
-	document.getElementById("residualRiskURL").value = residualRiskIMAGE;
+	document.getElementById("residualRiskNewURL").value = residualRiskIMAGE;
 	residualRiskChart.destroy();
 	//RESIDUAL RISK CHART CREATION ENDED
 	
@@ -254,9 +254,9 @@
 <div>	
 	<form action="imagedata" method="post" id = "chartForm">
 		<div>
-			<canvas id="residualRiskCanvas"></canvas>
+			<canvas id="residualRiskNewCanvas"></canvas>
 			<canvas id="assessmentCatCanvas"></canvas>				
-			<input type="text" id="residualRiskURL" name="residualRiskURL"/>
+			<input type="text" id="residualRiskNewURL" name="residualRiskNewURL"/>
 			<input type="text" id="assessmentCatURL" name="assessmentCatURL"/>
 			
 			<input type="text" id="totalWeightedScoreIR" name="totalWeightedScoreIR"/>

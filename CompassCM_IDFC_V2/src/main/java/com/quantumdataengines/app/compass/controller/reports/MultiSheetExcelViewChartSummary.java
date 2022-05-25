@@ -47,6 +47,10 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 		 	String imgId=request.getParameter("imageId");
 	 		//System.out.println("image Id: "+imgId);
 		 	String dEFAULTVALUECHART = "";
+		 	String t_RESIDUALRISK = "";
+		 	String rl_RESIDUALRISK = "";
+		 	String ra_RESIDUALRISK = "";
+		 	String wb_RESIDUALRISK = "";
 	 		String rESIDUALRISK = "";
 	 		String aSSESSMENTWISECAT = "";
 	 		String bl_IR = "";
@@ -74,12 +78,16 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 	 
 	            con = DriverManager.getConnection(url, user, pass);
 	            Statement st = con.createStatement();
-	            String sql = "SELECT DEFAULTVALUECHART, RESIDUALRISK, ASSESSMENTWISECAT, BL_IR, BL_IC, "
+	            String sql = "SELECT DEFAULTVALUECHART, T_RESIDUALRISK, RL_RESIDUALRISK, RA_RESIDUALRISK, WB_RESIDUALRISK, RESIDUALRISK, ASSESSMENTWISECAT, BL_IR, BL_IC, "
 	            		+ "A_TOTALWEIGHTEDSCOREIR, A_TOTALWEIGHTEDSCOREIC, TOTALTRESURYIR, TOTALTRESURYIC, "
 	            		+ "TOTALRLIR, TOTALRLIC, TOTALRAIR, TOTALRAIC, TOTALWBIR, TOTALWBIC FROM TB_IMAGEDATASUMMARY WHERE IMAGEID = '"+imgId+"'";
 	            ResultSet m = st.executeQuery(sql);
 	            while(m.next()) {
 	            	dEFAULTVALUECHART = m.getString("DEFAULTVALUECHART");
+	            	t_RESIDUALRISK = m.getString("T_RESIDUALRISK");
+	            	rl_RESIDUALRISK = m.getString("RL_RESIDUALRISK");
+	            	ra_RESIDUALRISK = m.getString("RA_RESIDUALRISK");
+	            	wb_RESIDUALRISK = m.getString("WB_RESIDUALRISK");
 	            	rESIDUALRISK = m.getString("RESIDUALRISK");
 	            	aSSESSMENTWISECAT = m.getString("ASSESSMENTWISECAT");
 	            	bl_IR = m.getString("BL_IR");
@@ -102,10 +110,18 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 	        }
 	        
 	        String base64ImageDefaultValueChart = null;
+	        String base64ImageT_ResidualRisk = null;
+	        String base64ImageRL_ResidualRisk = null;
+	        String base64ImageRA_ResidualRisk = null;
+	        String base64ImageWB_ResidualRisk = null;
 	        String base64ImageResidualRisk = null;
 	        String base64ImageAssessment = null;
 	        
 	        byte[] imageBytesDefaultValueChart = null;
+	        byte[] imageBytesT_ResidualRisk = null;
+	        byte[] imageBytesRL_ResidualRisk = null;
+	        byte[] imageBytesRA_ResidualRisk = null;
+	        byte[] imageBytesWB_ResidualRisk = null;
 	        byte[] imageBytesResidualRisk = null;
 	        byte[] imageBytesAssessment = null;
 	        
@@ -118,6 +134,18 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 	        	
 	        	base64ImageDefaultValueChart = dEFAULTVALUECHART.split(",")[1];
 	        	imageBytesDefaultValueChart = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64ImageDefaultValueChart);
+	        	
+	        	base64ImageT_ResidualRisk = t_RESIDUALRISK.split(",")[1];
+	        	imageBytesT_ResidualRisk = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64ImageT_ResidualRisk);
+	        	
+	        	base64ImageRL_ResidualRisk = rl_RESIDUALRISK.split(",")[1];
+	        	imageBytesRL_ResidualRisk = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64ImageRL_ResidualRisk);
+	        	
+	        	base64ImageRA_ResidualRisk = ra_RESIDUALRISK.split(",")[1];
+	        	imageBytesRA_ResidualRisk = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64ImageRA_ResidualRisk);
+	        	
+	        	base64ImageWB_ResidualRisk = wb_RESIDUALRISK.split(",")[1];
+	        	imageBytesWB_ResidualRisk = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64ImageWB_ResidualRisk);
 	        	
 	        	base64ImageResidualRisk = rESIDUALRISK.split(",")[1];
 	        	imageBytesResidualRisk = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64ImageResidualRisk);
@@ -752,9 +780,7 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
     				}       				
     			}           			
     		}
-			
-			
-			
+						
             for (int i = 2; i <= 6 ; i++) {
     			row = sheet.getRow(i);
     			for(int j = 0; j < noOfColumns; j++){
@@ -799,85 +825,132 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 			}
 			
 		}           			
-	}
+	}			
 			
+	int totalRows=currentRow;
 			
-			
-			
-			
-			
-			int totalRows=currentRow;
-
-			//System.out.println("Total Column: "+noOfColumns);
-			
-			try {
+	try {
 				
-				//if(sheet.getSheetName().equals("ASSESSSMENTWISE RISK RATING")){
+		if(sheet.getSheetName().equals("TREASURY")){
+		 	InputStream baseimageResidualRisk = new FileInputStream("C:\\APPFOLDER\\resources\\CM_MatrixHeatChart\\AssessmentWise\\ResidualRisk.png");
+		 	byte[] bytesResidualRisk = IOUtils.toByteArray(baseimageResidualRisk);
+			int pictureResidualRiskBase = workbook.addPicture(bytesResidualRisk, Workbook.PICTURE_TYPE_PNG);		 		
+	 		//chart
+		 	int pictureT_ResidualRiskChart = workbook.addPicture(imageBytesT_ResidualRisk, Workbook.PICTURE_TYPE_PNG);		 		 
+		 	CreationHelper helper = workbook.getCreationHelper();		 		
+			Drawing drawingResidualRisk = sheet.createDrawingPatriarch();
+	 		ClientAnchor anchorBaseResidualRisk = helper.createClientAnchor();		 		
+	 		ClientAnchor anchorChartResidualRisk = helper.createClientAnchor();		 		
+	 		//base image 
+	 		   anchorBaseResidualRisk.setCol1(noOfColumns+6);
+			   anchorBaseResidualRisk.setRow1(1);
+			   anchorBaseResidualRisk.setCol2(noOfColumns+11);
+			   anchorBaseResidualRisk.setRow2(11); 
+			   //CHART IMAGE
+			   anchorChartResidualRisk.setCol1(noOfColumns+7);
+			   anchorChartResidualRisk.setRow1(2); 
+			   anchorChartResidualRisk.setCol2(noOfColumns+11);
+			   anchorChartResidualRisk.setRow2(10); 				   
+	 		 //Creates a picture
+			 anchorBaseResidualRisk.setAnchorType(AnchorType.DONT_MOVE_AND_RESIZE);//set anchor type
+			 anchorChartResidualRisk.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);				 
 
-		 		InputStream baseimageResidualRisk = new FileInputStream("C:\\APPFOLDER\\resources\\CM_MatrixHeatChart\\AssessmentWise\\ResidualRisk.png");
-		 		byte[] bytesResidualRisk = IOUtils.toByteArray(baseimageResidualRisk);
-		 		int pictureResidualRiskBase = workbook.addPicture(bytesResidualRisk, Workbook.PICTURE_TYPE_PNG);
-		 		
-		 		InputStream baseimageAssessment = new FileInputStream("C:\\APPFOLDER\\resources\\CM_MatrixHeatChart\\AssessmentWise\\AssessmentWiseUnitLevelResidualRisk.png");
-		 		byte[] bytesAssessment = IOUtils.toByteArray(baseimageAssessment);
-		 		int pictureAssessmentBase = workbook.addPicture(bytesAssessment, Workbook.PICTURE_TYPE_PNG);
-		 		
-		 		//chart
-		 		int pictureResidualRiskChart = workbook.addPicture(imageBytesResidualRisk, Workbook.PICTURE_TYPE_PNG);
-		 		int pictureAssessmentChart = workbook.addPicture(imageBytesAssessment, Workbook.PICTURE_TYPE_PNG);
-		 		 
-		 		CreationHelper helper = workbook.getCreationHelper();
-		 		
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		 		Drawing drawingResidualRisk = sheet.createDrawingPatriarch();
-		 		ClientAnchor anchorBaseResidualRisk = helper.createClientAnchor();		 		
-		 		ClientAnchor anchorChartResidualRisk = helper.createClientAnchor();		 		
-		 		//base image 
-		 		   anchorBaseResidualRisk.setCol1(noOfColumns+6);
-				   anchorBaseResidualRisk.setRow1(1);
-				   anchorBaseResidualRisk.setCol2(noOfColumns+11);
-				   anchorBaseResidualRisk.setRow2(11); 
-				   //CHART IMAGE
-				   anchorChartResidualRisk.setCol1(noOfColumns+7);
-				   anchorChartResidualRisk.setRow1(2); 
-				   anchorChartResidualRisk.setCol2(noOfColumns+11);
-				   anchorChartResidualRisk.setRow2(10); 				   
-		 		 //Creates a picture
-				 anchorBaseResidualRisk.setAnchorType(AnchorType.DONT_MOVE_AND_RESIZE);//set anchor type
-				 anchorChartResidualRisk.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);
-				 
-			 	Drawing drawingAssessmentWise = sheet.createDrawingPatriarch();
-			 	ClientAnchor anchorBaseAssessmentWise = helper.createClientAnchor();		 		
-			 	ClientAnchor anchorChartAssessmentWise = helper.createClientAnchor();		 		
-			 	//base image 
-			 		anchorBaseAssessmentWise.setCol1(noOfColumns+6);
-			 		anchorBaseAssessmentWise.setRow1(12);
-			 		anchorBaseAssessmentWise.setCol2(noOfColumns+12);
-			 		anchorBaseAssessmentWise.setRow2(22); 
-				//CHART IMAGE
-			 		anchorChartAssessmentWise.setCol1(noOfColumns+7);
-			 		anchorChartAssessmentWise.setRow1(13); 
-			 		anchorChartAssessmentWise.setCol2(noOfColumns+11);
-			 		anchorChartAssessmentWise.setRow2(21); 				   
-			 	//Creates a picture
-			 	anchorBaseAssessmentWise.setAnchorType(AnchorType.DONT_MOVE_AND_RESIZE);//set anchor type
-			 	anchorChartAssessmentWise.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);
-				 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		 		 Picture createBaseResidualRisk = drawingResidualRisk.createPicture(anchorBaseResidualRisk, pictureResidualRiskBase);
-		 		 Picture createChartResidualRisk = drawingResidualRisk.createPicture(anchorChartResidualRisk, pictureResidualRiskChart);
-		 		 //Picture createBaseAssessmentWise = drawingResidualRisk.createPicture(anchorBaseAssessmentWise, pictureAssessmentBase);
-		 		 //Picture createChartAssessmentWise = drawingResidualRisk.createPicture(anchorChartAssessmentWise, pictureAssessmentChart);
-		 		//  }
+			 Picture createBaseResidualRisk = drawingResidualRisk.createPicture(anchorBaseResidualRisk, pictureResidualRiskBase);
+		 	 Picture createChartResidualRisk = drawingResidualRisk.createPicture(anchorChartResidualRisk, pictureT_ResidualRiskChart);
 			}
-			catch(Exception e) {
-				//System.out.println("error while inserting graph in report");
-				e.printStackTrace();
-			}
-	 		
-		  
 		
-			}/////
+		if(sheet.getSheetName().equals("RETAIL LIABILITIES")){
+		 	InputStream baseimageResidualRisk = new FileInputStream("C:\\APPFOLDER\\resources\\CM_MatrixHeatChart\\AssessmentWise\\ResidualRisk.png");
+		 	byte[] bytesResidualRisk = IOUtils.toByteArray(baseimageResidualRisk);
+			int pictureResidualRiskBase = workbook.addPicture(bytesResidualRisk, Workbook.PICTURE_TYPE_PNG);		 		
+	 		//chart
+		 	int pictureRL_ResidualRiskChart = workbook.addPicture(imageBytesRL_ResidualRisk, Workbook.PICTURE_TYPE_PNG);		 		 
+		 	CreationHelper helper = workbook.getCreationHelper();		 		
+			Drawing drawingResidualRisk = sheet.createDrawingPatriarch();
+	 		ClientAnchor anchorBaseResidualRisk = helper.createClientAnchor();		 		
+	 		ClientAnchor anchorChartResidualRisk = helper.createClientAnchor();		 		
+	 		//base image 
+	 		   anchorBaseResidualRisk.setCol1(noOfColumns+6);
+			   anchorBaseResidualRisk.setRow1(1);
+			   anchorBaseResidualRisk.setCol2(noOfColumns+11);
+			   anchorBaseResidualRisk.setRow2(11); 
+			   //CHART IMAGE
+			   anchorChartResidualRisk.setCol1(noOfColumns+7);
+			   anchorChartResidualRisk.setRow1(2); 
+			   anchorChartResidualRisk.setCol2(noOfColumns+11);
+			   anchorChartResidualRisk.setRow2(10); 				   
+	 		 //Creates a picture
+			 anchorBaseResidualRisk.setAnchorType(AnchorType.DONT_MOVE_AND_RESIZE);//set anchor type
+			 anchorChartResidualRisk.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);				 
+
+			 Picture createBaseResidualRisk = drawingResidualRisk.createPicture(anchorBaseResidualRisk, pictureResidualRiskBase);
+		 	 Picture createChartResidualRisk = drawingResidualRisk.createPicture(anchorChartResidualRisk, pictureRL_ResidualRiskChart);
+			}
+		
+		if(sheet.getSheetName().equals("RETAIL ASSETS")){
+		 	InputStream baseimageResidualRisk = new FileInputStream("C:\\APPFOLDER\\resources\\CM_MatrixHeatChart\\AssessmentWise\\ResidualRisk.png");
+		 	byte[] bytesResidualRisk = IOUtils.toByteArray(baseimageResidualRisk);
+			int pictureResidualRiskBase = workbook.addPicture(bytesResidualRisk, Workbook.PICTURE_TYPE_PNG);		 		
+	 		//chart
+		 	int pictureRA_ResidualRiskChart = workbook.addPicture(imageBytesRA_ResidualRisk, Workbook.PICTURE_TYPE_PNG);		 		 
+		 	CreationHelper helper = workbook.getCreationHelper();		 		
+			Drawing drawingResidualRisk = sheet.createDrawingPatriarch();
+	 		ClientAnchor anchorBaseResidualRisk = helper.createClientAnchor();		 		
+	 		ClientAnchor anchorChartResidualRisk = helper.createClientAnchor();		 		
+	 		//base image 
+	 		   anchorBaseResidualRisk.setCol1(noOfColumns+6);
+			   anchorBaseResidualRisk.setRow1(1);
+			   anchorBaseResidualRisk.setCol2(noOfColumns+11);
+			   anchorBaseResidualRisk.setRow2(11); 
+			   //CHART IMAGE
+			   anchorChartResidualRisk.setCol1(noOfColumns+7);
+			   anchorChartResidualRisk.setRow1(2); 
+			   anchorChartResidualRisk.setCol2(noOfColumns+11);
+			   anchorChartResidualRisk.setRow2(10); 				   
+	 		 //Creates a picture
+			 anchorBaseResidualRisk.setAnchorType(AnchorType.DONT_MOVE_AND_RESIZE);//set anchor type
+			 anchorChartResidualRisk.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);				 
+
+			 Picture createBaseResidualRisk = drawingResidualRisk.createPicture(anchorBaseResidualRisk, pictureResidualRiskBase);
+		 	 Picture createChartResidualRisk = drawingResidualRisk.createPicture(anchorChartResidualRisk, pictureRA_ResidualRiskChart);
+			}
+		
+		if(sheet.getSheetName().equals("WHOLESALE BANKING")){
+		 	InputStream baseimageResidualRisk = new FileInputStream("C:\\APPFOLDER\\resources\\CM_MatrixHeatChart\\AssessmentWise\\ResidualRisk.png");
+		 	byte[] bytesResidualRisk = IOUtils.toByteArray(baseimageResidualRisk);
+			int pictureResidualRiskBase = workbook.addPicture(bytesResidualRisk, Workbook.PICTURE_TYPE_PNG);		 		
+	 		//chart
+		 	int pictureWB_ResidualRiskChart = workbook.addPicture(imageBytesWB_ResidualRisk, Workbook.PICTURE_TYPE_PNG);		 		 
+		 	CreationHelper helper = workbook.getCreationHelper();		 		
+			Drawing drawingResidualRisk = sheet.createDrawingPatriarch();
+	 		ClientAnchor anchorBaseResidualRisk = helper.createClientAnchor();		 		
+	 		ClientAnchor anchorChartResidualRisk = helper.createClientAnchor();		 		
+	 		//base image 
+	 		   anchorBaseResidualRisk.setCol1(noOfColumns+6);
+			   anchorBaseResidualRisk.setRow1(1);
+			   anchorBaseResidualRisk.setCol2(noOfColumns+11);
+			   anchorBaseResidualRisk.setRow2(11); 
+			   //CHART IMAGE
+			   anchorChartResidualRisk.setCol1(noOfColumns+7);
+			   anchorChartResidualRisk.setRow1(2); 
+			   anchorChartResidualRisk.setCol2(noOfColumns+11);
+			   anchorChartResidualRisk.setRow2(10); 				   
+	 		 //Creates a picture
+			 anchorBaseResidualRisk.setAnchorType(AnchorType.DONT_MOVE_AND_RESIZE);//set anchor type
+			 anchorChartResidualRisk.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);				 
+
+			 Picture createBaseResidualRisk = drawingResidualRisk.createPicture(anchorBaseResidualRisk, pictureResidualRiskBase);
+		 	 Picture createChartResidualRisk = drawingResidualRisk.createPicture(anchorChartResidualRisk, pictureWB_ResidualRiskChart);
+			}
+		}
+			
+		catch(Exception e) 
+		{
+			e.printStackTrace();	
+		}
+	 		
+		  		
+	}
 			
 			
 			if(sheet.getSheetName().equals("RISK ASSESSMENT SUMMARY")){

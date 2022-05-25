@@ -335,7 +335,7 @@ private static final Logger log = LoggerFactory.getLogger(CommonController.class
 	}
 	
 	@RequestMapping(value={"/saveChartImageNew"}, method=RequestMethod.POST)
-	public ResponseEntity<String> saveChartImage(HttpServletRequest request, HttpServletResponse response, 
+	public ResponseEntity<String> saveChartImageSummary(HttpServletRequest request, HttpServletResponse response, 
 			Authentication authentication) throws Exception{
 		String CURRENTROLE = (String) request.getSession(false).getAttribute("CURRENTROLE");
 //		String data = request.getParameter("makerCheckerData");
@@ -350,7 +350,27 @@ private static final Logger log = LoggerFactory.getLogger(CommonController.class
 	    System.out.println("data:"+data);
 	    JSONObject jObj = new JSONObject(data);
 	    String ImageUrl = jObj.getString("data");
-	    String imageId = riskAssessmentNewService.saveImageUrlData(ImageUrl);
+	    String imageId = riskAssessmentNewService.saveImageUrlDataSummary(ImageUrl);
+		return ResponseEntity.ok(imageId);
+	}
+	
+	@RequestMapping(value={"/saveChartImageNew"}, method=RequestMethod.POST)
+	public ResponseEntity<String> saveChartImageNew(HttpServletRequest request, HttpServletResponse response, 
+			Authentication authentication) throws Exception{
+		String CURRENTROLE = (String) request.getSession(false).getAttribute("CURRENTROLE");
+//		String data = request.getParameter("makerCheckerData");
+		StringBuilder buffer = new StringBuilder();
+	    BufferedReader reader = request.getReader();
+	    String line;
+	    while ((line = reader.readLine()) != null) {
+	        buffer.append(line);
+	        buffer.append(System.lineSeparator());
+	    }
+	    String data = buffer.toString();
+	    System.out.println("data:"+data);
+	    JSONObject jObj = new JSONObject(data);
+	    String ImageUrl = jObj.getString("data");
+	    String imageId = riskAssessmentNewService.saveImageUrlDataNew(ImageUrl);
 		return ResponseEntity.ok(imageId);
 	}
 	
