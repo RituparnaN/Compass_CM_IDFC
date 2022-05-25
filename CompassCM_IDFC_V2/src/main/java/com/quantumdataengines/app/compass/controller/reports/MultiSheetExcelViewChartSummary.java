@@ -115,6 +115,8 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 	        String base64ImageRA_ResidualRisk = null;
 	        String base64ImageWB_ResidualRisk = null;
 	        String base64ImageResidualRisk = null;
+	        String base64ImageBL_IR = null;
+	        String base64ImageBL_IC = null;
 	        String base64ImageAssessment = null;
 	        
 	        byte[] imageBytesDefaultValueChart = null;
@@ -123,6 +125,8 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 	        byte[] imageBytesRA_ResidualRisk = null;
 	        byte[] imageBytesWB_ResidualRisk = null;
 	        byte[] imageBytesResidualRisk = null;
+	        byte[] imageBytesBL_IR = null;
+	        byte[] imageBytesBL_IC = null;
 	        byte[] imageBytesAssessment = null;
 	        
 	        try {
@@ -149,6 +153,12 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 	        	
 	        	base64ImageResidualRisk = rESIDUALRISK.split(",")[1];
 	        	imageBytesResidualRisk = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64ImageResidualRisk);
+	        	
+	        	base64ImageBL_IR = bl_IR.split(",")[1];
+	        	imageBytesBL_IR = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64ImageBL_IR);
+	        	
+	        	base64ImageBL_IC = bl_IC.split(",")[1];
+	        	imageBytesBL_IC = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64ImageBL_IC);
 	        	
 	        	base64ImageAssessment = aSSESSMENTWISECAT.split(",")[1];
 	        	imageBytesAssessment = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64ImageAssessment);
@@ -1724,7 +1734,7 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 			 		byte[] bytesResidualRisk = IOUtils.toByteArray(baseimageResidualRisk);
 			 		int pictureResidualRiskBase = workbook.addPicture(bytesResidualRisk, Workbook.PICTURE_TYPE_PNG);
 			 		
-			 		InputStream baseimageAssessment = new FileInputStream("C:\\APPFOLDER\\resources\\CM_MatrixHeatChart\\AssessmentWise\\S_AssessmentWiseUnitLevelResidualRisk.png");
+			 		InputStream baseimageAssessment = new FileInputStream("C:\\APPFOLDER\\resources\\CM_MatrixHeatChart\\AssessmentWise\\S_AssessmentWiseUnitLevelResidualRisk_og.png");
 			 		byte[] bytesAssessment = IOUtils.toByteArray(baseimageAssessment);
 			 		int pictureAssessmentBase = workbook.addPicture(bytesAssessment, Workbook.PICTURE_TYPE_PNG);
 			 		
@@ -1733,6 +1743,8 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 			 		
 			 		//chart
 			 		int pictureResidualRiskChart = workbook.addPicture(imageBytesResidualRisk, Workbook.PICTURE_TYPE_PNG);
+			 		int pictureBL_IR = workbook.addPicture(imageBytesBL_IR, Workbook.PICTURE_TYPE_PNG);
+			 		int pictureBL_IC = workbook.addPicture(imageBytesBL_IC, Workbook.PICTURE_TYPE_PNG);
 			 		int pictureAssessmentChart = workbook.addPicture(imageBytesAssessment, Workbook.PICTURE_TYPE_PNG);
 			 		 
 			 		CreationHelper helper = workbook.getCreationHelper();
@@ -1816,14 +1828,14 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 					 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			 		 Picture createBaseResidualRisk = drawingResidualRisk.createPicture(anchorBaseResidualRisk, pictureBL_IR_Base);
-			 		 Picture createChartResidualRisk = drawingResidualRisk.createPicture(anchorChartResidualRisk, pictureResidualRiskChart);
+			 		 Picture createChartResidualRisk = drawingResidualRisk.createPicture(anchorChartResidualRisk, pictureBL_IR);
 			 		 
 			 		 
 			 		 
 			 		 
 			 		 
 			 		 Picture createBaseResidualRisk1 = drawingResidualRisk.createPicture(anchorBaseResidualRisk1, pictureBL_IC_Base);
-			 		 Picture createChartResidualRisk1 = drawingResidualRisk.createPicture(anchorChartResidualRisk1, pictureResidualRiskChart);
+			 		 Picture createChartResidualRisk1 = drawingResidualRisk.createPicture(anchorChartResidualRisk1, pictureBL_IC);
 			 		 Picture createBaseResidualRisk2 = drawingResidualRisk.createPicture(anchorBaseResidualRisk2, pictureResidualRiskBase);
 			 		 Picture createChartResidualRisk2 = drawingResidualRisk.createPicture(anchorChartResidualRisk2, pictureResidualRiskChart);
 			 		 

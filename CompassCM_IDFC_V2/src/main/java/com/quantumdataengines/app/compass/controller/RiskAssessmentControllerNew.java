@@ -329,6 +329,8 @@ private static final Logger log = LoggerFactory.getLogger(CommonController.class
 			Authentication authentication) throws Exception{
 		String assessmentPeriod = request.getParameter("ASSESSMENTPERIOD");
 		System.out.println("In mixedChartSummary controller assessmentPeriod is "+assessmentPeriod);
+		Object test = riskAssessmentNewService.getGraphDataPointsSummary(assessmentPeriod);
+		System.out.println("TEST: "+test);
 		request.setAttribute("DATAPOINTS", riskAssessmentNewService.getGraphDataPointsSummary(assessmentPeriod));
 		
 		return "RiskAssessmentNew/mixedChartSummary";

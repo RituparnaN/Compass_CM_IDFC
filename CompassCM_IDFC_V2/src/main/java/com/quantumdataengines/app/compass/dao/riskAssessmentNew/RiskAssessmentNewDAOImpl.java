@@ -2043,6 +2043,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 			e.printStackTrace();
 		}
 		
+		
 		//RetailLiabilities
 		try{
 			String query = "SELECT A.CATEGORY AS CATEGORY, A.FINALRISKRATING AS SCORE "
@@ -2147,6 +2148,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 			e.printStackTrace();
 		}
 		
+		
 		//WholesaleBanking
 		try{
 			String query = "SELECT A.CATEGORY AS CATEGORY, A.FINALRISKRATING AS SCORE "
@@ -2198,6 +2200,882 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 		catch(Exception e){
 			e.printStackTrace();
 		}
+		
+		//DESIGN
+		//Treasury
+		try{
+			String query = "SELECT A.QDESIGNRATING, COUNT(A.QDESIGNRATING) AS TOTAL "
+					+ "FROM TB_RAQUESTIONRESPONSES A "
+					+ "LEFT OUTER JOIN TB_RAFORMGENERALDETAILS B "
+					+ "ON A.CMREFNO = B.CMREFNO "
+					+ "WHERE A.ASSESSMENTUNIT = 'Treasury' "
+					+ "AND A.QDESIGNRATING = 'E' "
+					+ "AND B.ASSESSMENTPERIOD = ? "
+					+ "GROUP BY A.QDESIGNRATING "
+					+ "ORDER BY QDESIGNRATING";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, assessmentPeriod);
+			resultSet = preparedStatement.executeQuery();
+			ArrayList<Object> dataPoints = new ArrayList<Object>();
+			while(resultSet.next()) {
+				Map<String,String> data = new LinkedHashMap<String, String>();
+			System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
+				data.put("TYPE",resultSet.getString("QDESIGNRATING"));
+				data.put("TOTAL",resultSet.getString("TOTAL"));
+				dataPoints.add(data);;
+			}
+			graphDataPoints.put("E_Design_T", dataPoints);			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		try{
+			String query = "SELECT A.QDESIGNRATING, COUNT(A.QDESIGNRATING) AS TOTAL "
+					+ "FROM TB_RAQUESTIONRESPONSES A "
+					+ "LEFT OUTER JOIN TB_RAFORMGENERALDETAILS B "
+					+ "ON A.CMREFNO = B.CMREFNO "
+					+ "WHERE A.ASSESSMENTUNIT = 'Treasury' "
+					+ "AND A.QDESIGNRATING = 'NA' "
+					+ "AND B.ASSESSMENTPERIOD = ? "
+					+ "GROUP BY A.QDESIGNRATING "
+					+ "ORDER BY QDESIGNRATING";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, assessmentPeriod);
+			resultSet = preparedStatement.executeQuery();
+			ArrayList<Object> dataPoints = new ArrayList<Object>();
+			while(resultSet.next()) {
+				Map<String,String> data = new LinkedHashMap<String, String>();
+			System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
+				data.put("TYPE",resultSet.getString("QDESIGNRATING"));
+				data.put("TOTAL",resultSet.getString("TOTAL"));
+				dataPoints.add(data);;
+			}
+			graphDataPoints.put("NA_Design_T", dataPoints);			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		try{
+			String query = "SELECT A.QDESIGNRATING, COUNT(A.QDESIGNRATING) AS TOTAL "
+					+ "FROM TB_RAQUESTIONRESPONSES A "
+					+ "LEFT OUTER JOIN TB_RAFORMGENERALDETAILS B "
+					+ "ON A.CMREFNO = B.CMREFNO "
+					+ "WHERE A.ASSESSMENTUNIT = 'Treasury' "
+					+ "AND A.QDESIGNRATING = 'NI' "
+					+ "AND B.ASSESSMENTPERIOD = ? "
+					+ "GROUP BY A.QDESIGNRATING "
+					+ "ORDER BY QDESIGNRATING";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, assessmentPeriod);
+			resultSet = preparedStatement.executeQuery();
+			ArrayList<Object> dataPoints = new ArrayList<Object>();
+			while(resultSet.next()) {
+				Map<String,String> data = new LinkedHashMap<String, String>();
+			System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
+				data.put("TYPE",resultSet.getString("QDESIGNRATING"));
+				data.put("TOTAL",resultSet.getString("TOTAL"));
+				dataPoints.add(data);;
+			}
+			graphDataPoints.put("NI_Design_T", dataPoints);			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		try{
+			String query = "SELECT A.QDESIGNRATING, COUNT(A.QDESIGNRATING) AS TOTAL "
+					+ "FROM TB_RAQUESTIONRESPONSES A "
+					+ "LEFT OUTER JOIN TB_RAFORMGENERALDETAILS B "
+					+ "ON A.CMREFNO = B.CMREFNO "
+					+ "WHERE A.ASSESSMENTUNIT = 'Treasury' "
+					+ "AND A.QDESIGNRATING = 'NC' "
+					+ "AND B.ASSESSMENTPERIOD = ? "
+					+ "GROUP BY A.QDESIGNRATING "
+					+ "ORDER BY QDESIGNRATING";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, assessmentPeriod);
+			resultSet = preparedStatement.executeQuery();
+			ArrayList<Object> dataPoints = new ArrayList<Object>();
+			while(resultSet.next()) {
+				Map<String,String> data = new LinkedHashMap<String, String>();
+			System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
+				data.put("TYPE",resultSet.getString("QDESIGNRATING"));
+				data.put("TOTAL",resultSet.getString("TOTAL"));
+				dataPoints.add(data);;
+			}
+			graphDataPoints.put("NC_Design_T", dataPoints);			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		//RL
+		try{
+			String query = "SELECT A.QDESIGNRATING, COUNT(A.QDESIGNRATING) AS TOTAL "
+					+ "FROM TB_RAQUESTIONRESPONSES A "
+					+ "LEFT OUTER JOIN TB_RAFORMGENERALDETAILS B "
+					+ "ON A.CMREFNO = B.CMREFNO "
+					+ "WHERE A.ASSESSMENTUNIT = 'RetailLiabilities' "
+					+ "AND A.QDESIGNRATING = 'E' "
+					+ "AND B.ASSESSMENTPERIOD = ? "
+					+ "GROUP BY A.QDESIGNRATING "
+					+ "ORDER BY QDESIGNRATING";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, assessmentPeriod);
+			resultSet = preparedStatement.executeQuery();
+			ArrayList<Object> dataPoints = new ArrayList<Object>();
+			while(resultSet.next()) {
+				Map<String,String> data = new LinkedHashMap<String, String>();
+			System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
+				data.put("TYPE",resultSet.getString("QDESIGNRATING"));
+				data.put("TOTAL",resultSet.getString("TOTAL"));
+				dataPoints.add(data);;
+			}
+			graphDataPoints.put("E_Design_RL", dataPoints);			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		try{
+			String query = "SELECT A.QDESIGNRATING, COUNT(A.QDESIGNRATING) AS TOTAL "
+					+ "FROM TB_RAQUESTIONRESPONSES A "
+					+ "LEFT OUTER JOIN TB_RAFORMGENERALDETAILS B "
+					+ "ON A.CMREFNO = B.CMREFNO "
+					+ "WHERE A.ASSESSMENTUNIT = 'RetailLiabilities' "
+					+ "AND A.QDESIGNRATING = 'NA' "
+					+ "AND B.ASSESSMENTPERIOD = ? "
+					+ "GROUP BY A.QDESIGNRATING "
+					+ "ORDER BY QDESIGNRATING";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, assessmentPeriod);
+			resultSet = preparedStatement.executeQuery();
+			ArrayList<Object> dataPoints = new ArrayList<Object>();
+			while(resultSet.next()) {
+				Map<String,String> data = new LinkedHashMap<String, String>();
+			System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
+				data.put("TYPE",resultSet.getString("QDESIGNRATING"));
+				data.put("TOTAL",resultSet.getString("TOTAL"));
+				dataPoints.add(data);;
+			}
+			graphDataPoints.put("NA_Design_RL", dataPoints);			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		try{
+			String query = "SELECT A.QDESIGNRATING, COUNT(A.QDESIGNRATING) AS TOTAL "
+					+ "FROM TB_RAQUESTIONRESPONSES A "
+					+ "LEFT OUTER JOIN TB_RAFORMGENERALDETAILS B "
+					+ "ON A.CMREFNO = B.CMREFNO "
+					+ "WHERE A.ASSESSMENTUNIT = 'RetailLiabilities' "
+					+ "AND A.QDESIGNRATING = 'NI' "
+					+ "AND B.ASSESSMENTPERIOD = ? "
+					+ "GROUP BY A.QDESIGNRATING "
+					+ "ORDER BY QDESIGNRATING";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, assessmentPeriod);
+			resultSet = preparedStatement.executeQuery();
+			ArrayList<Object> dataPoints = new ArrayList<Object>();
+			while(resultSet.next()) {
+				Map<String,String> data = new LinkedHashMap<String, String>();
+			System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
+				data.put("TYPE",resultSet.getString("QDESIGNRATING"));
+				data.put("TOTAL",resultSet.getString("TOTAL"));
+				dataPoints.add(data);;
+			}
+			graphDataPoints.put("NI_Design_RL", dataPoints);			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		try{
+			String query = "SELECT A.QDESIGNRATING, COUNT(A.QDESIGNRATING) AS TOTAL "
+					+ "FROM TB_RAQUESTIONRESPONSES A "
+					+ "LEFT OUTER JOIN TB_RAFORMGENERALDETAILS B "
+					+ "ON A.CMREFNO = B.CMREFNO "
+					+ "WHERE A.ASSESSMENTUNIT = 'RetailLiabilities' "
+					+ "AND A.QDESIGNRATING = 'NC' "
+					+ "AND B.ASSESSMENTPERIOD = ? "
+					+ "GROUP BY A.QDESIGNRATING "
+					+ "ORDER BY QDESIGNRATING";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, assessmentPeriod);
+			resultSet = preparedStatement.executeQuery();
+			ArrayList<Object> dataPoints = new ArrayList<Object>();
+			while(resultSet.next()) {
+				Map<String,String> data = new LinkedHashMap<String, String>();
+			System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
+				data.put("TYPE",resultSet.getString("QDESIGNRATING"));
+				data.put("TOTAL",resultSet.getString("TOTAL"));
+				dataPoints.add(data);;
+			}
+			graphDataPoints.put("NC_Design_RL", dataPoints);			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		//RA
+				try{
+					String query = "SELECT A.QDESIGNRATING, COUNT(A.QDESIGNRATING) AS TOTAL "
+							+ "FROM TB_RAQUESTIONRESPONSES A "
+							+ "LEFT OUTER JOIN TB_RAFORMGENERALDETAILS B "
+							+ "ON A.CMREFNO = B.CMREFNO "
+							+ "WHERE A.ASSESSMENTUNIT = 'RetailAssets' "
+							+ "AND A.QDESIGNRATING = 'E' "
+							+ "AND B.ASSESSMENTPERIOD = ? "
+							+ "GROUP BY A.QDESIGNRATING "
+							+ "ORDER BY QDESIGNRATING";
+					preparedStatement = connection.prepareStatement(query);
+					preparedStatement.setString(1, assessmentPeriod);
+					resultSet = preparedStatement.executeQuery();
+					ArrayList<Object> dataPoints = new ArrayList<Object>();
+					while(resultSet.next()) {
+						Map<String,String> data = new LinkedHashMap<String, String>();
+					System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
+						data.put("TYPE",resultSet.getString("QDESIGNRATING"));
+						data.put("TOTAL",resultSet.getString("TOTAL"));
+						dataPoints.add(data);;
+					}
+					graphDataPoints.put("E_Design_RA", dataPoints);			
+				}
+				catch(Exception e){
+					e.printStackTrace();
+				}
+				
+				try{
+					String query = "SELECT A.QDESIGNRATING, COUNT(A.QDESIGNRATING) AS TOTAL "
+							+ "FROM TB_RAQUESTIONRESPONSES A "
+							+ "LEFT OUTER JOIN TB_RAFORMGENERALDETAILS B "
+							+ "ON A.CMREFNO = B.CMREFNO "
+							+ "WHERE A.ASSESSMENTUNIT = 'RetailAssets' "
+							+ "AND A.QDESIGNRATING = 'NA' "
+							+ "AND B.ASSESSMENTPERIOD = ? "
+							+ "GROUP BY A.QDESIGNRATING "
+							+ "ORDER BY QDESIGNRATING";
+					preparedStatement = connection.prepareStatement(query);
+					preparedStatement.setString(1, assessmentPeriod);
+					resultSet = preparedStatement.executeQuery();
+					ArrayList<Object> dataPoints = new ArrayList<Object>();
+					while(resultSet.next()) {
+						Map<String,String> data = new LinkedHashMap<String, String>();
+					System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
+						data.put("TYPE",resultSet.getString("QDESIGNRATING"));
+						data.put("TOTAL",resultSet.getString("TOTAL"));
+						dataPoints.add(data);;
+					}
+					graphDataPoints.put("NA_Design_RA", dataPoints);			
+				}
+				catch(Exception e){
+					e.printStackTrace();
+				}
+				
+				try{
+					String query = "SELECT A.QDESIGNRATING, COUNT(A.QDESIGNRATING) AS TOTAL "
+							+ "FROM TB_RAQUESTIONRESPONSES A "
+							+ "LEFT OUTER JOIN TB_RAFORMGENERALDETAILS B "
+							+ "ON A.CMREFNO = B.CMREFNO "
+							+ "WHERE A.ASSESSMENTUNIT = 'RetailAssets' "
+							+ "AND A.QDESIGNRATING = 'NI' "
+							+ "AND B.ASSESSMENTPERIOD = ? "
+							+ "GROUP BY A.QDESIGNRATING "
+							+ "ORDER BY QDESIGNRATING";
+					preparedStatement = connection.prepareStatement(query);
+					preparedStatement.setString(1, assessmentPeriod);
+					resultSet = preparedStatement.executeQuery();
+					ArrayList<Object> dataPoints = new ArrayList<Object>();
+					while(resultSet.next()) {
+						Map<String,String> data = new LinkedHashMap<String, String>();
+					System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
+						data.put("TYPE",resultSet.getString("QDESIGNRATING"));
+						data.put("TOTAL",resultSet.getString("TOTAL"));
+						dataPoints.add(data);;
+					}
+					graphDataPoints.put("NI_Design_RA", dataPoints);			
+				}
+				catch(Exception e){
+					e.printStackTrace();
+				}
+				
+				try{
+					String query = "SELECT A.QDESIGNRATING, COUNT(A.QDESIGNRATING) AS TOTAL "
+							+ "FROM TB_RAQUESTIONRESPONSES A "
+							+ "LEFT OUTER JOIN TB_RAFORMGENERALDETAILS B "
+							+ "ON A.CMREFNO = B.CMREFNO "
+							+ "WHERE A.ASSESSMENTUNIT = 'RetailAssets' "
+							+ "AND A.QDESIGNRATING = 'NC' "
+							+ "AND B.ASSESSMENTPERIOD = ? "
+							+ "GROUP BY A.QDESIGNRATING "
+							+ "ORDER BY QDESIGNRATING";
+					preparedStatement = connection.prepareStatement(query);
+					preparedStatement.setString(1, assessmentPeriod);
+					resultSet = preparedStatement.executeQuery();
+					ArrayList<Object> dataPoints = new ArrayList<Object>();
+					while(resultSet.next()) {
+						Map<String,String> data = new LinkedHashMap<String, String>();
+					System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
+						data.put("TYPE",resultSet.getString("QDESIGNRATING"));
+						data.put("TOTAL",resultSet.getString("TOTAL"));
+						dataPoints.add(data);;
+					}
+					graphDataPoints.put("NC_Design_RA", dataPoints);			
+				}
+				catch(Exception e){
+					e.printStackTrace();
+				}
+				
+				//WB
+				try{
+					String query = "SELECT A.QDESIGNRATING, COUNT(A.QDESIGNRATING) AS TOTAL "
+							+ "FROM TB_RAQUESTIONRESPONSES A "
+							+ "LEFT OUTER JOIN TB_RAFORMGENERALDETAILS B "
+							+ "ON A.CMREFNO = B.CMREFNO "
+							+ "WHERE A.ASSESSMENTUNIT = 'WholesaleBanking' "
+							+ "AND A.QDESIGNRATING = 'E' "
+							+ "AND B.ASSESSMENTPERIOD = ? "
+							+ "GROUP BY A.QDESIGNRATING "
+							+ "ORDER BY QDESIGNRATING";
+					preparedStatement = connection.prepareStatement(query);
+					preparedStatement.setString(1, assessmentPeriod);
+					resultSet = preparedStatement.executeQuery();
+					ArrayList<Object> dataPoints = new ArrayList<Object>();
+					while(resultSet.next()) {
+						Map<String,String> data = new LinkedHashMap<String, String>();
+					System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
+						data.put("TYPE",resultSet.getString("QDESIGNRATING"));
+						data.put("TOTAL",resultSet.getString("TOTAL"));
+						dataPoints.add(data);;
+					}
+					graphDataPoints.put("E_Design_WB", dataPoints);			
+				}
+				catch(Exception e){
+					e.printStackTrace();
+				}
+				
+				try{
+					String query = "SELECT A.QDESIGNRATING, COUNT(A.QDESIGNRATING) AS TOTAL "
+							+ "FROM TB_RAQUESTIONRESPONSES A "
+							+ "LEFT OUTER JOIN TB_RAFORMGENERALDETAILS B "
+							+ "ON A.CMREFNO = B.CMREFNO "
+							+ "WHERE A.ASSESSMENTUNIT = 'WholesaleBanking' "
+							+ "AND A.QDESIGNRATING = 'NA' "
+							+ "AND B.ASSESSMENTPERIOD = ? "
+							+ "GROUP BY A.QDESIGNRATING "
+							+ "ORDER BY QDESIGNRATING";
+					preparedStatement = connection.prepareStatement(query);
+					preparedStatement.setString(1, assessmentPeriod);
+					resultSet = preparedStatement.executeQuery();
+					ArrayList<Object> dataPoints = new ArrayList<Object>();
+					while(resultSet.next()) {
+						Map<String,String> data = new LinkedHashMap<String, String>();
+					System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
+						data.put("TYPE",resultSet.getString("QDESIGNRATING"));
+						data.put("TOTAL",resultSet.getString("TOTAL"));
+						dataPoints.add(data);;
+					}
+					graphDataPoints.put("NA_Design_WB", dataPoints);			
+				}
+				catch(Exception e){
+					e.printStackTrace();
+				}
+				
+				try{
+					String query = "SELECT A.QDESIGNRATING, COUNT(A.QDESIGNRATING) AS TOTAL "
+							+ "FROM TB_RAQUESTIONRESPONSES A "
+							+ "LEFT OUTER JOIN TB_RAFORMGENERALDETAILS B "
+							+ "ON A.CMREFNO = B.CMREFNO "
+							+ "WHERE A.ASSESSMENTUNIT = 'WholesaleBanking' "
+							+ "AND A.QDESIGNRATING = 'NI' "
+							+ "AND B.ASSESSMENTPERIOD = ? "
+							+ "GROUP BY A.QDESIGNRATING "
+							+ "ORDER BY QDESIGNRATING";
+					preparedStatement = connection.prepareStatement(query);
+					preparedStatement.setString(1, assessmentPeriod);
+					resultSet = preparedStatement.executeQuery();
+					ArrayList<Object> dataPoints = new ArrayList<Object>();
+					while(resultSet.next()) {
+						Map<String,String> data = new LinkedHashMap<String, String>();
+					System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
+						data.put("TYPE",resultSet.getString("QDESIGNRATING"));
+						data.put("TOTAL",resultSet.getString("TOTAL"));
+						dataPoints.add(data);;
+					}
+					graphDataPoints.put("NI_Design_WB", dataPoints);			
+				}
+				catch(Exception e){
+					e.printStackTrace();
+				}
+				
+				try{
+					String query = "SELECT A.QDESIGNRATING, COUNT(A.QDESIGNRATING) AS TOTAL "
+							+ "FROM TB_RAQUESTIONRESPONSES A "
+							+ "LEFT OUTER JOIN TB_RAFORMGENERALDETAILS B "
+							+ "ON A.CMREFNO = B.CMREFNO "
+							+ "WHERE A.ASSESSMENTUNIT = 'WholesaleBanking' "
+							+ "AND A.QDESIGNRATING = 'NC' "
+							+ "AND B.ASSESSMENTPERIOD = ? "
+							+ "GROUP BY A.QDESIGNRATING "
+							+ "ORDER BY QDESIGNRATING";
+					preparedStatement = connection.prepareStatement(query);
+					preparedStatement.setString(1, assessmentPeriod);
+					resultSet = preparedStatement.executeQuery();
+					ArrayList<Object> dataPoints = new ArrayList<Object>();
+					while(resultSet.next()) {
+						Map<String,String> data = new LinkedHashMap<String, String>();
+					System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
+						data.put("TYPE",resultSet.getString("QDESIGNRATING"));
+						data.put("TOTAL",resultSet.getString("TOTAL"));
+						dataPoints.add(data);;
+					}
+					graphDataPoints.put("NC_Design_WB", dataPoints);			
+				}
+				catch(Exception e){
+					e.printStackTrace();
+				}
+
+		
+				//OPEARATING
+				//Treasury
+				try{
+					String query = "SELECT A.QOPERATINGRATING, COUNT(A.QOPERATINGRATING) AS TOTAL "
+							+ "FROM TB_RAQUESTIONRESPONSES A "
+							+ "LEFT OUTER JOIN TB_RAFORMGENERALDETAILS B "
+							+ "ON A.CMREFNO = B.CMREFNO "
+							+ "WHERE A.ASSESSMENTUNIT = 'Treasury' "
+							+ "AND A.QOPERATINGRATING = 'E' "
+							+ "AND B.ASSESSMENTPERIOD = ? "
+							+ "GROUP BY A.QOPERATINGRATING "
+							+ "ORDER BY QOPERATINGRATING";
+					preparedStatement = connection.prepareStatement(query);
+					preparedStatement.setString(1, assessmentPeriod);
+					resultSet = preparedStatement.executeQuery();
+					ArrayList<Object> dataPoints = new ArrayList<Object>();
+					while(resultSet.next()) {
+						Map<String,String> data = new LinkedHashMap<String, String>();
+					System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
+						data.put("TYPE",resultSet.getString("QOPERATINGRATING"));
+						data.put("TOTAL",resultSet.getString("TOTAL"));
+						dataPoints.add(data);;
+					}
+					graphDataPoints.put("E_Operating_T", dataPoints);			
+				}
+				catch(Exception e){
+					e.printStackTrace();
+				}
+				
+				try{
+					String query = "SELECT A.QOPERATINGRATING, COUNT(A.QOPERATINGRATING) AS TOTAL "
+							+ "FROM TB_RAQUESTIONRESPONSES A "
+							+ "LEFT OUTER JOIN TB_RAFORMGENERALDETAILS B "
+							+ "ON A.CMREFNO = B.CMREFNO "
+							+ "WHERE A.ASSESSMENTUNIT = 'Treasury' "
+							+ "AND A.QOPERATINGRATING = 'NA' "
+							+ "AND B.ASSESSMENTPERIOD = ? "
+							+ "GROUP BY A.QOPERATINGRATING "
+							+ "ORDER BY QOPERATINGRATING";
+					preparedStatement = connection.prepareStatement(query);
+					preparedStatement.setString(1, assessmentPeriod);
+					resultSet = preparedStatement.executeQuery();
+					ArrayList<Object> dataPoints = new ArrayList<Object>();
+					while(resultSet.next()) {
+						Map<String,String> data = new LinkedHashMap<String, String>();
+					System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
+						data.put("TYPE",resultSet.getString("QOPERATINGRATING"));
+						data.put("TOTAL",resultSet.getString("TOTAL"));
+						dataPoints.add(data);;
+					}
+					graphDataPoints.put("NA_Operating_T", dataPoints);			
+				}
+				catch(Exception e){
+					e.printStackTrace();
+				}
+				
+				try{
+					String query = "SELECT A.QOPERATINGRATING, COUNT(A.QOPERATINGRATING) AS TOTAL "
+							+ "FROM TB_RAQUESTIONRESPONSES A "
+							+ "LEFT OUTER JOIN TB_RAFORMGENERALDETAILS B "
+							+ "ON A.CMREFNO = B.CMREFNO "
+							+ "WHERE A.ASSESSMENTUNIT = 'Treasury' "
+							+ "AND A.QOPERATINGRATING = 'NI' "
+							+ "AND B.ASSESSMENTPERIOD = ? "
+							+ "GROUP BY A.QOPERATINGRATING "
+							+ "ORDER BY QOPERATINGRATING";
+					preparedStatement = connection.prepareStatement(query);
+					preparedStatement.setString(1, assessmentPeriod);
+					resultSet = preparedStatement.executeQuery();
+					ArrayList<Object> dataPoints = new ArrayList<Object>();
+					while(resultSet.next()) {
+						Map<String,String> data = new LinkedHashMap<String, String>();
+					System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
+						data.put("TYPE",resultSet.getString("QOPERATINGRATING"));
+						data.put("TOTAL",resultSet.getString("TOTAL"));
+						dataPoints.add(data);;
+					}
+					graphDataPoints.put("NI_Operating_T", dataPoints);			
+				}
+				catch(Exception e){
+					e.printStackTrace();
+				}
+				
+				try{
+					String query = "SELECT A.QOPERATINGRATING, COUNT(A.QOPERATINGRATING) AS TOTAL "
+							+ "FROM TB_RAQUESTIONRESPONSES A "
+							+ "LEFT OUTER JOIN TB_RAFORMGENERALDETAILS B "
+							+ "ON A.CMREFNO = B.CMREFNO "
+							+ "WHERE A.ASSESSMENTUNIT = 'Treasury' "
+							+ "AND A.QOPERATINGRATING = 'NC' "
+							+ "AND B.ASSESSMENTPERIOD = ? "
+							+ "GROUP BY A.QOPERATINGRATING "
+							+ "ORDER BY QOPERATINGRATING";
+					preparedStatement = connection.prepareStatement(query);
+					preparedStatement.setString(1, assessmentPeriod);
+					resultSet = preparedStatement.executeQuery();
+					ArrayList<Object> dataPoints = new ArrayList<Object>();
+					while(resultSet.next()) {
+						Map<String,String> data = new LinkedHashMap<String, String>();
+					System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
+						data.put("TYPE",resultSet.getString("QOPERATINGRATING"));
+						data.put("TOTAL",resultSet.getString("TOTAL"));
+						dataPoints.add(data);;
+					}
+					graphDataPoints.put("NC_Operating_T", dataPoints);			
+				}
+				catch(Exception e){
+					e.printStackTrace();
+				}
+				
+				//RL
+				try{
+					String query = "SELECT A.QOPERATINGRATING, COUNT(A.QOPERATINGRATING) AS TOTAL "
+							+ "FROM TB_RAQUESTIONRESPONSES A "
+							+ "LEFT OUTER JOIN TB_RAFORMGENERALDETAILS B "
+							+ "ON A.CMREFNO = B.CMREFNO "
+							+ "WHERE A.ASSESSMENTUNIT = 'RetailLiabilities' "
+							+ "AND A.QOPERATINGRATING = 'E' "
+							+ "AND B.ASSESSMENTPERIOD = ? "
+							+ "GROUP BY A.QOPERATINGRATING "
+							+ "ORDER BY QOPERATINGRATING";
+					preparedStatement = connection.prepareStatement(query);
+					preparedStatement.setString(1, assessmentPeriod);
+					resultSet = preparedStatement.executeQuery();
+					ArrayList<Object> dataPoints = new ArrayList<Object>();
+					while(resultSet.next()) {
+						Map<String,String> data = new LinkedHashMap<String, String>();
+					System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
+						data.put("TYPE",resultSet.getString("QOPERATINGRATING"));
+						data.put("TOTAL",resultSet.getString("TOTAL"));
+						dataPoints.add(data);;
+					}
+					graphDataPoints.put("E_Operating_RL", dataPoints);			
+				}
+				catch(Exception e){
+					e.printStackTrace();
+				}
+				
+				try{
+					String query = "SELECT A.QOPERATINGRATING, COUNT(A.QOPERATINGRATING) AS TOTAL "
+							+ "FROM TB_RAQUESTIONRESPONSES A "
+							+ "LEFT OUTER JOIN TB_RAFORMGENERALDETAILS B "
+							+ "ON A.CMREFNO = B.CMREFNO "
+							+ "WHERE A.ASSESSMENTUNIT = 'RetailLiabilities' "
+							+ "AND A.QOPERATINGRATING = 'NA' "
+							+ "AND B.ASSESSMENTPERIOD = ? "
+							+ "GROUP BY A.QOPERATINGRATING "
+							+ "ORDER BY QOPERATINGRATING";
+					preparedStatement = connection.prepareStatement(query);
+					preparedStatement.setString(1, assessmentPeriod);
+					resultSet = preparedStatement.executeQuery();
+					ArrayList<Object> dataPoints = new ArrayList<Object>();
+					while(resultSet.next()) {
+						Map<String,String> data = new LinkedHashMap<String, String>();
+					System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
+						data.put("TYPE",resultSet.getString("QOPERATINGRATING"));
+						data.put("TOTAL",resultSet.getString("TOTAL"));
+						dataPoints.add(data);;
+					}
+					graphDataPoints.put("NA_Operating_RL", dataPoints);			
+				}
+				catch(Exception e){
+					e.printStackTrace();
+				}
+				
+				try{
+					String query = "SELECT A.QOPERATINGRATING, COUNT(A.QOPERATINGRATING) AS TOTAL "
+							+ "FROM TB_RAQUESTIONRESPONSES A "
+							+ "LEFT OUTER JOIN TB_RAFORMGENERALDETAILS B "
+							+ "ON A.CMREFNO = B.CMREFNO "
+							+ "WHERE A.ASSESSMENTUNIT = 'RetailLiabilities' "
+							+ "AND A.QOPERATINGRATING = 'NI' "
+							+ "AND B.ASSESSMENTPERIOD = ? "
+							+ "GROUP BY A.QOPERATINGRATING "
+							+ "ORDER BY QOPERATINGRATING";
+					preparedStatement = connection.prepareStatement(query);
+					preparedStatement.setString(1, assessmentPeriod);
+					resultSet = preparedStatement.executeQuery();
+					ArrayList<Object> dataPoints = new ArrayList<Object>();
+					while(resultSet.next()) {
+						Map<String,String> data = new LinkedHashMap<String, String>();
+					System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
+						data.put("TYPE",resultSet.getString("QOPERATINGRATING"));
+						data.put("TOTAL",resultSet.getString("TOTAL"));
+						dataPoints.add(data);;
+					}
+					graphDataPoints.put("NI_Operating_RL", dataPoints);			
+				}
+				catch(Exception e){
+					e.printStackTrace();
+				}
+				
+				try{
+					String query = "SELECT A.QOPERATINGRATING, COUNT(A.QOPERATINGRATING) AS TOTAL "
+							+ "FROM TB_RAQUESTIONRESPONSES A "
+							+ "LEFT OUTER JOIN TB_RAFORMGENERALDETAILS B "
+							+ "ON A.CMREFNO = B.CMREFNO "
+							+ "WHERE A.ASSESSMENTUNIT = 'RetailLiabilities' "
+							+ "AND A.QOPERATINGRATING = 'NC' "
+							+ "AND B.ASSESSMENTPERIOD = ? "
+							+ "GROUP BY A.QOPERATINGRATING "
+							+ "ORDER BY QOPERATINGRATING";
+					preparedStatement = connection.prepareStatement(query);
+					preparedStatement.setString(1, assessmentPeriod);
+					resultSet = preparedStatement.executeQuery();
+					ArrayList<Object> dataPoints = new ArrayList<Object>();
+					while(resultSet.next()) {
+						Map<String,String> data = new LinkedHashMap<String, String>();
+					System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
+						data.put("TYPE",resultSet.getString("QOPERATINGRATING"));
+						data.put("TOTAL",resultSet.getString("TOTAL"));
+						dataPoints.add(data);;
+					}
+					graphDataPoints.put("NC_Operating_RL", dataPoints);			
+				}
+				catch(Exception e){
+					e.printStackTrace();
+				}
+				
+				//RA
+						try{
+							String query = "SELECT A.QOPERATINGRATING, COUNT(A.QOPERATINGRATING) AS TOTAL "
+									+ "FROM TB_RAQUESTIONRESPONSES A "
+									+ "LEFT OUTER JOIN TB_RAFORMGENERALDETAILS B "
+									+ "ON A.CMREFNO = B.CMREFNO "
+									+ "WHERE A.ASSESSMENTUNIT = 'RetailAssets' "
+									+ "AND A.QOPERATINGRATING = 'E' "
+									+ "AND B.ASSESSMENTPERIOD = ? "
+									+ "GROUP BY A.QOPERATINGRATING "
+									+ "ORDER BY QOPERATINGRATING";
+							preparedStatement = connection.prepareStatement(query);
+							preparedStatement.setString(1, assessmentPeriod);
+							resultSet = preparedStatement.executeQuery();
+							ArrayList<Object> dataPoints = new ArrayList<Object>();
+							while(resultSet.next()) {
+								Map<String,String> data = new LinkedHashMap<String, String>();
+							System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
+								data.put("TYPE",resultSet.getString("QOPERATINGRATING"));
+								data.put("TOTAL",resultSet.getString("TOTAL"));
+								dataPoints.add(data);;
+							}
+							graphDataPoints.put("E_Operating_RA", dataPoints);			
+						}
+						catch(Exception e){
+							e.printStackTrace();
+						}
+						
+						try{
+							String query = "SELECT A.QOPERATINGRATING, COUNT(A.QOPERATINGRATING) AS TOTAL "
+									+ "FROM TB_RAQUESTIONRESPONSES A "
+									+ "LEFT OUTER JOIN TB_RAFORMGENERALDETAILS B "
+									+ "ON A.CMREFNO = B.CMREFNO "
+									+ "WHERE A.ASSESSMENTUNIT = 'RetailAssets' "
+									+ "AND A.QOPERATINGRATING = 'NA' "
+									+ "AND B.ASSESSMENTPERIOD = ? "
+									+ "GROUP BY A.QOPERATINGRATING "
+									+ "ORDER BY QOPERATINGRATING";
+							preparedStatement = connection.prepareStatement(query);
+							preparedStatement.setString(1, assessmentPeriod);
+							resultSet = preparedStatement.executeQuery();
+							ArrayList<Object> dataPoints = new ArrayList<Object>();
+							while(resultSet.next()) {
+								Map<String,String> data = new LinkedHashMap<String, String>();
+							System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
+								data.put("TYPE",resultSet.getString("QOPERATINGRATING"));
+								data.put("TOTAL",resultSet.getString("TOTAL"));
+								dataPoints.add(data);;
+							}
+							graphDataPoints.put("NA_Operating_RA", dataPoints);			
+						}
+						catch(Exception e){
+							e.printStackTrace();
+						}
+						
+						try{
+							String query = "SELECT A.QOPERATINGRATING, COUNT(A.QOPERATINGRATING) AS TOTAL "
+									+ "FROM TB_RAQUESTIONRESPONSES A "
+									+ "LEFT OUTER JOIN TB_RAFORMGENERALDETAILS B "
+									+ "ON A.CMREFNO = B.CMREFNO "
+									+ "WHERE A.ASSESSMENTUNIT = 'RetailAssets' "
+									+ "AND A.QOPERATINGRATING = 'NI' "
+									+ "AND B.ASSESSMENTPERIOD = ? "
+									+ "GROUP BY A.QOPERATINGRATING "
+									+ "ORDER BY QOPERATINGRATING";
+							preparedStatement = connection.prepareStatement(query);
+							preparedStatement.setString(1, assessmentPeriod);
+							resultSet = preparedStatement.executeQuery();
+							ArrayList<Object> dataPoints = new ArrayList<Object>();
+							while(resultSet.next()) {
+								Map<String,String> data = new LinkedHashMap<String, String>();
+							System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
+								data.put("TYPE",resultSet.getString("QOPERATINGRATING"));
+								data.put("TOTAL",resultSet.getString("TOTAL"));
+								dataPoints.add(data);;
+							}
+							graphDataPoints.put("NI_Operating_RA", dataPoints);			
+						}
+						catch(Exception e){
+							e.printStackTrace();
+						}
+						
+						try{
+							String query = "SELECT A.QOPERATINGRATING, COUNT(A.QOPERATINGRATING) AS TOTAL "
+									+ "FROM TB_RAQUESTIONRESPONSES A "
+									+ "LEFT OUTER JOIN TB_RAFORMGENERALDETAILS B "
+									+ "ON A.CMREFNO = B.CMREFNO "
+									+ "WHERE A.ASSESSMENTUNIT = 'RetailAssets' "
+									+ "AND A.QOPERATINGRATING = 'NC' "
+									+ "AND B.ASSESSMENTPERIOD = ? "
+									+ "GROUP BY A.QOPERATINGRATING "
+									+ "ORDER BY QOPERATINGRATING";
+							preparedStatement = connection.prepareStatement(query);
+							preparedStatement.setString(1, assessmentPeriod);
+							resultSet = preparedStatement.executeQuery();
+							ArrayList<Object> dataPoints = new ArrayList<Object>();
+							while(resultSet.next()) {
+								Map<String,String> data = new LinkedHashMap<String, String>();
+							System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
+								data.put("TYPE",resultSet.getString("QOPERATINGRATING"));
+								data.put("TOTAL",resultSet.getString("TOTAL"));
+								dataPoints.add(data);;
+							}
+							graphDataPoints.put("NC_Operating_RA", dataPoints);			
+						}
+						catch(Exception e){
+							e.printStackTrace();
+						}
+						
+						//WB
+						try{
+							String query = "SELECT A.QOPERATINGRATING, COUNT(A.QOPERATINGRATING) AS TOTAL "
+									+ "FROM TB_RAQUESTIONRESPONSES A "
+									+ "LEFT OUTER JOIN TB_RAFORMGENERALDETAILS B "
+									+ "ON A.CMREFNO = B.CMREFNO "
+									+ "WHERE A.ASSESSMENTUNIT = 'WholesaleBanking' "
+									+ "AND A.QOPERATINGRATING = 'E' "
+									+ "AND B.ASSESSMENTPERIOD = ? "
+									+ "GROUP BY A.QOPERATINGRATING "
+									+ "ORDER BY QOPERATINGRATING";
+							preparedStatement = connection.prepareStatement(query);
+							preparedStatement.setString(1, assessmentPeriod);
+							resultSet = preparedStatement.executeQuery();
+							ArrayList<Object> dataPoints = new ArrayList<Object>();
+							while(resultSet.next()) {
+								Map<String,String> data = new LinkedHashMap<String, String>();
+							System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
+								data.put("TYPE",resultSet.getString("QOPERATINGRATING"));
+								data.put("TOTAL",resultSet.getString("TOTAL"));
+								dataPoints.add(data);;
+							}
+							graphDataPoints.put("E_Operating_WB", dataPoints);			
+						}
+						catch(Exception e){
+							e.printStackTrace();
+						}
+						
+						try{
+							String query = "SELECT A.QOPERATINGRATING, COUNT(A.QOPERATINGRATING) AS TOTAL "
+									+ "FROM TB_RAQUESTIONRESPONSES A "
+									+ "LEFT OUTER JOIN TB_RAFORMGENERALDETAILS B "
+									+ "ON A.CMREFNO = B.CMREFNO "
+									+ "WHERE A.ASSESSMENTUNIT = 'WholesaleBanking' "
+									+ "AND A.QOPERATINGRATING = 'NA' "
+									+ "AND B.ASSESSMENTPERIOD = ? "
+									+ "GROUP BY A.QOPERATINGRATING "
+									+ "ORDER BY QOPERATINGRATING";
+							preparedStatement = connection.prepareStatement(query);
+							preparedStatement.setString(1, assessmentPeriod);
+							resultSet = preparedStatement.executeQuery();
+							ArrayList<Object> dataPoints = new ArrayList<Object>();
+							while(resultSet.next()) {
+								Map<String,String> data = new LinkedHashMap<String, String>();
+							System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
+								data.put("TYPE",resultSet.getString("QOPERATINGRATING"));
+								data.put("TOTAL",resultSet.getString("TOTAL"));
+								dataPoints.add(data);;
+							}
+							graphDataPoints.put("NA_Operating_WB", dataPoints);			
+						}
+						catch(Exception e){
+							e.printStackTrace();
+						}
+						
+						try{
+							String query = "SELECT A.QOPERATINGRATING, COUNT(A.QOPERATINGRATING) AS TOTAL "
+									+ "FROM TB_RAQUESTIONRESPONSES A "
+									+ "LEFT OUTER JOIN TB_RAFORMGENERALDETAILS B "
+									+ "ON A.CMREFNO = B.CMREFNO "
+									+ "WHERE A.ASSESSMENTUNIT = 'WholesaleBanking' "
+									+ "AND A.QOPERATINGRATING = 'NI' "
+									+ "AND B.ASSESSMENTPERIOD = ? "
+									+ "GROUP BY A.QOPERATINGRATING "
+									+ "ORDER BY QOPERATINGRATING";
+							preparedStatement = connection.prepareStatement(query);
+							preparedStatement.setString(1, assessmentPeriod);
+							resultSet = preparedStatement.executeQuery();
+							ArrayList<Object> dataPoints = new ArrayList<Object>();
+							while(resultSet.next()) {
+								Map<String,String> data = new LinkedHashMap<String, String>();
+							System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
+								data.put("TYPE",resultSet.getString("QOPERATINGRATING"));
+								data.put("TOTAL",resultSet.getString("TOTAL"));
+								dataPoints.add(data);;
+							}
+							graphDataPoints.put("NI_Operating_WB", dataPoints);			
+						}
+						catch(Exception e){
+							e.printStackTrace();
+						}
+						
+						try{
+							String query = "SELECT A.QOPERATINGRATING, COUNT(A.QOPERATINGRATING) AS TOTAL "
+									+ "FROM TB_RAQUESTIONRESPONSES A "
+									+ "LEFT OUTER JOIN TB_RAFORMGENERALDETAILS B "
+									+ "ON A.CMREFNO = B.CMREFNO "
+									+ "WHERE A.ASSESSMENTUNIT = 'WholesaleBanking' "
+									+ "AND A.QOPERATINGRATING = 'NC' "
+									+ "AND B.ASSESSMENTPERIOD = ? "
+									+ "GROUP BY A.QOPERATINGRATING "
+									+ "ORDER BY QOPERATINGRATING";
+							preparedStatement = connection.prepareStatement(query);
+							preparedStatement.setString(1, assessmentPeriod);
+							resultSet = preparedStatement.executeQuery();
+							ArrayList<Object> dataPoints = new ArrayList<Object>();
+							while(resultSet.next()) {
+								Map<String,String> data = new LinkedHashMap<String, String>();
+							System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
+								data.put("TYPE",resultSet.getString("QOPERATINGRATING"));
+								data.put("TOTAL",resultSet.getString("TOTAL"));
+								dataPoints.add(data);;
+							}
+							graphDataPoints.put("NC_Operating_WB", dataPoints);			
+						}
+						catch(Exception e){
+							e.printStackTrace();
+						}
+
 		finally{
 			connectionUtil.closeResources(connection, preparedStatement, resultSet, null);
 		}
