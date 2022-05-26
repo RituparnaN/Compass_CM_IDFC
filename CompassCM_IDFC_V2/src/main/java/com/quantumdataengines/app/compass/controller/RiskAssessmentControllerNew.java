@@ -62,7 +62,7 @@ private static final Logger log = LoggerFactory.getLogger(CommonController.class
 	@RequestMapping(value="/getRiskAssessmentSummary", method=RequestMethod.GET)
 	public String riskAssessmentSummary(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication)throws Exception{
-		System.out.println("in here");
+		//System.out.println("in here");
 		String moduleType = request.getParameter("moduleType");
 		int assessmentPeriod = Integer.parseInt(request.getParameter("assessmentPeriod"));
 		String userCode = authentication.getPrincipal().toString();
@@ -98,7 +98,7 @@ private static final Logger log = LoggerFactory.getLogger(CommonController.class
 		
 		String assessmentUnit = request.getParameter("ASSESSMENTUNIT");
 		String questionId = request.getParameter("QUESTIONID");
-		System.out.println(assessmentUnit);
+		//System.out.println(assessmentUnit);
 		
 		String userCode = authentication.getPrincipal().toString();
 		request.setAttribute("USERCODE", userCode);
@@ -129,7 +129,7 @@ private static final Logger log = LoggerFactory.getLogger(CommonController.class
 	    String ipAddress = request.getRemoteAddr();
 	    
 	    FormConfigurationModel formConfigurationModel = new FormConfigurationModel(data);
-		System.out.println(formConfigurationModel.questionsList.toString());
+		//System.out.println(formConfigurationModel.questionsList.toString());
 		riskAssessmentNewService.saveRiskAssesesmentFormConfiguration(formConfigurationModel);
 		commonService.auditLog(authentication.getPrincipal().toString(), request, "Risk Assessment New", "save form Configuration", "Module Accessed");
 		return ResponseEntity.ok("Saved Successfully");
@@ -149,7 +149,7 @@ private static final Logger log = LoggerFactory.getLogger(CommonController.class
 		String data = buffer.toString();
 		String userName = authentication.getPrincipal().toString();
 		String ipAddress = request.getRemoteAddr();
-		System.out.println(data);
+		//System.out.println(data);
 		FormDataModel formDataModel = new FormDataModel(data,userName,CURRENTROLE);
 		
 		riskAssessmentNewService.saveRiskAssesesmentForm(formDataModel);
@@ -178,7 +178,7 @@ private static final Logger log = LoggerFactory.getLogger(CommonController.class
 		String assessmentUnit = request.getParameter("ASSESSMENTUNIT");
 		String COMPASSREFERENCENO = "";
 		String isNew = request.getParameter("ISNEWFORM");
-		System.out.println(assessmentUnit);
+		//System.out.println(assessmentUnit);
 		if(isNew.equals("Y")) {
 			COMPASSREFERENCENO = riskAssessmentNewService.generateCompassRefNo();
 		}
@@ -186,7 +186,7 @@ private static final Logger log = LoggerFactory.getLogger(CommonController.class
 			COMPASSREFERENCENO = request.getParameter("CMREFNO");
 		}
 		
-		System.out.println("compass ref no:"+COMPASSREFERENCENO);
+		//System.out.println("compass ref no:"+COMPASSREFERENCENO);
 		request.setAttribute("COMPASSREFERENCENO", COMPASSREFERENCENO);
 		request.setAttribute("QUESTIONSFORMDETAILS", riskAssessmentNewService.getQuestionsFormDetails(assessmentUnit,COMPASSREFERENCENO));
 		request.setAttribute("ASSESSMENTUNIT", assessmentUnit);
@@ -216,8 +216,8 @@ private static final Logger log = LoggerFactory.getLogger(CommonController.class
 	    
 		MakerCheckerDataModel makerCheckerData = new MakerCheckerDataModel(data, CURRENTROLE, userCode, ipAddress);
 		Map<String, Object> caseRaisedData = riskAssessmentNewService.saveRaiseToRFI(makerCheckerData);
-		System.out.println("qId:"+makerCheckerData.questionId);
-		System.out.println("compass Reference NO.:"+makerCheckerData.compassRefNo);
+		//System.out.println("qId:"+makerCheckerData.questionId);
+		//System.out.println("compass Reference NO.:"+makerCheckerData.compassRefNo);
 		
 		commonService.auditLog(authentication.getPrincipal().toString(), request, "Risk Assessment", "RAISETORFI", "Module Accessed");
 		return ResponseEntity.ok(caseRaisedData);
@@ -234,10 +234,10 @@ private static final Logger log = LoggerFactory.getLogger(CommonController.class
 	        buffer.append(System.lineSeparator());
 	    }
 	    String data = buffer.toString();
-	    System.out.println("string data:"+data);
+	    //System.out.println("string data:"+data);
 	    String qId = new JSONObject(data).getString("qId");
 	    String compassRefNo = new JSONObject(data).getString("compassRefNo");
-	    System.out.println("row details:"+riskAssessmentNewService.getMakerCheckerList(qId,compassRefNo).toString());
+	    //System.out.println("row details:"+riskAssessmentNewService.getMakerCheckerList(qId,compassRefNo).toString());
 		return ResponseEntity.ok(riskAssessmentNewService.getMakerCheckerList(qId,compassRefNo).toString());
 	}
 	
@@ -294,7 +294,7 @@ private static final Logger log = LoggerFactory.getLogger(CommonController.class
 	public ModelAndView generateCMReportSummary(HttpServletRequest request, HttpServletResponse response, 
 			Authentication authentication) throws Exception {
 		String assessmentPeriod = request.getParameter("ASSESSMENTPERIOD");
-		System.out.println("In generateCMReportSummary controller assessmentPeriod: "+assessmentPeriod);
+		//System.out.println("In generateCMReportSummary controller assessmentPeriod: "+assessmentPeriod);
 		String userCode = authentication.getPrincipal().toString();
 		String userRole = request.getSession(false) != null ? (String) request.getSession(false).getAttribute("CURRENTROLE") : "";
 		String ipAddress = request.getRemoteAddr();
@@ -328,9 +328,9 @@ private static final Logger log = LoggerFactory.getLogger(CommonController.class
 	public String chartSummary(HttpServletRequest request, HttpServletResponse response, 
 			Authentication authentication) throws Exception{
 		String assessmentPeriod = request.getParameter("ASSESSMENTPERIOD");
-		System.out.println("In mixedChartSummary controller assessmentPeriod is "+assessmentPeriod);
+		//System.out.println("In mixedChartSummary controller assessmentPeriod is "+assessmentPeriod);
 		Object test = riskAssessmentNewService.getGraphDataPointsSummary(assessmentPeriod);
-		System.out.println("TEST: "+test);
+		//System.out.println("TEST: "+test);
 		request.setAttribute("DATAPOINTS", riskAssessmentNewService.getGraphDataPointsSummary(assessmentPeriod));
 		
 		return "RiskAssessmentNew/mixedChartSummary";
@@ -349,7 +349,7 @@ private static final Logger log = LoggerFactory.getLogger(CommonController.class
 	        buffer.append(System.lineSeparator());
 	    }
 	    String data = buffer.toString();
-	    System.out.println("data:"+data);
+	    //System.out.println("data:"+data);
 	    JSONObject jObj = new JSONObject(data);
 	    String ImageUrl = jObj.getString("data");
 	    String imageId = riskAssessmentNewService.saveImageUrlData(ImageUrl);

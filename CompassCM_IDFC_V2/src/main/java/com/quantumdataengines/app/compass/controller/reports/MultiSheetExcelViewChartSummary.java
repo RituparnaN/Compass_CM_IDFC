@@ -80,7 +80,7 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 	            Statement st = con.createStatement();
 	            String sql = "SELECT DEFAULTVALUECHART, T_RESIDUALRISK, RL_RESIDUALRISK, RA_RESIDUALRISK, WB_RESIDUALRISK, RESIDUALRISK, ASSESSMENTWISECAT, BL_IR, BL_IC, "
 	            		+ "A_TOTALWEIGHTEDSCOREIR, A_TOTALWEIGHTEDSCOREIC, TOTALTRESURYIR, TOTALTRESURYIC, "
-	            		+ "TOTALRLIR, TOTALRLIC, TOTALRAIR, TOTALRAIC, TOTALWBIR, TOTALWBIC FROM TB_IMAGEDATASUMMARY WHERE IMAGEID = '"+imgId+"'";
+	            		+ "TOTALRLIR, TOTALRLIC, TOTALRAIR, TOTALRAIC, TOTALWBIR, TOTALWBIC FROM TB_IMAGEDATA WHERE IMAGEID = '"+imgId+"'";
 	            ResultSet m = st.executeQuery(sql);
 	            while(m.next()) {
 	            	dEFAULTVALUECHART = m.getString("DEFAULTVALUECHART");
@@ -741,7 +741,7 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 			
             for (int i = 1; i == 1 ; i++) {
 					row = sheet.getRow(i);
-    				System.out.println("inside first row");
+    				//System.out.println("inside first row");
     			for(int j = 0; j < noOfColumns; j++){
     				if(j == 4){
     					cell = row.getCell(j);
@@ -767,7 +767,7 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
             
             for (int i = 7; i == 7 ; i++) {
 					row = sheet.getRow(i);
-    				System.out.println("inside first row");
+    				//System.out.println("inside first row");
     			for(int j = 0; j < noOfColumns; j++){
     				if(j == 4){
     					cell = row.getCell(j);
@@ -1185,7 +1185,7 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 				
 				
 				int totalRows=currentRow;
-				System.out.println("totalRows: "+totalRows);
+				//System.out.println("totalRows: "+totalRows);
 				
 				row = sheet.createRow(totalRows+2);
 				cell = row.createCell(1);
@@ -1199,7 +1199,7 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 				
 	            for (int i = 2; i == 2 ; i++) {
 						row = sheet.getRow(2);
-        				System.out.println("inside second row");
+        				//System.out.println("inside second row");
         			for(int j = 0; j < noOfColumns; j++){
         				if(j == 4 || j == 6 || j == 8 || j == 10){
         					cell = row.getCell(j);
@@ -1250,7 +1250,7 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 	            
 	            for (int i = 8; i == 8 ; i++) {
 						row = sheet.getRow(i);
-        				System.out.println("inside second row");
+        				//System.out.println("inside second row");
         			for(int j = 0; j < noOfColumns; j++){
         				if(j == 4 || j == 6 || j == 8 || j == 10){
         					cell = row.getCell(j);
@@ -1301,421 +1301,6 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
         				
         			}           			
         		}
-				
-				
-				
-				/*
-				
-	            for (int i = 3; i <= 7 ; i++) {
-        			row = sheet.getRow(i);
-        			for(int j = 0; j < noOfColumns; j++){
-        				if(j == 4 || j == 6 || j == 8 || j == 10){
-        					cell = row.getCell(j);
-
-        					if(cell.getStringCellValue().equals("LOW")){
-        						cell.setCellStyle(lowBg);
-        					}
-        					else if(cell.getStringCellValue().equals("MEDIUM")){
-        						cell.setCellStyle(mediumBg);
-        					}
-        					else{
-        						cell.setCellStyle(highBg);
-        					}
-
-        				}
-        				
-        			}           			
-        		}
-	            
-	            		
-	            for (int i = 9; i <= 17 ; i++) {
-        			row = sheet.getRow(i);
-        			for(int j = 0; j < noOfColumns; j++){
-        				if(j == 4 || j == 6 || j == 8 || j == 10){
-        					cell = row.getCell(j);
-
-        					if(cell.getStringCellValue().equals("LOW")){
-        						cell.setCellValue("EFFECTIVE");
-        						cell.setCellStyle(lowBg);
-        					}
-        					else if(cell.getStringCellValue().equals("MEDIUM")){
-        						cell.setCellValue("NEED IMPROVEMENT");
-        						cell.setCellStyle(mediumBg);
-        					}
-        					else{
-        						cell.setCellValue("NO CONTROL");
-        						cell.setCellStyle(highBg);
-        					}
-
-        				}
-        				
-        			}           			
-        		}
-				
-	    		if(s_TotalTresuryIR <= 2){
-	            for (int i = 2; i == 2 ; i++) {
-        			row = sheet.getRow(i);       			
-        			for(int j = 0; j < noOfColumns; j++){
-        				if(j == 4){
-        					cell = row.getCell(j);
-        					cell.setCellValue("LOW");
-        					cell.setCellStyle(lowBoldBg);
-        					}
-
-        				}
-        				
-        			}           			
-        		}
-	    		
-	    		if(s_TotalTresuryIR > 2 && s_TotalTresuryIR <= 5){
-		            for (int i = 2; i == 2 ; i++) {
-	        			row = sheet.getRow(i);       			
-	        			for(int j = 0; j < noOfColumns; j++){
-	        				if(j == 4){
-	        					cell = row.getCell(j);
-	        					cell.setCellValue("MEDIUM");
-	        					cell.setCellStyle(mBoldBg);
-	        					}
-
-	        				}
-	        				
-	        			}           			
-	        		}
-				
-	    		if(s_TotalTresuryIR > 5){
-		            for (int i = 2; i == 2 ; i++) {
-	        			row = sheet.getRow(i);       			
-	        			for(int j = 0; j < noOfColumns; j++){
-	        				if(j == 4){
-	        					cell = row.getCell(j);
-	        					cell.setCellValue("HIGH");
-	        					cell.setCellStyle(hBoldBg);
-	        					}
-
-	        				}
-	        				
-	        			}           			
-	        		}
-				
-				
-	    		if(s_TotalRetailLiabiltiesIR <= 2){
-		            for (int i = 2; i == 2 ; i++) {
-	        			row = sheet.getRow(i);       			
-	        			for(int j = 0; j < noOfColumns; j++){
-	        				if(j == 6){
-	        					cell = row.getCell(j);
-	        					cell.setCellValue("LOW");
-	        					cell.setCellStyle(lowBg);
-	        					}
-
-	        				}
-	        				
-	        			}           			
-	        		}
-		    		
-		    		if(s_TotalRetailLiabiltiesIR > 2 && s_TotalRetailLiabiltiesIR <= 5){
-			            for (int i = 2; i == 2 ; i++) {
-		        			row = sheet.getRow(i);       			
-		        			for(int j = 0; j < noOfColumns; j++){
-		        				if(j == 6){
-		        					cell = row.getCell(j);
-		        					cell.setCellValue("MEDIUM");
-		        					cell.setCellStyle(mBoldBg);
-		        					}
-
-		        				}
-		        				
-		        			}           			
-		        		}
-					
-		    		if(s_TotalRetailLiabiltiesIR > 5){
-			            for (int i = 2; i == 2 ; i++) {
-		        			row = sheet.getRow(i);       			
-		        			for(int j = 0; j < noOfColumns; j++){
-		        				if(j == 6){
-		        					cell = row.getCell(j);
-		        					cell.setCellValue("HIGH");
-		        					cell.setCellStyle(hBoldBg);
-		        					}
-
-		        				}
-		        				
-		        			}           			
-		        		}
-		    		
-		    		if(s_TotalRetailAssetsIR <= 2){
-			            for (int i = 2; i == 2 ; i++) {
-		        			row = sheet.getRow(i);       			
-		        			for(int j = 0; j < noOfColumns; j++){
-		        				if(j == 8){
-		        					cell = row.getCell(j);
-		        					cell.setCellValue("LOW");
-		        					cell.setCellStyle(lowBoldBg);
-		        					}
-
-		        				}
-		        				
-		        			}           			
-		        		}
-			    		
-			    		if(s_TotalRetailAssetsIR > 2 && s_TotalRetailAssetsIR <= 5){
-				            for (int i = 2; i == 2 ; i++) {
-			        			row = sheet.getRow(i);       			
-			        			for(int j = 0; j < noOfColumns; j++){
-			        				if(j == 8){
-			        					cell = row.getCell(j);
-			        					cell.setCellValue("MEDIUM");
-			        					cell.setCellStyle(mBoldBg);
-			        					}
-
-			        				}
-			        				
-			        			}           			
-			        		}
-						
-			    		if(s_TotalRetailAssetsIR > 5){
-				            for (int i = 2; i == 2 ; i++) {
-			        			row = sheet.getRow(i);       			
-			        			for(int j = 0; j < noOfColumns; j++){
-			        				if(j == 8){
-			        					cell = row.getCell(j);
-			        					cell.setCellValue("HIGH");
-			        					cell.setCellStyle(hBoldBg);
-			        					}
-
-			        				}
-			        				
-			        			}           			
-			        		}
-			    		
-			    		if(s_TotalWholesaleIR <= 2){
-				            for (int i = 2; i == 2 ; i++) {
-			        			row = sheet.getRow(i);       			
-			        			for(int j = 0; j < noOfColumns; j++){
-			        				if(j == 10){
-			        					cell = row.getCell(j);
-			        					cell.setCellValue("LOW");
-			        					cell.setCellStyle(lowBoldBg);
-			        					}
-
-			        				}
-			        				
-			        			}           			
-			        		}
-				    		
-				    		if(s_TotalWholesaleIR > 2 && s_TotalWholesaleIR <= 5){
-					            for (int i = 2; i == 2 ; i++) {
-				        			row = sheet.getRow(i);       			
-				        			for(int j = 0; j < noOfColumns; j++){
-				        				if(j == 10){
-				        					cell = row.getCell(j);
-				        					cell.setCellValue("MEDIUM");
-				        					cell.setCellStyle(mBoldBg);
-				        					}
-
-				        				}
-				        				
-				        			}           			
-				        		}
-							
-				    		if(s_TotalWholesaleIR > 5){
-					            for (int i = 2; i == 2 ; i++) {
-				        			row = sheet.getRow(i);       			
-				        			for(int j = 0; j < noOfColumns; j++){
-				        				if(j == 10){
-				        					cell = row.getCell(j);
-				        					cell.setCellValue("HIGH");
-				        					cell.setCellStyle(hBoldBg);
-				        					}
-
-				        				}
-				        				
-				        			}           			
-				        		}
-				
-				
-				
-				    		if(s_TotalTresuryIC <= 2){
-					            for (int i = 8; i == 8 ; i++) {
-				        			row = sheet.getRow(i);       			
-				        			for(int j = 0; j < noOfColumns; j++){
-				        				if(j == 4){
-				        					cell = row.getCell(j);
-				        					cell.setCellValue("EFFECTIVE");
-				        					cell.setCellStyle(lowBoldBg);
-				        					}
-
-				        				}
-				        				
-				        			}           			
-				        		}
-					    		
-					    		if(s_TotalTresuryIC > 2 && s_TotalTresuryIC <= 5){
-						            for (int i = 8; i == 8 ; i++) {
-					        			row = sheet.getRow(i);       			
-					        			for(int j = 0; j < noOfColumns; j++){
-					        				if(j == 4){
-					        					cell = row.getCell(j);
-					        					cell.setCellValue("NEED IMPROVEMENT");
-					        					cell.setCellStyle(mBoldBg);
-					        					}
-
-					        				}
-					        				
-					        			}           			
-					        		}
-								
-					    		if(s_TotalTresuryIC > 5){
-						            for (int i = 8; i == 8 ; i++) {
-					        			row = sheet.getRow(i);       			
-					        			for(int j = 0; j < noOfColumns; j++){
-					        				if(j == 4){
-					        					cell = row.getCell(j);
-					        					cell.setCellValue("NO CONTROL");
-					        					cell.setCellStyle(hBoldBg);
-					        					}
-
-					        				}
-					        				
-					        			}           			
-					        		}
-								
-								
-					    		if(s_totalRetailLiabiltiesIC <= 2){
-						            for (int i = 8; i == 8 ; i++) {
-					        			row = sheet.getRow(i);       			
-					        			for(int j = 0; j < noOfColumns; j++){
-					        				if(j == 6){
-					        					cell = row.getCell(j);
-					        					cell.setCellValue("EFFECTIVE");
-					        					cell.setCellStyle(lowBoldBg);
-					        					}
-
-					        				}
-					        				
-					        			}           			
-					        		}
-						    		
-						    		if(s_totalRetailLiabiltiesIC > 2 && s_totalRetailLiabiltiesIC <= 5){
-							            for (int i = 8; i == 8 ; i++) {
-						        			row = sheet.getRow(i);       			
-						        			for(int j = 0; j < noOfColumns; j++){
-						        				if(j == 6){
-						        					cell = row.getCell(j);
-						        					cell.setCellValue("NEED IMPROVEMENT");
-						        					cell.setCellStyle(mBoldBg);
-						        					}
-
-						        				}
-						        				
-						        			}           			
-						        		}
-									
-						    		if(s_totalRetailLiabiltiesIC > 5){
-							            for (int i = 8; i == 8 ; i++) {
-						        			row = sheet.getRow(i);       			
-						        			for(int j = 0; j < noOfColumns; j++){
-						        				if(j == 6){
-						        					cell = row.getCell(j);
-						        					cell.setCellValue("NO CONTROL");
-						        					cell.setCellStyle(hBoldBg);
-						        					}
-
-						        				}
-						        				
-						        			}           			
-						        		}
-						    		
-						    		if(s_TotalRetailAssetsIC <= 2){
-							            for (int i = 8; i == 8 ; i++) {
-						        			row = sheet.getRow(i);       			
-						        			for(int j = 0; j < noOfColumns; j++){
-						        				if(j == 8){
-						        					cell = row.getCell(j);
-						        					cell.setCellValue("EFFECTIVE");
-						        					cell.setCellStyle(lowBoldBg);
-						        					}
-
-						        				}
-						        				
-						        			}           			
-						        		}
-							    		
-							    		if(s_TotalRetailAssetsIC > 2 && s_TotalRetailAssetsIC <= 5){
-								            for (int i = 8; i == 8 ; i++) {
-							        			row = sheet.getRow(i);       			
-							        			for(int j = 0; j < noOfColumns; j++){
-							        				if(j == 8){
-							        					cell = row.getCell(j);
-							        					cell.setCellValue("NEED IMPROVEMENT");
-							        					cell.setCellStyle(mBoldBg);
-							        					}
-
-							        				}
-							        				
-							        			}           			
-							        		}
-										
-							    		if(s_TotalRetailAssetsIC > 5){
-								            for (int i = 8; i == 8 ; i++) {
-							        			row = sheet.getRow(i);       			
-							        			for(int j = 0; j < noOfColumns; j++){
-							        				if(j == 8){
-							        					cell = row.getCell(j);
-							        					cell.setCellValue("NO CONTROL");
-							        					cell.setCellStyle(hBoldBg);
-							        					}
-
-							        				}
-							        				
-							        			}           			
-							        		}
-							    		
-							    		if(s_TotalWholesaleIC <= 2){
-								            for (int i = 8; i == 8 ; i++) {
-							        			row = sheet.getRow(i);       			
-							        			for(int j = 0; j < noOfColumns; j++){
-							        				if(j == 10){
-							        					cell = row.getCell(j);
-							        					cell.setCellValue("EFFECTIVE");
-							        					cell.setCellStyle(lowBoldBg);
-							        					}
-
-							        				}
-							        				
-							        			}           			
-							        		}
-								    		
-								    		if(s_TotalWholesaleIC > 2 && s_TotalWholesaleIC <= 5){
-									            for (int i = 8; i == 8 ; i++) {
-								        			row = sheet.getRow(i);       			
-								        			for(int j = 0; j < noOfColumns; j++){
-								        				if(j == 10){
-								        					cell = row.getCell(j);
-								        					cell.setCellValue("NEED IMPROVEMENT");
-								        					cell.setCellStyle(mBoldBg);
-								        					}
-
-								        				}
-								        				
-								        			}           			
-								        		}
-											
-								    		if(s_TotalWholesaleIC > 5){
-									            for (int i = 8; i == 8 ; i++) {
-								        			row = sheet.getRow(i);       			
-								        			for(int j = 0; j < noOfColumns; j++){
-								        				if(j == 10){
-								        					cell = row.getCell(j);
-								        					cell.setCellValue("NO CONTROL");
-								        					cell.setCellStyle(hBoldBg);
-								        					}
-
-								        				}
-								        				
-								        			}           			
-								        		}
-				*/
 
 				
 				

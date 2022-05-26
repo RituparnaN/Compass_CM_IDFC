@@ -1411,7 +1411,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 	public Map<String, Object> generateCMReportNew(String compassRefNo, String assessmentUnit, String userCode, String userRole, String ipAddress){
 		Map<String, Object> mainMap = new LinkedHashMap<String, Object>();
 		
-		System.out.println("assessmentUnit in NEW controller: "+assessmentUnit);
+		//System.out.println("assessmentUnit in NEW controller: "+assessmentUnit);
 		
     	Connection connection = null;
 		CallableStatement callableStatement = null;
@@ -1451,7 +1451,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 				String sheetName = itr.next();
 				ResultSet resultSet = resultSetMap.get(sheetName);
 				
-				System.out.println("sheetName: "+sheetName+" "+"resultSet: "+resultSet);
+				//System.out.println("sheetName: "+sheetName+" "+"resultSet: "+resultSet);
 				
 				ArrayList<ArrayList<String>> headerList = new ArrayList<ArrayList<String>>();
 				ArrayList<ArrayList<String>> resultList = new ArrayList<ArrayList<String>>();
@@ -1502,7 +1502,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 	
 	@Override
 	public Map<String, Object> generateCMReportSummary(String assessmentPeriod, String userCode, String userRole, String ipAddress){
-		System.out.println("In generateCMReportSummary dao assessmentPeriod: "+assessmentPeriod);
+		//System.out.println("In generateCMReportSummary dao assessmentPeriod: "+assessmentPeriod);
 		Map<String, Object> mainMap = new LinkedHashMap<String, Object>();
     	Connection connection = null;
 		CallableStatement callableStatement = null;
@@ -1900,7 +1900,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 			connectionUtil.closeResources(connection, preparedStatement, resultSet, null);
 		}
 		
-		System.out.println("graphDataPoints: "+graphDataPoints);
+		//System.out.println("graphDataPoints: "+graphDataPoints);
 		
 		return graphDataPoints;	
 	}
@@ -1976,7 +1976,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 			connectionUtil.closeResources(connection, preparedStatement, resultSet, null);
 		}
 		
-		System.out.println("graphDataPoints: "+graphDataPoints);
+		//System.out.println("graphDataPoints: "+graphDataPoints);
 		
 		return graphDataPoints;	
 	}
@@ -1986,7 +1986,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 	public Map<String, Object> getGraphDataPointsSummary(String assessmentPeriod){
 		Map<String, Object> graphDataPoints = new LinkedHashMap<String,Object>();
 		
-		System.out.println("In mixedChartSummary dao assessmentPeriod is "+assessmentPeriod);
+		//System.out.println("In mixedChartSummary dao assessmentPeriod is "+assessmentPeriod);
 		
 		Connection connection = connectionUtil.getConnection();
 		PreparedStatement preparedStatement = null;
@@ -2219,7 +2219,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 			ArrayList<Object> dataPoints = new ArrayList<Object>();
 			while(resultSet.next()) {
 				Map<String,String> data = new LinkedHashMap<String, String>();
-			System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
+				//System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
 				data.put("TYPE",resultSet.getString("QDESIGNRATING"));
 				data.put("TOTAL",resultSet.getString("TOTAL"));
 				dataPoints.add(data);;
@@ -2246,7 +2246,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 			ArrayList<Object> dataPoints = new ArrayList<Object>();
 			while(resultSet.next()) {
 				Map<String,String> data = new LinkedHashMap<String, String>();
-			System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
+				//System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
 				data.put("TYPE",resultSet.getString("QDESIGNRATING"));
 				data.put("TOTAL",resultSet.getString("TOTAL"));
 				dataPoints.add(data);;
@@ -2273,7 +2273,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 			ArrayList<Object> dataPoints = new ArrayList<Object>();
 			while(resultSet.next()) {
 				Map<String,String> data = new LinkedHashMap<String, String>();
-			System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
+				//System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
 				data.put("TYPE",resultSet.getString("QDESIGNRATING"));
 				data.put("TOTAL",resultSet.getString("TOTAL"));
 				dataPoints.add(data);;
@@ -2300,7 +2300,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 			ArrayList<Object> dataPoints = new ArrayList<Object>();
 			while(resultSet.next()) {
 				Map<String,String> data = new LinkedHashMap<String, String>();
-			System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
+				//System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
 				data.put("TYPE",resultSet.getString("QDESIGNRATING"));
 				data.put("TOTAL",resultSet.getString("TOTAL"));
 				dataPoints.add(data);;
@@ -2328,7 +2328,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 			ArrayList<Object> dataPoints = new ArrayList<Object>();
 			while(resultSet.next()) {
 				Map<String,String> data = new LinkedHashMap<String, String>();
-			System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
+				//System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
 				data.put("TYPE",resultSet.getString("QDESIGNRATING"));
 				data.put("TOTAL",resultSet.getString("TOTAL"));
 				dataPoints.add(data);;
@@ -2355,7 +2355,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 			ArrayList<Object> dataPoints = new ArrayList<Object>();
 			while(resultSet.next()) {
 				Map<String,String> data = new LinkedHashMap<String, String>();
-			System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
+				//System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
 				data.put("TYPE",resultSet.getString("QDESIGNRATING"));
 				data.put("TOTAL",resultSet.getString("TOTAL"));
 				dataPoints.add(data);;
@@ -2382,7 +2382,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 			ArrayList<Object> dataPoints = new ArrayList<Object>();
 			while(resultSet.next()) {
 				Map<String,String> data = new LinkedHashMap<String, String>();
-			System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
+				//System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
 				data.put("TYPE",resultSet.getString("QDESIGNRATING"));
 				data.put("TOTAL",resultSet.getString("TOTAL"));
 				dataPoints.add(data);;
@@ -2409,7 +2409,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 			ArrayList<Object> dataPoints = new ArrayList<Object>();
 			while(resultSet.next()) {
 				Map<String,String> data = new LinkedHashMap<String, String>();
-			System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
+				//System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
 				data.put("TYPE",resultSet.getString("QDESIGNRATING"));
 				data.put("TOTAL",resultSet.getString("TOTAL"));
 				dataPoints.add(data);;
@@ -2437,7 +2437,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 					ArrayList<Object> dataPoints = new ArrayList<Object>();
 					while(resultSet.next()) {
 						Map<String,String> data = new LinkedHashMap<String, String>();
-					System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
+						//System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
 						data.put("TYPE",resultSet.getString("QDESIGNRATING"));
 						data.put("TOTAL",resultSet.getString("TOTAL"));
 						dataPoints.add(data);;
@@ -2464,7 +2464,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 					ArrayList<Object> dataPoints = new ArrayList<Object>();
 					while(resultSet.next()) {
 						Map<String,String> data = new LinkedHashMap<String, String>();
-					System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
+						//System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
 						data.put("TYPE",resultSet.getString("QDESIGNRATING"));
 						data.put("TOTAL",resultSet.getString("TOTAL"));
 						dataPoints.add(data);;
@@ -2491,7 +2491,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 					ArrayList<Object> dataPoints = new ArrayList<Object>();
 					while(resultSet.next()) {
 						Map<String,String> data = new LinkedHashMap<String, String>();
-					System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
+						//System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
 						data.put("TYPE",resultSet.getString("QDESIGNRATING"));
 						data.put("TOTAL",resultSet.getString("TOTAL"));
 						dataPoints.add(data);;
@@ -2518,7 +2518,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 					ArrayList<Object> dataPoints = new ArrayList<Object>();
 					while(resultSet.next()) {
 						Map<String,String> data = new LinkedHashMap<String, String>();
-					System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
+						//System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
 						data.put("TYPE",resultSet.getString("QDESIGNRATING"));
 						data.put("TOTAL",resultSet.getString("TOTAL"));
 						dataPoints.add(data);;
@@ -2546,7 +2546,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 					ArrayList<Object> dataPoints = new ArrayList<Object>();
 					while(resultSet.next()) {
 						Map<String,String> data = new LinkedHashMap<String, String>();
-					System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
+						//System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
 						data.put("TYPE",resultSet.getString("QDESIGNRATING"));
 						data.put("TOTAL",resultSet.getString("TOTAL"));
 						dataPoints.add(data);;
@@ -2573,7 +2573,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 					ArrayList<Object> dataPoints = new ArrayList<Object>();
 					while(resultSet.next()) {
 						Map<String,String> data = new LinkedHashMap<String, String>();
-					System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
+						//System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
 						data.put("TYPE",resultSet.getString("QDESIGNRATING"));
 						data.put("TOTAL",resultSet.getString("TOTAL"));
 						dataPoints.add(data);;
@@ -2600,7 +2600,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 					ArrayList<Object> dataPoints = new ArrayList<Object>();
 					while(resultSet.next()) {
 						Map<String,String> data = new LinkedHashMap<String, String>();
-					System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
+						//System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
 						data.put("TYPE",resultSet.getString("QDESIGNRATING"));
 						data.put("TOTAL",resultSet.getString("TOTAL"));
 						dataPoints.add(data);;
@@ -2627,7 +2627,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 					ArrayList<Object> dataPoints = new ArrayList<Object>();
 					while(resultSet.next()) {
 						Map<String,String> data = new LinkedHashMap<String, String>();
-					System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
+						//System.out.println("RESULT"+resultSet.getString("QDESIGNRATING"));	
 						data.put("TYPE",resultSet.getString("QDESIGNRATING"));
 						data.put("TOTAL",resultSet.getString("TOTAL"));
 						dataPoints.add(data);;
@@ -2657,7 +2657,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 					ArrayList<Object> dataPoints = new ArrayList<Object>();
 					while(resultSet.next()) {
 						Map<String,String> data = new LinkedHashMap<String, String>();
-					System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
+						//System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
 						data.put("TYPE",resultSet.getString("QOPERATINGRATING"));
 						data.put("TOTAL",resultSet.getString("TOTAL"));
 						dataPoints.add(data);;
@@ -2684,7 +2684,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 					ArrayList<Object> dataPoints = new ArrayList<Object>();
 					while(resultSet.next()) {
 						Map<String,String> data = new LinkedHashMap<String, String>();
-					System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
+						//System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
 						data.put("TYPE",resultSet.getString("QOPERATINGRATING"));
 						data.put("TOTAL",resultSet.getString("TOTAL"));
 						dataPoints.add(data);;
@@ -2711,7 +2711,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 					ArrayList<Object> dataPoints = new ArrayList<Object>();
 					while(resultSet.next()) {
 						Map<String,String> data = new LinkedHashMap<String, String>();
-					System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
+						//System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
 						data.put("TYPE",resultSet.getString("QOPERATINGRATING"));
 						data.put("TOTAL",resultSet.getString("TOTAL"));
 						dataPoints.add(data);;
@@ -2738,7 +2738,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 					ArrayList<Object> dataPoints = new ArrayList<Object>();
 					while(resultSet.next()) {
 						Map<String,String> data = new LinkedHashMap<String, String>();
-					System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
+					//System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
 						data.put("TYPE",resultSet.getString("QOPERATINGRATING"));
 						data.put("TOTAL",resultSet.getString("TOTAL"));
 						dataPoints.add(data);;
@@ -2766,7 +2766,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 					ArrayList<Object> dataPoints = new ArrayList<Object>();
 					while(resultSet.next()) {
 						Map<String,String> data = new LinkedHashMap<String, String>();
-					System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
+					//System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
 						data.put("TYPE",resultSet.getString("QOPERATINGRATING"));
 						data.put("TOTAL",resultSet.getString("TOTAL"));
 						dataPoints.add(data);;
@@ -2793,7 +2793,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 					ArrayList<Object> dataPoints = new ArrayList<Object>();
 					while(resultSet.next()) {
 						Map<String,String> data = new LinkedHashMap<String, String>();
-					System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
+					//System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
 						data.put("TYPE",resultSet.getString("QOPERATINGRATING"));
 						data.put("TOTAL",resultSet.getString("TOTAL"));
 						dataPoints.add(data);;
@@ -2820,7 +2820,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 					ArrayList<Object> dataPoints = new ArrayList<Object>();
 					while(resultSet.next()) {
 						Map<String,String> data = new LinkedHashMap<String, String>();
-					System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
+					//System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
 						data.put("TYPE",resultSet.getString("QOPERATINGRATING"));
 						data.put("TOTAL",resultSet.getString("TOTAL"));
 						dataPoints.add(data);;
@@ -2847,7 +2847,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 					ArrayList<Object> dataPoints = new ArrayList<Object>();
 					while(resultSet.next()) {
 						Map<String,String> data = new LinkedHashMap<String, String>();
-					System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
+					//System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
 						data.put("TYPE",resultSet.getString("QOPERATINGRATING"));
 						data.put("TOTAL",resultSet.getString("TOTAL"));
 						dataPoints.add(data);;
@@ -2875,7 +2875,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 							ArrayList<Object> dataPoints = new ArrayList<Object>();
 							while(resultSet.next()) {
 								Map<String,String> data = new LinkedHashMap<String, String>();
-							System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
+							//System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
 								data.put("TYPE",resultSet.getString("QOPERATINGRATING"));
 								data.put("TOTAL",resultSet.getString("TOTAL"));
 								dataPoints.add(data);;
@@ -2902,7 +2902,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 							ArrayList<Object> dataPoints = new ArrayList<Object>();
 							while(resultSet.next()) {
 								Map<String,String> data = new LinkedHashMap<String, String>();
-							System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
+							//System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
 								data.put("TYPE",resultSet.getString("QOPERATINGRATING"));
 								data.put("TOTAL",resultSet.getString("TOTAL"));
 								dataPoints.add(data);;
@@ -2929,7 +2929,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 							ArrayList<Object> dataPoints = new ArrayList<Object>();
 							while(resultSet.next()) {
 								Map<String,String> data = new LinkedHashMap<String, String>();
-							System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
+							//System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
 								data.put("TYPE",resultSet.getString("QOPERATINGRATING"));
 								data.put("TOTAL",resultSet.getString("TOTAL"));
 								dataPoints.add(data);;
@@ -2956,7 +2956,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 							ArrayList<Object> dataPoints = new ArrayList<Object>();
 							while(resultSet.next()) {
 								Map<String,String> data = new LinkedHashMap<String, String>();
-							System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
+							//System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
 								data.put("TYPE",resultSet.getString("QOPERATINGRATING"));
 								data.put("TOTAL",resultSet.getString("TOTAL"));
 								dataPoints.add(data);;
@@ -2984,7 +2984,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 							ArrayList<Object> dataPoints = new ArrayList<Object>();
 							while(resultSet.next()) {
 								Map<String,String> data = new LinkedHashMap<String, String>();
-							System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
+							//System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
 								data.put("TYPE",resultSet.getString("QOPERATINGRATING"));
 								data.put("TOTAL",resultSet.getString("TOTAL"));
 								dataPoints.add(data);;
@@ -3011,7 +3011,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 							ArrayList<Object> dataPoints = new ArrayList<Object>();
 							while(resultSet.next()) {
 								Map<String,String> data = new LinkedHashMap<String, String>();
-							System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
+							//System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
 								data.put("TYPE",resultSet.getString("QOPERATINGRATING"));
 								data.put("TOTAL",resultSet.getString("TOTAL"));
 								dataPoints.add(data);;
@@ -3038,7 +3038,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 							ArrayList<Object> dataPoints = new ArrayList<Object>();
 							while(resultSet.next()) {
 								Map<String,String> data = new LinkedHashMap<String, String>();
-							System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
+							//System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
 								data.put("TYPE",resultSet.getString("QOPERATINGRATING"));
 								data.put("TOTAL",resultSet.getString("TOTAL"));
 								dataPoints.add(data);;
@@ -3065,7 +3065,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 							ArrayList<Object> dataPoints = new ArrayList<Object>();
 							while(resultSet.next()) {
 								Map<String,String> data = new LinkedHashMap<String, String>();
-							System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
+							//System.out.println("RESULT"+resultSet.getString("QOPERATINGRATING"));	
 								data.put("TYPE",resultSet.getString("QOPERATINGRATING"));
 								data.put("TOTAL",resultSet.getString("TOTAL"));
 								dataPoints.add(data);;
@@ -3605,7 +3605,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 			connectionUtil.closeResources(connection, preparedStatement, resultSet, null);
 		}
 		
-		System.out.println("graphDataPoints: "+graphDataPoints);
+		//System.out.println("graphDataPoints: "+graphDataPoints);
 		
 		return graphDataPoints;	
 	}
@@ -3613,8 +3613,8 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 	
 	@Override
 	public String saveImageUrlData(String imageUrl){
-		System.out.println("saveImageUrlData in NEW DAO CALLED!!");
-		System.out.println("imageURL data: "+imageUrl);
+		//System.out.println("saveImageUrlData in NEW DAO CALLED!!");
+		//System.out.println("imageURL data: "+imageUrl);
 		
 		String imageUrlData = imageUrl;
 		String[] parts = imageUrlData.split("@~@");
@@ -3661,7 +3661,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 		id = sb.toString();
 
 		try{
-			String query = "INSERT INTO COMAML_CM.TB_IMAGEDATASUMMARY VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSTIMESTAMP) ";
+			String query = "INSERT INTO COMAML_CM.TB_IMAGEDATA VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSTIMESTAMP) ";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, id);
 			preparedStatement.setString(2, defaultVALUECHART);

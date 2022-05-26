@@ -122,8 +122,19 @@
 	const residualRiskDATA = {
 			  datasets: [{
 			    label: 'RESIDUAL RISK',
-			    data: residualRiskDataPoints,
-			    pointStyle: 'crossRot',
+			    //data: residualRiskDataPoints,
+			    data: [
+				  	{
+					  x: totalWeightedScoreIR_x,
+					  y: totalWeightedScoreIC_y,
+					  r: 20
+				  	},
+				  	{
+					  x: totalWeightedScoreIR_x,
+					  y: totalWeightedScoreIC_y,
+					  r: 20
+				  	},],
+			    pointStyle: ['crossRot', 'cross'],
 			    borderWidth: 6,
 			    backgroundColor: 'rgba(0, 0, 0, 1)',
 			    borderColor: 'rgba(0, 0, 0, 1)',
@@ -237,7 +248,7 @@
 	const assessmentCatChart = new Chart(assessmentCatCTX,assessmentCatCONFIG);
 	var assessmentCatIMAGE = assessmentCatChart.toBase64Image();
 	var img = document.getElementById('assessmentCatCanvas').toDataURL("image/png");
-	console.log("assessmentCatChart:",img)
+	//console.log("assessmentCatChart:",img)
 	document.getElementById("assessmentCatURL").value = assessmentCatIMAGE;
 	assessmentCatChart.destroy();
 	//ASSESSMENT UNITWISE CHART (EACH IR CATEGORY) CREATION ENDED

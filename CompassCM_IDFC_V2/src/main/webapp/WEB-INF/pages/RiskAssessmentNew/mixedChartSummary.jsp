@@ -10,7 +10,7 @@
 	
 	
 	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS}">
-		console.log("DATAPOINTS: ","${dataPointLabel}")
+		//console.log("DATAPOINTS: ","${dataPointLabel}")
 	</c:forEach>
 		
 	//DESIGN CALCULATION
@@ -206,11 +206,12 @@
 	
 	var avg_Design = 0.0;
 	avg_Design = (t_Design + rl_Design + ra_Design + wb_Design) / 4;
-	console.log("avg_Design: ",avg_Design)
+	//console.log("avg_Design: ",avg_Design)
 	
 	
 	// IMPACT AND LIKLIHOOD CALCULATION
 	//TREASURY
+	//Customer
 	var customer_T_Impact = 0.0
 	var customer_T_LIKELYHOOD = 0.0
 	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.T_CUSTOMER}">
@@ -221,7 +222,343 @@
 	customer_T_LIKELYHOOD = ${score};
 	</c:forEach>
 	</c:forEach>
-	alert(customer_T_Impact+" "+customer_T_LIKELYHOOD)
+	//alert(customer_T_Impact+" "+customer_T_LIKELYHOOD)
+	//Geography
+	var geo_T_Impact = 0.0
+	var geo_T_LIKELYHOOD = 0.0
+	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.T_GEO}">
+	<c:forEach var = "score" items = "${dataPointLabel.IMPACT}">
+	geo_T_Impact = ${score};
+	</c:forEach>
+	<c:forEach var = "score" items = "${dataPointLabel.LIKELYHOOD}">
+	geo_T_LIKELYHOOD = ${score};
+	</c:forEach>
+	</c:forEach>
+	//alert(customer_T_Impact+" "+customer_T_LIKELYHOOD)
+	//Product and services
+	var ps_T_Impact = 0.0
+	var ps_T_LIKELYHOOD = 0.0
+	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.T_PROD_SERV}">
+	<c:forEach var = "score" items = "${dataPointLabel.IMPACT}">
+	ps_T_Impact = ${score};
+	</c:forEach>
+	<c:forEach var = "score" items = "${dataPointLabel.LIKELYHOOD}">
+	ps_T_LIKELYHOOD = ${score};
+	</c:forEach>
+	</c:forEach>
+	//alert(customer_T_Impact+" "+customer_T_LIKELYHOOD)
+	//Transcation
+	var trans_T_Impact = 0.0
+	var trans_T_LIKELYHOOD = 0.0
+	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.T_TRANS}">
+	<c:forEach var = "score" items = "${dataPointLabel.IMPACT}">
+	trans_T_Impact = ${score};
+	</c:forEach>
+	<c:forEach var = "score" items = "${dataPointLabel.LIKELYHOOD}">
+	trans_T_LIKELYHOOD = ${score};
+	</c:forEach>
+	</c:forEach>
+	//alert(customer_T_Impact+" "+customer_T_LIKELYHOOD)
+	//Delivery Channel
+	var dc_T_Impact = 0.0
+	var dc_T_LIKELYHOOD = 0.0
+	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.T_DC}">
+	<c:forEach var = "score" items = "${dataPointLabel.IMPACT}">
+	dc_T_Impact = ${score};
+	</c:forEach>
+	<c:forEach var = "score" items = "${dataPointLabel.LIKELYHOOD}">
+	dc_T_LIKELYHOOD = ${score};
+	</c:forEach>
+	</c:forEach>
+	//alert(customer_T_Impact+" "+customer_T_LIKELYHOOD)
+	
+	//RETAIL LIABLITIES
+	//Customer
+	var customer_RL_Impact = 0.0
+	var customer_RL_LIKELYHOOD = 0.0
+	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.RL_CUSTOMER}">
+	<c:forEach var = "score" items = "${dataPointLabel.IMPACT}">
+	customer_RL_Impact = ${score};
+	</c:forEach>
+	<c:forEach var = "score" items = "${dataPointLabel.LIKELYHOOD}">
+	customer_RL_LIKELYHOOD = ${score};
+	</c:forEach>
+	</c:forEach>
+	//alert(customer_RL_Impact+" "+customer_RL_LIKELYHOOD)
+	//Geography
+	var geo_RL_Impact = 0.0
+	var geo_RL_LIKELYHOOD = 0.0
+	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.RL_GEO}">
+	<c:forEach var = "score" items = "${dataPointLabel.IMPACT}">
+	geo_RL_Impact = ${score};
+	</c:forEach>
+	<c:forEach var = "score" items = "${dataPointLabel.LIKELYHOOD}">
+	geo_RL_LIKELYHOOD = ${score};
+	</c:forEach>
+	</c:forEach>
+	//alert(customer_RL_Impact+" "+customer_RL_LIKELYHOOD)
+	//Product and services
+	var ps_RL_Impact = 0.0
+	var ps_RL_LIKELYHOOD = 0.0
+	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.RL_PROD_SERV}">
+	<c:forEach var = "score" items = "${dataPointLabel.IMPACT}">
+	ps_RL_Impact = ${score};
+	</c:forEach>
+	<c:forEach var = "score" items = "${dataPointLabel.LIKELYHOOD}">
+	ps_RL_LIKELYHOOD = ${score};
+	</c:forEach>
+	</c:forEach>
+	//alert(customer_RL_Impact+" "+customer_RL_LIKELYHOOD)
+	//Transcation
+	var trans_RL_Impact = 0.0
+	var trans_RL_LIKELYHOOD = 0.0
+	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.RL_TRANS}">
+	<c:forEach var = "score" items = "${dataPointLabel.IMPACT}">
+	trans_RL_Impact = ${score};
+	</c:forEach>
+	<c:forEach var = "score" items = "${dataPointLabel.LIKELYHOOD}">
+	trans_RL_LIKELYHOOD = ${score};
+	</c:forEach>
+	</c:forEach>
+	//alert(customer_RL_Impact+" "+customer_RL_LIKELYHOOD)
+	//Delivery Channel
+	var dc_RL_Impact = 0.0
+	var dc_RL_LIKELYHOOD = 0.0
+	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.RL_DC}">
+	<c:forEach var = "score" items = "${dataPointLabel.IMPACT}">
+	dc_RL_Impact = ${score};
+	</c:forEach>
+	<c:forEach var = "score" items = "${dataPointLabel.LIKELYHOOD}">
+	dc_RL_LIKELYHOOD = ${score};
+	</c:forEach>
+	</c:forEach>
+	//alert(customer_RL_Impact+" "+customer_RL_LIKELYHOOD)
+	
+	//RETAIL ASSETS
+	//Customer
+	var customer_RA_Impact = 0.0
+	var customer_RA_LIKELYHOOD = 0.0
+	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.RA_CUSTOMER}">
+	<c:forEach var = "score" items = "${dataPointLabel.IMPACT}">
+	customer_RA_Impact = ${score};
+	</c:forEach>
+	<c:forEach var = "score" items = "${dataPointLabel.LIKELYHOOD}">
+	customer_RA_LIKELYHOOD = ${score};
+	</c:forEach>
+	</c:forEach>
+	//alert(customer_RA_Impact+" "+customer_RA_LIKELYHOOD)
+	//Geography
+	var geo_RA_Impact = 0.0
+	var geo_RA_LIKELYHOOD = 0.0
+	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.RA_GEO}">
+	<c:forEach var = "score" items = "${dataPointLabel.IMPACT}">
+	geo_RA_Impact = ${score};
+	</c:forEach>
+	<c:forEach var = "score" items = "${dataPointLabel.LIKELYHOOD}">
+	geo_RA_LIKELYHOOD = ${score};
+	</c:forEach>
+	</c:forEach>
+	//alert(customer_RA_Impact+" "+customer_RA_LIKELYHOOD)
+	//Product and services
+	var ps_RA_Impact = 0.0
+	var ps_RA_LIKELYHOOD = 0.0
+	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.RA_PROD_SERV}">
+	<c:forEach var = "score" items = "${dataPointLabel.IMPACT}">
+	ps_RA_Impact = ${score};
+	</c:forEach>
+	<c:forEach var = "score" items = "${dataPointLabel.LIKELYHOOD}">
+	ps_RA_LIKELYHOOD = ${score};
+	</c:forEach>
+	</c:forEach>
+	//alert(customer_RA_Impact+" "+customer_RA_LIKELYHOOD)
+	//Transcation
+	var trans_RA_Impact = 0.0
+	var trans_RA_LIKELYHOOD = 0.0
+	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.RA_TRANS}">
+	<c:forEach var = "score" items = "${dataPointLabel.IMPACT}">
+	trans_RA_Impact = ${score};
+	</c:forEach>
+	<c:forEach var = "score" items = "${dataPointLabel.LIKELYHOOD}">
+	trans_RA_LIKELYHOOD = ${score};
+	</c:forEach>
+	</c:forEach>
+	//alert(customer_RA_Impact+" "+customer_RA_LIKELYHOOD)
+	//Delivery Channel
+	var dc_RA_Impact = 0.0
+	var dc_RA_LIKELYHOOD = 0.0
+	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.RA_DC}">
+	<c:forEach var = "score" items = "${dataPointLabel.IMPACT}">
+	dc_RA_Impact = ${score};
+	</c:forEach>
+	<c:forEach var = "score" items = "${dataPointLabel.LIKELYHOOD}">
+	dc_RA_LIKELYHOOD = ${score};
+	</c:forEach>
+	</c:forEach>
+	//alert(customer_RA_Impact+" "+customer_RA_LIKELYHOOD)
+	
+	//WHOLESALE BANKING
+	//Customer
+	var customer_WB_Impact = 0.0
+	var customer_WB_LIKELYHOOD = 0.0
+	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.WB_CUSTOMER}">
+	<c:forEach var = "score" items = "${dataPointLabel.IMPACT}">
+	customer_WB_Impact = ${score};
+	</c:forEach>
+	<c:forEach var = "score" items = "${dataPointLabel.LIKELYHOOD}">
+	customer_WB_LIKELYHOOD = ${score};
+	</c:forEach>
+	</c:forEach>
+	//alert(customer_WB_Impact+" "+customer_WB_LIKELYHOOD)
+	//Geography
+	var geo_WB_Impact = 0.0
+	var geo_WB_LIKELYHOOD = 0.0
+	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.WB_GEO}">
+	<c:forEach var = "score" items = "${dataPointLabel.IMPACT}">
+	geo_WB_Impact = ${score};
+	</c:forEach>
+	<c:forEach var = "score" items = "${dataPointLabel.LIKELYHOOD}">
+	geo_WB_LIKELYHOOD = ${score};
+	</c:forEach>
+	</c:forEach>
+	//alert(customer_WB_Impact+" "+customer_WB_LIKELYHOOD)
+	//Product and services
+	var ps_WB_Impact = 0.0
+	var ps_WB_LIKELYHOOD = 0.0
+	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.WB_PROD_SERV}">
+	<c:forEach var = "score" items = "${dataPointLabel.IMPACT}">
+	ps_WB_Impact = ${score};
+	</c:forEach>
+	<c:forEach var = "score" items = "${dataPointLabel.LIKELYHOOD}">
+	ps_WB_LIKELYHOOD = ${score};
+	</c:forEach>
+	</c:forEach>
+	//alert(customer_WB_Impact+" "+customer_WB_LIKELYHOOD)
+	//Transcation
+	var trans_WB_Impact = 0.0
+	var trans_WB_LIKELYHOOD = 0.0
+	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.WB_TRANS}">
+	<c:forEach var = "score" items = "${dataPointLabel.IMPACT}">
+	trans_WB_Impact = ${score};
+	</c:forEach>
+	<c:forEach var = "score" items = "${dataPointLabel.LIKELYHOOD}">
+	trans_WB_LIKELYHOOD = ${score};
+	</c:forEach>
+	</c:forEach>
+	//alert(customer_WB_Impact+" "+customer_WB_LIKELYHOOD)
+	//Delivery Channel
+	var dc_WB_Impact = 0.0
+	var dc_WB_LIKELYHOOD = 0.0
+	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.WB_DC}">
+	<c:forEach var = "score" items = "${dataPointLabel.IMPACT}">
+	dc_WB_Impact = ${score};
+	</c:forEach>
+	<c:forEach var = "score" items = "${dataPointLabel.LIKELYHOOD}">
+	dc_WB_LIKELYHOOD = ${score};
+	</c:forEach>
+	</c:forEach>
+	//alert(customer_WB_Impact+" "+customer_WB_LIKELYHOOD)
+	
+	
+	var total_Impact = 0.0
+	var total_Likelyhood = 0.0
+	total_Impact = customer_T_Impact + geo_T_Impact + ps_T_Impact + trans_T_Impact + dc_T_Impact + 
+					customer_RL_Impact + geo_RL_Impact + ps_RL_Impact + trans_RL_Impact + dc_RL_Impact + 
+					customer_RA_Impact + geo_RA_Impact + ps_RA_Impact + trans_RA_Impact + dc_RA_Impact +
+					customer_WB_Impact + geo_WB_Impact + ps_WB_Impact + trans_WB_Impact + dc_WB_Impact;
+	
+	total_Likelyhood = customer_T_LIKELYHOOD + geo_T_LIKELYHOOD + ps_T_LIKELYHOOD + trans_T_LIKELYHOOD + dc_T_LIKELYHOOD + 
+						customer_RL_LIKELYHOOD + geo_RL_LIKELYHOOD + ps_RL_LIKELYHOOD + trans_RL_LIKELYHOOD + dc_RL_LIKELYHOOD + 
+						customer_RA_LIKELYHOOD + geo_RA_LIKELYHOOD + ps_RA_LIKELYHOOD + trans_RA_LIKELYHOOD + dc_RA_LIKELYHOOD +
+						customer_WB_LIKELYHOOD + geo_WB_LIKELYHOOD + ps_WB_LIKELYHOOD + trans_WB_LIKELYHOOD + dc_WB_LIKELYHOOD;
+	
+	//console.log("Total Impact: "+total_Impact+" "+"Total Likelyhood: "+total_Likelyhood)
+	var avg_Impact = 0.0
+	avg_Impact = total_Impact/20;
+	
+	var avg_Likelyhood = 0.0
+	avg_Likelyhood = total_Likelyhood/20;
+	
+	//console.log("BEFORE IMPACT: "+avg_Impact+" LIKELYHOOD: "+avg_Likelyhood)
+	
+	if(avg_Impact <= 2){
+		if(avg_Impact == 0){
+			avg_Impact = 0.5;
+		}
+		else if(avg_Impact > 0 && avg_Impact < 2){
+			avg_Impact = (avg_Impact * 2) + 0.5;
+		}
+		else if(avg_Impact == 2){
+			avg_Impact = 5;
+		}
+	}
+	
+	else if(avg_Impact > 2  && avg_Impact <= 5){
+			avg_Impact = (avg_Impact * 2) + 0.5;
+	}
+	
+	else if(avg_Impact > 5 && avg_Impact <= 14){
+		if(avg_Impact > 5 && avg_Impact <= 6.5){
+			avg_Impact = (avg_Impact * 2) + 0.5;
+		}
+		else if(avg_Impact > 6.5 && avg_Impact < 8){
+			avg_Impact = (avg_Impact * 1.5) + 0.5;
+		}
+		else if(avg_Impact > 8 && avg_Impact < 10){
+			avg_Impact = (avg_Impact * 1.2) + 0.5;
+		}
+		else if(avg_Impact > 10 && avg_Impact < 14){
+			avg_Impact = 14;
+		}
+	}
+	
+	else if(avg_Impact > 14.5){
+		avg_Impact = 14;
+	}
+	
+	else{
+		//console.log("N.A")
+	}
+	
+	if(avg_Likelyhood <= 2){
+		if(avg_Likelyhood == 0){
+			avg_Likelyhood = 0.5;
+		}
+		else if(avg_Likelyhood > 0 && avg_Likelyhood < 2){
+			avg_Likelyhood = (avg_Likelyhood * 2) + 0.5;
+		}
+		else if(avg_Likelyhood == 2){
+			avg_Likelyhood = 5;
+		}
+	}
+	
+	else if(avg_Likelyhood > 2  && avg_Likelyhood <= 5){
+			avg_Likelyhood = (avg_Likelyhood * 2) + 0.5;
+	}
+	
+	else if(avg_Likelyhood > 5 && avg_Likelyhood <= 14){
+		if(avg_Likelyhood > 5 && avg_Likelyhood <= 6.5){
+			avg_Likelyhood = (avg_Likelyhood * 2) + 0.5;
+		}
+		else if(avg_Likelyhood > 6.5 && avg_Likelyhood < 8){
+			avg_Likelyhood = (avg_Likelyhood * 1.5) + 0.5;
+		}
+		else if(avg_Likelyhood > 8 && avg_Likelyhood < 10){
+			avg_Likelyhood = (avg_Likelyhood * 1.2) + 0.5;
+		}
+		else if(avg_Likelyhood > 10 && avg_Likelyhood < 14){
+			avg_Likelyhood = 14;
+		}
+	}
+	
+	else if(avg_Likelyhood > 14.5){
+		avg_Likelyhood = 14;
+	}
+	
+	else{
+		//console.log("N.A")
+	}
+	
+	//console.log("AFTER IMPACT: "+avg_Impact+" LIKELYHOOD: "+avg_Likelyhood)
 	
 	
 	
@@ -418,7 +755,7 @@
 	
 	var avg_Operating = 0.0;
 	avg_Operating = (t_Operating + rl_Operating + ra_Operating + wb_Operating) / 4;
-	console.log("avg_Operating: ",avg_Operating)
+	//console.log("avg_Operating: ",avg_Operating)
 	
 	
 		
@@ -1416,8 +1753,8 @@
 			    label: 'BANK LEVEL IR',
 			    //data: bankLevelResidualRisk,
 			    data: [{
-				      x: avg_Design,
-				      y: avg_Operating,
+				      x: avg_Impact,
+				      y: avg_Likelyhood,
 				      r: 20
 				    },],
 				    pointStyle: 'crossRot',
@@ -1554,7 +1891,7 @@
 			       r: 20
 				 },], 
 				pointStyle: ['crossRot', 'rect', 'triangle', 'circle'],
-				borderWidth: 6,
+				borderWidth: 5,
 			    backgroundColor: ['rgb(0, 0, 0)', 'rgb(144, 153, 254)', 'rgb(127, 0, 100)', 'rgb(255, 255, 255)'],
 			    borderColor: 'rgba(0, 0, 0, 1)',
 			  }]

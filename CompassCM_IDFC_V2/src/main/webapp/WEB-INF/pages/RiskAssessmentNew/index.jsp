@@ -54,7 +54,7 @@
 		$("#generateRiskAssessmentSummary").click(function(elm){
 			var assessmentPeriod = $("#assessmentPeriod").val();
 			//var compassRefNo= "CM020520221814";
-			console.log("assessmentPeriod: ",assessmentPeriod)
+			//console.log("assessmentPeriod: ",assessmentPeriod)
 			if(assessmentPeriod != null && assessmentPeriod != ""){
 				 if(confirm("Are you sure you want to Generate Excel Report?")){
 					  $.ajax({

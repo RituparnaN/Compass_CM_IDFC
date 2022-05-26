@@ -60,7 +60,7 @@ public class RiskAssessmentNewServiceImpl implements RiskAssessmentNewService{
 	@Override
 	public Map<String, Object> generateCMReportSummary(String assessmentPeriod, String userCode, String userRole,
 			String ipAddress) {
-		System.out.println("In generateCMReportSummary service assessmentPeriod: "+assessmentPeriod);
+		//System.out.println("In generateCMReportSummary service assessmentPeriod: "+assessmentPeriod);
 		return riskAssessmentNewDAO.generateCMReportSummary(assessmentPeriod, userCode, userRole, ipAddress);
 	}
 	
@@ -92,7 +92,7 @@ public class RiskAssessmentNewServiceImpl implements RiskAssessmentNewService{
 	@Override
 	public Object getGraphDataPointsSummary(String assessmentPeriod) {
 		// TODO Auto-generated method stub
-		System.out.println("In mixedChartSummary service assessmentPeriod is "+assessmentPeriod);
+		//System.out.println("In mixedChartSummary service assessmentPeriod is "+assessmentPeriod);
 		return riskAssessmentNewDAO.getGraphDataPointsSummary(assessmentPeriod);
 	}
 	
