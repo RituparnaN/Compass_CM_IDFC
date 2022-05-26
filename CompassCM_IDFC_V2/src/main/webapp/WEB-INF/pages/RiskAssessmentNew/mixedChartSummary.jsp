@@ -10,7 +10,7 @@
 	
 	
 	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS}">
-		////console.log("DATAPOINTS: ","${dataPointLabel}")
+		console.log("DATAPOINTS: ","${dataPointLabel}")
 	</c:forEach>
 		
 	//DESIGN CALCULATION
@@ -207,6 +207,21 @@
 	var avg_Design = 0.0;
 	avg_Design = (t_Design + rl_Design + ra_Design + wb_Design) / 4;
 	console.log("avg_Design: ",avg_Design)
+	
+	
+	// IMPACT AND LIKLIHOOD CALCULATION
+	//TREASURY
+	var customer_T_Impact = 0.0
+	var customer_T_LIKELYHOOD = 0.0
+	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.T_CUSTOMER}">
+	<c:forEach var = "score" items = "${dataPointLabel.IMPACT}">
+	customer_T_Impact = ${score};
+	</c:forEach>
+	<c:forEach var = "score" items = "${dataPointLabel.LIKELYHOOD}">
+	customer_T_LIKELYHOOD = ${score};
+	</c:forEach>
+	</c:forEach>
+	alert(customer_T_Impact+" "+customer_T_LIKELYHOOD)
 	
 	
 	
@@ -1540,7 +1555,7 @@
 				 },], 
 				pointStyle: ['crossRot', 'rect', 'triangle', 'circle'],
 				borderWidth: 6,
-			    backgroundColor: ['rgb(0, 0, 0)', 'rgb(87, 0, 255)', 'rgb(127, 0, 100)', 'rgb(255, 255, 255)'],
+			    backgroundColor: ['rgb(0, 0, 0)', 'rgb(144, 153, 254)', 'rgb(127, 0, 100)', 'rgb(255, 255, 255)'],
 			    borderColor: 'rgba(0, 0, 0, 1)',
 			  }]
 			};		
