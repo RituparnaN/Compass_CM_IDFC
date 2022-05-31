@@ -30,14 +30,18 @@
 		$("#searchRiskAssessmentSummary").click(function(){
 			var assessmentPeriod = $("#assessmentPeriod").val();
 			if(assessmentPeriod != null && assessmentPeriod != ""){
-				$(this).html("Collecting data...");
+				//$(this).html("Collecting data...");
 				$.ajax({
 					url : "${pageContext.request.contextPath}/common/getRiskAssessmentSummary",
 					type : "GET",
 					cache : false,
 					data : "assessmentPeriod="+assessmentPeriod,
 					success : function(res){
-						$(".compassrow"+id).html(res);
+						//For opening modal
+						 $("#openModal").modal("show");
+						//For putting data in same modal
+					     $("#getCode").html(res).show();
+					     
 					},
 					error : function(){
 						alert("Error while collecting summary data");
@@ -304,6 +308,24 @@
 	
 	
 </script>
+
+
+ <!-- Modal -->
+ <div class="modal fade" id="openModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+   <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+       <div class="modal-header bg-primary">
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="font-size: 26px !important;"><span aria-hidden="true">&times;</span></button>
+         <h4 class="modal-title text-white" id="modalLabel" style=" font-size: 14px !important;">Summary Report</h4>
+       </div>
+       <div class="modal-body" id="getCode">
+          <h4>Data not Available!!</h4>
+       </div>
+    </div>
+   </div>
+ </div>
+
+
 <div class="row compassrow${UNQID}">
 	<div class="col-sm-12">
 		<div class="card card-primary panel_CDDForm">
