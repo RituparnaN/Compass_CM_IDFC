@@ -36,11 +36,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 	
 	public String imageUrl = "";
-	
-	
-//	public MultiSheetExcelViewChart(String imageUrl) {
-//		this.imageUrl = imageUrl;
-//	}
+
 	@Override
 	protected void buildExcelDocument(Map<String, Object> model, Workbook workbook, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -93,11 +89,6 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 	        byte[] imageBytesAssessment = null;
 	        
 	        try {
-	        	
-	        	//System.out.println("A_RESIDUALRISK: "+a_RESIDUALRISK);
-	        	//System.out.println("A_ASSESSMENTWISECAT: "+a_ASSESSMENTWISECAT);
-	        	//System.out.println("A_TOTALWEIGHTEDSCOREIR: "+a_TOTALWEIGHTEDSCOREIR);
-	        	//System.out.println("A_TOTALWEIGHTEDSCOREIC: "+a_TOTALWEIGHTEDSCOREIC);
 	        	
 	        	base64ImageDefaultValueChart = dEFAULTVALUECHART.split(",")[1];
 	        	imageBytesDefaultValueChart = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64ImageDefaultValueChart);
@@ -1352,11 +1343,7 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 							 anchorBaseResidualRisk2.setAnchorType(AnchorType.DONT_MOVE_AND_RESIZE);//set anchor type
 							 anchorChartResidualRisk2.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);
 					 
-					
-							 
-					/////////////////////////////////////****************************		 
-							 
-					 
+				 
 				 	Drawing drawingAssessmentWise = sheet.createDrawingPatriarch();
 				 	ClientAnchor anchorBaseAssessmentWise = helper.createClientAnchor();		 		
 				 	ClientAnchor anchorChartAssessmentWise = helper.createClientAnchor();		 		
@@ -1374,23 +1361,14 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 				 	anchorBaseAssessmentWise.setAnchorType(AnchorType.DONT_MOVE_AND_RESIZE);//set anchor type
 				 	anchorChartAssessmentWise.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);
 					 
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			 		 Picture createBaseResidualRisk = drawingResidualRisk.createPicture(anchorBaseResidualRisk, pictureBL_IR_Base);
 			 		 Picture createChartResidualRisk = drawingResidualRisk.createPicture(anchorChartResidualRisk, pictureBL_IR);
-			 		 
-			 		 
-			 		 
-			 		 
+			 		 		 		 
 			 		 
 			 		 Picture createBaseResidualRisk1 = drawingResidualRisk.createPicture(anchorBaseResidualRisk1, pictureBL_IC_Base);
 			 		 Picture createChartResidualRisk1 = drawingResidualRisk.createPicture(anchorChartResidualRisk1, pictureBL_IC);
 			 		 Picture createBaseResidualRisk2 = drawingResidualRisk.createPicture(anchorBaseResidualRisk2, pictureResidualRiskBase);
 			 		 Picture createChartResidualRisk2 = drawingResidualRisk.createPicture(anchorChartResidualRisk2, pictureResidualRiskChart);
-			 		 
-			 		 
-			 		 
-			 		 
-			 		 
 			 		 
 			 		 Picture createBaseAssessmentWise = drawingResidualRisk.createPicture(anchorBaseAssessmentWise, pictureAssessmentBase);
 			 		 Picture createChartAssessmentWise = drawingResidualRisk.createPicture(anchorChartAssessmentWise, pictureAssessmentChart);
@@ -1400,16 +1378,9 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 					//System.out.println("error while inserting graph in report");
 					e.printStackTrace();
 				}
-		 		
-			  
-			
-				
+		
 			}
-		
-		
-		
-		
-		//////////////////
+
 		
 		}
 		

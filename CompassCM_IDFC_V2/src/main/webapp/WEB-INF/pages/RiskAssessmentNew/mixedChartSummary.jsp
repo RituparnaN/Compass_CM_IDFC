@@ -1890,10 +1890,11 @@
 			       y: totalWholesaleIC_y,
 			       r: 20
 				 },], 
-				pointStyle: ['crossRot', 'rect', 'triangle', 'circle'],
-				borderWidth: 5,
-			    backgroundColor: ['rgb(0, 0, 0)', 'rgb(144, 153, 254)', 'rgb(127, 0, 100)', 'rgb(255, 255, 255)'],
-			    borderColor: 'rgba(0, 0, 0, 1)',
+				//pointStyle: ['crossRot', 'rect', 'triangle', 'circle'],
+				pointStyle: ['rect', 'circle', 'triangle', 'crossRot'],
+				borderWidth: [1, 2, 1, 3],
+			    backgroundColor: ['rgb(255, 255, 255)', 'rgb(144, 153, 254)', 'rgb(127, 0, 100)', 'rgb(0, 0, 0)'],
+			    borderColor: ['rgb(0, 0, 0)', 'rgb(144, 153, 254)', 'rgb(127, 0, 100)', 'rgba(0, 0, 0)'],
 			  }]
 			};		
 
