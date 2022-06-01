@@ -3693,5 +3693,105 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 		return id;	
 	}
 	
+	
+	@Override
+	public String getImageUrlDataNew(String imageId){
+		System.out.println("in Here");
+		
+ 		String a_RESIDUALRISK = "";
+ 		String a_ASSESSMENTWISECAT = "";
+ 		double a_TOTALWEIGHTEDSCOREIR = 0.0;
+ 		double a_TOTALWEIGHTEDSCOREIC = 0.0;
+		
+		Connection connection = connectionUtil.getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try{
+			String query = "SELECT RESIDUALRISK, ASSESSMENTWISECAT, A_TOTALWEIGHTEDSCOREIR, A_TOTALWEIGHTEDSCOREIC FROM TB_IMAGEDATA WHERE IMAGEID = ? ";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, imageId);
+			resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()) {
+            	a_RESIDUALRISK = resultSet.getString("RESIDUALRISK");
+            	a_ASSESSMENTWISECAT = resultSet.getString("ASSESSMENTWISECAT");
+            	a_TOTALWEIGHTEDSCOREIR = resultSet.getDouble("A_TOTALWEIGHTEDSCOREIR");
+            	a_TOTALWEIGHTEDSCOREIC = resultSet.getDouble("A_TOTALWEIGHTEDSCOREIC");
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			connectionUtil.closeResources(connection, preparedStatement, resultSet, null);
+		}
+		return a_RESIDUALRISK+"@~@"+a_ASSESSMENTWISECAT+"@~@"+a_TOTALWEIGHTEDSCOREIR+"@~@"+a_TOTALWEIGHTEDSCOREIC;	
+	}
+	
 
+	@Override
+	public String getImageUrlDataSummary(String imageId){
+		System.out.println("in Here");
+		
+		String dEFAULTVALUECHART = "";
+	 	String t_RESIDUALRISK = "";
+	 	String rl_RESIDUALRISK = "";
+	 	String ra_RESIDUALRISK = "";
+	 	String wb_RESIDUALRISK = "";
+ 		String rESIDUALRISK = "";
+ 		String aSSESSMENTWISECAT = "";
+ 		String bl_IR = "";
+ 		String bl_IC = "";
+ 		double a_TOTALWEIGHTEDSCOREIR = 0.0;
+ 		double a_TOTALWEIGHTEDSCOREIC = 0.0;
+ 		double s_TotalTresuryIR = 0.0;
+ 		double s_TotalTresuryIC = 0.0;
+ 		double s_TotalRetailLiabiltiesIR = 0.0;
+ 		double s_totalRetailLiabiltiesIC = 0.0;
+ 		double s_TotalRetailAssetsIR = 0.0;
+ 		double s_TotalRetailAssetsIC = 0.0;
+ 		double s_TotalWholesaleIR = 0.0;
+ 		double s_TotalWholesaleIC = 0.0;
+		
+		Connection connection = connectionUtil.getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try{
+			String query = "SELECT DEFAULTVALUECHART, T_RESIDUALRISK, RL_RESIDUALRISK, RA_RESIDUALRISK, WB_RESIDUALRISK, RESIDUALRISK, ASSESSMENTWISECAT, BL_IR, BL_IC, "
+            		+ "A_TOTALWEIGHTEDSCOREIR, A_TOTALWEIGHTEDSCOREIC, TOTALTRESURYIR, TOTALTRESURYIC, "
+            		+ "TOTALRLIR, TOTALRLIC, TOTALRAIR, TOTALRAIC, TOTALWBIR, TOTALWBIC FROM TB_IMAGEDATA WHERE IMAGEID = ?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, imageId);
+			resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()) {
+            	dEFAULTVALUECHART = resultSet.getString("DEFAULTVALUECHART");
+            	t_RESIDUALRISK = resultSet.getString("T_RESIDUALRISK");
+            	rl_RESIDUALRISK = resultSet.getString("RL_RESIDUALRISK");
+            	ra_RESIDUALRISK = resultSet.getString("RA_RESIDUALRISK");
+            	wb_RESIDUALRISK = resultSet.getString("WB_RESIDUALRISK");
+            	rESIDUALRISK = resultSet.getString("RESIDUALRISK");
+            	aSSESSMENTWISECAT = resultSet.getString("ASSESSMENTWISECAT");
+            	bl_IR = resultSet.getString("BL_IR");
+            	bl_IC = resultSet.getString("BL_IC");
+            	a_TOTALWEIGHTEDSCOREIR = resultSet.getDouble("A_TOTALWEIGHTEDSCOREIR");
+            	a_TOTALWEIGHTEDSCOREIC = resultSet.getDouble("A_TOTALWEIGHTEDSCOREIC");
+            	s_TotalTresuryIR = resultSet.getDouble("TOTALTRESURYIR");
+            	s_TotalTresuryIC = resultSet.getDouble("TOTALTRESURYIC");
+            	s_TotalRetailLiabiltiesIR = resultSet.getDouble("TOTALRLIR");
+            	s_totalRetailLiabiltiesIC = resultSet.getDouble("TOTALRLIC");
+            	s_TotalRetailAssetsIR = resultSet.getDouble("TOTALRAIR");
+            	s_TotalRetailAssetsIC = resultSet.getDouble("TOTALRAIC");
+            	s_TotalWholesaleIR = resultSet.getDouble("TOTALWBIR");
+            	s_TotalWholesaleIC = resultSet.getDouble("TOTALWBIC");
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			connectionUtil.closeResources(connection, preparedStatement, resultSet, null);
+		}
+		return dEFAULTVALUECHART+"@~@"+t_RESIDUALRISK+"@~@"+rl_RESIDUALRISK+"@~@"+ra_RESIDUALRISK+"@~@"
+				+wb_RESIDUALRISK+"@~@"+rESIDUALRISK+"@~@"+aSSESSMENTWISECAT+"@~@"+bl_IR+"@~@"
+				+bl_IC+"@~@"+a_TOTALWEIGHTEDSCOREIR+"@~@"+a_TOTALWEIGHTEDSCOREIC+"@~@"+s_TotalTresuryIR+"@~@"
+				+s_TotalTresuryIC+"@~@"+s_TotalRetailLiabiltiesIR+"@~@"+s_totalRetailLiabiltiesIC+"@~@"+s_TotalRetailAssetsIR+"@~@"	
+				+s_TotalRetailAssetsIC+"@~@"+s_TotalWholesaleIR+"@~@"+s_TotalWholesaleIC;
+	}
 }

@@ -46,68 +46,31 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 			HttpServletResponse response) throws Exception {
 		 	String imgId=request.getParameter("imageId");
 	 		//System.out.println("image Id: "+imgId);
-		 	String dEFAULTVALUECHART = "";
-		 	String t_RESIDUALRISK = "";
-		 	String rl_RESIDUALRISK = "";
-		 	String ra_RESIDUALRISK = "";
-		 	String wb_RESIDUALRISK = "";
-	 		String rESIDUALRISK = "";
-	 		String aSSESSMENTWISECAT = "";
-	 		String bl_IR = "";
-	 		String bl_IC = "";
-	 		double a_TOTALWEIGHTEDSCOREIR = 0.0;
-	 		double a_TOTALWEIGHTEDSCOREIC = 0.0;
-	 		double s_TotalTresuryIR = 0.0;
-	 		double s_TotalTresuryIC = 0.0;
-	 		double s_TotalRetailLiabiltiesIR = 0.0;
-	 		double s_totalRetailLiabiltiesIC = 0.0;
-	 		double s_TotalRetailAssetsIR = 0.0;
-	 		double s_TotalRetailAssetsIC = 0.0;
-	 		double s_TotalWholesaleIR = 0.0;
-	 		double s_TotalWholesaleIC = 0.0;
-	 		String url = "jdbc:oracle:thin:@localhost:1521/xe";
-	        String user = "COMAML_CM";
-	        String pass = "ORACLE";
-	 	        
-	        Connection con = null;
-	        
-	        try {
-	 
-	            DriverManager.registerDriver(
-	                new oracle.jdbc.OracleDriver());
-	 
-	            con = DriverManager.getConnection(url, user, pass);
-	            Statement st = con.createStatement();
-	            String sql = "SELECT DEFAULTVALUECHART, T_RESIDUALRISK, RL_RESIDUALRISK, RA_RESIDUALRISK, WB_RESIDUALRISK, RESIDUALRISK, ASSESSMENTWISECAT, BL_IR, BL_IC, "
-	            		+ "A_TOTALWEIGHTEDSCOREIR, A_TOTALWEIGHTEDSCOREIC, TOTALTRESURYIR, TOTALTRESURYIC, "
-	            		+ "TOTALRLIR, TOTALRLIC, TOTALRAIR, TOTALRAIC, TOTALWBIR, TOTALWBIC FROM TB_IMAGEDATA WHERE IMAGEID = '"+imgId+"'";
-	            ResultSet m = st.executeQuery(sql);
-	            while(m.next()) {
-	            	dEFAULTVALUECHART = m.getString("DEFAULTVALUECHART");
-	            	t_RESIDUALRISK = m.getString("T_RESIDUALRISK");
-	            	rl_RESIDUALRISK = m.getString("RL_RESIDUALRISK");
-	            	ra_RESIDUALRISK = m.getString("RA_RESIDUALRISK");
-	            	wb_RESIDUALRISK = m.getString("WB_RESIDUALRISK");
-	            	rESIDUALRISK = m.getString("RESIDUALRISK");
-	            	aSSESSMENTWISECAT = m.getString("ASSESSMENTWISECAT");
-	            	bl_IR = m.getString("BL_IR");
-	            	bl_IC = m.getString("BL_IC");
-	            	a_TOTALWEIGHTEDSCOREIR = m.getDouble("A_TOTALWEIGHTEDSCOREIR");
-	            	a_TOTALWEIGHTEDSCOREIC = m.getDouble("A_TOTALWEIGHTEDSCOREIC");
-	            	s_TotalTresuryIR = m.getDouble("TOTALTRESURYIR");
-	            	s_TotalTresuryIC = m.getDouble("TOTALTRESURYIC");
-	            	s_TotalRetailLiabiltiesIR = m.getDouble("TOTALRLIR");
-	            	s_totalRetailLiabiltiesIC = m.getDouble("TOTALRLIC");
-	            	s_TotalRetailAssetsIR = m.getDouble("TOTALRAIR");
-	            	s_TotalRetailAssetsIC = m.getDouble("TOTALRAIC");
-	            	s_TotalWholesaleIR = m.getDouble("TOTALWBIR");
-	            	s_TotalWholesaleIC = m.getDouble("TOTALWBIC");
-	            }
-	            con.close();
-	        }
-	        catch (Exception ex) {
-	            System.err.println(ex);
-	        }
+		 	
+		 	String getGraphData = (String) model.get("DATA");
+			System.out.println("data: "+getGraphData);
+			
+			String[] parts = getGraphData.split("@~@");
+			String dEFAULTVALUECHART = parts[0];
+		 	String t_RESIDUALRISK = parts[1];
+		 	String rl_RESIDUALRISK = parts[2];
+		 	String ra_RESIDUALRISK = parts[3];
+		 	String wb_RESIDUALRISK = parts[4];
+	 		String rESIDUALRISK = parts[5];
+	 		String aSSESSMENTWISECAT = parts[6];
+	 		String bl_IR = parts[7];
+	 		String bl_IC = parts[8];		
+			double a_TOTALWEIGHTEDSCOREIR = Double.parseDouble(parts[9]); 
+			double a_TOTALWEIGHTEDSCOREIC = Double.parseDouble(parts[10]);
+			double s_TotalTresuryIR = Double.parseDouble(parts[11]);
+	 		double s_TotalTresuryIC = Double.parseDouble(parts[12]);
+	 		double s_TotalRetailLiabiltiesIR = Double.parseDouble(parts[13]);
+	 		double s_totalRetailLiabiltiesIC = Double.parseDouble(parts[14]);
+	 		double s_TotalRetailAssetsIR = Double.parseDouble(parts[15]);
+	 		double s_TotalRetailAssetsIC = Double.parseDouble(parts[16]);
+	 		double s_TotalWholesaleIR = Double.parseDouble(parts[17]);
+	 		double s_TotalWholesaleIC = Double.parseDouble(parts[18]);
+			
 	        
 	        String base64ImageDefaultValueChart = null;
 	        String base64ImageT_ResidualRisk = null;

@@ -36,60 +36,25 @@ public class MultiSheetExcelViewChartNew extends AbstractExcelView {
 	
 	public String imageUrl = "";
 	
-	
-//	public MultiSheetExcelViewChart(String imageUrl) {
-//		this.imageUrl = imageUrl;
-//	}
 	@Override
 	protected void buildExcelDocument(Map<String, Object> model, Workbook workbook, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		 	String imgId=request.getParameter("imageId");
-	 		//System.out.println("image Id: "+imgId);
-	 		String a_RESIDUALRISK = "";
-	 		String a_ASSESSMENTWISECAT = "";
-	 		double a_TOTALWEIGHTEDSCOREIR = 0.0;
-	 		double a_TOTALWEIGHTEDSCOREIC = 0.0;
-	 		String url = "jdbc:oracle:thin:@localhost:1521/xe";
-	        String user = "COMAML_CM";
-	        String pass = "ORACLE";
-	        
-	        //System.out.println("Excel NEW opened");
-	 	        
-	        Connection con = null;
-	        
-	        try {
-	 
-	            DriverManager.registerDriver(
-	                new oracle.jdbc.OracleDriver());
-	 
-	            con = DriverManager.getConnection(url, user, pass);
-	            Statement st = con.createStatement();
-	            String sql = "SELECT RESIDUALRISK, ASSESSMENTWISECAT, A_TOTALWEIGHTEDSCOREIR, A_TOTALWEIGHTEDSCOREIC FROM TB_IMAGEDATA WHERE IMAGEID = '"+imgId+"'";
-	            ResultSet m = st.executeQuery(sql);
-	            while(m.next()) {
-	            	a_RESIDUALRISK = m.getString("RESIDUALRISK");
-	            	a_ASSESSMENTWISECAT = m.getString("ASSESSMENTWISECAT");
-	            	a_TOTALWEIGHTEDSCOREIR = m.getDouble("A_TOTALWEIGHTEDSCOREIR");
-	            	a_TOTALWEIGHTEDSCOREIC = m.getDouble("A_TOTALWEIGHTEDSCOREIC");
-	            }
-	            con.close();
-	        }
-	        catch (Exception ex) {
-	            System.err.println(ex);
-	        }
-	        
+		
+		 	String getGraphData = (String) model.get("DATA");
+			System.out.println("data: "+getGraphData);
+			
+			String[] parts = getGraphData.split("@~@");
+			String a_RESIDUALRISK = parts[0]; 
+			String a_ASSESSMENTWISECAT = parts[1]; 
+			double a_TOTALWEIGHTEDSCOREIR = Double.parseDouble(parts[2]); 
+			double a_TOTALWEIGHTEDSCOREIC = Double.parseDouble(parts[3]);
+ 
 	        String base64ImageResidualRisk = null;
 	        String base64ImageAssessment = null;
 	        byte[] imageBytesResidualRisk = null;
 	        byte[] imageBytesAssessment = null;
 	        
-	        try {
-	        	
-	        	//System.out.println("A_RESIDUALRISK: "+a_RESIDUALRISK);
-	        	//System.out.println("A_ASSESSMENTWISECAT: "+a_ASSESSMENTWISECAT);
-	        	//System.out.println("A_TOTALWEIGHTEDSCOREIR: "+a_TOTALWEIGHTEDSCOREIR);
-	        	//System.out.println("A_TOTALWEIGHTEDSCOREIC: "+a_TOTALWEIGHTEDSCOREIC);
-	        	
+	        try {        	
 	        	base64ImageResidualRisk = a_RESIDUALRISK.split(",")[1];
 	        	imageBytesResidualRisk = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64ImageResidualRisk);
 	        	
@@ -102,6 +67,10 @@ public class MultiSheetExcelViewChartNew extends AbstractExcelView {
 	 	    
 		List<String> tabOrder = (List<String>) model.get("TABORDER");
 		String filename = (String) model.get("FILENAME");
+		
+		String test = (String) model.get("TEST");
+		System.out.println("TEST: "+test);
+		
 		if(!filename.isEmpty()) {
 			response.setContentType("application/vnd.ms-excel");
 		    response.setHeader("Content-Disposition", "attachment; fileName=\""+filename+".xlsx\"");

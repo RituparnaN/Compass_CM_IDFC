@@ -284,6 +284,12 @@ private static final Logger log = LoggerFactory.getLogger(CommonController.class
 		Date date = new Date();
 		mainMap.put("TABORDER", tabOrder);
 		mainMap.put("FILENAME", compassRefNo+"_"+userCode+"_"+sdf.format(date));
+		System.out.println(mainMap);
+		
+		String imgId=request.getParameter("imageId");
+		String getData = riskAssessmentNewService.getImageUrlDataNew(imgId);
+		mainMap.put("DATA", getData);
+		
 		ModelAndView modelAndView = new ModelAndView(new MultiSheetExcelViewChartNew(), mainMap);
 		//System.out.println("MAINMAP: "+mainMap);
 		commonService.auditLog(authentication.getPrincipal().toString(), request, "REPORTS", "DOWNLOAD", "File Downloaded");
@@ -308,7 +314,12 @@ private static final Logger log = LoggerFactory.getLogger(CommonController.class
 		SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyyHHmmss");
 		Date date = new Date();
 		mainMap.put("TABORDER", tabOrder);
-		mainMap.put("FILENAME", assessmentPeriod+"_"+userCode+"_"+sdf.format(date));
+		mainMap.put("FILENAME", "Summary_Report_"+assessmentPeriod+"_"+userCode+"_"+sdf.format(date));
+		
+		String imgId=request.getParameter("imageId");
+		String getData = riskAssessmentNewService.getImageUrlDataSummary(imgId);
+		mainMap.put("DATA", getData);
+		
 		ModelAndView modelAndView = new ModelAndView(new MultiSheetExcelViewChartSummary(), mainMap);
 		//System.out.println("MAINMAP: "+mainMap);
 		commonService.auditLog(authentication.getPrincipal().toString(), request, "REPORTS", "DOWNLOAD", "File Downloaded");

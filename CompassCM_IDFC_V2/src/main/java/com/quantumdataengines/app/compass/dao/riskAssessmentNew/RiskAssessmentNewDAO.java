@@ -28,4 +28,7 @@ public interface RiskAssessmentNewDAO {
 	public Object getGraphDataPointsNew(String cmRefNo);
 	public Object getGraphDataPointsSummary(String assessmentPeriod);
 	public String saveImageUrlData(String imageUrl);
+	
+	public String getImageUrlDataNew(String imageId);
+	public String getImageUrlDataSummary(String imageId);
 }
