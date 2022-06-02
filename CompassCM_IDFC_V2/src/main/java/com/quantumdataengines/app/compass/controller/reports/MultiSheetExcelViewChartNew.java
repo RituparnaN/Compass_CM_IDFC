@@ -235,7 +235,7 @@ public class MultiSheetExcelViewChartNew extends AbstractExcelView {
             cell.setCellValue(a_TOTALWEIGHTEDSCOREIC);
             
             
-            if(a_TOTALWEIGHTEDSCOREIR <= 2){
+            if(a_TOTALWEIGHTEDSCOREIR <= 5){
             	for (int i = 2; i <= 6 ; i++) {
             			row = sheet.getRow(i);
             			for(int j = 0; j < noOfColumns; j++){
@@ -254,7 +254,7 @@ public class MultiSheetExcelViewChartNew extends AbstractExcelView {
             		}
             	}
             
-            if(a_TOTALWEIGHTEDSCOREIR > 2 && a_TOTALWEIGHTEDSCOREIR <= 5){
+            if(a_TOTALWEIGHTEDSCOREIR > 5 && a_TOTALWEIGHTEDSCOREIR <= 15){
             	for (int i = 2; i <= 6 ; i++) {
             			row = sheet.getRow(i);
             			for(int j = 0; j < noOfColumns; j++){
@@ -273,7 +273,7 @@ public class MultiSheetExcelViewChartNew extends AbstractExcelView {
             		}
             	}
             
-            if(a_TOTALWEIGHTEDSCOREIR > 5){
+            if(a_TOTALWEIGHTEDSCOREIR > 15){
             	for (int i = 2; i <= 6 ; i++) {
             			row = sheet.getRow(i);
             			for(int j = 0; j < noOfColumns; j++){
@@ -293,7 +293,7 @@ public class MultiSheetExcelViewChartNew extends AbstractExcelView {
             	}
             
             
-            if(a_TOTALWEIGHTEDSCOREIC <= 2){
+            if(a_TOTALWEIGHTEDSCOREIC <= 3){
             	for (int i = 8; i <= 16 ; i++) {
         			row = sheet.getRow(i);
         			for(int j = 0; j < noOfColumns; j++){
@@ -312,7 +312,7 @@ public class MultiSheetExcelViewChartNew extends AbstractExcelView {
   			}
             }
             
-            if(a_TOTALWEIGHTEDSCOREIC > 2 && a_TOTALWEIGHTEDSCOREIC <= 5){
+            if(a_TOTALWEIGHTEDSCOREIC > 3 && a_TOTALWEIGHTEDSCOREIC <= 7){
             	for (int i = 8; i <= 16 ; i++) {
         			row = sheet.getRow(i);
         			for(int j = 0; j < noOfColumns; j++){
@@ -331,7 +331,7 @@ public class MultiSheetExcelViewChartNew extends AbstractExcelView {
   			}
             }
             
-            if(a_TOTALWEIGHTEDSCOREIC > 5){
+            if(a_TOTALWEIGHTEDSCOREIC > 7){
             	for (int i = 8; i <= 16 ; i++) {
         			row = sheet.getRow(i);
         			for(int j = 0; j < noOfColumns; j++){

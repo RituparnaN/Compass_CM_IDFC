@@ -691,7 +691,8 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 			}
 			
 			int noOfColumns = sheet.getRow(0).getLastCellNum();
-
+			int totalRows=currentRow;
+			
 			
             for (int i = 1; i == 1 ; i++) {
 					row = sheet.getRow(i);
@@ -703,11 +704,11 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
     					// ***** TO CONVERT CELL INTO DOUBLE FIRST CONVERT INTO STRING THEN CONVERT INTO DOUBLE *****
     					double cellData = Double.parseDouble(cell.toString());
 
-    					if(cellData <= 2){
+    					if(cellData <= 5){
     						cell.setCellValue("LOW");
     						cell.setCellStyle(lowBoldBg);
     					}
-    					else if(cellData > 2 && cellData <= 5){
+    					else if(cellData > 5 && cellData <= 15){
     						cell.setCellValue("MEDIUM");
     						cell.setCellStyle(mBoldBg);
     					}
@@ -729,11 +730,11 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
     					// ***** TO CONVERT CELL INTO DOUBLE FIRST CONVERT INTO STRING THEN CONVERT INTO DOUBLE *****
     					double cellData = Double.parseDouble(cell.toString());
 
-    					if(cellData <= 2){
+    					if(cellData <= 3){
     						cell.setCellValue("EFFECTIVE");
     						cell.setCellStyle(lowBoldBg);
     					}
-    					else if(cellData > 2 && cellData <= 5){
+    					else if(cellData > 3 && cellData <= 7){
     						cell.setCellValue("NEED IMPROVEMENT");
     						cell.setCellStyle(mBoldBg);
     					}
@@ -744,7 +745,62 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
     				}       				
     			}           			
     		}
-						
+            
+            for (int i = 2; i <= 6 ; i++) {
+    			row = sheet.getRow(i);
+    			for(int j = 0; j < noOfColumns; j++){
+    				if(j == 4){
+    					cell = row.getCell(j);
+   					
+    					// ***** TO CONVERT CELL INTO DOUBLE FIRST CONVERT INTO STRING THEN CONVERT INTO DOUBLE *****
+    					double cellData = Double.parseDouble(cell.toString());
+
+    					if(cellData <= 5){
+    						cell.setCellValue("LOW");
+    						cell.setCellStyle(lowBg);
+    					}
+    					else if(cellData > 5 && cellData <= 15){
+    						cell.setCellValue("MEDIUM");
+    						cell.setCellStyle(mediumBg);
+    					}
+    					else{
+    						cell.setCellValue("HIGH");
+    						cell.setCellStyle(highBg);
+    					}
+
+    				}
+    				
+    			}           			
+    		}
+            
+            for (int i = 8; i <= 16 ; i++) {
+    			row = sheet.getRow(i);
+    			for(int j = 0; j < noOfColumns; j++){
+    				if(j == 4){
+    					cell = row.getCell(j);
+   					
+    					// ***** TO CONVERT CELL INTO DOUBLE FIRST CONVERT INTO STRING THEN CONVERT INTO DOUBLE *****
+    					double cellData = Double.parseDouble(cell.toString());
+
+    					if(cellData <= 3){
+    						cell.setCellValue("EFFECTIVE");
+    						cell.setCellStyle(lowBg);
+    					}
+    					else if(cellData > 3 && cellData <= 7){
+    						cell.setCellValue("NEED IMPROVEMENTS");
+    						cell.setCellStyle(mediumBg);
+    					}
+    					else{
+    						cell.setCellValue("NO CONTROL");
+    						cell.setCellStyle(highBg);
+    					}
+
+    				}
+    				
+    			}           			
+    		}
+			
+            /*
             for (int i = 2; i <= 6 ; i++) {
     			row = sheet.getRow(i);
     			for(int j = 0; j < noOfColumns; j++){
@@ -789,9 +845,10 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 			}
 			
 		}           			
-	}			
+	}	
+    */
 			
-	int totalRows=currentRow;
+
 			
 	try {
 				
@@ -1161,11 +1218,11 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
         					// ***** TO CONVERT CELL INTO DOUBLE FIRST CONVERT INTO STRING THEN CONVERT INTO DOUBLE *****
         					double cellData = Double.parseDouble(cell.toString());
 
-        					if(cellData <= 2){
+        					if(cellData <= 5){
         						cell.setCellValue("LOW");
         						cell.setCellStyle(lowBoldBg);
         					}
-        					else if(cellData > 2 && cellData <= 5){
+        					else if(cellData > 5 && cellData <= 15){
         						cell.setCellValue("MEDIUM");
         						cell.setCellStyle(mBoldBg);
         					}
@@ -1186,11 +1243,11 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
         					// ***** TO CONVERT CELL INTO DOUBLE FIRST CONVERT INTO STRING THEN CONVERT INTO DOUBLE *****
         					double cellData = Double.parseDouble(cell.toString());
 
-        					if(cellData <= 2){
+        					if(cellData <= 5){
         						cell.setCellValue("LOW");
         						cell.setCellStyle(lowBg);
         					}
-        					else if(cellData > 2 && cellData <= 5){
+        					else if(cellData > 5 && cellData <= 15){
         						cell.setCellValue("MEDIUM");
         						cell.setCellStyle(mediumBg);
         					}
@@ -1212,11 +1269,11 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
         					// ***** TO CONVERT CELL INTO DOUBLE FIRST CONVERT INTO STRING THEN CONVERT INTO DOUBLE *****
         					double cellData = Double.parseDouble(cell.toString());
 
-        					if(cellData <= 2){
+        					if(cellData <= 3){
         						cell.setCellValue("EFFECTIVE");
         						cell.setCellStyle(lowBoldBg);
         					}
-        					else if(cellData > 2 && cellData <= 5){
+        					else if(cellData > 3 && cellData <= 7){
         						cell.setCellValue("NEED IMPROVEMENT");
         						cell.setCellStyle(mBoldBg);
         					}
@@ -1238,11 +1295,11 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
         					// ***** TO CONVERT CELL INTO DOUBLE FIRST CONVERT INTO STRING THEN CONVERT INTO DOUBLE *****
         					double cellData = Double.parseDouble(cell.toString());
 
-        					if(cellData <= 2){
+        					if(cellData <= 3){
         						cell.setCellValue("EFFECTIVE");
         						cell.setCellStyle(lowBg);
         					}
-        					else if(cellData > 2 && cellData <= 5){
+        					else if(cellData > 3 && cellData <= 7){
         						cell.setCellValue("NEED IMPROVEMENTS");
         						cell.setCellStyle(mediumBg);
         					}

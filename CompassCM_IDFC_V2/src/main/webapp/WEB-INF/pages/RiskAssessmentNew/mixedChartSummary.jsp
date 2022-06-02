@@ -5,9 +5,6 @@
 <script type="text/javascript"	src="${pageContext.request.contextPath}/includes/scripts/chart.js"></script>
 
 <script>
-	//console.log("MIXED CHART SUMMARY CALLED!!")
-	/* Chart.defaults.scales.linear.max = 30; //set lebel max on y axis */
-	
 	
 	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS}">
 		//console.log("DATAPOINTS: ","${dataPointLabel}")
@@ -43,7 +40,6 @@
 	 nc_Design_T = ${score};
 	</c:forEach>
 	</c:forEach>
-	////console.log("T: "+e_Design_T+" "+na_Design_T+" "+ni_Design_T+" "+nc_Design_T);
 	
 	var t_Design = 0.0;
 	var t_Design1 = 0.0;
@@ -58,9 +54,7 @@
 	{
 		t_Design = t_Design1 / t_Design2;
 	}
-	//test = ((e_Design_T * 0) + (ni_Design_T * 5) + (nc_Design_T * 10))/((e_Design_T + ni_Design_T + na_Design_T + nc_Design_T) - (na_Design_T));
-	//console.log("test: "+t_Design);
-	
+
 	//RL
 	//E
 	var e_Design_RL = 0.0
@@ -90,7 +84,6 @@
 	 nc_Design_RL = ${score};
 	</c:forEach>
 	</c:forEach>
-	//console.log("RL: "+e_Design_RL+" "+na_Design_RL+" "+ni_Design_RL+" "+nc_Design_RL);
 	
 	var rl_Design = 0.0;
 	var rl_Design1 = 0.0;
@@ -105,10 +98,7 @@
 	{
 		rl_Design = rl_Design1 / rl_Design2;
 	}
-	//test = ((e_Design_T * 0) + (ni_Design_T * 5) + (nc_Design_T * 10))/((e_Design_T + ni_Design_T + na_Design_T + nc_Design_T) - (na_Design_T));
-	//console.log("test_RL: "+rl_Design);
-	
-	
+
 	//RA
 	//E
 	var e_Design_RA = 0.0
@@ -138,7 +128,6 @@
 	 nc_Design_RA = ${score};
 	</c:forEach>
 	</c:forEach>
-	//console.log("RA: "+e_Design_RA+" "+na_Design_RA+" "+ni_Design_RA+" "+nc_Design_RA);
 	
 	var ra_Design = 0.0;
 	var ra_Design1 = 0.0;
@@ -153,9 +142,6 @@
 	{
 		ra_Design = ra_Design1 / ra_Design2;
 	}
-	//test = ((e_Design_T * 0) + (ni_Design_T * 5) + (nc_Design_T * 10))/((e_Design_T + ni_Design_T + na_Design_T + nc_Design_T) - (na_Design_T));
-	//console.log("test_ra: "+ra_Design);
-	
 	
 	//WB
 	//E
@@ -186,7 +172,6 @@
 	 nc_Design_WB = ${score};
 	</c:forEach>
 	</c:forEach>
-	//console.log("WB: "+e_Design_WB+" "+na_Design_WB+" "+ni_Design_WB+" "+nc_Design_WB);
 	
 	var wb_Design = 0.0;
 	var wb_Design1 = 0.0;
@@ -201,12 +186,9 @@
 	{
 		wb_Design = wb_Design1 / wb_Design2;
 	}
-	//test = ((e_Design_T * 0) + (ni_Design_T * 5) + (nc_Design_T * 10))/((e_Design_T + ni_Design_T + na_Design_T + nc_Design_T) - (na_Design_T));
-	//console.log("test_wb: "+wb_Design);
-	
+
 	var avg_Design = 0.0;
 	avg_Design = (t_Design + rl_Design + ra_Design + wb_Design) / 4;
-	//console.log("avg_Design: ",avg_Design)
 	
 	
 	// IMPACT AND LIKLIHOOD CALCULATION
@@ -471,95 +453,106 @@
 						customer_RA_LIKELYHOOD + geo_RA_LIKELYHOOD + ps_RA_LIKELYHOOD + trans_RA_LIKELYHOOD + dc_RA_LIKELYHOOD +
 						customer_WB_LIKELYHOOD + geo_WB_LIKELYHOOD + ps_WB_LIKELYHOOD + trans_WB_LIKELYHOOD + dc_WB_LIKELYHOOD;
 	
-	//console.log("Total Impact: "+total_Impact+" "+"Total Likelyhood: "+total_Likelyhood)
+
 	var avg_Impact = 0.0
 	avg_Impact = total_Impact/20;
 	
 	var avg_Likelyhood = 0.0
 	avg_Likelyhood = total_Likelyhood/20;
 	
-	//console.log("BEFORE IMPACT: "+avg_Impact+" LIKELYHOOD: "+avg_Likelyhood)
+
 	
-	if(avg_Impact <= 2){
+//////////////////////////////////////////////////////////////////////////
+	if(avg_Impact <= 5){
 		if(avg_Impact == 0){
-			avg_Impact = 0.5;
+			avg_Impact = 0.8;
 		}
-		else if(avg_Impact > 0 && avg_Impact < 2){
-			avg_Impact = (avg_Impact * 2) + 0.5;
+		else if(avg_Impact > 0 && avg_Impact < 5){
+			avg_Impact = avg_Impact * 2;
 		}
-		else if(avg_Impact == 2){
-			avg_Impact = 5;
-		}
-	}
-	
-	else if(avg_Impact > 2  && avg_Impact <= 5){
-			avg_Impact = (avg_Impact * 2) + 0.5;
-	}
-	
-	else if(avg_Impact > 5 && avg_Impact <= 14){
-		if(avg_Impact > 5 && avg_Impact <= 6.5){
-			avg_Impact = (avg_Impact * 2) + 0.5;
-		}
-		else if(avg_Impact > 6.5 && avg_Impact < 8){
-			avg_Impact = (avg_Impact * 1.5) + 0.5;
-		}
-		else if(avg_Impact > 8 && avg_Impact < 10){
-			avg_Impact = (avg_Impact * 1.2) + 0.5;
-		}
-		else if(avg_Impact > 10 && avg_Impact < 14){
-			avg_Impact = 14;
+		else if(avg_Impact == 5){
+			avg_Impact = 10;
 		}
 	}
 	
-	else if(avg_Impact > 14.5){
-		avg_Impact = 14;
+	else if(avg_Impact > 5  && avg_Impact <= 15){
+		
+		if(avg_Impact > 5 && avg_Impact <= 7.5){
+			avg_Impact = avg_Impact * 2.1;
+		}
+		
+		else if(avg_Impact > 7.5 && avg_Impact <= 12){
+			avg_Impact = avg_Impact * 1.5;
+		}
+		
+		else if(avg_Impact > 12 && avg_Impact < 15){
+			avg_Impact = avg_Impact * 1.3;
+		}
+		
+		else if(avg_Impact == 15){
+			avg_Impact = 20;
+		}
+			
 	}
 	
-	else{
-		//console.log("N.A")
+	else if(avg_Impact > 15 && avg_Impact < 20){
+		avg_Impact = avg_Impact * 1.4;		
 	}
 	
-	if(avg_Likelyhood <= 2){
+	else if(avg_Impact > 20){
+		avg_Impact = 29.5;
+	}
+	
+///////////////
+	
+	
+	if(avg_Likelyhood <= 3){
 		if(avg_Likelyhood == 0){
-			avg_Likelyhood = 0.5;
+			avg_Likelyhood = 0.8;
 		}
-		else if(avg_Likelyhood > 0 && avg_Likelyhood < 2){
-			avg_Likelyhood = (avg_Likelyhood * 2) + 0.5;
+		else if(avg_Likelyhood > 0 && avg_Likelyhood < 3){
+			avg_Likelyhood = avg_Likelyhood * 3;
 		}
-		else if(avg_Likelyhood == 2){
-			avg_Likelyhood = 5;
-		}
-	}
-	
-	else if(avg_Likelyhood > 2  && avg_Likelyhood <= 5){
-			avg_Likelyhood = (avg_Likelyhood * 2) + 0.5;
-	}
-	
-	else if(avg_Likelyhood > 5 && avg_Likelyhood <= 14){
-		if(avg_Likelyhood > 5 && avg_Likelyhood <= 6.5){
-			avg_Likelyhood = (avg_Likelyhood * 2) + 0.5;
-		}
-		else if(avg_Likelyhood > 6.5 && avg_Likelyhood < 8){
-			avg_Likelyhood = (avg_Likelyhood * 1.5) + 0.5;
-		}
-		else if(avg_Likelyhood > 8 && avg_Likelyhood < 10){
-			avg_Likelyhood = (avg_Likelyhood * 1.2) + 0.5;
-		}
-		else if(avg_Likelyhood > 10 && avg_Likelyhood < 14){
-			avg_Likelyhood = 14;
+		else if(avg_Likelyhood == 3){
+			avg_Likelyhood = 10;
 		}
 	}
 	
-	else if(avg_Likelyhood > 14.5){
-		avg_Likelyhood = 14;
+	else if(avg_Likelyhood > 3  && avg_Likelyhood <= 7){
+		
+		if(avg_Likelyhood > 3 && avg_Likelyhood <= 3.5){
+			avg_Likelyhood = avg_Likelyhood * 4;
+		}
+		
+		else if(avg_Likelyhood > 3.5 && avg_Likelyhood <= 4.5){
+			avg_Likelyhood = avg_Likelyhood * 3.5;
+		}
+		
+		else if(avg_Likelyhood > 4.5 && avg_Likelyhood < 5.5){
+			avg_Likelyhood = avg_Likelyhood * 3.5;
+		}
+		
+		else if(avg_Likelyhood > 5.5 && avg_Likelyhood < 6.5){
+			avg_Likelyhood = avg_Likelyhood * 3;
+		}
+		
+		else if(avg_Likelyhood > 6.5 && avg_Likelyhood < 7){
+			avg_Likelyhood = avg_Likelyhood * 2.5;
+		}
+		else if(avg_Likelyhood == 7){
+			avg_Likelyhood = 20;
+		}
+			
 	}
 	
-	else{
-		//console.log("N.A")
+	else if(avg_Likelyhood > 7 && avg_Likelyhood < 8){
+		avg_Likelyhood = avg_Likelyhood * 3;		
 	}
 	
-	//console.log("AFTER IMPACT: "+avg_Impact+" LIKELYHOOD: "+avg_Likelyhood)
-	
+	else if(avg_Likelyhood > 8){
+		avg_Likelyhood = 29.5;
+	}
+//////////////////////////////////////////////////////////////////////////////////////////////	
 	
 	
 	//OPERATING CALCULATION
@@ -607,8 +600,7 @@
 	{
 		t_Operating = t_Operating1 / t_Operating2;
 	}
-	//test = ((e_Operating_T * 0) + (ni_Operating_T * 5) + (nc_Operating_T * 10))/((e_Operating_T + ni_Operating_T + na_Operating_T + nc_Operating_T) - (na_Operating_T));
-	//console.log("test: "+t_Operating);
+
 	
 	//RL
 	//E
@@ -639,7 +631,6 @@
 	 nc_Operating_RL = ${score};
 	</c:forEach>
 	</c:forEach>
-	//console.log("RL: "+e_Operating_RL+" "+na_Operating_RL+" "+ni_Operating_RL+" "+nc_Operating_RL);
 	
 	var rl_Operating = 0.0;
 	var rl_Operating1 = 0.0;
@@ -654,10 +645,7 @@
 	{
 		rl_Operating = rl_Operating1 / rl_Operating2;
 	}
-	//test = ((e_Operating_T * 0) + (ni_Operating_T * 5) + (nc_Operating_T * 10))/((e_Operating_T + ni_Operating_T + na_Operating_T + nc_Operating_T) - (na_Operating_T));
-	//console.log("test_RL: "+rl_Operating);
-	
-	
+
 	//RA
 	//E
 	var e_Operating_RA = 0.0
@@ -687,7 +675,6 @@
 	 nc_Operating_RA = ${score};
 	</c:forEach>
 	</c:forEach>
-	//console.log("RA: "+e_Operating_RA+" "+na_Operating_RA+" "+ni_Operating_RA+" "+nc_Operating_RA);
 	
 	var ra_Operating = 0.0;
 	var ra_Operating1 = 0.0;
@@ -702,10 +689,7 @@
 	{
 		ra_Operating = ra_Operating1 / ra_Operating2;
 	}
-	//test = ((e_Operating_T * 0) + (ni_Operating_T * 5) + (nc_Operating_T * 10))/((e_Operating_T + ni_Operating_T + na_Operating_T + nc_Operating_T) - (na_Operating_T));
-	//console.log("test_ra: "+ra_Operating);
-	
-	
+
 	//WB
 	//E
 	var e_Operating_WB = 0.0
@@ -735,7 +719,6 @@
 	 nc_Operating_WB = ${score};
 	</c:forEach>
 	</c:forEach>
-	//console.log("WB: "+e_Operating_WB+" "+na_Operating_WB+" "+ni_Operating_WB+" "+nc_Operating_WB);
 	
 	var wb_Operating = 0.0;
 	var wb_Operating1 = 0.0;
@@ -750,101 +733,102 @@
 	{
 		wb_Operating = wb_Operating1 / wb_Operating2;
 	}
-	//test = ((e_Operating_T * 0) + (ni_Operating_T * 5) + (nc_Operating_T * 10))/((e_Operating_T + ni_Operating_T + na_Operating_T + nc_Operating_T) - (na_Operating_T));
-	//console.log("test_wb: "+wb_Operating);
-	
+
 	var avg_Operating = 0.0;
 	avg_Operating = (t_Operating + rl_Operating + ra_Operating + wb_Operating) / 4;
-	//console.log("avg_Operating: ",avg_Operating)
-	
-	
+
 		
-	if(avg_Design <= 2){
+//////////////////////////////////////////////////////////////////////////
+	if(avg_Design <= 5){
 		if(avg_Design == 0){
-			avg_Design = 0.5;
+			avg_Design = 0.8;
 		}
-		else if(avg_Design > 0 && avg_Design < 2){
-			avg_Design = (avg_Design * 2) + 0.5;
+		else if(avg_Design > 0 && avg_Design < 5){
+			avg_Design = avg_Design * 2;
 		}
-		else if(avg_Design == 2){
-			avg_Design = 5;
-		}
-	}
-	
-	else if(avg_Design > 2  && avg_Design <= 5){
-			avg_Design = (avg_Design * 2) + 0.5;
-	}
-	
-	else if(avg_Design > 5 && avg_Design <= 14){
-		if(avg_Design > 5 && avg_Design <= 6.5){
-			avg_Design = (avg_Design * 2) + 0.5;
-		}
-		else if(avg_Design > 6.5 && avg_Design < 8){
-			avg_Design = (avg_Design * 1.5) + 0.5;
-		}
-		else if(avg_Design > 8 && avg_Design < 10){
-			avg_Design = (avg_Design * 1.2) + 0.5;
-		}
-		else if(avg_Design > 10 && avg_Design < 14){
-			avg_Design = 14;
+		else if(avg_Design == 5){
+			avg_Design = 10;
 		}
 	}
 	
-	else if(avg_Design > 14.5){
-		avg_Design = 14;
-	}
-	
-	else{
-		//console.log("N.A")
-	}
-	
-
+	else if(avg_Design > 5  && avg_Design <= 15){
 		
-	if(avg_Operating <= 2){
+		if(avg_Design > 5 && avg_Design <= 7.5){
+			avg_Design = avg_Design * 2.1;
+		}
+		
+		else if(avg_Design > 7.5 && avg_Design <= 12){
+			avg_Design = avg_Design * 1.5;
+		}
+		
+		else if(avg_Design > 12 && avg_Design < 15){
+			avg_Design = avg_Design * 1.3;
+		}
+		
+		else if(avg_Design == 15){
+			avg_Design = 20;
+		}
+			
+	}
+	
+	else if(avg_Design > 15 && avg_Design < 20){
+		avg_Design = avg_Design * 1.4;		
+	}
+	
+	else if(avg_Design > 20){
+		avg_Design = 29.5;
+	}
+	
+///////////////
+	
+	
+	if(avg_Operating <= 3){
 		if(avg_Operating == 0){
-			avg_Operating = 0.5;
+			avg_Operating = 0.8;
 		}
-		else if(avg_Operating > 0 && avg_Operating < 2){
-			avg_Operating = (avg_Operating * 2) + 0.5;
+		else if(avg_Operating > 0 && avg_Operating < 3){
+			avg_Operating = avg_Operating * 3;
 		}
-		else if(avg_Operating == 2){
-			avg_Operating = 5;
-		}
-	}
-	
-	else if(avg_Operating > 2  && avg_Operating <= 5){
-			avg_Operating = (avg_Operating * 2) + 0.5;
-	}
-	
-	else if(avg_Operating > 5 && total_of_IR <= 14){
-		if(avg_Operating > 5 && avg_Operating <= 6.5){
-			avg_Operating = (avg_Operating * 2) + 0.5;
-		}
-		else if(avg_Operating > 6.5 && avg_Operating < 8){
-			avg_Operating = (avg_Operating * 1.5) + 0.5;
-		}
-		else if(avg_Operating > 8 && avg_Operating < 10){
-			avg_Operating = (avg_Operating * 1.2) + 0.5;
-		}
-		else if(avg_Operating > 10 && avg_Operating < 14){
-			avg_Operating = 14;
+		else if(avg_Operating == 3){
+			avg_Operating = 10;
 		}
 	}
 	
-	else if(avg_Operating > 14.5){
-		avg_Operating = 14;
+	else if(avg_Operating > 3  && avg_Operating <= 7){
+		
+		if(avg_Operating > 3 && avg_Operating <= 3.5){
+			avg_Operating = avg_Operating * 4;
+		}
+		
+		else if(avg_Operating > 3.5 && avg_Operating <= 4.5){
+			avg_Operating = avg_Operating * 3.5;
+		}
+		
+		else if(avg_Operating > 4.5 && avg_Operating < 5.5){
+			avg_Operating = avg_Operating * 3.5;
+		}
+		
+		else if(avg_Operating > 5.5 && avg_Operating < 6.5){
+			avg_Operating = avg_Operating * 3;
+		}
+		
+		else if(avg_Operating > 6.5 && avg_Operating < 7){
+			avg_Operating = avg_Operating * 2.5;
+		}
+		else if(avg_Operating == 7){
+			avg_Operating = 20;
+		}
+			
 	}
 	
-	else{
-		//console.log("N.A")
+	else if(avg_Operating > 7 && avg_Operating < 8){
+		avg_Operating = avg_Operating * 3;		
 	}
 	
-	
-	
-	
-	
-	
-
+	else if(avg_Operating > 8){
+		avg_Operating = 29.5;
+	}
+//////////////////////////////////////////////////////////////////////////////////////////////
 	
 	//TRESURY CHART CALCULATION
 	var residualRiskDataPoints = []	
@@ -869,13 +853,6 @@
 	</c:forEach>
 	totalTresuryIC = ${totalIC_T};
 	
-	
-	
-
-	
-	
-	
-	
 	//RL chart Calculation
 	var totalRetailLiabiltiesIR = 0.0
 	<c:set var="totalIR_RL" value="${0}"/>
@@ -886,7 +863,6 @@
 	</c:forEach>
 	</c:forEach>
 	totalRetailLiabiltiesIR = ${totalIR_RL};
-
 	
 	var totalRetailLiabiltiesIC = 0.0
 	<c:set var="totalIC_RL" value="${0}"/>
@@ -897,10 +873,6 @@
 	</c:forEach>
 	</c:forEach>
 	totalRetailLiabiltiesIC = ${totalIC_RL};
-
-	
-	
-	
 	
 	// RA Chart calculation
 	var totalRetailAssetsIR = 0.0
@@ -912,7 +884,6 @@
 	</c:forEach>
 	</c:forEach>
 	totalRetailAssetsIR = ${totalIR_RA};
-
 	
 	var totalRetailAssetsIC = 0.0
 	<c:set var="totalIC_RA" value="${0}"/>
@@ -923,11 +894,7 @@
 	</c:forEach>
 	</c:forEach>
 	totalRetailAssetsIC = ${totalIC_RA};
-	
-	
 
-
-	
 	//WB chart calculation
 	var totalWholesaleIR = 0.0
 	<c:set var="totalIR_WB" value="${0}"/>
@@ -939,7 +906,6 @@
 	</c:forEach>
 	totalWholesaleIR = ${totalIR_WB};
 
-	
 	var totalWholesaleIC = 0.0
 	<c:set var="totalIC_WB" value="${0}"/>
 	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.WholesaleBankingInternalControl}">
@@ -949,427 +915,481 @@
 	</c:forEach>
 	</c:forEach>
 	totalWholesaleIC = ${totalIC_WB};
-	
-	
 
-	
-	
 	total_of_IR = (totalTresuryIR + totalRetailLiabiltiesIR + totalRetailAssetsIR + totalWholesaleIR)/4;
 	total_of_IC = (totalTresuryIC + totalRetailLiabiltiesIC + totalRetailAssetsIC + totalWholesaleIC)/4;
 	
-	
-	//alert("BEFORE: "+total_of_IR+" "+total_of_IC)
-	
-	
-	if(total_of_IR <= 2){
+//////////////////////////////////////////////////////////////////////////
+	if(total_of_IR <= 5){
 		if(total_of_IR == 0){
-			total_of_IR = 0.5;
+			total_of_IR = 0.8;
 		}
-		else if(total_of_IR > 0 && total_of_IR < 2){
-			total_of_IR = (total_of_IR * 2) + 0.5;
+		else if(total_of_IR > 0 && total_of_IR < 5){
+			total_of_IR = total_of_IR * 2;
 		}
-		else if(total_of_IR == 2){
-			total_of_IR = 5;
-		}
-	}
-	
-	else if(total_of_IR > 2  && total_of_IR <= 5){
-			total_of_IR = (total_of_IR * 2) + 0.5;
-	}
-	
-	else if(total_of_IR > 5 && total_of_IR <= 14){
-		if(total_of_IR > 5 && total_of_IR <= 6.5){
-			total_of_IR = (total_of_IR * 2) + 0.5;
-		}
-		else if(total_of_IR > 6.5 && total_of_IR < 8){
-			total_of_IR = (total_of_IR * 1.5) + 0.5;
-		}
-		else if(total_of_IR > 8 && total_of_IR < 10){
-			total_of_IR = (total_of_IR * 1.2) + 0.5;
-		}
-		else if(total_of_IR > 10 && total_of_IR < 14){
-			total_of_IR = 14;
+		else if(total_of_IR == 5){
+			total_of_IR = 10;
 		}
 	}
 	
-	else if(total_of_IR > 14.5){
-		total_of_IR = 14;
+	else if(total_of_IR > 5  && total_of_IR <= 15){
+		
+		if(total_of_IR > 5 && total_of_IR <= 7.5){
+			total_of_IR = total_of_IR * 2.1;
+		}
+		
+		else if(total_of_IR > 7.5 && total_of_IR <= 12){
+			total_of_IR = total_of_IR * 1.5;
+		}
+		
+		else if(total_of_IR > 12 && total_of_IR < 15){
+			total_of_IR = total_of_IR * 1.3;
+		}
+		
+		else if(total_of_IR == 15){
+			total_of_IR = 20;
+		}
+			
 	}
 	
-	else{
-		//console.log("N.A")
+	else if(total_of_IR > 15 && total_of_IR < 20){
+		total_of_IR = total_of_IR * 1.4;		
 	}
 	
+	else if(total_of_IR > 20){
+		total_of_IR = 29.5;
+	}
 	
-	if(total_of_IC <= 2){
+///////////////
+	
+	
+	if(total_of_IC <= 3){
 		if(total_of_IC == 0){
-			total_of_IC = 0.5;
+			total_of_IC = 0.8;
 		}
-		else if(total_of_IC > 0 && total_of_IC < 2){
-			total_of_IC = (total_of_IC * 2) + 0.5;
+		else if(total_of_IC > 0 && total_of_IC < 3){
+			total_of_IC = total_of_IC * 3;
 		}
-		else if(total_of_IC == 2){
-			total_of_IC = 5;
-		}
-	}
-	
-	else if(total_of_IC > 2  && total_of_IC <= 5){
-			total_of_IC = (total_of_IC * 2) + 0.5;
-	}
-	
-	else if(total_of_IC > 5 && total_of_IR <= 14){
-		if(total_of_IC > 5 && total_of_IC <= 6.5){
-			total_of_IC = (total_of_IC * 2) + 0.5;
-		}
-		else if(total_of_IC > 6.5 && total_of_IC < 8){
-			total_of_IC = (total_of_IC * 1.5) + 0.5;
-		}
-		else if(total_of_IC > 8 && total_of_IC < 10){
-			total_of_IC = (total_of_IC * 1.2) + 0.5;
-		}
-		else if(total_of_IC > 10 && total_of_IC < 14){
-			total_of_IC = 14;
+		else if(total_of_IC == 3){
+			total_of_IC = 10;
 		}
 	}
 	
-	else if(total_of_IC > 14.5){
-		total_of_IC = 14;
+	else if(total_of_IC > 3  && total_of_IC <= 7){
+		
+		if(total_of_IC > 3 && total_of_IC <= 3.5){
+			total_of_IC = total_of_IC * 4;
+		}
+		
+		else if(total_of_IC > 3.5 && total_of_IC <= 4.5){
+			total_of_IC = total_of_IC * 3.5;
+		}
+		
+		else if(total_of_IC > 4.5 && total_of_IC < 5.5){
+			total_of_IC = total_of_IC * 3.5;
+		}
+		
+		else if(total_of_IC > 5.5 && total_of_IC < 6.5){
+			total_of_IC = total_of_IC * 3;
+		}
+		
+		else if(total_of_IC > 6.5 && total_of_IC < 7){
+			total_of_IC = total_of_IC * 2.5;
+		}
+		else if(total_of_IC == 7){
+			total_of_IC = 20;
+		}
+			
 	}
 	
-	else{
-		//console.log("N.A")
+	else if(total_of_IC > 7 && total_of_IC < 8){
+		total_of_IC = total_of_IC * 3;		
 	}
 	
-	
-	
-	///////////////////////testing
+	else if(total_of_IC > 8){
+		total_of_IC = 29.5;
+	}
+//////////////////////////////////////////////////////////////////////////////////////////////
+
 	var totalTresuryIR_x = 0.0;
-	
-	if(totalTresuryIR <= 2){
-		if(totalTresuryIR == 0){
-			totalTresuryIR_x = 0.5;
-		}
-		else if(totalTresuryIR > 0 && totalTresuryIR < 2){
-			totalTresuryIR_x = (totalTresuryIR * 2) + 0.5;
-		}
-		else if(totalTresuryIR == 2){
-			totalTresuryIR_x = 5;
-		}
-	}
-	
-	else if(totalTresuryIR > 2  && totalTresuryIR <= 5){
-			totalTresuryIR_x = (totalTresuryIR * 2) + 0.5;
-	}
-	
-	else if(totalTresuryIR > 5 && totalTresuryIR <= 14){
-		if(totalTresuryIR > 5 && totalTresuryIR < 8){
-			totalTresuryIR_x = (totalTresuryIR * 1.5) + 0.5;
-		}
-		else if(totalTresuryIR > 8 && totalTresuryIR < 10){
-			totalTresuryIR_x = (totalTresuryIR * 1.2) + 0.5;
-		}
-		else if(totalTresuryIR > 10 && totalTresuryIR < 14){
-			totalTresuryIR_x = 14;
-		}
-	}
-	
-	else if(totalTresuryIR > 14.5){
-		totalTresuryIR_x = 14;
-	}
-	
-	else{
-		//console.log("N.A")
-	}
-	
 	var totalTresuryIC_y = 0.0;
+
+	if(totalTresuryIR <= 5){
+		if(totalTresuryIR == 0){
+			totalTresuryIR_x = 0.8;
+		}
+		else if(totalTresuryIR > 0 && totalTresuryIR < 5){
+			totalTresuryIR_x = totalTresuryIR * 2;
+		}
+		else if(totalTresuryIR == 5){
+			totalTresuryIR_x = 10;
+		}
+	}
 	
-	if(totalTresuryIC <= 2){
+	else if(totalTresuryIR > 5  && totalTresuryIR <= 15){
+		
+		if(totalTresuryIR > 5 && totalTresuryIR <= 7.5){
+			totalTresuryIR_x = totalTresuryIR * 2.1;
+		}
+		
+		else if(totalTresuryIR > 7.5 && totalTresuryIR <= 12){
+			totalTresuryIR = totalTresuryIR * 1.5;
+		}
+		
+		else if(totalTresuryIR > 12 && totalTresuryIR < 15){
+			totalTresuryIR_x = totalTresuryIR * 1.3;
+		}
+		
+		else if(totalTresuryIR == 15){
+			totalTresuryIR_x = 20;
+		}
+			
+	}
+	
+	else if(totalTresuryIR > 15 && totalTresuryIR < 20){
+		totalTresuryIR_x = totalTresuryIR * 1.4;		
+	}
+	
+	else if(totalTresuryIR > 20){
+		totalTresuryIR_x = 29.5;
+	}
+	
+///////////////
+	
+	
+	if(totalTresuryIC <= 3){
 		if(totalTresuryIC == 0){
-			totalTresuryIC_y = 0.5;
+			totalTresuryIC_y = 0.8;
 		}
-		else if(totalTresuryIC > 0 && totalTresuryIC < 2){
-			totalTresuryIC_y = (totalTresuryIC * 2) + 0.5;
+		else if(totalTresuryIC > 0 && totalTresuryIC < 3){
+			totalTresuryIC_y = totalTresuryIC * 3;
 		}
-		else if(totalTresuryIC == 2){
-			totalTresuryIC_y = 5;
-		}
-	}
-	
-	else if(totalTresuryIC > 2  && totalTresuryIC <= 5){
-			totalTresuryIC_y = (totalTresuryIC * 2) + 0.5;
-	}
-	
-	else if(totalTresuryIC > 5 && totalTresuryIC <= 14){
-		if(totalTresuryIC > 5 && totalTresuryIC < 8){
-			totalTresuryIC_y = (totalTresuryIC * 1.5) + 0.5;
-		}
-		else if(totalTresuryIC > 8 && totalTresuryIC < 10){
-			totalTresuryIC_y = (totalTresuryIC * 1.2) + 0.5;
-		}
-		else if(totalTresuryIC > 10 && totalTresuryIC < 14){
-			totalTresuryIC_y = 14;
+		else if(totalTresuryIC == 3){
+			totalTresuryIC_y = 10;
 		}
 	}
 	
-	else if(totalTresuryIC > 14.5){
-		totalTresuryIC_y = 14;
+	else if(totalTresuryIC > 3  && totalTresuryIC <= 7){
+		
+		if(totalTresuryIC > 3 && totalTresuryIC <= 3.5){
+			totalTresuryIC_y = totalTresuryIC * 4;
+		}
+		
+		else if(totalTresuryIC > 3.5 && totalTresuryIC <= 4.5){
+			totalTresuryIC_y = totalTresuryIC * 3.5;
+		}
+		
+		else if(totalTresuryIC > 4.5 && totalTresuryIC < 5.5){
+			totalTresuryIC_y = totalTresuryIC * 3.5;
+		}
+		
+		else if(totalTresuryIC > 5.5 && totalTresuryIC < 6.5){
+			totalTresuryIC_y = totalTresuryIC * 3;
+		}
+		
+		else if(totalTresuryIC > 6.5 && totalTresuryIC < 7){
+			totalTresuryIC_y = totalTresuryIC * 2.5;
+		}
+		else if(totalTresuryIC == 7){
+			totalTresuryIC_y = 20;
+		}
+			
 	}
 	
-	else{
-		//console.log("N.A")
+	else if(totalTresuryIC > 7 && totalTresuryIC < 8){
+		totalTresuryIC_y = totalTresuryIC * 3;		
 	}
 	
-	/////////////////////
-	
+	else if(totalTresuryIC > 8){
+		totalTresuryIC_y = 29.5;
+	}
+//////////////////////////////////////////////////////////////////////////////////////////////
+
 	var totalRetailLiabiltiesIR_x = 0.0;
-	
-	if(totalRetailLiabiltiesIR <= 2){
-		if(totalRetailLiabiltiesIR == 0){
-			totalRetailLiabiltiesIR_x = 0.5;
-		}
-		else if(totalRetailLiabiltiesIR > 0 && totalRetailLiabiltiesIR < 2){
-			totalRetailLiabiltiesIR_x = (totalRetailLiabiltiesIR * 2) + 0.5;
-		}
-		else if(totalRetailLiabiltiesIR == 2){
-			totalRetailLiabiltiesIR_x = 5;
-		}
-	}
-	
-	else if(totalRetailLiabiltiesIR > 2  && totalRetailLiabiltiesIR <= 5){
-			totalRetailLiabiltiesIR_x = (totalRetailLiabiltiesIR * 2) + 0.5;
-	}
-	
-	else if(totalRetailLiabiltiesIR > 5 && totalRetailLiabiltiesIR <= 14){
-		if(totalRetailLiabiltiesIR > 5 && totalRetailLiabiltiesIR < 8){
-			totalRetailLiabiltiesIR_x = (totalRetailLiabiltiesIR * 1.5) + 0.5;
-		}
-		else if(totalRetailLiabiltiesIR > 8 && totalRetailLiabiltiesIR < 10){
-			totalRetailLiabiltiesIR_x = (totalRetailLiabiltiesIR * 1.2) + 0.5;
-		}
-		else if(totalRetailLiabiltiesIR > 10 && totalRetailLiabiltiesIR < 14){
-			totalRetailLiabiltiesIR_x = 14;
-		}
-	}
-	
-	else if(totalRetailLiabiltiesIR > 14.5){
-		totalRetailLiabiltiesIR_x = 14;
-	}
-	
-	else{
-		//console.log("N.A")
-	}
-	
-	
 	var totalRetailLiabiltiesIC_y = 0.0;
+
+	if(totalRetailLiabiltiesIR <= 5){
+		if(totalRetailLiabiltiesIR == 0){
+			totalRetailLiabiltiesIR_x = 0.8;
+		}
+		else if(totalRetailLiabiltiesIR > 0 && totalRetailLiabiltiesIR < 5){
+			totalRetailLiabiltiesIR_x = totalRetailLiabiltiesIR * 2;
+		}
+		else if(totalRetailLiabiltiesIR == 5){
+			totalRetailLiabiltiesIR_x = 10;
+		}
+	}
 	
-	if(totalRetailLiabiltiesIC <= 2){
+	else if(totalRetailLiabiltiesIR > 5  && totalRetailLiabiltiesIR <= 15){
+		
+		if(totalRetailLiabiltiesIR > 5 && totalRetailLiabiltiesIR <= 7.5){
+			totalRetailLiabiltiesIR_x = totalRetailLiabiltiesIR * 2.1;
+		}
+		
+		else if(totalRetailLiabiltiesIR > 7.5 && totalRetailLiabiltiesIR <= 12){
+			totalRetailLiabiltiesIR = totalRetailLiabiltiesIR * 1.5;
+		}
+		
+		else if(totalRetailLiabiltiesIR > 12 && totalRetailLiabiltiesIR < 15){
+			totalRetailLiabiltiesIR_x = totalRetailLiabiltiesIR * 1.3;
+		}
+		
+		else if(totalRetailLiabiltiesIR == 15){
+			totalRetailLiabiltiesIR_x = 20;
+		}
+			
+	}
+	
+	else if(totalRetailLiabiltiesIR > 15 && totalRetailLiabiltiesIR < 20){
+		totalRetailLiabiltiesIR_x = totalRetailLiabiltiesIR * 1.4;		
+	}
+	
+	else if(totalRetailLiabiltiesIR > 20){
+		totalRetailLiabiltiesIR_x = 29.5;
+	}
+	
+///////////////
+	
+	
+	if(totalRetailLiabiltiesIC <= 3){
 		if(totalRetailLiabiltiesIC == 0){
-			totalRetailLiabiltiesIC_y = 0.5;
+			totalRetailLiabiltiesIC_y = 0.8;
 		}
-		else if(totalRetailLiabiltiesIC > 0 && totalRetailLiabiltiesIC < 2){
-			totalRetailLiabiltiesIC_y = (totalRetailLiabiltiesIC * 2) + 0.5;
+		else if(totalRetailLiabiltiesIC > 0 && totalRetailLiabiltiesIC < 3){
+			totalRetailLiabiltiesIC_y = totalRetailLiabiltiesIC * 3;
 		}
-		else if(totalRetailLiabiltiesIC == 2){
-			totalRetailLiabiltiesIC_y = 5;
-		}
-	}
-	
-	else if(totalRetailLiabiltiesIC > 2  && totalRetailLiabiltiesIC <= 5){
-			totalRetailLiabiltiesIC_y = (totalRetailLiabiltiesIC * 2) + 0.5;
-	}
-	
-	else if(totalRetailLiabiltiesIC > 5 && totalRetailLiabiltiesIC <= 14){
-		if(totalRetailLiabiltiesIC > 5 && totalRetailLiabiltiesIC < 8){
-			totalRetailLiabiltiesIC_y = (totalRetailLiabiltiesIC * 1.5) + 0.5;
-		}
-		else if(totalRetailLiabiltiesIC > 8 && totalRetailLiabiltiesIC < 10){
-			totalRetailLiabiltiesIC_y = (totalRetailLiabiltiesIC * 1.2) + 0.5;
-		}
-		else if(totalRetailLiabiltiesIC > 10 && totalRetailLiabiltiesIC < 14){
-			totalRetailLiabiltiesIC_y = 14;
+		else if(totalRetailLiabiltiesIC == 3){
+			totalRetailLiabiltiesIC_y = 10;
 		}
 	}
 	
-	else if(totalRetailLiabiltiesIC > 14.5){
-		totalRetailLiabiltiesIC_y = 14;
+	else if(totalRetailLiabiltiesIC > 3  && totalRetailLiabiltiesIC <= 7){
+		
+		if(totalRetailLiabiltiesIC > 3 && totalRetailLiabiltiesIC <= 3.5){
+			totalRetailLiabiltiesIC_y = totalRetailLiabiltiesIC * 4;
+		}
+		
+		else if(totalRetailLiabiltiesIC > 3.5 && totalRetailLiabiltiesIC <= 4.5){
+			totalRetailLiabiltiesIC_y = totalRetailLiabiltiesIC * 3.5;
+		}
+		
+		else if(totalRetailLiabiltiesIC > 4.5 && totalRetailLiabiltiesIC < 5.5){
+			totalRetailLiabiltiesIC_y = totalRetailLiabiltiesIC * 3.5;
+		}
+		
+		else if(totalRetailLiabiltiesIC > 5.5 && totalRetailLiabiltiesIC < 6.5){
+			totalRetailLiabiltiesIC_y = totalRetailLiabiltiesIC * 3;
+		}
+		
+		else if(totalRetailLiabiltiesIC > 6.5 && totalRetailLiabiltiesIC < 7){
+			totalRetailLiabiltiesIC_y = totalRetailLiabiltiesIC * 2.5;
+		}
+		else if(totalRetailLiabiltiesIC == 7){
+			totalRetailLiabiltiesIC_y = 20;
+		}
+			
 	}
 	
-	else{
-		//console.log("N.A")
+	else if(totalRetailLiabiltiesIC > 7 && totalRetailLiabiltiesIC < 8){
+		totalRetailLiabiltiesIC_y = totalRetailLiabiltiesIC * 3;		
 	}
 	
-	
-	
+	else if(totalRetailLiabiltiesIC > 8){
+		totalRetailLiabiltiesIC_y = 29.5;
+	}
+//////////////////////////////////////////////////////////////////////////////////////////////	
 	
 	var totalRetailAssetsIR_x = 0.0;
-	
-	if(totalRetailAssetsIR <= 2){
-		if(totalRetailAssetsIR == 0){
-			totalRetailAssetsIR_x = 0.5;
-		}
-		else if(totalRetailAssetsIR > 0 && totalRetailAssetsIR < 2){
-			totalRetailAssetsIR_x = (totalRetailAssetsIR * 2) + 0.5;
-		}
-		else if(totalRetailAssetsIR == 2){
-			totalRetailAssetsIR_x = 5;
-		}
-	}
-	
-	else if(totalRetailAssetsIR > 2  && totalRetailAssetsIR <= 5){
-			totalRetailAssetsIR_x = (totalRetailAssetsIR * 2) + 0.5;
-	}
-	
-	else if(totalRetailAssetsIR > 5 && totalRetailAssetsIR <= 14){
-		if(totalRetailAssetsIR > 5 && totalRetailAssetsIR < 8){
-			totalRetailAssetsIR_x = (totalRetailAssetsIR * 1.5) + 0.5;
-		}
-		else if(totalRetailAssetsIR > 8 && totalRetailAssetsIR < 10){
-			totalRetailAssetsIR_x = (totalRetailAssetsIR * 1.2) + 0.5;
-		}
-		else if(totalRetailAssetsIR > 10 && totalRetailAssetsIR < 14){
-			totalRetailAssetsIR_x = 14;
-		}
-	}
-	
-	else if(totalRetailAssetsIR > 14.5){
-		totalRetailAssetsIR_x = 14;
-	}
-	
-	else{
-		//console.log("N.A")
-	}
-	
-	
 	var totalRetailAssetsIC_y = 0.0;
+
+	if(totalRetailAssetsIR <= 5){
+		if(totalRetailAssetsIR == 0){
+			totalRetailAssetsIR_x = 0.8;
+		}
+		else if(totalRetailAssetsIR > 0 && totalRetailAssetsIR < 5){
+			totalRetailAssetsIR_x = totalRetailAssetsIR * 2;
+		}
+		else if(totalRetailAssetsIR == 5){
+			totalRetailAssetsIR_x = 10;
+		}
+	}
 	
-	if(totalRetailAssetsIC <= 2){
+	else if(totalRetailAssetsIR > 5  && totalRetailAssetsIR <= 15){
+		
+		if(totalRetailAssetsIR > 5 && totalRetailAssetsIR <= 7.5){
+			totalRetailAssetsIR_x = totalRetailAssetsIR * 2.1;
+		}
+		
+		else if(totalRetailAssetsIR > 7.5 && totalRetailAssetsIR <= 12){
+			totalRetailAssetsIR = totalRetailAssetsIR * 1.5;
+		}
+		
+		else if(totalRetailAssetsIR > 12 && totalRetailAssetsIR < 15){
+			totalRetailAssetsIR_x = totalRetailAssetsIR * 1.3;
+		}
+		
+		else if(totalRetailAssetsIR == 15){
+			totalRetailAssetsIR_x = 20;
+		}
+			
+	}
+	
+	else if(totalRetailAssetsIR > 15 && totalRetailAssetsIR < 20){
+		totalRetailAssetsIR_x = totalRetailAssetsIR * 1.4;		
+	}
+	
+	else if(totalRetailAssetsIR > 20){
+		totalRetailAssetsIR_x = 29.5;
+	}
+	
+///////////////
+	
+	
+	if(totalRetailAssetsIC <= 3){
 		if(totalRetailAssetsIC == 0){
-			totalRetailAssetsIC_y = 0.5;
+			totalRetailAssetsIC_y = 0.8;
 		}
-		else if(totalRetailAssetsIC > 0 && totalRetailAssetsIC < 2){
-			totalRetailAssetsIC_y = (totalRetailAssetsIC * 2) + 0.5;
+		else if(totalRetailAssetsIC > 0 && totalRetailAssetsIC < 3){
+			totalRetailAssetsIC_y = totalRetailAssetsIC * 3;
 		}
-		else if(totalRetailAssetsIC == 2){
-			totalRetailAssetsIC_y = 5;
-		}
-	}
-	
-	else if(totalRetailAssetsIC > 2  && totalRetailAssetsIC <= 5){
-			totalRetailAssetsIC_y = (totalRetailAssetsIC * 2) + 0.5;
-	}
-	
-	else if(totalRetailAssetsIC > 5 && totalRetailAssetsIC <= 14){
-		if(totalRetailAssetsIC > 5 && totalRetailAssetsIC < 8){
-			totalRetailAssetsIC_y = (totalRetailAssetsIC * 1.5) + 0.5;
-		}
-		else if(totalRetailAssetsIC > 8 && totalRetailAssetsIC < 10){
-			totalRetailAssetsIC_y = (totalRetailAssetsIC * 1.2) + 0.5;
-		}
-		else if(totalRetailAssetsIC > 10 && totalRetailAssetsIC < 14){
-			totalRetailAssetsIC_y = 14;
+		else if(totalRetailAssetsIC == 3){
+			totalRetailAssetsIC_y = 10;
 		}
 	}
 	
-	else if(totalRetailAssetsIC > 14.5){
-		totalRetailAssetsIC_y = 14;
+	else if(totalRetailAssetsIC > 3  && totalRetailAssetsIC <= 7){
+		
+		if(totalRetailAssetsIC > 3 && totalRetailAssetsIC <= 3.5){
+			totalRetailAssetsIC_y = totalRetailAssetsIC * 4;
+		}
+		
+		else if(totalRetailAssetsIC > 3.5 && totalRetailAssetsIC <= 4.5){
+			totalRetailAssetsIC_y = totalRetailAssetsIC * 3.5;
+		}
+		
+		else if(totalRetailAssetsIC > 4.5 && totalRetailAssetsIC < 5.5){
+			totalRetailAssetsIC_y = totalRetailAssetsIC * 3.5;
+		}
+		
+		else if(totalRetailAssetsIC > 5.5 && totalRetailAssetsIC < 6.5){
+			totalRetailAssetsIC_y = totalRetailAssetsIC * 3;
+		}
+		
+		else if(totalRetailAssetsIC > 6.5 && totalRetailAssetsIC < 7){
+			totalRetailAssetsIC_y = totalRetailAssetsIC * 2.5;
+		}
+		else if(totalRetailAssetsIC == 7){
+			totalRetailAssetsIC_y = 20;
+		}
+			
 	}
 	
-	else{
-		//console.log("N.A")
+	else if(totalRetailAssetsIC > 7 && totalRetailAssetsIC < 8){
+		totalRetailAssetsIC_y = totalRetailAssetsIC * 3;		
 	}
 	
-	
+	else if(totalRetailAssetsIC > 8){
+		totalRetailAssetsIC_y = 29.5;
+	}
+//////////////////////////////////////////////////////////////////////////////////////////////
 	
 	var totalWholesaleIR_x = 0.0;
-	
-	if(totalWholesaleIR <= 2){
-		if(totalWholesaleIR == 0){
-			totalWholesaleIR_x = 0.5;
-		}
-		else if(totalWholesaleIR > 0 && totalWholesaleIR < 2){
-			totalWholesaleIR_x = (totalWholesaleIR * 2) + 0.5;
-		}
-		else if(totalWholesaleIR == 2){
-			totalWholesaleIR_x = 5;
-		}
-	}
-	
-	else if(totalWholesaleIR > 2  && totalWholesaleIR <= 5){
-			totalWholesaleIR_x = (totalWholesaleIR * 2) + 0.5;
-	}
-	
-	else if(totalWholesaleIR > 5 && totalWholesaleIR <= 14){
-		if(totalWholesaleIR > 5 && totalWholesaleIR < 8){
-			totalWholesaleIR_x = (totalWholesaleIR * 1.5) + 0.5;
-		}
-		else if(totalWholesaleIR > 8 && totalWholesaleIR < 10){
-			totalWholesaleIR_x = (totalWholesaleIR * 1.2) + 0.5;
-		}
-		else if(totalWholesaleIR > 10 && totalWholesaleIR < 14){
-			totalWholesaleIR_x = 14;
-		}
-	}
-	
-	else if(totalWholesaleIR > 14.5){
-		totalWholesaleIR_x = 14;
-	}
-	
-	else{
-		//console.log("N.A")
-	}
-	
-	
 	var totalWholesaleIC_y = 0.0;
 	
-	if(totalWholesaleIC <= 2){
+	if(totalWholesaleIR <= 5){
+		if(totalWholesaleIR == 0){
+			totalWholesaleIR_x = 0.8;
+		}
+		else if(totalWholesaleIR > 0 && totalWholesaleIR < 5){
+			totalWholesaleIR_x = totalWholesaleIR * 2;
+		}
+		else if(totalWholesaleIR == 5){
+			totalWholesaleIR_x = 10;
+		}
+	}
+	
+	else if(totalWholesaleIR > 5  && totalWholesaleIR <= 15){
+		
+		if(totalWholesaleIR > 5 && totalWholesaleIR <= 7.5){
+			totalWholesaleIR_x = totalWholesaleIR * 2.1;
+		}
+		
+		else if(totalWholesaleIR > 7.5 && totalWholesaleIR <= 12){
+			totalWholesaleIR = totalWholesaleIR * 1.5;
+		}
+		
+		else if(totalWholesaleIR > 12 && totalWholesaleIR < 15){
+			totalWholesaleIR_x = totalWholesaleIR * 1.3;
+		}
+		
+		else if(totalWholesaleIR == 15){
+			totalWholesaleIR_x = 20;
+		}
+			
+	}
+	
+	else if(totalWholesaleIR > 15 && totalWholesaleIR < 20){
+		totalWholesaleIR_x = totalWholesaleIR * 1.4;		
+	}
+	
+	else if(totalWholesaleIR > 20){
+		totalWholesaleIR_x = 29.5;
+	}
+	
+///////////////
+	
+	
+	if(totalWholesaleIC <= 3){
 		if(totalWholesaleIC == 0){
-			totalWholesaleIC_y = 0.5;
+			totalWholesaleIC_y = 0.8;
 		}
-		else if(totalWholesaleIC > 0 && totalWholesaleIC < 2){
-			totalWholesaleIC_y = (totalWholesaleIC * 2) + 0.5;
+		else if(totalWholesaleIC > 0 && totalWholesaleIC < 3){
+			totalWholesaleIC_y = totalWholesaleIC * 3;
 		}
-		else if(totalWholesaleIC == 2){
-			totalWholesaleIC_y = 5;
-		}
-	}
-	
-	else if(totalWholesaleIC > 2  && totalWholesaleIC <= 5){
-			totalWholesaleIC_y = (totalWholesaleIC * 2) + 0.5;
-	}
-	
-	else if(totalWholesaleIC > 5 && totalWholesaleIC <= 14){
-		if(totalWholesaleIC > 5 && totalWholesaleIC < 8){
-			totalWholesaleIC_y = (totalWholesaleIC * 1.5) + 0.5;
-		}
-		else if(totalWholesaleIC > 8 && totalWholesaleIC < 10){
-			totalWholesaleIC_y = (totalWholesaleIC * 1.2) + 0.5;
-		}
-		else if(totalWholesaleIC > 10 && totalWholesaleIC < 14){
-			totalWholesaleIC_y = 14;
+		else if(totalWholesaleIC == 3){
+			totalWholesaleIC_y = 10;
 		}
 	}
 	
-	else if(totalWholesaleIC > 14.5){
-		totalWholesaleIC_y = 14;
+	else if(totalWholesaleIC > 3  && totalWholesaleIC <= 7){
+		
+		if(totalWholesaleIC > 3 && totalWholesaleIC <= 3.5){
+			totalWholesaleIC_y = totalWholesaleIC * 4;
+		}
+		
+		else if(totalWholesaleIC > 3.5 && totalWholesaleIC <= 4.5){
+			totalWholesaleIC_y = totalWholesaleIC * 3.5;
+		}
+		
+		else if(totalWholesaleIC > 4.5 && totalWholesaleIC < 5.5){
+			totalWholesaleIC_y = totalWholesaleIC * 3.5;
+		}
+		
+		else if(totalWholesaleIC > 5.5 && totalWholesaleIC < 6.5){
+			totalWholesaleIC_y = totalWholesaleIC * 3;
+		}
+		
+		else if(totalWholesaleIC > 6.5 && totalWholesaleIC < 7){
+			totalWholesaleIC_y = totalWholesaleIC * 2.5;
+		}
+		else if(totalWholesaleIC == 7){
+			totalWholesaleIC_y = 20;
+		}
+			
 	}
 	
-	else{
-		//console.log("N.A")
+	else if(totalWholesaleIC > 7 && totalWholesaleIC < 8){
+		totalWholesaleIC_y = totalWholesaleIC * 3;		
 	}
 	
-	
-	//alert("AFTER: "+total_of_IR+" "+total_of_IC)
-	
-	//alert(totalTresuryIR_x+" "+totalTresuryIC_y+" "+totalRetailLiabiltiesIR_x+" "+totalRetailLiabiltiesIC_y+" "+
-	//		totalRetailAssetsIR_x+" "+totalRetailAssetsIC_y+" "+totalWholesaleIR_x+" "+totalWholesaleIC_y)
-	///////////////////////////////
-	
+	else if(totalWholesaleIC > 8){
+		totalWholesaleIC_y = 29.5;
+	}
+//////////////////////////////////////////////////////////////////////////////////////////////
 	
 	var bankLevelResidualRisk = [];
 	bankLevelResidualRisk.push({x: total_of_IR, y: total_of_IC, r: 20});
 	
-
-
 	residualRiskDataPoints.push({x: totalTresuryIR, y: totalTresuryIC, r: 20})
 	residualRiskDataPoints.push({x: totalRetailLiabiltiesIR, y: totalRetailLiabiltiesIC, r: 20})
 	residualRiskDataPoints.push({x: totalRetailAssetsIR, y: totalRetailAssetsIC, r: 20})
@@ -1383,8 +1403,8 @@
 			  datasets: [{
 			    label: 'DEFAULT VALUE RISK',
 			    data: [{
-			      x: 0.5,
-			      y: 0.5,
+			      x: 0.8,
+			      y: 0.8,
 			      r: 20
 			    },],
 			    pointStyle: 'crossRot',
@@ -1413,7 +1433,7 @@
 		            x: {
 		            	display: false,
 		            	min: 0,
-		                max: 15,
+		                max: 30,
 		            	ticks: { display: false},
 		                grid: { display: false,},
 		            	},		            			            	
@@ -1421,7 +1441,7 @@
 		            y: {
 		            	display: false,
 		            	min: 0,
-		                max: 15,
+		                max: 30,
 		            	ticks: { display: false},
 		                grid: { display: false,}, 
 		                reverse: true,
@@ -1474,7 +1494,7 @@
 		            x: {
 		            	display: false,
 		            	min: 0,
-		                max: 15,
+		                max: 30,
 		            	ticks: { display: false},
 		                grid: { display: false,},
 		            	},		            			            	
@@ -1482,7 +1502,7 @@
 		            y: {
 		            	display: false,
 		            	min: 0,
-		                max: 15,
+		                max: 30,
 		            	ticks: { display: false},
 		                grid: { display: false,}, 
 		                reverse: true,
@@ -1536,7 +1556,7 @@
 		            x: {
 		            	display: false,
 		            	min: 0,
-		                max: 15,
+		                max: 30,
 		            	ticks: { display: false},
 		                grid: { display: false,},
 		            	},		            			            	
@@ -1544,7 +1564,7 @@
 		            y: {
 		            	display: false,
 		            	min: 0,
-		                max: 15,
+		                max: 30,
 		            	ticks: { display: false},
 		                grid: { display: false,}, 
 		                reverse: true,
@@ -1598,7 +1618,7 @@
 		            x: {
 		            	display: false,
 		            	min: 0,
-		                max: 15,
+		                max: 30,
 		            	ticks: { display: false},
 		                grid: { display: false,},
 		            	},		            			            	
@@ -1606,7 +1626,7 @@
 		            y: {
 		            	display: false,
 		            	min: 0,
-		                max: 15,
+		                max: 30,
 		            	ticks: { display: false},
 		                grid: { display: false,}, 
 		                reverse: true,
@@ -1660,7 +1680,7 @@
 		            x: {
 		            	display: false,
 		            	min: 0,
-		                max: 15,
+		                max: 30,
 		            	ticks: { display: false},
 		                grid: { display: false,},
 		            	},		            			            	
@@ -1668,7 +1688,7 @@
 		            y: {
 		            	display: false,
 		            	min: 0,
-		                max: 15,
+		                max: 30,
 		            	ticks: { display: false},
 		                grid: { display: false,}, 
 		                reverse: true,
@@ -1722,7 +1742,7 @@
 		            x: {
 		            	display: false,
 		            	min: 0,
-		                max: 15,
+		                max: 30,
 		            	ticks: { display: false},
 		                grid: { display: false,},
 		            	},		            			            	
@@ -1730,7 +1750,7 @@
 		            y: {
 		            	display: false,
 		            	min: 0,
-		                max: 15,
+		                max: 30,
 		            	ticks: { display: false},
 		                grid: { display: false,}, 
 		                reverse: true,
@@ -1783,7 +1803,7 @@
 		            x: {
 		            	display: false,
 		            	min: 0,
-		                max: 15,
+		                max: 30,
 		            	ticks: { display: false},
 		                grid: { display: false,},
 		            	},		            			            	
@@ -1791,7 +1811,7 @@
 		            y: {
 		            	display: false,
 		            	min: 0,
-		                max: 15,
+		                max: 30,
 		            	ticks: { display: false},
 		                grid: { display: false,}, 
 		                reverse: true,
@@ -1843,7 +1863,7 @@
 		            x: {
 		            	display: false,
 		            	min: 0,
-		                max: 15,
+		                max: 30,
 		            	ticks: { display: false},
 		                grid: { display: false,},
 		            	},		            			            	
@@ -1851,7 +1871,7 @@
 		            y: {
 		            	display: false,
 		            	min: 0,
-		                max: 15,
+		                max: 30,
 		            	ticks: { display: false},
 		                grid: { display: false,}, 
 		                reverse: true,
@@ -1917,7 +1937,7 @@
 		            x: {
 		            	display: false,
 		            	min: 0,
-		                max: 15,
+		                max: 30,
 		            	ticks: { display: false},
 		                grid: { display: false,},
 		            	},		            			            	
@@ -1925,7 +1945,7 @@
 		            y: {
 		            	display: false,
 		            	min: 0,
-		                max: 15,
+		                max: 30,
 		            	ticks: { display: false},
 		                grid: { display: false,}, 
 		                reverse: true,

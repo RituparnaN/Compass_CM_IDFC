@@ -6,8 +6,6 @@
 
 <script>
 	
-	/* Chart.defaults.scales.linear.max = 30; //set lebel max on y axis */
-	
 	//RESIDUAL RISK CHART CALCULATION
 	var residualRiskDataPoints = []	
 	var totalWeightedScoreIR = 0.0
@@ -19,7 +17,7 @@
 	</c:forEach>
 	totalWeightedScoreIR = ${totalIR};
 	
-	var totalWeightedScoreIC = 0.0
+	var totalWeightedScoreIC = 0.0;
 	<c:set var="totalIC" value="${0}"/>
 	<c:forEach var = "dataPointLabel" items = "${DATAPOINTS.InternalControl}">
 	<c:forEach var = "score" items = "${dataPointLabel.WEIGHTED_SCORE}">
@@ -31,87 +29,97 @@
 	var totalWeightedScoreIR_x = totalWeightedScoreIR;
 	var totalWeightedScoreIC_y = totalWeightedScoreIC;
 	
-		
-/* 	if(totalWeightedScoreIR < 1){
-		totalWeightedScoreIR = totalWeightedScoreIR+0.5;
-	} */
-	
-/* 	if(totalWeightedScoreIC < 1){
-		totalWeightedScoreIC = totalWeightedScoreIC+0.5;
-	} */
-	
-/* 	if(totalWeightedScoreIR_x > 14.5){
-		totalWeightedScoreIR_x = 14;
-	} */
-	
-	/* if(totalWeightedScoreIC > 14.5){
-		totalWeightedScoreIC = 14;
-	} */
-	
-	///
-	if(totalWeightedScoreIR_x <= 2){
+	/////////////////
+	if(totalWeightedScoreIR_x <= 5){
 		if(totalWeightedScoreIR_x == 0){
-			totalWeightedScoreIR_x = 0;
+			totalWeightedScoreIR_x = 0.8;
 		}
-		if(totalWeightedScoreIR_x > 0 && totalWeightedScoreIR_x < 2){
-			totalWeightedScoreIR_x = (totalWeightedScoreIR_x * 2) + 0.5;
+		else if(totalWeightedScoreIR_x > 0 && totalWeightedScoreIR_x < 5){
+			totalWeightedScoreIR_x = totalWeightedScoreIR_x * 2;
 		}
-		if(totalWeightedScoreIR_x == 2){
-			totalWeightedScoreIR_x = 5;
-		}
-	}
-	
-	else if(totalWeightedScoreIR_x > 2  && totalWeightedScoreIR_x <= 5){
-			totalWeightedScoreIR_x = (totalWeightedScoreIR_x * 2) + 0.5;
-	}
-	
-	else if(totalWeightedScoreIR_x > 5){
-		if(totalWeightedScoreIR_x > 5 && totalWeightedScoreIR_x < 14){
-			totalWeightedScoreIR_x = (totalWeightedScoreIR_x * 3) + 0.5;
+		else if(totalWeightedScoreIR_x == 5){
+			totalWeightedScoreIR_x = 10;
 		}
 	}
 	
-	else if(totalWeightedScoreIR_x > 14.5){
-		totalWeightedScoreIR_x = 14;
+	else if(totalWeightedScoreIR_x > 5  && totalWeightedScoreIR_x <= 15){
+		
+		if(totalWeightedScoreIR_x > 5 && totalWeightedScoreIR_x <= 7.5){
+			totalWeightedScoreIR_x = totalWeightedScoreIR_x * 2.1;
+		}
+		
+		else if(totalWeightedScoreIR_x > 7.5 && totalWeightedScoreIR_x <= 12){
+			totalWeightedScoreIR_x = totalWeightedScoreIR_x * 1.5;
+		}
+		
+		else if(totalWeightedScoreIR_x > 12 && totalWeightedScoreIR_x < 15){
+			totalWeightedScoreIR_x = totalWeightedScoreIR_x * 1.3;
+		}
+		
+		else if(totalWeightedScoreIR_x == 15){
+			totalWeightedScoreIR_x = 20;
+		}
+			
 	}
 	
-	else{
-		console.log("N.A")
+	else if(totalWeightedScoreIR_x > 15 && totalWeightedScoreIR_x < 20){
+		totalWeightedScoreIR_x = totalWeightedScoreIR_x * 1.4;		
 	}
 	
+	else if(totalWeightedScoreIR_x > 20){
+		totalWeightedScoreIR_x = 29.5;
+	}
 	
-	if(totalWeightedScoreIC_y <= 2){
+////////
+	
+	
+	if(totalWeightedScoreIC_y <= 3){
 		if(totalWeightedScoreIC_y == 0){
-			totalWeightedScoreIC_y = 0;
+			totalWeightedScoreIC_y = 0.8;
 		}
-		if(totalWeightedScoreIC_y > 0 && totalWeightedScoreIC_y < 2){
-			totalWeightedScoreIC_y = (totalWeightedScoreIC_y * 2) + 0.5;
+		else if(totalWeightedScoreIC_y > 0 && totalWeightedScoreIC_y < 3){
+			totalWeightedScoreIC_y = totalWeightedScoreIC_y * 3;
 		}
-		if(totalWeightedScoreIC_y == 2){
-			totalWeightedScoreIC_y = 5;
-		}
-	}
-	
-	else if(totalWeightedScoreIC_y > 2  && totalWeightedScoreIC_y <= 5){
-			totalWeightedScoreIC_y = (totalWeightedScoreIC_y * 2) + 0.5;
-	}
-	
-	else if(totalWeightedScoreIC_y > 5){
-		if(totalWeightedScoreIC_y > 5 && totalWeightedScoreIC_y < 14){
-			totalWeightedScoreIC_y = (totalWeightedScoreIC_y * 3) + 0.5;
+		else if(totalWeightedScoreIC_y == 3){
+			totalWeightedScoreIC_y = 10;
 		}
 	}
 	
-	else if(totalWeightedScoreIC_y > 14.5){
-		totalWeightedScoreIC_y = 14;
+	else if(totalWeightedScoreIC_y > 3  && totalWeightedScoreIC_y <= 7){
+		
+		if(totalWeightedScoreIC_y > 3 && totalWeightedScoreIC_y <= 3.5){
+			totalWeightedScoreIC_y = totalWeightedScoreIC_y * 4;
+		}
+		
+		else if(totalWeightedScoreIC_y > 3.5 && totalWeightedScoreIC_y <= 4.5){
+			totalWeightedScoreIC_y = totalWeightedScoreIC_y * 3.5;
+		}
+		
+		else if(totalWeightedScoreIC_y > 4.5 && totalWeightedScoreIC_y < 5.5){
+			totalWeightedScoreIC_y = totalWeightedScoreIC_y * 3.5;
+		}
+		
+		else if(totalWeightedScoreIC_y > 5.5 && totalWeightedScoreIC_y < 6.5){
+			totalWeightedScoreIC_y = totalWeightedScoreIC_y * 3;
+		}
+		
+		else if(totalWeightedScoreIC_y > 6.5 && totalWeightedScoreIC_y < 7){
+			totalWeightedScoreIC_y = totalWeightedScoreIC_y * 2.5;
+		}
+		else if(totalWeightedScoreIC_y == 7){
+			totalWeightedScoreIC_y = 20;
+		}
+			
 	}
 	
-	else{
-		console.log("N.A")
+	else if(totalWeightedScoreIC_y > 7 && totalWeightedScoreIC_y < 8){
+		totalWeightedScoreIC_y = totalWeightedScoreIC_y * 3;		
 	}
-
-
-	//alert(totalWeightedScoreIR_x+" "+totalWeightedScoreIC_y)
+	
+	else if(totalWeightedScoreIC_y > 8){
+		totalWeightedScoreIC_y = 29.5;
+	}
+//////////////////////////
 	
 	residualRiskDataPoints.push({x: totalWeightedScoreIR_x, y: totalWeightedScoreIC_y, r: 20});
 	
@@ -160,7 +168,7 @@
 			            x: {
 			            	display: false,
 			            	min: 0,
-			                max: 15,
+			                max: 30,
 			            	ticks: { display: false},
 			                grid: { display: false,},
 			            	},		            			            	
@@ -168,7 +176,7 @@
 			            y: {
 			            	display: false,
 			            	min: 0,
-			                max: 15,
+			                max: 30,
 			            	ticks: { display: false},
 			                grid: { display: false,}, 
 			                reverse: true,
