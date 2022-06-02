@@ -780,6 +780,96 @@ END STP_GETRISKASSESSAPPROVEDRESP;
 ------------------------------------------------------------------------------------------------------------
 
 
+create or replace PROCEDURE             "STP_RISKASSESS_GETPENDCASESN" (
+ i_vcFromDate       IN VARCHAR2, i_vcToDate      IN VARCHAR2,
+ i_vcQuestionNo     IN VARCHAR2, i_vcQuestion    IN VARCHAR2,
+ i_vcFromCaseNo     IN VARCHAR2, i_vcToCaseNo    IN VARCHAR2,
+ i_vcUserCode       IN VARCHAR2, i_vcGroupCode   IN VARCHAR2,
+ i_vcIPAddress      IN VARCHAR2, io_cuRestultSet IN OUT SYS_REFCURSOR
+)
+-- EXEC STP_RISKASSESS_GETPENDINGCASES('01/01/2011','01/01/2017','','','','','','','','','','','',:KG);
+AS
+  vcQuery varchar2(32000);
+BEGIN
+
+IF(i_vcGroupCode IN ('ROLE_CM_MAKER')) THEN
+
+  vcQuery := 'SELECT A.CASENO CM_CASENO, A.CASEID CM_QUESTIONNO, B.QUESTION CM_QUESTION, '||
+             '       FUN_DATETOCHAR(A.MAKERDUEDATE) AS MAKERDUEDATE, FUN_DATETOCHAR(A.CHECKERDUEDATE) AS CHECKERDUEDATE, A.COMMENTS,A.COMPASSREFNO '||
+             '  FROM COMAML_CM.TB_CMQUES_CASEWORKFLOWDETAILS A '||
+             '  LEFT OUTER JOIN TB_RISKASSESSQUESTIONSCONFIG B ON A.CASEID = B.QUESTIONID ' ||
+             ' WHERE ASSIGNEDMAKERCODE = '''||i_vcUserCode||''' '||
+             '   AND CASESTATUS = ''0'' ';          
+
+IF (i_vcFromDate IS NOT NULL) THEN
+   vcQuery := vcQuery||' AND A.USERASSIGNEE_DATE >= FUN_CHARTODATE('''||i_vcFromDate||''' )';
+END IF;
+
+IF (i_vcToDate IS NOT NULL) THEN
+   vcQuery := vcQuery||' AND A.USERASSIGNEE_DATE < FUN_CHARTODATE('''||i_vcToDate||''' )+1';
+END IF;
+
+IF (i_vcQuestionNo IS NOT NULL AND i_vcQuestionNo NOT IN (' ')) THEN
+  vcQuery := vcQuery||' AND A.CASEID = '''||i_vcQuestionNo||''' ';
+END IF;
+
+IF (i_vcQuestion IS NOT NULL AND i_vcQuestion NOT IN (' ')) THEN
+  vcQuery := vcQuery||' AND B.QUESTIONDESCRIPTION = '''||i_vcQuestion||''' ';
+END IF;
+
+IF (i_vcFromCaseNo IS NOT NULL AND i_vcFromCaseNo NOT IN (' ')) THEN
+  vcQuery := vcQuery||' AND TO_NUMBER(A.CASENO) >= '''||i_vcFromCaseNo||''' ';
+END IF;
+
+IF (i_vcToCaseNo IS NOT NULL AND i_vcToCaseNo NOT IN (' ')) THEN
+  vcQuery := vcQuery||' AND TO_NUMBER(A.CASENO) <= '''||i_vcToCaseNo||''' ';
+END IF;
+
+END IF;
+
+IF(i_vcGroupCode IN ('ROLE_CM_CHECKER')) THEN
+
+vcQuery := 'SELECT A.CASENO CM_CASENO, A.CASEID CM_QUESTIONNO, B.QUESTION CM_QUESTION, '|| 
+           '       FUN_DATETOCHAR(A.MAKERDUEDATE) AS MAKERDUEDATE, FUN_DATETOCHAR(A.CHECKERDUEDATE) AS CHECKERDUEDATE, A.COMMENTS,A.COMPASSREFNO '||
+           '  FROM COMAML_CM.TB_CMQUES_CASEWORKFLOWDETAILS A '||
+           '  LEFT OUTER JOIN TB_RISKASSESSQUESTIONSCONFIG B ON A.CASEID = B.QUESTIONID '||
+           ' WHERE ESCALATEDTO LIKE ''%'||i_vcUserCode||'%'' '||
+           '   AND CASESTATUS = ''1'' ';          
+
+IF (i_vcFromDate IS NOT NULL) THEN
+   vcQuery := vcQuery||' AND A.USERASSIGNEE_DATE >= FUN_CHARTODATE('''||i_vcFromDate||''' )';
+END IF;
+
+IF (i_vcToDate IS NOT NULL) THEN
+   vcQuery := vcQuery||' AND A.USERASSIGNEE_DATE < FUN_CHARTODATE('''||i_vcToDate||''' )+1';
+END IF;
+
+IF (i_vcQuestionNo IS NOT NULL AND i_vcQuestionNo NOT IN (' ')) THEN
+  vcQuery := vcQuery||' AND A.CASEID = '''||i_vcQuestionNo||''' ';
+END IF;
+
+IF (i_vcQuestion IS NOT NULL AND i_vcQuestion NOT IN (' ')) THEN
+  vcQuery := vcQuery||' AND B.QUESTIONDESCRIPTION = '''||i_vcQuestion||''' ';
+END IF;
+
+IF (i_vcFromCaseNo IS NOT NULL AND i_vcFromCaseNo NOT IN (' ')) THEN
+  vcQuery := vcQuery||' AND TO_NUMBER(A.CASENO) >= '''||i_vcFromCaseNo||''' ';
+END IF;
+
+IF (i_vcToCaseNo IS NOT NULL AND i_vcToCaseNo NOT IN (' ')) THEN
+  vcQuery := vcQuery||' AND TO_NUMBER(A.CASENO) <= '''||i_vcToCaseNo||''' ';
+END IF;
+
+vcQuery:=vcQuery||'ORDER BY UPDATEDTIMESTAMP DESC';
+
+END IF;
+
+
+
+OPEN io_cuRestultSet FOR vcQuery;
+
+END STP_RISKASSESS_GETPENDCASESN;
+
 
 
    
