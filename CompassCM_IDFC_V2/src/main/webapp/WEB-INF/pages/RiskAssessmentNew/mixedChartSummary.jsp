@@ -1013,15 +1013,21 @@
 
 	var totalTresuryIR_x = 0.0;
 	var totalTresuryIC_y = 0.0;
+	
+	console.log("totalTresuryIR: "+totalTresuryIR)
 
 	if(totalTresuryIR <= 5){
+		//console.log("inside0")
 		if(totalTresuryIR == 0){
+			//console.log("inside1")
 			totalTresuryIR_x = 0.8;
 		}
 		else if(totalTresuryIR > 0 && totalTresuryIR < 5){
+			//console.log("inside2")
 			totalTresuryIR_x = totalTresuryIR * 2;
 		}
 		else if(totalTresuryIR == 5){
+			console.log("inside3")
 			totalTresuryIR_x = 10;
 		}
 	}
@@ -1029,30 +1035,37 @@
 	else if(totalTresuryIR > 5  && totalTresuryIR <= 15){
 		
 		if(totalTresuryIR > 5 && totalTresuryIR <= 7.5){
+			//console.log("inside4")
 			totalTresuryIR_x = totalTresuryIR * 2.1;
 		}
 		
 		else if(totalTresuryIR > 7.5 && totalTresuryIR <= 12){
-			totalTresuryIR = totalTresuryIR * 1.5;
+			//console.log("inside5")
+			totalTresuryIR_x = totalTresuryIR * 1.5;
 		}
 		
 		else if(totalTresuryIR > 12 && totalTresuryIR < 15){
+			//console.log("inside6")
 			totalTresuryIR_x = totalTresuryIR * 1.3;
 		}
 		
 		else if(totalTresuryIR == 15){
+			//console.log("inside7")
 			totalTresuryIR_x = 20;
 		}
 			
 	}
 	
 	else if(totalTresuryIR > 15 && totalTresuryIR < 20){
+		//console.log("inside8")
 		totalTresuryIR_x = totalTresuryIR * 1.4;		
 	}
 	
 	else if(totalTresuryIR > 20){
+		//console.log("inside9")
 		totalTresuryIR_x = 29.5;
 	}
+	//console.log("totalTresuryIR_x:"+totalTresuryIR_x)
 	
 ///////////////
 	
@@ -1127,7 +1140,7 @@
 		}
 		
 		else if(totalRetailLiabiltiesIR > 7.5 && totalRetailLiabiltiesIR <= 12){
-			totalRetailLiabiltiesIR = totalRetailLiabiltiesIR * 1.5;
+			totalRetailLiabiltiesIR_x = totalRetailLiabiltiesIR * 1.5;
 		}
 		
 		else if(totalRetailLiabiltiesIR > 12 && totalRetailLiabiltiesIR < 15){
@@ -1221,7 +1234,7 @@
 		}
 		
 		else if(totalRetailAssetsIR > 7.5 && totalRetailAssetsIR <= 12){
-			totalRetailAssetsIR = totalRetailAssetsIR * 1.5;
+			totalRetailAssetsIR_x = totalRetailAssetsIR * 1.5;
 		}
 		
 		else if(totalRetailAssetsIR > 12 && totalRetailAssetsIR < 15){
@@ -1315,7 +1328,7 @@
 		}
 		
 		else if(totalWholesaleIR > 7.5 && totalWholesaleIR <= 12){
-			totalWholesaleIR = totalWholesaleIR * 1.5;
+			totalWholesaleIR_x = totalWholesaleIR * 1.5;
 		}
 		
 		else if(totalWholesaleIR > 12 && totalWholesaleIR < 15){
