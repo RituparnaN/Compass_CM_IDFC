@@ -17,6 +17,7 @@ import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.ClientAnchor;
 import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Drawing;
@@ -37,6 +38,7 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 	
 	public String imageUrl = "";
 
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void buildExcelDocument(Map<String, Object> model, Workbook workbook, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -1206,6 +1208,248 @@ public class MultiSheetExcelViewChartSummary extends AbstractExcelView {
 				cell.setCellValue("Internal Control: "+totalIC);
 				sheet.addMergedRegion(new CellRangeAddress(19, 19,  6, 8));
 				cell.setCellStyle(boldText);
+				
+				
+				
+				
+				for (int i = 3; i <= 7 ; i++) {
+					row = sheet.getRow(i);
+    				//System.out.println("inside second row");
+    			for(int j = 0; j < noOfColumns; j++){
+    				if(j == 0){
+    					cell = row.getCell(j);
+    					//System.out.println("CELL Data inside column 1: "+cell);
+    					
+    					if(i == 3)
+    					{
+    						cell.setCellValue(1);
+    					}
+    					if(i == 4)
+    					{
+    						cell.setCellValue(2);
+    					}
+    					if(i == 5)
+    					{
+    						cell.setCellValue(3);
+    					}
+    					if(i == 6)
+    					{
+    						cell.setCellValue(4);
+    					}
+    					if(i == 7)
+    					{
+    						cell.setCellValue(5);
+    					}
+    				}
+   					
+    					if(j == 1){
+        					cell = row.getCell(j);
+        					//System.out.println("CELL Data inside column 1: "+cell);
+        					
+        					if(i == 3)
+        					{
+        						cell.setCellValue("customer");
+        					}
+        					if(i == 4)
+        					{
+        						cell.setCellValue("geography");
+        					}
+        					if(i == 5)
+        					{
+        						cell.setCellValue("product and services");
+        					}
+        					if(i == 6)
+        					{
+        						cell.setCellValue("transcations");
+        					}
+        					if(i == 7)
+        					{
+        						cell.setCellValue("delivery channel");
+        					}
+    					}
+        					
+        					if(j == 2){
+            					cell = row.getCell(j);
+            					//System.out.println("CELL Data inside column 1: "+cell);
+            					
+            					if(i == 3)
+            					{
+            						cell.setCellValue("30%");
+            					}
+            					if(i == 4)
+            					{
+            						cell.setCellValue("25%");
+            					}
+            					if(i == 5)
+            					{
+            						cell.setCellValue("25%");
+            					}
+            					if(i == 6)
+            					{
+            						cell.setCellValue("10%");
+            					}
+            					if(i == 7)
+            					{
+            						cell.setCellValue("10%");
+            					}
+        					}
+        					
+        					if(j <= 10){
+            					cell = row.getCell(j);
+            					if(cell == null || cell.getCellType() == Cell.CELL_TYPE_BLANK){
+            						//System.out.println(i+" "+j);  
+            						cell.setCellValue(0.0);
+            					}
+            				} 
+    					}      				
+    			          			
+					}
+				
+				
+				
+				for (int i = 9; i <= totalRows; i++) {
+					row = sheet.getRow(i);
+    				//System.out.println("inside second row");
+    			for(int j = 0; j < noOfColumns; j++){
+    				if(j == 0){
+    					cell = row.getCell(j);
+    					//System.out.println("CELL Data inside column 1: "+cell);
+    					
+    					if(i == 9)
+    					{
+    						cell.setCellValue(6);
+    					}
+    					if(i == 10)
+    					{
+    						cell.setCellValue(7);
+    					}
+    					if(i == 11)
+    					{
+    						cell.setCellValue(8);
+    					}
+    					if(i == 12)
+    					{
+    						cell.setCellValue(9);
+    					}
+    					if(i == 13)
+    					{
+    						cell.setCellValue(10);
+    					}
+    					if(i == 14)
+    					{
+    						cell.setCellValue(11);
+    					}
+    					if(i == 15)
+    					{
+    						cell.setCellValue(12);
+    					}
+    					if(i == 16)
+    					{
+    						cell.setCellValue(13);
+    					}
+    					if(i == 17)
+    					{
+    						cell.setCellValue(14);
+    					}
+    				}
+   					
+    					if(j == 1){
+        					cell = row.getCell(j);
+        					//System.out.println("CELL Data inside column 1: "+cell);
+        					
+        					if(i == 9)
+        					{
+        						cell.setCellValue("Governance & Management Oversight");
+        					}
+        					if(i == 10)
+        					{
+        						cell.setCellValue("Customer Due Diligence & Risk Management");
+        					}
+        					if(i == 11)
+        					{
+        						cell.setCellValue("Transactions Monitoring");
+        					}
+        					if(i == 12)
+        					{
+        						cell.setCellValue("Internal Quality Assurance and Compliance Testing");
+        					}
+        					if(i == 13)
+        					{
+        						cell.setCellValue("Name/Sanctions Screening");
+        					}
+        					if(i == 14)
+        					{
+        						cell.setCellValue("Training");
+        					}
+        					if(i == 15)
+        					{
+        						cell.setCellValue("Foreign Correspondent Banking Relationships");
+        					}
+        					if(i == 16)
+        					{
+        						cell.setCellValue("Internal Audit");
+        					}
+        					if(i == 17)
+        					{
+        						cell.setCellValue("Reporting Requirements");
+        					}
+    					}
+        					
+        					if(j == 2){
+            					cell = row.getCell(j);
+            					//System.out.println("CELL Data inside column 1: "+cell);
+            					
+            					if(i == 9)
+            					{
+            						cell.setCellValue("10%");
+            					}
+            					if(i == 10)
+            					{
+            						cell.setCellValue("25%");
+            					}
+            					if(i == 11)
+            					{
+            						cell.setCellValue("10%");
+            					}
+            					if(i == 12)
+            					{
+            						cell.setCellValue("10%");
+            					}
+            					if(i == 13)
+            					{
+            						cell.setCellValue("10%");
+            					}
+            					if(i == 14)
+            					{
+            						cell.setCellValue("15%");
+            					}
+            					if(i == 15)
+            					{
+            						cell.setCellValue("5%");
+            					}
+            					if(i == 16)
+            					{
+            						cell.setCellValue("10%");
+            					}
+            					if(i == 17)
+            					{
+            						cell.setCellValue("5%");
+            					}
+        					}
+        					
+        					if(j <= 10){
+            					cell = row.getCell(j);
+            					if(cell == null || cell.getCellType() == Cell.CELL_TYPE_BLANK){
+            						//System.out.println(i+" "+j);  
+            						cell.setCellValue(0.0);
+            					}
+            				} 
+    					}      				
+    			          			
+					}
+				
+				
+				
 				
 				
 	            for (int i = 2; i == 2 ; i++) {

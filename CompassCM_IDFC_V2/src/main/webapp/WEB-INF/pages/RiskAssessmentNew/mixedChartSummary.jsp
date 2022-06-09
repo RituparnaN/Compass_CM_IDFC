@@ -841,6 +841,12 @@
 	</c:forEach>
 	</c:forEach>
 	totalTresuryIR = ${totalIR_T};
+	if(totalTresuryIR != 0.0){
+		totalTresuryIR = totalTresuryIR/5;
+	}
+	else{
+		totalTresuryIR = totalTresuryIR;
+	}
 
 	
 	var totalTresuryIC = 0.0
@@ -852,6 +858,12 @@
 	</c:forEach>
 	</c:forEach>
 	totalTresuryIC = ${totalIC_T};
+	if(totalTresuryIC != 0.0){
+		totalTresuryIC = totalTresuryIC/9;
+	}
+	else{
+		totalTresuryIC = totalTresuryIC;
+	}
 	
 	//RL chart Calculation
 	var totalRetailLiabiltiesIR = 0.0
@@ -863,6 +875,13 @@
 	</c:forEach>
 	</c:forEach>
 	totalRetailLiabiltiesIR = ${totalIR_RL};
+	if(totalRetailLiabiltiesIR != 0.0){
+		totalRetailLiabiltiesIR = totalRetailLiabiltiesIR/5;
+	}
+	else{
+		totalRetailLiabiltiesIR = totalRetailLiabiltiesIR;
+	}
+	
 	
 	var totalRetailLiabiltiesIC = 0.0
 	<c:set var="totalIC_RL" value="${0}"/>
@@ -873,6 +892,13 @@
 	</c:forEach>
 	</c:forEach>
 	totalRetailLiabiltiesIC = ${totalIC_RL};
+	if(totalRetailLiabiltiesIC != 0.0){
+		totalRetailLiabiltiesIC = totalRetailLiabiltiesIC/9;
+	}
+	else{
+		totalRetailLiabiltiesIC = totalRetailLiabiltiesIC;
+	}
+	
 	
 	// RA Chart calculation
 	var totalRetailAssetsIR = 0.0
@@ -884,6 +910,13 @@
 	</c:forEach>
 	</c:forEach>
 	totalRetailAssetsIR = ${totalIR_RA};
+	if(totalRetailAssetsIR != 0.0){
+		totalRetailAssetsIR = totalRetailAssetsIR/5;
+	}
+	else{
+		totalRetailAssetsIR = totalRetailAssetsIR;
+	}
+	
 	
 	var totalRetailAssetsIC = 0.0
 	<c:set var="totalIC_RA" value="${0}"/>
@@ -894,6 +927,13 @@
 	</c:forEach>
 	</c:forEach>
 	totalRetailAssetsIC = ${totalIC_RA};
+	if(totalRetailAssetsIC != 0.0){
+		totalRetailAssetsIC = totalRetailAssetsIC/9;
+	}
+	else{
+		totalRetailAssetsIC = totalRetailAssetsIC;
+	}
+	
 
 	//WB chart calculation
 	var totalWholesaleIR = 0.0
@@ -905,6 +945,13 @@
 	</c:forEach>
 	</c:forEach>
 	totalWholesaleIR = ${totalIR_WB};
+	if(totalWholesaleIR != 0.0){
+		totalWholesaleIR = totalWholesaleIR/5;
+	}
+	else{
+		totalWholesaleIR = totalWholesaleIR;
+	}
+	
 
 	var totalWholesaleIC = 0.0
 	<c:set var="totalIC_WB" value="${0}"/>
@@ -915,6 +962,13 @@
 	</c:forEach>
 	</c:forEach>
 	totalWholesaleIC = ${totalIC_WB};
+	if(totalWholesaleIC != 0.0){
+		totalWholesaleIC = totalWholesaleIC/9;
+	}
+	else{
+		totalWholesaleIC = totalWholesaleIC;
+	}
+	
 
 	total_of_IR = (totalTresuryIR + totalRetailLiabiltiesIR + totalRetailAssetsIR + totalWholesaleIR)/4;
 	total_of_IC = (totalTresuryIC + totalRetailLiabiltiesIC + totalRetailAssetsIC + totalWholesaleIC)/4;
