@@ -1502,7 +1502,8 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 	
 	@Override
 	public Map<String, Object> generateCMReportSummary(String assessmentPeriod, String userCode, String userRole, String ipAddress){
-		//System.out.println("In generateCMReportSummary dao assessmentPeriod: "+assessmentPeriod);
+		System.out.println("In generateCMReportSummary dao assessmentPeriod: "+assessmentPeriod);
+		
 		Map<String, Object> mainMap = new LinkedHashMap<String, Object>();
     	Connection connection = null;
 		CallableStatement callableStatement = null;

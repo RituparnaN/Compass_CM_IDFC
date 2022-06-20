@@ -1,3 +1,5 @@
+SET DEFINE OFF;
+
 create or replace PROCEDURE "STP_GETCMREPORTDATANEW"
 (
   i_vcCompassRefNo  IN VARCHAR2,            i_vcUserCode     IN VARCHAR2,
@@ -79,71 +81,7 @@ vcSQL1 :=
 		WHERE category = subcategory
 		AND CMREFNO='''||i_vcCompassRefNo||''' ';
 
-vcSQL2 :=
-         'SELECT CREFNUM, VERSION_SEQNO, QUESTIONID, NVL(QUESTIONVALUE, '' '') QUESTIONVALUE, NVL(REMARKS, '' '') REMARKS,
-          NVL(IMPACTRISKRATING, '' '') IMPACTRISKRATING, NVL(LIKELIHOODRISKRATING, '' '') LIKELIHOODRISKRATING
-          FROM TB_CMGEOGQUESTIONDETAILS
-          WHERE CREFNUM ='''||i_vcCompassRefNo||''' ';
-
-vcSQL3 :=
-         'SELECT CREFNUM, VERSION_SEQNO, QUESTIONID, NVL(QUESTIONVALUE, '' '') QUESTIONVALUE, NVL(REMARKS, '' '') REMARKS,
-          NVL(IMPACTRISKRATING, '' '') IMPACTRISKRATING, NVL(LIKELIHOODRISKRATING, '' '') LIKELIHOODRISKRATING
-          FROM TB_CMPRODUCTQUESTIONDETAILS
-          WHERE CREFNUM ='''||i_vcCompassRefNo||''' ';
-
-vcSQL4 :=
-         'SELECT CREFNUM, VERSION_SEQNO, QUESTIONID, NVL(QUESTIONVALUE, '' '') QUESTIONVALUE, NVL(REMARKS, '' '') REMARKS,
-          NVL(IMPACTRISKRATING, '' '') IMPACTRISKRATING, NVL(LIKELIHOODRISKRATING, '' '') LIKELIHOODRISKRATING
-          FROM TB_CMTRANSQUESTIONDETAILS
-          WHERE CREFNUM ='''||i_vcCompassRefNo||''' ';
-
-vcSQL5 :=
-         'SELECT CREFNUM, VERSION_SEQNO, QUESTIONID, NVL(QUESTIONVALUE, '' '') QUESTIONVALUE, NVL(REMARKS, '' '') REMARKS,
-          NVL(IMPACTRISKRATING, '' '') IMPACTRISKRATING, NVL(LIKELIHOODRISKRATING, '' '') LIKELIHOODRISKRATING
-          FROM TB_CMDELIVERYCHANNELDETAILS
-          WHERE CREFNUM ='''||i_vcCompassRefNo||''' ';
-
-vcSQL6 :=
-         'SELECT CREFNUM, VERSION_SEQNO, QUESTIONID, NVL(QUESTIONVALUE, '' '') QUESTIONVALUE, NVL(REMARKS, '' '') REMARKS,
-          NVL(ASSESSMENTCTRLSCORE, '' '') IMPACTRISKRATING, '' '' LIKELIHOODRISKRATING
-          FROM TB_CMCONTROLPARAMETERDETAILS
-          WHERE CREFNUM ='''||i_vcCompassRefNo||''' ';
-
-vcSQL7 :=
-         'SELECT ''Customer'' AS ASSESSMENT_UNIT, CUSTOMERSYSTEMGENRISK AS System_Generated_Risk_Rating, CUSTOMERPROVISRISK AS 	Provisional_Risk_Rating,
-          CUSTOMERFINALRISK AS Final_Risk_Rating FROM TB_CMGENRLFINALRISKDETAILS WHERE CREFNUM='''||i_vcCompassRefNo||'''
-          UNION ALL
-          SELECT ''Geography'' AS ASSESSMENT_UNIT, GEOGSYSTEMGENRISK AS System_Generated_Risk_Rating, GEOGPROVISRISK AS Provisional_Risk_Rating,
-          GEOGFINALRISK AS Final_Risk_Rating FROM TB_CMGENRLFINALRISKDETAILS WHERE CREFNUM='''||i_vcCompassRefNo||'''
-          UNION ALL
-          SELECT ''Products and Services'' AS ASSESSMENT_UNIT, PRODUCTSSYSTEMGENRISK AS System_Generated_Risk_Rating, PRODUCTSPROVISRISK AS Provisional_Risk_Rating,
-          PRODUCTSFINALRISK AS Final_Risk_Rating FROM TB_CMGENRLFINALRISKDETAILS WHERE CREFNUM='''||i_vcCompassRefNo||'''
-          UNION ALL
-          SELECT ''Transactions'' AS ASSESSMENT_UNIT, TRANSACTIONSSYSTEMGENRISK AS System_Generated_Risk_Rating, TRANSACTIONSPROVISRISK AS 	Provisional_Risk_Rating,
-          TRANSACTIONSFINALRISK AS Final_Risk_Rating FROM TB_CMGENRLFINALRISKDETAILS WHERE CREFNUM='''||i_vcCompassRefNo||'''
-          UNION ALL
-          SELECT ''Delivery Channels'' AS ASSESSMENT_UNIT, DELIVERYSYSTEMGENRISK AS System_Generated_Risk_Rating, DELIVERYPROVISRISK AS Provisional_Risk_Rating,
-          DELIVERYFINALRISK AS Final_Risk_Rating FROM TB_CMGENRLFINALRISKDETAILS WHERE CREFNUM='''||i_vcCompassRefNo||'''
-          UNION ALL
-          SELECT ''Control Parameters'' AS ASSESSMENT_UNIT, CONTROLSYSTEMGENRISK AS System_Generated_Risk_Rating, CONTROLPROVISRISK AS 	Provisional_Risk_Rating,
-          CONTROLFINALRISK AS Final_Risk_Rating FROM TB_CMGENRLFINALRISKDETAILS WHERE CREFNUM='''||i_vcCompassRefNo||'''
-          UNION ALL
-          SELECT ''Residual Risk Rating'' AS ASSESSMENT_UNIT, RESIDUALSYSTEMGENRISK AS System_Generated_Risk_Rating, RESIDUALPROVRISK AS Provisional_Risk_Rating,
-          RESIDUALFINALRISK AS Final_Risk_Rating FROM TB_CMGENRLFINALRISKDETAILS WHERE CREFNUM='''||i_vcCompassRefNo||'''
-          UNION ALL
-          SELECT ''Total Inherent Assessment Units Risk Rating'' AS ASSESSMENT_UNIT, TOTINHSYSGENRISK AS System_Generated_Risk_Rating, TOTINHPROVISRISK AS Provisional_Risk_Rating,
-          TOTINHFINALRISK AS Final_Risk_Rating FROM TB_CMGENRLFINALRISKDETAILS WHERE CREFNUM='''||i_vcCompassRefNo||'''
-          UNION ALL
-          SELECT ''Total Control Parameters Risk Rating'' AS ASSESSMENT_UNIT, TOTCONTPARSYSGENRISK AS System_Generated_Risk_Rating, TOTCONTPARPROVISRISK AS Provisional_Risk_Rating,
-          TOTCONTPARFINALRISK AS Final_Risk_Rating FROM TB_CMGENRLFINALRISKDETAILS WHERE CREFNUM='''||i_vcCompassRefNo||''' ';
-
-   Open io_cuResultSet0 FOR vcSQL0 ;
-	 Open io_cuResultSet1 FOR vcSQL1 ;
-	 Open io_cuResultSet2 FOR vcSQL2 ;
-	 Open io_cuResultSet3 FOR vcSQL3 ;
-	 Open io_cuResultSet4 FOR vcSQL4 ;
-	 Open io_cuResultSet5 FOR vcSQL5 ;
-	 Open io_cuResultSet6 FOR vcSQL6 ;
-   Open io_cuResultSet7 FOR vcSQL7 ;
+    Open io_cuResultSet0 FOR vcSQL0 ;
+    Open io_cuResultSet1 FOR vcSQL1 ;
 
 END STP_GETCMREPORTDATANEW;
