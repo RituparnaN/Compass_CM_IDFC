@@ -18,6 +18,9 @@ for (i = 0; i < acc.length; i++) {
 }
 </script>
 <style>
+	.subTab {
+		text-transform: capitalize;
+	}
 	.accordion {
 	  background-color: #337ab7;
 	  border-color: #337ab7;

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../tags/tags.jsp"%>
-
+<script type="text/javascript"	src="${pageContext.request.contextPath}/includes/scripts/chart.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		var id = '${UNQID}';
@@ -30,20 +30,141 @@
 		$("#searchRiskAssessmentSummary").click(function(){
 			var assessmentPeriod = $("#assessmentPeriod").val();
 			if(assessmentPeriod != null && assessmentPeriod != ""){
-				$(this).html("Collecting data...");
+				//$(this).html("Collecting data...");
 				$.ajax({
 					url : "${pageContext.request.contextPath}/common/getRiskAssessmentSummary",
 					type : "GET",
 					cache : false,
 					data : "assessmentPeriod="+assessmentPeriod,
 					success : function(res){
-						$(".compassrow"+id).html(res);
+						//For opening modal
+						 $("#openModal").modal("show");
+						//For putting data in same modal
+					     $("#getCode").html(res).show();
+					     
 					},
 					error : function(){
 						alert("Error while collecting summary data");
 						$("#searchRiskAssessmentSummary").html("Get Summary");
 					}
 				});
+				
+			}else{
+				alert("Please provide assessment period to proceed. ex: 2022");
+				
+			}
+		});
+		
+		$("#generateRiskAssessmentSummary").click(function(elm){
+			var assessmentPeriod = $("#assessmentPeriod").val();
+			//var compassRefNo= "CM020520221814";
+			//console.log("assessmentPeriod: ",assessmentPeriod)
+			if(assessmentPeriod != null && assessmentPeriod != ""){
+				 if(confirm("Are you sure you want to Generate Excel Report?")){
+					  $.ajax({
+							url : "${pageContext.request.contextPath}/common/mixedChartSummary?ASSESSMENTPERIOD="+assessmentPeriod,
+							type : "POST",
+							cache : false,
+							success : function(res){
+								document.getElementById("defalutValueChartDiv").style.display = "block";
+								document.getElementById("residualRiskChartDiv").style.display = "block";
+								document.getElementById("bl_IR_ChartDiv").style.display = "block";
+								document.getElementById("bl_IC_ChartDiv").style.display = "block";
+								document.getElementById("tResidualRiskChartDiv").style.display = "block";
+								document.getElementById("rlResidualRiskChartDiv").style.display = "block";
+								document.getElementById("raResidualRiskChartDiv").style.display = "block";
+								document.getElementById("wbResidualRiskChartDiv").style.display = "block";
+								document.getElementById("assessmentWiseCatChartDiv").style.display = "block";
+								$("#defalutValueChartDiv").html(res);
+								$("#residualRiskChartDiv").html(res);
+								$("#bl_IR_ChartDiv").html(res);
+								$("#bl_IC_ChartDiv").html(res);
+								$("#tResidualRiskChartDiv").html(res);
+								$("#rlResidualRiskChartDiv").html(res);
+								$("#raResidualRiskChartDiv").html(res);
+								$("#wbResidualRiskChartDiv").html(res);
+								$("#assessmentWiseCatChartDiv").html(res);
+								
+								
+								//MIXED CHART NEW DATA
+								var defalutValueData = $("#defalutValueURL").val();
+								var residualRiskData = $("#residualRiskURL").val();
+								var bl_IR_Data = $("#bl_IR_URL").val();
+								var bl_IC_Data = $("#bl_IC_URL").val();
+								var t_ResidualRiskData = $("#tResidualRiskURL").val();
+								var rl_ResidualRiskData = $("#rlResidualRiskURL").val();
+								var ra_ResidualRiskData = $("#raResidualRiskURL").val();
+								var wb_ResidualRiskData = $("#wbResidualRiskURL").val();
+								var assessmentWiseCatData = $("#assessmentCatURL").val();
+								
+								var bl_IR = $("#residualRiskURL").val();
+								var bl_IC = $("#assessmentCatURL").val();
+								
+								var A_TOTALWEIGHTEDSCOREIR = 0.0;
+								var A_TOTALWEIGHTEDSCOREIC = 0.0;
+								
+								var totalTresuryIR = $("#totalTresuryIR").val();
+								var totalTresuryIC = $("#totalTresuryIC").val();
+								var totalRetailLiabiltiesIR = $("#totalRetailLiabiltiesIR").val();
+								var totalRetailLiabiltiesIC = $("#totalRetailLiabiltiesIC").val();
+								var totalRetailAssetsIR = $("#totalRetailAssetsIR").val();
+								var totalRetailAssetsIC = $("#totalRetailAssetsIC").val();
+								var totalWholesaleIR = $("#totalWholesaleIR").val();
+								var totalWholesaleIC = $("#totalWholesaleIC").val();
+								/* console.log("totalTresuryIR: "+totalTresuryIR+" "+"totalTresuryIC: "+totalTresuryIC+
+										"totalRetailLiabiltiesIR: "+totalRetailLiabiltiesIR+" "+"totalRetailLiabiltiesIC: "+totalRetailLiabiltiesIC+
+										"totalRetailAssetsIR: "+totalRetailAssetsIR+" "+"totalRetailAssetsIC: "+totalRetailAssetsIC+
+										"totalWholesaleIR: "+totalWholesaleIR+" "+"totalWholesaleIC: "+totalWholesaleIC) */
+								
+								
+								var data = defalutValueData+"@~@"+t_ResidualRiskData+"@~@"+rl_ResidualRiskData
+											+"@~@"+ra_ResidualRiskData+"@~@"+wb_ResidualRiskData+"@~@"+residualRiskData
+											+"@~@"+assessmentWiseCatData+"@~@"+bl_IR_Data+"@~@"+bl_IC_Data
+											+"@~@"+A_TOTALWEIGHTEDSCOREIR+"@~@"+A_TOTALWEIGHTEDSCOREIC+"@~@"
+											+totalTresuryIR+"@~@"+totalTresuryIC+"@~@"+totalRetailLiabiltiesIR+"@~@"+totalRetailLiabiltiesIC+"@~@"
+											+totalRetailAssetsIR+"@~@"+totalRetailAssetsIC+"@~@"+totalWholesaleIR+"@~@"+totalWholesaleIC;
+								
+								document.getElementById("defalutValueChartDiv").style.display = "none";
+								document.getElementById("residualRiskChartDiv").style.display = "none";
+								document.getElementById("bl_IR_ChartDiv").style.display = "none";
+								document.getElementById("bl_IC_ChartDiv").style.display = "none";
+								document.getElementById("assessmentWiseCatChartDiv").style.display = "none";
+								document.getElementById("tResidualRiskChartDiv").style.display = "none";
+								document.getElementById("rlResidualRiskChartDiv").style.display = "none";
+								document.getElementById("raResidualRiskChartDiv").style.display = "none";
+								document.getElementById("wbResidualRiskChartDiv").style.display = "none";
+								
+								$.ajax({
+										url : "${pageContext.request.contextPath}/common/saveChartImageNew",
+										type : "POST",
+										cache : false,
+										data: JSON.stringify({"data":data}),
+										success : function(res){
+											//alert("DATA SAVED SUCCESSFULLY!!");
+											$.fileDownload("${pageContext.request.contextPath}/common/generateCMReportSummary?ASSESSMENTPERIOD="+assessmentPeriod+"&imageId="+res , {
+											    httpMethod : "GET",
+											    successCallback: function (url) {	
+													alert("done")
+											    	$(elm).html("Downloaded");
+													btn.prop('disabled', false);
+											    },
+											    failCallback: function (html, url) {
+											    	btn.prop('disabled', false);
+											    	alert('Failed to download file'+url+"\n"+html);
+											    }
+											});											
+										},
+										error : function(){
+											alert("Error while opening form");
+										}
+									}); 
+							},
+							error : function(){
+								alert("Error while opening form");
+							}
+						});  
+					 
+				 }	 	
 				
 			}else{
 				alert("Please provide assessment period to proceed. ex: 2022");
@@ -99,32 +220,65 @@
 	function generateRAReport(elm){
 		var id = '${UNQID}';
 		var compassRefNo = $(elm).attr("compassRefNo");
-		//alert(compassRefNo);
-		 //$(elm).html("Generating...");
-		 var fromDate = "01/01/2000";
+		var assessmentUnit = $(elm).attr("assessmentUnit");
+		var fromDate = "01/01/2000";
 		 
 		 if(confirm("Are you sure you want to Generate Excel Report?")){
 			  $.ajax({
-					url : "${pageContext.request.contextPath}/common/mixedChart?CRMREFNO="+compassRefNo,
+					url : "${pageContext.request.contextPath}/common/mixedChartNew?CRMREFNO="+compassRefNo,
 					type : "POST",
 					cache : false,
 					success : function(res){
-						//console.log("mixedChart jsp tags call ",res);
-						document.getElementById("chartDiv").style.display = "block";
-						$("#chartDiv").html(res);
-						var data = $("#demo").val();
-						//console.log("data came in demo: ",res);
-						document.getElementById("chartDiv").style.display = "none";
+						document.getElementById("residualRiskNewChartDiv").style.display = "block";
+						//document.getElementById("assessmentWiseCatChartDiv").style.display = "block";
+						$("#residualRiskNewChartDiv").html(res);
+						//$("#assessmentWiseCatChartDiv").html(res);
 						
-						console.log()
+						
+						//MIXED CHART NEW DATA
+						var residualRiskNewData = $("#residualRiskNewURL").val();
+						var assessmentWiseNewCatData = $("#residualRiskNewURL").val();
+						
+						
+						var totalWeightedScoreIR = $("#totalWeightedScoreIR").val();
+						var totalWeightedScoreIC = $("#totalWeightedScoreIC").val();
+						
+						var totalTresuryIR = 0.0;
+						var totalTresuryIC = 0.0;
+						var totalRetailLiabiltiesIR = 0.0;
+						var totalRetailLiabiltiesIC = 0.0;
+						var totalRetailAssetsIR = 0.0;
+						var totalRetailAssetsIC = 0.0;
+						var totalWholesaleIR = 0.0;
+						var totalWholesaleIC = 0.0;
+						//console.log("totalWeightedScoreIR: "+totalWeightedScoreIR+" "+"totalWeightedScoreIC: "+totalWeightedScoreIC)
+						
+						var defalutValueData = "NO DATA AVAILABLE";
+						var bl_IR = $("#residualRiskNewURL").val();
+						var bl_IC = $("#assessmentNewCatURL").val();
+						
+						//var data = defalutValueData+"@~@"+residualRiskData+"@~@"+assessmentWiseCatData+"@~@"+totalWeightedScoreIR+"@~@"+totalWeightedScoreIC;
+						
+						
+						var data = defalutValueData+"@~@"+residualRiskNewData+"@~@"+residualRiskNewData+"@~@"+residualRiskNewData+"@~@"+residualRiskNewData
+									+"@~@"+residualRiskNewData+"@~@"+assessmentWiseNewCatData+"@~@"+bl_IR+"@~@"+bl_IC
+									+"@~@"+totalWeightedScoreIR+"@~@"+totalWeightedScoreIC
+									+"@~@"+totalTresuryIR+"@~@"+totalTresuryIC+"@~@"+totalRetailLiabiltiesIR+"@~@"+totalRetailLiabiltiesIC
+									+"@~@"+totalRetailAssetsIR+"@~@"+totalRetailAssetsIC+"@~@"+totalWholesaleIR+"@~@"+totalWholesaleIC;
+						
+						
+						//var data = residualRiskData+"@~@"+assessmentWiseCatData+"@~@"+totalWeightedScoreIR+"@~@"+totalWeightedScoreIC;
+						document.getElementById("residualRiskNewChartDiv").style.display = "none";
+						//document.getElementById("assessmentWiseCatChartDiv").style.display = "none";
+						
 						$.ajax({
-								url : "${pageContext.request.contextPath}/common/saveChartImage",
+								url : "${pageContext.request.contextPath}/common/saveChartImageNew",
 								type : "POST",
 								cache : false,
 								data: JSON.stringify({"data":data}),
 								success : function(res){
-									//alert(res);
-									$.fileDownload("${pageContext.request.contextPath}/common/generateCMReport?compassRefNo="+compassRefNo+"&imageId="+res , {
+									//alert("DATA SAVED SUCCESSFULLY!!");
+									$.fileDownload("${pageContext.request.contextPath}/common/generateCMReportNew?compassRefNo="+compassRefNo+"&imageId="+res+"&assessmentUnit="+assessmentUnit , {
 									    httpMethod : "GET",
 									    successCallback: function (url) {	
 											alert("done")
@@ -154,6 +308,24 @@
 	
 	
 </script>
+
+
+ <!-- Modal -->
+ <div class="modal fade" id="openModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+   <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+       <div class="modal-header bg-primary">
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="font-size: 26px !important;"><span aria-hidden="true">&times;</span></button>
+         <h4 class="modal-title text-white" id="modalLabel" style=" font-size: 14px !important;">Summary Report</h4>
+       </div>
+       <div class="modal-body" id="getCode">
+          <h4>Data not Available!!</h4>
+       </div>
+    </div>
+   </div>
+ </div>
+
+
 <div class="row compassrow${UNQID}">
 	<div class="col-sm-12">
 		<div class="card card-primary panel_CDDForm">
@@ -182,7 +354,8 @@
 			</div>
 			<div class="card-footer clearfix">
 				<div class="pull-${dirR}">
-					<button type="button" id="searchRiskAssessmentSummary" class="btn btn-success btn-sm">Get Summary</button>
+					<button type="button" id="generateRiskAssessmentSummary" class="btn btn-success btn-sm">Generate Summary</button>
+					<button type="button" id="searchRiskAssessmentSummary" class="btn btn-primary btn-sm">Get Summary</button>
 				</div>
 			</div>
 		</div>
@@ -239,5 +412,17 @@
 		</div>
 	</div>
 </div>
-<div id = "chartDiv" style="display: block">
-</div>
+
+<!-- SUMMARY WISE-->
+<div id = "defalutValueChartDiv" style="display: block"></div>
+<div id = "residualRiskChartDiv" style="display: block"></div>
+<div id = "bl_IR_ChartDiv" style="display: block"></div>
+<div id = "bl_IC_ChartDiv" style="display: block"></div>
+<div id = "tResidualRiskChartDiv" style="display: block"></div>
+<div id = "rlResidualRiskChartDiv" style="display: block"></div>
+<div id = "raResidualRiskChartDiv" style="display: block"></div>
+<div id = "wbResidualRiskChartDiv" style="display: block"></div>
+<div id = "assessmentWiseCatChartDiv" style="display: block"></div>
+
+<!-- ASSESSMENT UNIT WISE -->
+<div id = "residualRiskNewChartDiv" style="display: block"></div>
