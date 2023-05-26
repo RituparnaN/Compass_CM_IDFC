@@ -122,7 +122,7 @@ for (i = 0; i < acc.length; i++) {
 			$(panelBody).slideDown();
 			$(slidingDiv).removeClass('card-collapsed');
 			$(slidingDiv).find("i.collapsable"+target).removeClass("fa-chevron-down").addClass("fa-chevron-up");
-			console.log($(mainRow).next().find(".compassrow"+id).find(".card-header").next())
+			// console.log($(mainRow).next().find(".compassrow"+id).find(".card-header").next())
 			/* $(mainRow).next().find(".compassrow"+id).find(".card-header").next().slideUp(); */
 			$("#"+target).slideUp();
 			
@@ -153,7 +153,7 @@ for (i = 0; i < acc.length; i++) {
 					allQuestionConfigurationList.push(newQuestion);
 					try{
 						question['SUBQUESTIONLIST'].forEach(question=>{
-							console.log(question)
+							// console.log(question)
 							var newSubQuestion = Object.assign({},question)
 							newSubQuestion['category'] = category;
 							newSubQuestion['subCategory'] = subCategory;
@@ -178,7 +178,7 @@ for (i = 0; i < acc.length; i++) {
 					allCRQuestionConfigurationList.push(newQuestion);
 					try{
 						question['SUBQUESTIONLIST'].forEach(question=>{
-							console.log(question)
+							// console.log(question)
 							var newSubQuestion = Object.assign({},question)
 							newSubQuestion['category'] = category;
 							newSubQuestion['subCategory'] = subCategory;
@@ -195,7 +195,7 @@ for (i = 0; i < acc.length; i++) {
 					"questionsList":allQuestionConfigurationList,
 					"crQuestionsList":allCRQuestionConfigurationList
 				   };
-		console.log(data)
+		// console.log(data)
 		$.ajax({
 			url: url,
 			cache: false,

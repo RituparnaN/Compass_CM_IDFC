@@ -98,7 +98,7 @@
 			$(panelBody).slideDown();
 			$(slidingDiv).removeClass('card-collapsed');
 			$(slidingDiv).find("i.collapsable"+target).removeClass("fa-chevron-down").addClass("fa-chevron-up");
-			console.log($(mainRow).next().find(".compassrow"+id).find(".card-header").next())
+			// console.log($(mainRow).next().find(".compassrow"+id).find(".card-header").next())
 			/* $(mainRow).next().find(".compassrow"+id).find(".card-header").next().slideUp(); */
 			$("#"+target).slideUp();
 			
@@ -350,9 +350,9 @@
 		var editField = elm.name.split("||")[1]
 		var category = elm.name.split("||")[2]
 		questionResponsesData[questionId][editField] = elm.value
-		console.log(questionId)
-		console.log(editField)
-		console.log(questionResponsesData)
+		// console.log(questionId)
+		// console.log(editField)
+		// console.log(questionResponsesData)
 		$("#questionResponses").html(JSON.stringify(questionResponsesData))
 
 		var Ecount = 0
@@ -539,7 +539,7 @@
 				 Object.keys(questionResponsesJ).forEach(category=>{
 					 questionResponses.push(questionResponsesJ[category])
 					 })
-				console.log(questionResponses)
+				// console.log(questionResponses)
 					 
 				 var data = {
 							"generalAndStatusDetails":JSON.parse($("#generalAndstatusDetails").html()),

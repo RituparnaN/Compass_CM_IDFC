@@ -3702,7 +3702,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 	
 	@Override
 	public String getImageUrlDataNew(String imageId){
-		System.out.println("in Here");
+//		System.out.println("in Here");
 		
  		String a_RESIDUALRISK = "";
  		String a_ASSESSMENTWISECAT = "";
@@ -3735,7 +3735,7 @@ public class RiskAssessmentNewDAOImpl implements RiskAssessmentNewDAO {
 
 	@Override
 	public String getImageUrlDataSummary(String imageId){
-		System.out.println("in Here");
+//		System.out.println("in Here");
 		
 		String dEFAULTVALUECHART = "";
 	 	String t_RESIDUALRISK = "";

@@ -932,7 +932,7 @@ var riskAssessmentMaster = riskAssessmentMaster || (function () {
 					})
 				}
 			})
-			console.log(toAddSubCategory+"subCategLinkCR")
+			// console.log(toAddSubCategory+"subCategLinkCR")
 			$("#controlsReviewsQuestionsDetails").html(JSON.stringify(questionsFormDetails))
 			$("#riskAssessmentQuestionsForm"+unqId).html(riskAssessmentMaster.generateQuestionsForm(unqId,toAddCategory+"Link",toAddSubCategory+"subCategLinkCR",true))
 			

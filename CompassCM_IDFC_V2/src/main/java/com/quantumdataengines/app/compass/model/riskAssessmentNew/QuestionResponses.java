@@ -23,7 +23,7 @@ public class QuestionResponses {
 			}
 			try {
 				questionResponseData.put("QINPUT", questionListObj.getJSONObject(x).getString("QINPUT"));
-				System.out.println("qinput: "+questionListObj.getJSONObject(x).getString("QINPUT"));
+//				System.out.println("qinput: "+questionListObj.getJSONObject(x).getString("QINPUT"));
 				
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
@@ -87,7 +87,7 @@ public class QuestionResponses {
 //				e.printStackTrace();
 			}
 			this.questionsResponseList.add(questionResponseData);
-			System.out.println(questionResponseData.toString());
+//			System.out.println(questionResponseData.toString());
 		}
 	}
 }
