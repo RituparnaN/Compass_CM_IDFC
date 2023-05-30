@@ -1628,28 +1628,44 @@
 																												<td width = "30%">
 																													${question.QUESTION }
 																												</td>
-																												<td width = "12%">
+																												<%-- <td width = "12%">
 																													<c:if test = "${question.HASPARENT eq 'Y' }">
 																													<textarea class="form-control input-sm ${formattedCategory}Qinput" id="${question.QUESTIONID }qInput" name="${question.QUESTIONID }||QINPUT||${formattedCategory}" onChange = "handleCRInputChange(this)">${question.QRESPONSES.QINPUT }</textarea>
+																													</c:if>
+																												</td> --%>
+																												<td width = "12%">
+																													<c:if test = "${question.INPUTTYPE eq 'T' }">
+																													<textarea class="form-control input-sm ${formattedCategory}Qinput" id="${question.QUESTIONID }qInput" name="${question.QUESTIONID }||QINPUT||${formattedCategory}" onChange = "handleCRInputChange(this)">${question.QRESPONSES.QINPUT }</textarea>
+																													</c:if>
+																													<c:if test = "${question.INPUTTYPE eq 'L' }">
+																														<select class="form-control input-sm ${formattedCategory}Qinput" id="${question.QUESTIONID}qInput" name="${question.QUESTIONID }||QINPUT||${formattedCategory}" onChange = "handleCRInputChange(this)">
+																														<!-- <option>Nothing Selected</option> -->
+																														<option value = 'Y' <c:if test = "${question.QRESPONSES.QINPUT eq 'Y'}">selected</c:if>>Yes</option>
+																														<option value = 'N' <c:if test = "${question.QRESPONSES.QINPUT eq 'N'}">selected</c:if>>No</option>
+																														<option value = 'U' <c:if test = "${question.QRESPONSES.QINPUT eq 'U'}">selected</c:if>>U</option>
+																														<option value = 'NA' <c:if test = "${question.QRESPONSES.QINPUT eq 'NA'}">selected</c:if>>Not Applicable</option>
+																														
+																													</select>
 																													</c:if>
 																												</td>
 																												<td width = "12%">
 																													<select class="form-control input-sm ${formattedCategory}designRating" id="${question.QUESTIONID }desinRating" name="${question.QUESTIONID }||QDESIGNRATING||${formattedCategory}" onChange = "handleCRInputChange(this)">
 																														<!-- <option>Nothing Selected</option> -->
-																														<option value = 'NA' <c:if test = "${question.QRESPONSES.QDESIGNRATING eq 'NA'}">selected</c:if>>NA</option>
-																														<option value = 'E' <c:if test = "${question.QRESPONSES.QDESIGNRATING eq 'E'}">selected</c:if>>E</option>
-																														<option value = 'NI' <c:if test = "${question.QRESPONSES.QDESIGNRATING eq 'NI'}">selected</c:if>>NI</option>
-																														<option value = 'NC' <c:if test = "${question.QRESPONSES.QDESIGNRATING eq 'NC'}">selected</c:if>>NC</option>
+																														<option value = 'NA' <c:if test = "${question.QRESPONSES.QDESIGNRATING eq 'NA'}">selected</c:if>>Not applicable (N/A)</option>
+																														<option value = 'E' <c:if test = "${question.QRESPONSES.QDESIGNRATING eq 'E'}">selected</c:if>>Effective (E)</option>
+																														<option value = 'NI' <c:if test = "${question.QRESPONSES.QDESIGNRATING eq 'NI'}">selected</c:if>>Needs Improvement  (NI)</option>
+																														<option value = 'NC' <c:if test = "${question.QRESPONSES.QDESIGNRATING eq 'NC'}">selected</c:if>>No Controls (NC)</option>
 																														
 																													</select>
 																												</td>
 																												<td width = "12%">
 																													<select class="form-control input-sm ${formattedCategory}operatingRating" id="${question.QUESTIONID }operatingRating" name="${question.QUESTIONID }||QOPERATINGRATING||${formattedCategory}" onChange = "handleCRInputChange(this)">
 																														
-																														<option value = 'NA' <c:if test = "${question.QRESPONSES.QOPERATINGRATING eq 'NA'}">selected</c:if>>NA</option>
-																														<option value = 'E' <c:if test = "${question.QRESPONSES.QOPERATINGRATING eq 'E'}">selected</c:if>>E</option>
-																														<option value = 'NI' <c:if test = "${question.QRESPONSES.QOPERATINGRATING eq 'NI'}">selected</c:if>>NI</option>
-																														<option value = 'NC' <c:if test = "${question.QRESPONSES.QOPERATINGRATING eq 'NC'}">selected</c:if>>NC</option>
+																														<option value = 'NA' <c:if test = "${question.QRESPONSES.QOPERATINGRATING eq 'NA'}">selected</c:if>>Not applicable (N/A)</option>
+																														<option value = 'E' <c:if test = "${question.QRESPONSES.QOPERATINGRATING eq 'E'}">selected</c:if>>Effective (E)</option>
+																														<option value = 'NI' <c:if test = "${question.QRESPONSES.QOPERATINGRATING eq 'NI'}">selected</c:if>>Needs Improvement  (NI)</option>
+																														<option value = 'NC' <c:if test = "${question.QRESPONSES.QOPERATINGRATING eq 'NC'}">selected</c:if>>No Controls (NC)</option>
+																											
 																														
 																													</select>
 																												</td>
