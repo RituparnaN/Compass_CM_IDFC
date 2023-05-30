@@ -128,22 +128,19 @@ body.ie6 .info, body.ie7 .info, body.ie8 .info {
 			<div class="alertSection">
 				<c:if test="${not empty message or not empty error}">
 					<div
-						class='messages
-						<c:if test="${not empty message}">
-							alert alert-success alert-dismissable
-						</c:if>
-						<c:if test="${not empty error}">
-							alert alert-danger alert-dismissable
-						</c:if>'>
+						class='messages	<c:if test="${not empty message}">alert alert-success alert-dismissable	</c:if><c:if test="${not empty error}">	alert alert-danger alert-dismissable</c:if>'>
 						<c:if test="${not empty message}">
 							${message}
+							<button type="button" class="close" style="color: #3C763D">
+							<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
+						</button>
 						</c:if>
 						<c:if test="${not empty error}">
 							${error}
-						</c:if>
-						<button type="button" class="close">
+							<button type="button" class="close" style="color: #A94442">
 							<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
 						</button>
+						</c:if>
 					</div>
 				</c:if>
 			</div>

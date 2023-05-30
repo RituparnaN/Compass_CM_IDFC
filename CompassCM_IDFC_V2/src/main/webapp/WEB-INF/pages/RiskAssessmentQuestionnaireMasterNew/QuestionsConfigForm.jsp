@@ -18,6 +18,9 @@ for (i = 0; i < acc.length; i++) {
 }
 </script>
 <style>
+	.subTab {
+		text-transform: capitalize;
+	}
 	.accordion {
 	  background-color: #337ab7;
 	  border-color: #337ab7;
@@ -49,6 +52,16 @@ for (i = 0; i < acc.length; i++) {
 	$(document).ready(function() {
 		var id = '${UNQID}';
 		var assessmentUnit = '${ASSESSMENTUNIT}'
+
+		var today = new Date();
+		var dd = String(today.getDate()).padStart(2, '0');
+		var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+		var yyyy = today.getFullYear();
+
+		today = mm + '/' + dd + '/' + yyyy;
+		
+		$("#todayDate").html(today)
+		
 		compassTopFrame.init(id, 'reportBenchMarkDtlsTable1'+id, 'dd/mm/yy');
 
 		// creating js array from jstl object for categories and sub categories
@@ -109,7 +122,7 @@ for (i = 0; i < acc.length; i++) {
 			$(panelBody).slideDown();
 			$(slidingDiv).removeClass('card-collapsed');
 			$(slidingDiv).find("i.collapsable"+target).removeClass("fa-chevron-down").addClass("fa-chevron-up");
-			console.log($(mainRow).next().find(".compassrow"+id).find(".card-header").next())
+			// console.log($(mainRow).next().find(".compassrow"+id).find(".card-header").next())
 			/* $(mainRow).next().find(".compassrow"+id).find(".card-header").next().slideUp(); */
 			$("#"+target).slideUp();
 			
@@ -140,7 +153,7 @@ for (i = 0; i < acc.length; i++) {
 					allQuestionConfigurationList.push(newQuestion);
 					try{
 						question['SUBQUESTIONLIST'].forEach(question=>{
-							console.log(question)
+							// console.log(question)
 							var newSubQuestion = Object.assign({},question)
 							newSubQuestion['category'] = category;
 							newSubQuestion['subCategory'] = subCategory;
@@ -165,7 +178,7 @@ for (i = 0; i < acc.length; i++) {
 					allCRQuestionConfigurationList.push(newQuestion);
 					try{
 						question['SUBQUESTIONLIST'].forEach(question=>{
-							console.log(question)
+							// console.log(question)
 							var newSubQuestion = Object.assign({},question)
 							newSubQuestion['category'] = category;
 							newSubQuestion['subCategory'] = subCategory;
@@ -182,7 +195,7 @@ for (i = 0; i < acc.length; i++) {
 					"questionsList":allQuestionConfigurationList,
 					"crQuestionsList":allCRQuestionConfigurationList
 				   };
-		console.log(data)
+		// console.log(data)
 		$.ajax({
 			url: url,
 			cache: false,
@@ -344,6 +357,15 @@ for (i = 0; i < acc.length; i++) {
 	</div>
 	<div id = "unqId">
 		${UNQID}
+	</div>
+	<div id = "userCode">
+		${USERCODE }
+	</div>
+	<div id = "todayDate">
+		
+	</div>
+	<div id = "individualQsId">
+		${QUESTIONID }
 	</div>
 </div>
 </div>

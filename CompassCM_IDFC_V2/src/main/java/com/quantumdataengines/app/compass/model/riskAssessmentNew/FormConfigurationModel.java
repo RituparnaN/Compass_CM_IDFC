@@ -119,6 +119,27 @@ public class FormConfigurationModel {
 				// TODO: handle exception
 				questionDetails.put("INPUTOPTIONSLISTFORNUMERIC","" );
 			}
+			try {
+				
+				questionDetails.put("CREATEDBY",qObj.getString("CREATEDBY") );
+			} catch (Exception e) {
+				// TODO: handle exception
+				questionDetails.put("CREATEDBY","" );
+			}
+			try {
+				
+				questionDetails.put("CREATEDON",qObj.getString("CREATEDON") );
+			} catch (Exception e) {
+				// TODO: handle exception
+				questionDetails.put("CREATEDON","" );
+			}
+			try {
+				
+				questionDetails.put("COMMENTS",qObj.getString("COMMENTS") );
+			} catch (Exception e) {
+				// TODO: handle exception
+				questionDetails.put("COMMENTS","" );
+			}
 
 			this.controlsReviewQsList.add(questionDetails);
 			
@@ -217,6 +238,27 @@ public class FormConfigurationModel {
 			} catch (Exception e) {
 				// TODO: handle exception
 				questionDetails.put("INPUTOPTIONSLISTFORNUMERIC","" );
+			}
+			try {
+				
+				questionDetails.put("CREATEDBY",qObj.getString("CREATEDBY") );
+			} catch (Exception e) {
+				// TODO: handle exception
+				questionDetails.put("CREATEDBY","" );
+			}
+			try {
+				
+				questionDetails.put("CREATEDON",qObj.getString("CREATEDON") );
+			} catch (Exception e) {
+				// TODO: handle exception
+				questionDetails.put("CREATEDON","" );
+			}
+			try {
+				
+				questionDetails.put("COMMENTS",qObj.getString("COMMENTS") );
+			} catch (Exception e) {
+				// TODO: handle exception
+				questionDetails.put("COMMENTS","" );
 			}
 //			System.out.println(questionDetails);
 			

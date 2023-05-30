@@ -98,7 +98,7 @@
 			$(panelBody).slideDown();
 			$(slidingDiv).removeClass('card-collapsed');
 			$(slidingDiv).find("i.collapsable"+target).removeClass("fa-chevron-down").addClass("fa-chevron-up");
-			console.log($(mainRow).next().find(".compassrow"+id).find(".card-header").next())
+			// console.log($(mainRow).next().find(".compassrow"+id).find(".card-header").next())
 			/* $(mainRow).next().find(".compassrow"+id).find(".card-header").next().slideUp(); */
 			$("#"+target).slideUp();
 			
@@ -174,6 +174,10 @@
 			resultValue = Math.round((value*100)/divisorValue)
 		//alert(resultValue)
 		//if(resultValue < 100 || elmData[5] == ""){
+		
+		if(isNaN(resultValue)){
+			resultValue = 0
+			}
 			var likelyhood = 0
 			if(resultValue <= 0)likelyhood = 0
 			else if(resultValue > 0 && resultValue <=5) likelyhood = 1
@@ -181,6 +185,7 @@
 			else likelyhood = 3
 
 			var impactCriteria = 0
+			
 			if(inputType == 'select'){
 				try{
 					impactCriteria = parseInt(elm.value.split("||")[1])
@@ -201,6 +206,20 @@
 				
 
 			}
+
+			if(inputType == 'text'){
+				
+				questionResponsesData[toEditQuestionId]['QIMPACTCRITERIA'] = 0
+				questionResponsesData[toEditQuestionId]['QINPUT'] = elm.value
+				questionResponsesData[toEditQuestionId]['QRESULT'] = 0
+				questionResponsesData[toEditQuestionId]['QLIKELYHOOD'] = 0
+				questionResponsesData[toEditQuestionId]['QINHERENTRISK'] = 0
+
+				$("#questionResponses").html(JSON.stringify(questionResponsesData))
+				return
+				
+				
+				}
 			
 			if(inputType == 'numeric'){
 				var rangesStr = elmData[1].split("^")[1]
@@ -331,6 +350,9 @@
 		var editField = elm.name.split("||")[1]
 		var category = elm.name.split("||")[2]
 		questionResponsesData[questionId][editField] = elm.value
+		// console.log(questionId)
+		// console.log(editField)
+		// console.log(questionResponsesData)
 		$("#questionResponses").html(JSON.stringify(questionResponsesData))
 
 		var Ecount = 0
@@ -450,7 +472,10 @@
 		var url = ctx + '/common/saveRiskAssesesmentForm';
 		var CURRENTROLE = "${CURRENTROLE}";
 		var userCode = "${USERCODE}"
-		
+		if($("#GENERAL_ASSESSMENTPERIOD"+"${UNQID}").val() == ""){
+			alert("Please Provide Assessment Period In General Tab")
+			return
+		}
 		var generalAndstatusDetails = JSON.parse($("#generalAndstatusDetails").html())
 		/* alert(elm.value) */
 		generalAndstatusDetails['FORMSTATUS'] = elm.value
@@ -514,6 +539,7 @@
 				 Object.keys(questionResponsesJ).forEach(category=>{
 					 questionResponses.push(questionResponsesJ[category])
 					 })
+				// console.log(questionResponses)
 					 
 				 var data = {
 							"generalAndStatusDetails":JSON.parse($("#generalAndstatusDetails").html()),
@@ -646,14 +672,14 @@
 				<form action="javascript:void(0)" method="POST" id="riskAssessmentForm">
 				<input type="hidden" value="${ASSESSMENTUNIT}" name="ASSESSMENTUNIT"></input>
 				<input type="hidden" value="${COMPASSREFERENCENO}" name="COMPASSREFNO"></input>
-					<ul class="nav nav-pills modalNav" role="tablist">
+					<ul class="nav nav-pills modalNav" role="tablist" style = "margin:2px 0px 2px 0px;">
 						<li role="presentation" class="active" id="generalTabNew">
 							<a class="subTab nav-link active" href="#generalNew" aria-controls="tab" role="tab" data-toggle="tab">General</a>
 						</li>
 						<c:forEach var = "category" items = "${QUESTIONSFORMDETAILS.categoryList}">
 						
 							<li role="presentation" id=<c:out value="${f:replace(category,' ','')}TabNew"/>>
-								<a class="subTab nav-link" href=<c:out value="#${f:replace(category,' ','')}New"/> aria-controls="tab" role="tab" data-toggle="tab">${category }</a>
+								<a class="subTab nav-link" href=<c:out value="#${f:replace(category,' ','')}New"/> aria-controls="tab" role="tab" data-toggle="tab" style="text-transform: capitalize">${category }</a>
 							</li>
 						</c:forEach>
 						<!-- <li role="presentation" id="geographyTab">
@@ -906,11 +932,11 @@
 							<div role="tabpanel" class="tab-pane  fade in" id=<c:out value="${f:replace(category,' ','')}New"/> >
 								<div class="row">
 									<div class="col-sm-12">
-										<div class="card card-primary">
-											<div id=<c:out value="${f:replace(category,' ','')}DetailsNew"/>>
+										<div class="">
+											<%-- <div id=<c:out value="${f:replace(category,' ','')}DetailsNew"/>> --%>
 												<c:forEach var ="subCategory" items = "${QUESTIONSFORMDETAILS.categoresAndSubCategories[category] }">
 													<c:set var = "formattedSubCategory" value = "${f:replace(f:replace(f:replace(f:replace(subCategory,')',''),'(',''),'/',''),' ','')}"/>
-													<div class="card card-primary panel_RiskAssessmentForm" style="margin-top: 10px;">
+													<div class="card card-primary panel_RiskAssessmentForm" style="">
 														<div class="card-header panelSlidingRiskAssessmentForm${UNQID} clearfix">
 															<h6 class="card-title pull-${dirL}">${subCategory}</h6>
 														</div>
@@ -921,14 +947,14 @@
 																<table class="table " id = "${formattedCategory }||${formattedSubCategory }||table" style="style="margin-bottom: 0px;border-collapse:collapse;">
 																	<tbody>
 																			 <tr style="background-color:#ddd">
-																				<th></th>
-																				<th>Question Id</th>
-																				<th>Question</th>
-																				<th>Question Input</th>
-																				<th>Result (%)</th>
-																				<th>Impact Criteria</th>
-																				<th>Likely hood</th>
-																				<th colspan=2 style="text-align:center">Action</th>
+																				<th width = "1%"></th>
+																				<th width = "10%">Question Id</th>
+																				<th width = "45%">Question</th>
+																				<th width = "10%">Question Input</th>
+																				<th width = "5%">Result (%)</th>
+																				<th width = "7%">Impact Criteria</th>
+																				<th width = "7%">Likelihood</th>
+																				<th colspan=2 width="10%" style="text-align:center">Action</th>
 																			</tr> 
 																		<%-- ${QUESTIONSFORMDETAILS.categoryWiseQuesitons[category][subCategory] } --%>
 																		<c:forEach var = "question" items = "${QUESTIONSFORMDETAILS.categoryWiseQuesitons[category][subCategory]}">
@@ -960,7 +986,7 @@
 																									<td width = "10%">
 																										${question.QUESTIONID } 
 																										<div class="btn-group pull-right clearfix">
-																											<span class="pull-right" onclick="handleSlidingPanels(this,'${UNQID}','${f:replace(question['QUESTIONID'],'.','SQ')}slidingQuestionDetails${UNQID}')"><i class="collapsable${f:replace(question['QUESTIONID'],'.','SQ')}slidingQuestionDetails${UNQID} fa fa-chevron-up"></i></span>
+																											<span class="pull-right" onclick="handleSlidingPanels(this,'${UNQID}','${f:replace(question['QUESTIONID'],'.','SQ')}slidingQuestionDetails${UNQID}')"><i class="collapsable${f:replace(question['QUESTIONID'],'.','SQ')}slidingQuestionDetails${UNQID} fa fa-chevron-up" style = "font-size:15px;"></i></span>
 																										</div>
 																									</td>
 																									<td width = "45%">
@@ -983,7 +1009,7 @@
 																											<input id = "${question['QUESTIONID'] }inputValue" value = "${question.QRESPONSES.QINPUT }"  class="form-control input-sm RAInputValue" type = "number" name = "numeric||${question['QUESTIONID'] }^${f:replace(f:replace(question['INPUTOPTIONSLISTFORNUMERIC'],'||','%%'),'^','$') }||null||${formattedCategory}||${formattedSubCategory}||<c:if test = "${question['ISSUPERPARENT'] ne 'Y' }">${question['PARENTQSIDS']}</c:if>" onchange = "userInputChange(this)">
 																										</c:if>
 																										<c:if test = "${question.INPUTTYPE eq 'text' }">
-																											<textarea class="form-control input-sm">${question.QRESPONSES.QINPUT }</textarea>
+																											<textarea id = "${question['QUESTIONID'] }inputValue" class="form-control input-sm" name = "text||null||null||${formattedCategory}||${formattedSubCategory}||<c:if test = "${question['ISSUPERPARENT'] ne 'Y' }">${question['PARENTQSIDS']}</c:if>" onchange = "userInputChange(this)">${question.QRESPONSES.QINPUT }</textarea>
 																										</c:if>
 																										
 																									</td>
@@ -1014,11 +1040,11 @@
 																											<%-- <td width = "5%">
 																												<input id = "${question.QUESTIONID }result" class="form-control input-sm" disabled> 
 																											</td> --%>
-																											<td width = "5%">
-																												<button class="btn btn-primary" name = "${question['QUESTIONID']}||rtrfibutton||${COMPASSREFERENCENO}" onclick="document.getElementById('bulk').value = '';rfiCaseWorkFlowActionsNew.handleRaiseForRFIPage(this)" data-toggle="tooltip" title="Raise to RFI"  id="raiseToRFIIndividual${question['QUESTIONID']}">rToRfi</button> 
+																											<td width = "5%" align="center">
+																												<button class="btn btn-primary" name = "${question['QUESTIONID']}||rtrfibutton||${COMPASSREFERENCENO}" onclick="document.getElementById('bulk').value = '';rfiCaseWorkFlowActionsNew.handleRaiseForRFIPage(this)" data-toggle="tooltip" title="Raise to RFI"  id="raiseToRFIIndividual${question['QUESTIONID']}"><i class="fa fa-paper-plane-o" style = "font-size:15px;"></i></button> 
 																											</td>
-																											<td width = "5%">
-																												<button class="btn btn-warning" name = "${question['QUESTIONID'] }||vcbutton||${COMPASSREFERENCENO}" class="btn btn-primary btn-sm" data-toggle="tooltip" title="View Comments" id="viewComments${question['QUESTIONID']}" onclick="rfiCaseWorkFlowActionsNew.handleViewComments(this)">VC</button>
+																											<td width = "5%" align="center">
+																												<button class="btn btn-warning" name = "${question['QUESTIONID'] }||vcbutton||${COMPASSREFERENCENO}" class="btn btn-primary btn-sm" data-toggle="tooltip" title="View Comments" id="viewComments${question['QUESTIONID']}" onclick="rfiCaseWorkFlowActionsNew.handleViewComments(this)"><i class="fa fa-comments-o" style = "font-size:15px;"></i></button>
 																											</td>
 																										</c:when>
 																										<c:otherwise>
@@ -1028,11 +1054,11 @@
 																											</td>
 																											<td width = "7%"> 
 																											</td>
-																											<td width = "5%">
-																												<button class="btn btn-primary" name = "${question['QUESTIONID']}||rtrfibutton||${COMPASSREFERENCENO}" onclick="document.getElementById('bulk').value = '';rfiCaseWorkFlowActionsNew.handleRaiseForRFIPage(this)" data-toggle="tooltip" title="Raise to RFI"  id="raiseToRFIIndividual${question['QUESTIONID']}">rToRfi</button> 
+																											<td width = "5%" align="center">
+																												<button class="btn btn-primary" name = "${question['QUESTIONID']}||rtrfibutton||${COMPASSREFERENCENO}" onclick="document.getElementById('bulk').value = '';rfiCaseWorkFlowActionsNew.handleRaiseForRFIPage(this)" data-toggle="tooltip" title="Raise to RFI"  id="raiseToRFIIndividual${question['QUESTIONID']}"><i class="fa fa-paper-plane-o" style = "font-size:15px;"></i></button> 
 																											</td>
-																											<td width = "5%">
-																												<button class="btn btn-warning" name = "${question['QUESTIONID'] }||vcbutton||${COMPASSREFERENCENO}" class="btn btn-primary btn-sm" data-toggle="tooltip" title="View Comments" id="viewComments${question['QUESTIONID']}" onclick="rfiCaseWorkFlowActionsNew.handleViewComments(this)">VC</button>
+																											<td width = "5%" align="center">
+																												<button class="btn btn-warning" name = "${question['QUESTIONID'] }||vcbutton||${COMPASSREFERENCENO}" class="btn btn-primary btn-sm" data-toggle="tooltip" title="View Comments" id="viewComments${question['QUESTIONID']}" onclick="rfiCaseWorkFlowActionsNew.handleViewComments(this)"><i class="fa fa-comments-o" style = "font-size:15px;"></i></button>
 																											</td>
 																										</c:otherwise>
 																									</c:choose>
@@ -1052,7 +1078,7 @@
 																																	<th>Question Input</th>
 																																	<th>Result (%)</th>
 																																	<th>Impact Criteria</th>
-																																	<th>Likely hood</th>
+																																	<th>Likelihood</th>
 																																	<th colspan=2 style="text-align:center">Action</th>
 																																</tr> 
 																															<c:forEach var = "subQuestion" items = "${question['SUBQUESTIONLIST']}">
@@ -1096,8 +1122,11 @@
 																																		<c:if test = "${subQuestion.INPUTTYPE eq 'numeric' }">
 																																			<input id = "${f:replace(subQuestion['QUESTIONID'],'.','SQ') }inputValue" value = "${subQuestion.QRESPONSES.QINPUT }" class="form-control input-sm RAInputValue" type = "number" name = "numeric||${question['QUESTIONID'] }^${f:replace(f:replace(subQuestion['INPUTOPTIONSLISTFORNUMERIC'],'||','%%'),'^','$') }||${f:replace(subQuestion['QUESTIONID'],'.','SQ') }||${formattedCategory}||${formattedSubCategory}||${subQuestion['PARENTQSIDS']}" onchange = "userInputChange(this)">
 																																		</c:if>
-																																		<c:if test = "${subQuestion.INPUTTYPE eq 'text' }">
+																																		<%-- <c:if test = "${subQuestion.INPUTTYPE eq 'text' }">
 																																			<textarea class="form-control input-sm">${subQuestion.QRESPONSES.QINPUT } </textarea>
+																																		</c:if> --%>
+																																		<c:if test = "${subQuestion.INPUTTYPE eq 'text' }">
+																																			<textarea id = "${f:replace(subQuestion['QUESTIONID'],'.','SQ') }inputValue" class="form-control input-sm" name = "text||null||null||${formattedCategory}||${formattedSubCategory}||${subQuestion['PARENTQSIDS']}" onchange = "userInputChange(this)">${subQuestion.QRESPONSES.QINPUT }</textarea>
 																																		</c:if>
 																																		
 																																	</td>
@@ -1126,11 +1155,11 @@
 																																					
 																																				</select>
 																																			</td>
-																																			<td width = "5%">
-																																				<button class="btn btn-primary" name = "${subQuestion['QUESTIONID']}||rtrfibutton||${COMPASSREFERENCENO}" onclick="document.getElementById('bulk').value = '';rfiCaseWorkFlowActionsNew.handleRaiseForRFIPage(this)" data-toggle="tooltip" title="Raise to RFI"  id="raiseToRFIIndividual${subQuestion['QUESTIONID']}">rToRfi</button> 
+																																			<td width = "5%" align="center">
+																																				<button class="btn btn-primary" name = "${subQuestion['QUESTIONID']}||rtrfibutton||${COMPASSREFERENCENO}" onclick="document.getElementById('bulk').value = '';rfiCaseWorkFlowActionsNew.handleRaiseForRFIPage(this)" data-toggle="tooltip" title="Raise to RFI"  id="raiseToRFIIndividual${subQuestion['QUESTIONID']}"><i class="fa fa-paper-plane-o" style = "font-size:15px;"></i></button> 
 																																			</td>
-																																			<td width = "5%">
-																																				<button class="btn btn-warning" name = "${subQuestion['QUESTIONID'] }||vcbutton||${COMPASSREFERENCENO}" class="btn btn-primary btn-sm" data-toggle="tooltip" title="View Comments" id="viewComments${subQuestion['QUESTIONID']}" onclick="rfiCaseWorkFlowActionsNew.handleViewComments(this)">VC</button>
+																																			<td width = "5%" align="center">
+																																				<button class="btn btn-warning" name = "${subQuestion['QUESTIONID'] }||vcbutton||${COMPASSREFERENCENO}" class="btn btn-primary btn-sm" data-toggle="tooltip" title="View Comments" id="viewComments${subQuestion['QUESTIONID']}" onclick="rfiCaseWorkFlowActionsNew.handleViewComments(this)"><i class="fa fa-comments-o" style = "font-size:15px;"></i></button>
 																																			</td>
 																																			</c:when>
 																																		<c:otherwise>
@@ -1140,11 +1169,11 @@
 																																			</td>
 																																			<td width = "7%"> 
 																																			</td>
-																																			<td width = "5%">
-																																				<button class="btn btn-primary" name = "${subQuestion['QUESTIONID']}||rtrfibutton||${COMPASSREFERENCENO}" onclick="document.getElementById('bulk').value = '';rfiCaseWorkFlowActionsNew.handleRaiseForRFIPage(this)" data-toggle="tooltip" title="Raise to RFI"  id="raiseToRFIIndividual${subQuestion['QUESTIONID']}">rToRfi</button> 
+																																			<td width = "5%" align="center">
+																																				<button class="btn btn-primary" name = "${subQuestion['QUESTIONID']}||rtrfibutton||${COMPASSREFERENCENO}" onclick="document.getElementById('bulk').value = '';rfiCaseWorkFlowActionsNew.handleRaiseForRFIPage(this)" data-toggle="tooltip" title="Raise to RFI"  id="raiseToRFIIndividual${subQuestion['QUESTIONID']}"><i class="fa fa-paper-plane-o" style = "font-size:15px;"></i></button> 
 																																			</td>
-																																			<td width = "5%">
-																																				<button class="btn btn-warning" name = "${subQuestion['QUESTIONID'] }||vcbutton||${COMPASSREFERENCENO}" class="btn btn-primary btn-sm" data-toggle="tooltip" title="View Comments" id="viewComments${subQuestion['QUESTIONID']}" onclick="rfiCaseWorkFlowActionsNew.handleViewComments(this)">VC</button>
+																																			<td width = "5%" align="center">
+																																				<button class="btn btn-warning" name = "${subQuestion['QUESTIONID'] }||vcbutton||${COMPASSREFERENCENO}" class="btn btn-primary btn-sm" data-toggle="tooltip" title="View Comments" id="viewComments${subQuestion['QUESTIONID']}" onclick="rfiCaseWorkFlowActionsNew.handleViewComments(this)"><i class="fa fa-comments-o" style = "font-size:15px;"></i></button>
 																																			</td>
 																																		</c:otherwise>
 																																	</c:choose>				
@@ -1213,11 +1242,11 @@
 																													
 																									</select>
 																								</td>
-																								<td width = "5%">
-																									<button class="btn btn-primary" name = "${question['QUESTIONID']}||rtrfibutton||${COMPASSREFERENCENO}" onclick="document.getElementById('bulk').value = '';rfiCaseWorkFlowActionsNew.handleRaiseForRFIPage(this)" data-toggle="tooltip" title="Raise to RFI"  id="raiseToRFIIndividual${question['QUESTIONID']}">rToRfi</button> 
+																								<td width = "5%" align="center">
+																									<button class="btn btn-primary" name = "${question['QUESTIONID']}||rtrfibutton||${COMPASSREFERENCENO}" onclick="document.getElementById('bulk').value = '';rfiCaseWorkFlowActionsNew.handleRaiseForRFIPage(this)" data-toggle="tooltip" title="Raise to RFI"  id="raiseToRFIIndividual${question['QUESTIONID']}"><i class="fa fa-paper-plane-o" style = "font-size:15px;"></i></button> 
 																								</td>
-																								<td width = "5%">
-																									<button class="btn btn-warning" name = "${question['QUESTIONID'] }||vcbutton||${COMPASSREFERENCENO}" class="btn btn-primary btn-sm" data-toggle="tooltip" title="View Comments" id="viewComments${question['QUESTIONID']}" onclick="rfiCaseWorkFlowActionsNew.handleViewComments(this)">VC</button>
+																								<td width = "5%" align="center">
+																									<button class="btn btn-warning" name = "${question['QUESTIONID'] }||vcbutton||${COMPASSREFERENCENO}" class="btn btn-primary btn-sm" data-toggle="tooltip" title="View Comments" id="viewComments${question['QUESTIONID']}" onclick="rfiCaseWorkFlowActionsNew.handleViewComments(this)"><i class="fa fa-comments-o" style = "font-size:15px;"></i></button>
 																								</td>
 																							</c:when>
 																							<c:otherwise>
@@ -1230,11 +1259,11 @@
 																								<td width = "7%">
 																									
 																								</td>
-																								<td width = "5%">
-																									<button class="btn btn-primary" name = "${question['QUESTIONID']}||rtrfibutton||${COMPASSREFERENCENO}" onclick="document.getElementById('bulk').value = '';rfiCaseWorkFlowActionsNew.handleRaiseForRFIPage(this)" data-toggle="tooltip" title="Raise to RFI"  id="raiseToRFIIndividual${question['QUESTIONID']}">rToRfi</button> 
+																								<td width = "5%" align="center">
+																									<button class="btn btn-primary" name = "${question['QUESTIONID']}||rtrfibutton||${COMPASSREFERENCENO}" onclick="document.getElementById('bulk').value = '';rfiCaseWorkFlowActionsNew.handleRaiseForRFIPage(this)" data-toggle="tooltip" title="Raise to RFI"  id="raiseToRFIIndividual${question['QUESTIONID']}"><i class="fa fa-paper-plane-o" style = "font-size:15px;"></i></button> 
 																								</td>
-																								<td width = "5%">
-																									<button class="btn btn-warning" name = "${question['QUESTIONID'] }||vcbutton||${COMPASSREFERENCENO}" class="btn btn-primary btn-sm" data-toggle="tooltip" title="View Comments" id="viewComments${question['QUESTIONID']}" onclick="rfiCaseWorkFlowActionsNew.handleViewComments(this)">VC</button>
+																								<td width = "5%" align="center">
+																									<button class="btn btn-warning" name = "${question['QUESTIONID'] }||vcbutton||${COMPASSREFERENCENO}" class="btn btn-primary btn-sm" data-toggle="tooltip" title="View Comments" id="viewComments${question['QUESTIONID']}" onclick="rfiCaseWorkFlowActionsNew.handleViewComments(this)"><i class="fa fa-comments-o" style = "font-size:15px;"></i></button>
 																								</td>
 																							</c:otherwise>
 																						</c:choose>
@@ -1261,7 +1290,7 @@
 														</div>
 													</div>
 												</c:forEach>
-											</div>
+											<!-- </div> -->
 											
 										</div>
 										<div class="card-search-card">
@@ -1346,13 +1375,13 @@
 						<div role="tabpanel" class="tab-pane fade in" id="controlsReviewNew" >
 							<div class="row">
 								<div class="col-sm-12">
-									<div class="card card-primary">
+									<div class="">
 										<div id=<c:out value="controlsReviewDetailsNew"/>>
 												<c:forEach var = "category" items = "${QUESTIONSFORMDETAILS.controlsReviewCategSubCateg.subCategories }">
 												<c:set var = "formattedCategory" value = "${f:replace(f:replace(f:replace(f:replace(f:replace(f:replace(category,'&',''),'&amp;',''),')',''),'(',''),'/',''),' ','')}"/>
-													<div class="card card-primary panel_RiskAssessmentForm" style="margin-top: 10px;">
+													<div class="card card-primary panel_RiskAssessmentForm" >
 														<div class="card-header panelSlidingRiskAssessmentForm${UNQID} clearfix">
-															<h6 class="card-title" style = "text-align:center">${category}</h6>
+															<h6 class="card-title" style = "font-weight:bold">${category}</h6>
 														</div>
 														<div class="panelSearchForm">
 															<div class="card-search-card" style="padding-bottom:10px">
@@ -1372,9 +1401,9 @@
 																									<td width = "10%" style="font-weight:bold;">Question Id</td>
 																									<td width = "30%" style="font-weight:bold;">Question</td>
 																									<td width = "12%" style="font-weight:bold;">Question Input</td>
-																									<td width = "12%" style="text-align:center;font-weight:bold;">Design rating</td>
-																									<td width = "12%" style="text-align:center;font-weight:bold;">Operating Rating</td>
-																									<td width = "12%" style="text-align:center;font-weight:bold;">Observation</td>
+																									<td width = "12%" style="font-weight:bold;">Design Rating</td>
+																									<td width = "12%" style="font-weight:bold;">Operating Rating</td>
+																									<td width = "12%" style="font-weight:bold;">Observation</td>
 																									<td  style="text-align:center;font-weight:bold;" colspan = '2'>Documents Referred / Sample Testing</td>
 																								</tr>  
 																								<!-- <tr>
@@ -1426,34 +1455,44 @@
 																															<td width = "10%">
 																																${question.QUESTIONID } 
 																																<div class="btn-group pull-right clearfix">
-																																	<span class="pull-right" onclick="handleSlidingPanels(this,'${UNQID}','${f:replace(question['QUESTIONID'],'.','SQ')}slidingQuestionDetails${UNQID}')"><i class="collapsable${f:replace(question['QUESTIONID'],'.','SQ')}slidingQuestionDetails${UNQID} fa fa-chevron-up"></i></span>
+																																	<span class="pull-right" onclick="handleSlidingPanels(this,'${UNQID}','${f:replace(question['QUESTIONID'],'.','SQ')}slidingQuestionDetails${UNQID}')"><i class="collapsable${f:replace(question['QUESTIONID'],'.','SQ')}slidingQuestionDetails${UNQID} fa fa-chevron-up" style = "font-size:15px;"></i></span>
 																																</div>
 																															</td>
 																															<td width = "30%">
 																																${question.QUESTION }
 																															</td>
 																															<td width = "12%">
-																																<c:if test = "${question.HASPARENT eq 'Y' }">
+																																<c:if test = "${question.INPUTTYPE eq 'T' }">
 																																<textarea class="form-control input-sm ${formattedCategory}Qinput" id="${question.QUESTIONID }qInput" name="${question.QUESTIONID }||QINPUT||${formattedCategory}" onChange = "handleCRInputChange(this)">${question.QRESPONSES.QINPUT }</textarea>
+																																</c:if>
+																																<c:if test = "${question.INPUTTYPE eq 'L' }">
+																																	<select class="form-control input-sm ${formattedCategory}Qinput" id="${question.QUESTIONID}qInput" name="${question.QUESTIONID }||QINPUT||${formattedCategory}" onChange = "handleCRInputChange(this)">
+																																	<!-- <option>Nothing Selected</option> -->
+																																	<option value = 'Y' <c:if test = "${question.QRESPONSES.QINPUT eq 'Y'}">selected</c:if>>Yes</option>
+																																	<option value = 'N' <c:if test = "${question.QRESPONSES.QINPUT eq 'N'}">selected</c:if>>No</option>
+																																	<option value = 'U' <c:if test = "${question.QRESPONSES.QINPUT eq 'U'}">selected</c:if>>U</option>
+																																	<option value = 'NA' <c:if test = "${question.QRESPONSES.QINPUT eq 'NA'}">selected</c:if>>Not Applicable</option>
+																																	
+																																</select>
 																																</c:if>
 																															</td>
 																															<td width = "12%">
 																																<select class="form-control input-sm ${formattedCategory}designRating" id="${question.QUESTIONID }desinRating" name="${question.QUESTIONID }||QDESIGNRATING||${formattedCategory}" onChange = "handleCRInputChange(this)">
 																																	<!-- <option>Nothing Selected</option> -->
-																																	<option value = 'NA' <c:if test = "${question.QRESPONSES.QDESIGNRATING eq 'NA'}">selected</c:if>>NA</option>
-																																	<option value = 'E' <c:if test = "${question.QRESPONSES.QDESIGNRATING eq 'E'}">selected</c:if>>E</option>
-																																	<option value = 'NI' <c:if test = "${question.QRESPONSES.QDESIGNRATING eq 'NI'}">selected</c:if>>NI</option>
-																																	<option value = 'NC' <c:if test = "${question.QRESPONSES.QDESIGNRATING eq 'NC'}">selected</c:if>>NC</option>
+																																	<option value = 'NA' <c:if test = "${question.QRESPONSES.QDESIGNRATING eq 'NA'}">selected</c:if>>Not applicable (N/A)</option>
+																																	<option value = 'E' <c:if test = "${question.QRESPONSES.QDESIGNRATING eq 'E'}">selected</c:if>>Effective (E)</option>
+																																	<option value = 'NI' <c:if test = "${question.QRESPONSES.QDESIGNRATING eq 'NI'}">selected</c:if>>Needs Improvement  (NI)</option>
+																																	<option value = 'NC' <c:if test = "${question.QRESPONSES.QDESIGNRATING eq 'NC'}">selected</c:if>>No Controls (NC)</option>
 																																	
 																																</select>
 																															</td>
 																															<td width = "12%">
 																																<select class="form-control input-sm ${formattedCategory}operatingRating" id="${question.QUESTIONID }operatingRating" name="${question.QUESTIONID }||QOPERATINGRATING||${formattedCategory}" onChange = "handleCRInputChange(this)">
 																																	
-																																	<option value = 'NA' <c:if test = "${question.QRESPONSES.QOPERATINGRATING eq 'NA'}">selected</c:if>>NA</option>
-																																	<option value = 'E' <c:if test = "${question.QRESPONSES.QOPERATINGRATING eq 'E'}">selected</c:if>>E</option>
-																																	<option value = 'NI' <c:if test = "${question.QRESPONSES.QOPERATINGRATING eq 'NI'}">selected</c:if>>NI</option>
-																																	<option value = 'NC' <c:if test = "${question.QRESPONSES.QOPERATINGRATING eq 'NC'}">selected</c:if>>NC</option>
+																																	<option value = 'NA' <c:if test = "${question.QRESPONSES.QOPERATINGRATING eq 'NA'}">selected</c:if>>Not applicable (N/A)</option>
+																																	<option value = 'E' <c:if test = "${question.QRESPONSES.QOPERATINGRATING eq 'E'}">selected</c:if>>Effective (E)</option>
+																																	<option value = 'NI' <c:if test = "${question.QRESPONSES.QOPERATINGRATING eq 'NI'}">selected</c:if>>Needs Improvement  (NI)</option>
+																																	<option value = 'NC' <c:if test = "${question.QRESPONSES.QOPERATINGRATING eq 'NC'}">selected</c:if>>No Controls (NC)</option>
 																														
 																																	
 																																</select>
@@ -1511,15 +1550,25 @@
 																																							<td width = "10%">
 																																								${subQuestion.QUESTIONID } 
 																																								<%-- <div class="btn-group pull-right clearfix">
-																																									<span class="pull-right" onclick="handleSlidingPanels(this,'${UNQID}','${f:replace(question['QUESTIONID'],'.','SQ')}slidingQuestionDetails${UNQID}')"><i class="collapsable${f:replace(question['QUESTIONID'],'.','SQ')}slidingQuestionDetails${UNQID} fa fa-chevron-up"></i></span>
+																																									<span class="pull-right" onclick="handleSlidingPanels(this,'${UNQID}','${f:replace(question['QUESTIONID'],'.','SQ')}slidingQuestionDetails${UNQID}')"><i class="collapsable${f:replace(question['QUESTIONID'],'.','SQ')}slidingQuestionDetails${UNQID} fa fa-chevron-up" style = "font-size:15px;"></i></span>
 																																								</div> --%>
 																																							</td>
 																																							<td width = "30%">
 																																								${subQuestion.QUESTION }
 																																							</td>
 																																							<td width = "12%">
-																																								<c:if test = "${subQuestion.HASPARENT eq 'Y' }">
+																																								<c:if test = "${subQuestion.INPUTTYPE eq 'T' }">
 																																									<textarea class="form-control input-sm ${formattedCategory}Qinput" id="${subQuestion.QUESTIONID }qInput" name="${subQuestion.QUESTIONID }||QINPUT||${formattedCategory}" onChange = "handleCRInputChange(this)">${subQuestion.QRESPONSES.QINPUT }</textarea>
+																																								</c:if>
+																																								<c:if test = "${subQuestion.INPUTTYPE eq 'L' }">
+																																									<select class="form-control input-sm ${formattedCategory}Qinput" id="${subQuestion.QUESTIONID}qInput" name="${subQuestion.QUESTIONID }||QINPUT||${formattedCategory}" onChange = "handleCRInputChange(this)">
+																																									<!-- <option>Nothing Selected</option> -->
+																																									<option value = 'Y' <c:if test = "${subQuestion.QRESPONSES.QINPUT eq 'Y'}">selected</c:if>>Yes</option>
+																																									<option value = 'N' <c:if test = "${subQuestion.QRESPONSES.QINPUT eq 'N'}">selected</c:if>>No</option>
+																																									<option value = 'U' <c:if test = "${subQuestion.QRESPONSES.QINPUT eq 'U'}">selected</c:if>>U</option>
+																																									<option value = 'NA' <c:if test = "${subQuestion.QRESPONSES.QINPUT eq 'NA'}">selected</c:if>>Not Applicable</option>
+																																									
+																																								</select>
 																																								</c:if>
 																																							</td>
 																																							<td width = "12%">
@@ -1573,34 +1622,50 @@
 																												<td width = "10%">
 																													${question.QUESTIONID } 
 																													<%-- <div class="btn-group pull-right clearfix">
-																														<span class="pull-right" onclick="handleSlidingPanels(this,'${UNQID}','${f:replace(question['QUESTIONID'],'.','SQ')}slidingQuestionDetails${UNQID}')"><i class="collapsable${f:replace(question['QUESTIONID'],'.','SQ')}slidingQuestionDetails${UNQID} fa fa-chevron-up"></i></span>
+																														<span class="pull-right" onclick="handleSlidingPanels(this,'${UNQID}','${f:replace(question['QUESTIONID'],'.','SQ')}slidingQuestionDetails${UNQID}')"><i class="collapsable${f:replace(question['QUESTIONID'],'.','SQ')}slidingQuestionDetails${UNQID} fa fa-chevron-up" style = "font-size:15px;"></i></span>
 																													</div> --%>
 																												</td>
 																												<td width = "30%">
 																													${question.QUESTION }
 																												</td>
-																												<td width = "12%">
+																												<%-- <td width = "12%">
 																													<c:if test = "${question.HASPARENT eq 'Y' }">
 																													<textarea class="form-control input-sm ${formattedCategory}Qinput" id="${question.QUESTIONID }qInput" name="${question.QUESTIONID }||QINPUT||${formattedCategory}" onChange = "handleCRInputChange(this)">${question.QRESPONSES.QINPUT }</textarea>
+																													</c:if>
+																												</td> --%>
+																												<td width = "12%">
+																													<c:if test = "${question.INPUTTYPE eq 'T' }">
+																													<textarea class="form-control input-sm ${formattedCategory}Qinput" id="${question.QUESTIONID }qInput" name="${question.QUESTIONID }||QINPUT||${formattedCategory}" onChange = "handleCRInputChange(this)">${question.QRESPONSES.QINPUT }</textarea>
+																													</c:if>
+																													<c:if test = "${question.INPUTTYPE eq 'L' }">
+																														<select class="form-control input-sm ${formattedCategory}Qinput" id="${question.QUESTIONID}qInput" name="${question.QUESTIONID }||QINPUT||${formattedCategory}" onChange = "handleCRInputChange(this)">
+																														<!-- <option>Nothing Selected</option> -->
+																														<option value = 'Y' <c:if test = "${question.QRESPONSES.QINPUT eq 'Y'}">selected</c:if>>Yes</option>
+																														<option value = 'N' <c:if test = "${question.QRESPONSES.QINPUT eq 'N'}">selected</c:if>>No</option>
+																														<option value = 'U' <c:if test = "${question.QRESPONSES.QINPUT eq 'U'}">selected</c:if>>U</option>
+																														<option value = 'NA' <c:if test = "${question.QRESPONSES.QINPUT eq 'NA'}">selected</c:if>>Not Applicable</option>
+																														
+																													</select>
 																													</c:if>
 																												</td>
 																												<td width = "12%">
 																													<select class="form-control input-sm ${formattedCategory}designRating" id="${question.QUESTIONID }desinRating" name="${question.QUESTIONID }||QDESIGNRATING||${formattedCategory}" onChange = "handleCRInputChange(this)">
 																														<!-- <option>Nothing Selected</option> -->
-																														<option value = 'NA' <c:if test = "${question.QRESPONSES.QDESIGNRATING eq 'NA'}">selected</c:if>>NA</option>
-																														<option value = 'E' <c:if test = "${question.QRESPONSES.QDESIGNRATING eq 'E'}">selected</c:if>>E</option>
-																														<option value = 'NI' <c:if test = "${question.QRESPONSES.QDESIGNRATING eq 'NI'}">selected</c:if>>NI</option>
-																														<option value = 'NC' <c:if test = "${question.QRESPONSES.QDESIGNRATING eq 'NC'}">selected</c:if>>NC</option>
+																														<option value = 'NA' <c:if test = "${question.QRESPONSES.QDESIGNRATING eq 'NA'}">selected</c:if>>Not applicable (N/A)</option>
+																														<option value = 'E' <c:if test = "${question.QRESPONSES.QDESIGNRATING eq 'E'}">selected</c:if>>Effective (E)</option>
+																														<option value = 'NI' <c:if test = "${question.QRESPONSES.QDESIGNRATING eq 'NI'}">selected</c:if>>Needs Improvement  (NI)</option>
+																														<option value = 'NC' <c:if test = "${question.QRESPONSES.QDESIGNRATING eq 'NC'}">selected</c:if>>No Controls (NC)</option>
 																														
 																													</select>
 																												</td>
 																												<td width = "12%">
 																													<select class="form-control input-sm ${formattedCategory}operatingRating" id="${question.QUESTIONID }operatingRating" name="${question.QUESTIONID }||QOPERATINGRATING||${formattedCategory}" onChange = "handleCRInputChange(this)">
 																														
-																														<option value = 'NA' <c:if test = "${question.QRESPONSES.QOPERATINGRATING eq 'NA'}">selected</c:if>>NA</option>
-																														<option value = 'E' <c:if test = "${question.QRESPONSES.QOPERATINGRATING eq 'E'}">selected</c:if>>E</option>
-																														<option value = 'NI' <c:if test = "${question.QRESPONSES.QOPERATINGRATING eq 'NI'}">selected</c:if>>NI</option>
-																														<option value = 'NC' <c:if test = "${question.QRESPONSES.QOPERATINGRATING eq 'NC'}">selected</c:if>>NC</option>
+																														<option value = 'NA' <c:if test = "${question.QRESPONSES.QOPERATINGRATING eq 'NA'}">selected</c:if>>Not applicable (N/A)</option>
+																														<option value = 'E' <c:if test = "${question.QRESPONSES.QOPERATINGRATING eq 'E'}">selected</c:if>>Effective (E)</option>
+																														<option value = 'NI' <c:if test = "${question.QRESPONSES.QOPERATINGRATING eq 'NI'}">selected</c:if>>Needs Improvement  (NI)</option>
+																														<option value = 'NC' <c:if test = "${question.QRESPONSES.QOPERATINGRATING eq 'NC'}">selected</c:if>>No Controls (NC)</option>
+																											
 																														
 																													</select>
 																												</td>
@@ -1713,9 +1778,9 @@
 						<div role="tabpanel" class="tab-pane fade in" id="riskRatingNew" >
 							<div class="row">
 								<div class="col-sm-12">
-									<div class="card card-primary">
+									<div class="">
 										<div id="riskRatingDetailsNew">
-											<div class="card card-primary panel_RiskCalculationForm" style="margin-top: 10px; margin-bottom: 0;">	
+											<div class="card card-primary panel_RiskCalculationForm" style=" margin-bottom: 0;">	
 												<div class="card-search-card" >
 													<table class="table table-striped formSearchTable riskMatrixForm${UNQID}" style="margin-bottom: 0px;border-collapse:collapse;">
 														<%-- <c:set var="residualFinalRiskVal" value="${f:split(RISKTABDATA['RESIDUALFINALRISK'], ' - ')}"></c:set> --%>
@@ -1891,7 +1956,7 @@
 						<div role="tabpanel" class="tab-pane fade in" id="statusApprovalsNew" >
 							<div class="row">
 								<div class="col-sm-12">
-									<div class="card card-primary">
+									<div class="">
 										<table class="table table-striped" id="statusTable${UNQID}" style="margin-bottom: 0px;">
 											<tr>
 												<td>Form Status</td>
