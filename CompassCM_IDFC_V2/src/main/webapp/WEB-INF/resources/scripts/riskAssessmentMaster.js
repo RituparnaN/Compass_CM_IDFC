@@ -235,6 +235,8 @@ var riskAssessmentMaster = riskAssessmentMaster || (function () {
 		},
 		
 		addQuestion: function(elm,unqId,toAddCategory,toAddSubCategory,qsType,buttonPosition){
+			var assessmentUnit = $("#assessmentUnit").html();
+			var assessmentUnitPrefix = assessmentUnit.replace(/[^A-Z]+/g, "")+"_"
 			var categoryPrefixes=['A','B','C','D','E','F','G']
 			var subCategoryPrefixes=['a','b','c','d','e','f','g']
 			var questionsFormDetails = JSON.parse($("#quesionDetailsFormJson").html())
@@ -248,8 +250,8 @@ var riskAssessmentMaster = riskAssessmentMaster || (function () {
 							var questionOrder = 1;
 							if(questionsFormDetails[category][subCategory].length > 0){
 									questionsFormDetails[category][subCategory].forEach(q=>{
-										if(parseInt(q['QUESTIONID'].replace(categoryPrefixes[categoryIndex],"").replace(subCategoryPrefixes[subCategoryIndex],""))+1 > questionOrder){
-											questionOrder = parseInt(q['QUESTIONID'].replace(categoryPrefixes[categoryIndex],"").replace(subCategoryPrefixes[subCategoryIndex],""))+1
+										if(parseInt(q['QUESTIONID'].replace(assessmentUnitPrefix,"").replace(categoryPrefixes[categoryIndex],"").replace(subCategoryPrefixes[subCategoryIndex],""))+1 > questionOrder){
+											questionOrder = parseInt(q['QUESTIONID'].replace(assessmentUnitPrefix,"").replace(categoryPrefixes[categoryIndex],"").replace(subCategoryPrefixes[subCategoryIndex],""))+1
 										}
 										
 									})
@@ -258,7 +260,7 @@ var riskAssessmentMaster = riskAssessmentMaster || (function () {
 									
 									//questionOrder = questionsFormDetails[category][subCategory].length+1
 									var newQuestionObject = {
-																"QUESTIONID":categoryPrefixes[categoryIndex]+subCategoryPrefixes[subCategoryIndex]+questionOrder,
+																"QUESTIONID":assessmentUnitPrefix+categoryPrefixes[categoryIndex]+subCategoryPrefixes[subCategoryIndex]+questionOrder,
 																"ISSUPERPARENT":"N",
 																"QUESTION":"",
 																"INPUTTYPE":"numeric",
@@ -277,7 +279,7 @@ var riskAssessmentMaster = riskAssessmentMaster || (function () {
 								else{
 									//questionOrder = questionsFormDetails[category][subCategory].length+1
 									var newQuestionObject = [{
-																"QUESTIONID":categoryPrefixes[categoryIndex]+subCategoryPrefixes[subCategoryIndex]+questionOrder,
+																"QUESTIONID":assessmentUnitPrefix+categoryPrefixes[categoryIndex]+subCategoryPrefixes[subCategoryIndex]+questionOrder,
 																"ISSUPERPARENT":"N",
 																"QUESTION":"",
 																"INPUTTYPE":"numeric",
@@ -300,7 +302,7 @@ var riskAssessmentMaster = riskAssessmentMaster || (function () {
 							}
 							else{
 								var newQuestionObject = {
-															"QUESTIONID":categoryPrefixes[categoryIndex]+subCategoryPrefixes[subCategoryIndex]+questionOrder,
+															"QUESTIONID":assessmentUnitPrefix+categoryPrefixes[categoryIndex]+subCategoryPrefixes[subCategoryIndex]+questionOrder,
 															"ISSUPERPARENT":"N",
 															"QUESTION":"",
 															"INPUTTYPE":"numeric",
@@ -866,6 +868,8 @@ var riskAssessmentMaster = riskAssessmentMaster || (function () {
 		addCRQuestion: function(elm,unqId,toAddCategory,toAddSubCategory,qsType,buttonPosition){
 			var categoryPrefixes=['A','B','C','D','E','F','G','H','I','J','K']
 			var subCategoryPrefixes=['a','b','c','d','e','f','g','h','i','j','k']
+			var assessmentUnit = $("#assessmentUnit").html();
+			var assessmentUnitPrefix = assessmentUnit.replace(/[^A-Z]+/g, "")+"_"
 			var questionsFormDetails = JSON.parse($("#controlsReviewsQuestionsDetails").html())
 			var categories = JSON.parse($("#controlsReviewsCategSubCateg").html())
 			Object.keys(categories).forEach((category,categoryIndex)=>{
@@ -877,8 +881,8 @@ var riskAssessmentMaster = riskAssessmentMaster || (function () {
 							var questionOrder = 1;
 							if(questionsFormDetails[category][subCategory].length > 0){
 									questionsFormDetails[category][subCategory].forEach(q=>{
-										if(parseInt(q['QUESTIONID'].replace("CR",'').replace(categoryPrefixes[categoryIndex],"").replace(subCategoryPrefixes[subCategoryIndex],""))+1 > questionOrder){
-											questionOrder = parseInt(q['QUESTIONID'].replace("CR",'').replace(categoryPrefixes[categoryIndex],"").replace(subCategoryPrefixes[subCategoryIndex],""))+1
+										if(parseInt(q['QUESTIONID'].replace(assessmentUnitPrefix,"").replace("CR",'').replace(categoryPrefixes[categoryIndex],"").replace(subCategoryPrefixes[subCategoryIndex],""))+1 > questionOrder){
+											questionOrder = parseInt(q['QUESTIONID'].replace(assessmentUnitPrefix,"").replace("CR",'').replace(categoryPrefixes[categoryIndex],"").replace(subCategoryPrefixes[subCategoryIndex],""))+1
 										}
 										
 									})
@@ -887,7 +891,7 @@ var riskAssessmentMaster = riskAssessmentMaster || (function () {
 									
 									//questionOrder = questionsFormDetails[category][subCategory].length+1
 									var newQuestionObject = {
-																"QUESTIONID":"CR"+categoryPrefixes[categoryIndex]+subCategoryPrefixes[subCategoryIndex]+questionOrder,
+																"QUESTIONID":assessmentUnitPrefix+"CR"+categoryPrefixes[categoryIndex]+subCategoryPrefixes[subCategoryIndex]+questionOrder,
 																"ISSUPERPARENT":"N",
 																"QUESTION":"",
 																"INPUTTYPE":"",
@@ -906,7 +910,7 @@ var riskAssessmentMaster = riskAssessmentMaster || (function () {
 								else{
 									//questionOrder = questionsFormDetails[category][subCategory].length+1
 									var newQuestionObject = [{
-																"QUESTIONID":"CR"+categoryPrefixes[categoryIndex]+subCategoryPrefixes[subCategoryIndex]+questionOrder,
+																"QUESTIONID":assessmentUnitPrefix+"CR"+categoryPrefixes[categoryIndex]+subCategoryPrefixes[subCategoryIndex]+questionOrder,
 																"ISSUPERPARENT":"N",
 																"QUESTION":"",
 																"INPUTTYPE":"",
